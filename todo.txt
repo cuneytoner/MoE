@@ -1,0 +1,2 @@
+Aider / Vibe Coding ortamının Git entegrasyonu ile ayağa kaldırılması 
+Görsel/Video modelleri için Docker orkestrasyon katmanının kurulması 
