@@ -1,0 +1,58 @@
+version: '3.8'
+
+# ==============================================================================
+# File: docker-compose.yml
+# Description: Production-grade container architecture hosting Open-WebUI, 
+#              ComfyUI (for Flux.1 & CogVideoX execution), and local database stacks.
+# ==============================================================================
+
+services:
+  # 1. Primary UI Layer & Multi-Modal Orchestrator
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: always
+    ports:
+      - "3000:8080"
+    volumes:
+      - open-webui-data:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://docker.internal
+      # Enable local multi-modal image generation pipe targeting ComfyUI / Stable Diffusion API
+      - ENABLE_IMAGE_GENERATION=True
+      - IMAGE_GENERATION_ENGINE=comfyui
+      - COMFYUI_BASE_URL=http://docker.internal
+      # Advanced user local semantic memory configuration
+      - ENABLE_RAG=True
+      - RAG_EMBEDDING_MODEL=all-MiniLM-L6-v2
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - media-inference-engine
+
+  # 2. Heavy Media Inference Engine (Flux.1 Schnell & CogVideoX Engine)
+  media-inference-engine:
+    image: comfyui/comfyui:latest-cuda
+    container_name: comfyui-media-engine
+    restart: always
+    ports:
+      - "8188:8188"
+    volumes:
+      - comfyui-data:/home/user/comfyui
+      # Mount shared project directory for direct script asset pipelines
+      - ~/MoE/media_outputs:/home/user/comfyui/output
+    environment:
+      - CLI_ARGS=--listen 0.0.0.0 --port 8188 --fp16-split --smart-memory-management
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  open-webui-data:
+    name: open_webui_storage
+  comfyui-data:
+    name: comfyui_models_storage

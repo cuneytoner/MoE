@@ -43,6 +43,11 @@ mkdir -p "$LOCAL_RUN_DIR"
 rsync -avz --delete "$LOCAL_SRC_DIR" "$LOCAL_RUN_DIR"
 echo "[SUCCESS] Local runtime sync complete."
 
+echo ">>> Mirroring Docker compose infrastructure context..."
+mkdir -p "$LOCAL_DOCKER_RUN_DIR"
+rsync -avz --delete "$LOCAL_DOCKER_DIR" "$LOCAL_DOCKER_RUN_DIR"
+
+
 # STAGE 2: Remote Workers Iterative Deployment (PC-2, PC-3, etc.)
 echo "------------------------------------------------------------------------"
 echo "[STAGE 2] Traversing remote node topologies..."
