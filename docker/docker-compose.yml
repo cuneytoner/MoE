@@ -92,19 +92,28 @@ services:
 
   # 4. Central Orchestration Dashboard Backend (FastAPI Engine)
   # 4. Central Orchestration Dashboard Backend (FastAPI Engine - Host Network Mode)
+  # 4. Central Orchestration Dashboard Backend (Hardened Dynamic Telemetry Node)
   dashboard-backend:
     image: python:3.10-slim
     container_name: moe-dashboard-backend
     restart: always
-    # CRITICAL NETWORKING REINFORCEMENT: Uses PC-1 native internet connection directly
     network_mode: host
     volumes:
       - ~/MoE/dashboard/backend:/app
       - ~/MoE/models/checkpoints:/home/cuneyt/MoE/models/checkpoints
       - /home/cuneyt/DiskD/Projects/MoE/.env:/home/cuneyt/DiskD/Projects/MoE/.env
+      # Bound master host ssh registry to instantly trust local cluster nodes
+      - ~/.ssh:/root/.ssh:ro
     working_dir: /app
-    # FIXED: Forces requirements re-evaluation and explicitly installs requests globally before uvicorn spin-up
-    command: sh -c "python3 -m pip install --upgrade pip && pip install requests fastapi uvicorn huggingface_hub && uvicorn main:app --host 0.0.0.0 --port 8050 --reload"
+    # Installs native openssh client on boot before firing the uvicorn polling loop
+    command: sh -c "apt-get update && apt-get install -y openssh-client && python3 -m pip install --upgrade pip && pip install requests fastapi uvicorn huggingface_hub && uvicorn main:app --host 0.0.0.0 --port 8050 --reload"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   # 5. Central Orchestration Dashboard Frontend (React Web Space)
   dashboard-frontend:
