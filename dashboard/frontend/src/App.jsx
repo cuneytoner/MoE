@@ -9,9 +9,9 @@ import React, { useState, useEffect } from 'react';
 
 export default function App() {
   const [clusterStatus, setClusterStatus] = useState({ status: "loading", available_checkpoints: [] });
-  // Cleaned defaults mapping precisely to the absolute corporate storage structures
+  // Fixed state defaults to the official 5B model listed explicitly on your screen
   const [downloadRepo, setDownloadRepo] = useState("Kijai/CogVideoX_GGUF");
-  const [downloadFile, setDownloadFile] = useState("CogVideoX_2b_GGUF_Q4_K_M.gguf");
+  const [downloadFile, setDownloadFile] = useState("CogVideoX_5b_I2V_GGUF_Q4_0.safetensors");
   const [contextSize, setContextSize] = useState(131072);
   const [gpuLayers, setGpuLayers] = useState(48);
 
