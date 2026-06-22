@@ -9,9 +9,9 @@ import React, { useState, useEffect } from 'react';
 
 export default function App() {
   const [clusterStatus, setClusterStatus] = useState({ status: "loading", available_checkpoints: [] });
-  // Fixed defaults to official ComfyUI corporate video repository pipelines
-  const [downloadRepo, setDownloadRepo] = useState("Comfy-Org/CogVideoX-2b-light");
-  const [downloadFile, setDownloadFile] = useState("cogvideox_2b_light.safetensors");
+  // Cleaned defaults mapping precisely to the absolute corporate storage structures
+  const [downloadRepo, setDownloadRepo] = useState("Kijai/CogVideoX_GGUF");
+  const [downloadFile, setDownloadFile] = useState("CogVideoX_2b_GGUF_Q4_K_M.gguf");
   const [contextSize, setContextSize] = useState(131072);
   const [gpuLayers, setGpuLayers] = useState(48);
 
