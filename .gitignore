@@ -18,3 +18,9 @@ venv*/
 # System and logs
 *.log
 .DS_Store
+.aider*
+
+# Front-end dependencies & build outputs
+node_modules/
+dist/
+.html

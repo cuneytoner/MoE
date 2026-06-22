@@ -2,75 +2,74 @@
 
 # ==============================================================================
 # Script Name:  deploy.sh
-# Description:  Parametric and dynamic multi-node deployment engine reading 
-#               cluster topology from local environment configurations (.env).
-# Author:       AI Collaborator
-# Year:         2026
+# Description:  Optimized multi-node deployment engine with rigorous exclusion
+#               filters to prevent Git assets and docs from leaking to runtimes.
 # ==============================================================================
 
-# Fail immediately if any piped command triggers an error flag
 set -e
 
-# Resolve absolute execution path to accurately locate the .env context
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
 ENV_FILE="${SCRIPT_DIR}/.env"
-LOCAL_SRC_DIR="$HOME/DiskD/Projects/MoE/"
-LOCAL_RUN_DIR="$HOME/MoE/"
-REMOTE_RUN_DIR="/home/cuneyt/MoE/"
 
-
-
-# Validate existence of environment manifest
 if [ ! -f "$ENV_FILE" ]; then
     echo "[CRITICAL ERROR] Configuration manifest (.env) missing at ${ENV_FILE}"
     exit 1
 fi
 
-# Ingest and export configurations from .env
 set -a
 source "$ENV_FILE"
 set +a
 
+# Define global rsync exclusion flags to keep runtimes light and secure
+RSYNC_EXCLUDES=(
+    --exclude='.git/'
+    --exclude='.gitignore'
+    --exclude='docs/'
+    --exclude='venv*/'
+    --exclude='.venv/'
+    --exclude='__pycache__/'
+    --exclude='*.md'
+    --exclude='models/'
+    --exclude='media_outputs/'
+    --exclude='node_modules/'
+)
+
 echo "========================================================================"
-echo "[DEPLOYMENT PIPELINE STARTED] Orchestrating multi-node ecosystem sync..."
+echo "[DEPLOYMENT PIPELINE STARTED] Syncing clean production runtimes..."
 echo "========================================================================"
 
-# STAGE 1: Local Node Deployment (PC-1)
+# STAGE 1: PC-1 Master Node (Full local copy minus filtered files)
 echo "------------------------------------------------------------------------"
-echo "[STAGE 1] Syncing local runtime cluster targets on PC-1..."
+echo "[STAGE 1] Syncing optimized assets to local PC-1 Runtime..."
 echo "------------------------------------------------------------------------"
 mkdir -p "$LOCAL_RUN_DIR"
-rsync -avz --delete "$LOCAL_SRC_DIR" "$LOCAL_RUN_DIR"
-echo "[SUCCESS] Local runtime sync complete."
-
-echo ">>> Mirroring Docker compose infrastructure context..."
-mkdir -p "$LOCAL_DOCKER_RUN_DIR"
-rsync -avz --delete "$LOCAL_DOCKER_DIR" "$LOCAL_DOCKER_RUN_DIR"
+rsync -avz --delete --perms --chmod=ugo+x "${RSYNC_EXCLUDES[@]}" "${LOCAL_SRC_DIR}/" "$LOCAL_RUN_DIR"
 
 
-# STAGE 2: Remote Workers Iterative Deployment (PC-2, PC-3, etc.)
+echo "[SUCCESS] PC-1 runtime architecture unified."
+
+
+
+# STAGE 2: PC-2 Worker Node (Excludes filtered files AND the entire docker dir)
 echo "------------------------------------------------------------------------"
-echo "[STAGE 2] Traversing remote node topologies..."
+echo "[STAGE 2] Syncing filtered assets to remote worker PC-2..."
 echo "------------------------------------------------------------------------"
 
-# Loop through all space-separated IPs defined inside REMOTE_NODES
 for NODE_IP in $REMOTE_NODES; do
-    echo ">>> Initializing secure sync pipeline for remote target [${DEPLOY_USER}@${NODE_IP}]"
+    echo ">>> Deploying secure pipeline to target node [${DEPLOY_USER}@${NODE_IP}]"
     
-    # Assert network node reachability using explicit SSH timeout restrictions
     if ! ssh -o ConnectTimeout="$SSH_TIMEOUT" -o BatchMode=yes "${DEPLOY_USER}@${NODE_IP}" "exit" 2>/dev/null; then
-        echo "    [ERROR] Host ${NODE_IP} unreachable or SSH handshake failed. Skipping node."
+        echo "    [ERROR] Host ${NODE_IP} unreachable. Skipping node."
         continue
     fi
     
-    # Establish remote workspace architecture
     ssh -o ConnectTimeout="$SSH_TIMEOUT" "${DEPLOY_USER}@${NODE_IP}" "mkdir -p ${REMOTE_RUN_DIR}"
     
-    # Synchronize codebase over secure active network pipe
-    rsync -avz --delete -e ssh "$LOCAL_SRC_DIR" "${DEPLOY_USER}@${NODE_IP}:${REMOTE_RUN_DIR}"
-    echo "    [SUCCESS] Target node ${NODE_IP} successfully updated."
+    # PC-2 specific constraint: Add --exclude='docker/' to the global exclusion list
+    rsync -avz --delete --perms --chmod=ugo+x "${RSYNC_EXCLUDES[@]}" --exclude='docker/' -e ssh "${LOCAL_SRC_DIR}/" "${DEPLOY_USER}@${NODE_IP}:${REMOTE_RUN_DIR}"
+    echo "    [SUCCESS] Worker node ${NODE_IP} synchronized successfully."
 done
 
 echo "========================================================================"
-echo "[SUCCESS] Synchronization cycle terminated. All active nodes are unified."
+echo "[SUCCESS] Deployment cycle terminated. Clean runtimes established."
 echo "========================================================================"

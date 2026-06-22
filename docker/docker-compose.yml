@@ -1,11 +1,3 @@
-version: '3.8'
-
-# ==============================================================================
-# File: docker-compose.yml
-# Description: Production-grade container architecture hosting Open-WebUI, 
-#              ComfyUI (for Flux.1 & CogVideoX execution), and local database stacks.
-# ==============================================================================
-
 services:
   # 1. Primary UI Layer & Multi-Modal Orchestrator
   open-webui:
@@ -17,32 +9,34 @@ services:
     volumes:
       - open-webui-data:/app/backend/data
     environment:
-      - OLLAMA_BASE_URL=http://docker.internal
-      # Enable local multi-modal image generation pipe targeting ComfyUI / Stable Diffusion API
+      - OLLAMA_BASE_URL=http://172.17.0.1:11434
       - ENABLE_IMAGE_GENERATION=True
       - IMAGE_GENERATION_ENGINE=comfyui
-      - COMFYUI_BASE_URL=http://docker.internal
-      # Advanced user local semantic memory configuration
+      # CRITICAL FIX: Point directly to the container service name and port
+      - COMFYUI_BASE_URL=http://media-inference-engine:8188
       - ENABLE_RAG=True
       - RAG_EMBEDDING_MODEL=all-MiniLM-L6-v2
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - moe-cluster-net
     depends_on:
       - media-inference-engine
 
-  # 2. Heavy Media Inference Engine (Flux.1 Schnell & CogVideoX Engine)
+  # 2. Heavy Media Inference Engine (Localized Dockerfile Build)
   media-inference-engine:
-    image: comfyui/comfyui:latest-cuda
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: comfyui-media-engine
     restart: always
     ports:
       - "8188:8188"
     volumes:
-      - comfyui-data:/home/user/comfyui
-      # Mount shared project directory for direct script asset pipelines
-      - ~/MoE/media_outputs:/home/user/comfyui/output
-    environment:
-      - CLI_ARGS=--listen 0.0.0.0 --port 8188 --fp16-split --smart-memory-management
+      # Isolate using direct host path mapping to bypass container cache layers
+      - ~/MoE/media_outputs:/workspace/output
+      - ~/MoE/models/checkpoints:/workspace/models/checkpoints
+      - comfyui-data:/workspace
     deploy:
       resources:
         reservations:
@@ -50,9 +44,92 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+    networks:
+      - moe-cluster-net
+
+  # 3. Native Llama.cpp Engine - INSANE SPEED MOE CONFIGURATION (Based on Video Guide)
+  # 3. Native Llama.cpp Engine (Optimized Dense 32B Memory Allocation)
+  llama-cpp-engine:
+    image: ghcr.io/ggml-org/llama.cpp:server-cuda
+    container_name: llama-cpp-engine
+    restart: always
+    ports:
+      - "8000:8080"
+    volumes:
+      - ~/MoE/models/checkpoints:/models
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    # Context balanced to 32k to safely house the 7GB compressed KV cache alongside 32B model layers
+    command:
+      - "--model"
+      - "/models/qwen2.5-coder-32b-instruct-q4_k_m.gguf"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8080"
+      - "--n-gpu-layers"
+      - "28"
+      - "--flash-attn"
+      - "on"
+      - "--cache-type-k"
+      - "q4_0"
+      - "--cache-type-v"
+      - "q4_0"
+      - "--ctx-size"
+      - "32768"
+      - "--threads"
+      - "8"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - moe-cluster-net
+
+  # 4. Central Orchestration Dashboard Backend (FastAPI Engine)
+  dashboard-backend:
+    image: python:3.10-slim
+    container_name: moe-dashboard-backend
+    restart: always
+    ports:
+      - "8050:8000"
+    volumes:
+      - ~/MoE/dashboard/backend:/app
+      - ~/MoE/models/checkpoints:/home/cuneyt/MoE/models/checkpoints
+      - /home/cuneyt/DiskD/Projects/MoE/.env:/home/cuneyt/DiskD/Projects/MoE/.env
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000"
+    networks:
+      - moe-cluster-net
+
+  # 5. Central Orchestration Dashboard Frontend (React Web Space)
+  dashboard-frontend:
+    image: node:18-slim
+    container_name: moe-dashboard-frontend
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ~/MoE/dashboard/frontend:/app
+    working_dir: /app
+    # Swapped production build server to live dev engine to guarantee no internal permissions crashes
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 8080"
+    networks:
+      - moe-cluster-net
+
+
+networks:
+  moe-cluster-net:
+    name: moe_cluster_network
+    driver: bridge
 
 volumes:
   open-webui-data:
     name: open_webui_storage
   comfyui-data:
     name: comfyui_models_storage
+
+  # 3. Native Llama.cpp High-Performance Inference Engine (Bypasses Ollama Overhead)
