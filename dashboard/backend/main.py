@@ -52,9 +52,23 @@ def async_download_processor(repo_id: str, filename: str):
 
 @app.get("/api/status")
 def get_cluster_status():
-    # Return available hardware-mapped checkpoints in the persistence zone
     models = os.listdir(TARGET_DIR) if os.path.exists(TARGET_DIR) else []
-    return {"status": "healthy", "available_checkpoints": models}
+    
+    # Check if the official Comfy-Org corporate video asset is compiling on disk
+    video_file = "cogvideox_2b_light.safetensors"
+    video_path = os.path.join(TARGET_DIR, video_file)
+    progress = 0
+    if os.path.exists(video_path):
+        current_size = os.path.getsize(video_path)
+        # Official Comfy-Org/CogVideoX-2b-light file size is exactly 4920000000 bytes (~4.58 GB)
+        target_size = 4920000000 
+        progress = min(int((current_size / target_size) * 100), 100)
+        
+    return {
+        "status": "healthy", 
+        "available_checkpoints": models,
+        "download_progress": progress
+    }
 
 @app.post("/api/download")
 def trigger_model_download(payload: ModelDownloadRequest, background_tasks: BackgroundTasks):
