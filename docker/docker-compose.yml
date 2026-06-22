@@ -33,9 +33,10 @@ services:
     ports:
       - "8188:8188"
     volumes:
-      # Isolate using direct host path mapping to bypass container cache layers
       - ~/MoE/media_outputs:/workspace/output
+      # Absolute host paths mapped safely into both traditional checkpoints and modern diffusion paths
       - ~/MoE/models/checkpoints:/workspace/models/checkpoints
+      - ~/MoE/models/checkpoints:/workspace/models/diffusion_models
       - comfyui-data:/workspace
     deploy:
       resources:
@@ -90,20 +91,20 @@ services:
       - moe-cluster-net
 
   # 4. Central Orchestration Dashboard Backend (FastAPI Engine)
+  # 4. Central Orchestration Dashboard Backend (FastAPI Engine - Host Network Mode)
   dashboard-backend:
     image: python:3.10-slim
     container_name: moe-dashboard-backend
     restart: always
-    ports:
-      - "8050:8000"
+    # CRITICAL NETWORKING REINFORCEMENT: Uses PC-1 native internet connection directly
+    network_mode: host
     volumes:
       - ~/MoE/dashboard/backend:/app
       - ~/MoE/models/checkpoints:/home/cuneyt/MoE/models/checkpoints
       - /home/cuneyt/DiskD/Projects/MoE/.env:/home/cuneyt/DiskD/Projects/MoE/.env
     working_dir: /app
-    command: sh -c "pip install -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000"
-    networks:
-      - moe-cluster-net
+    # FIXED: Forces requirements re-evaluation and explicitly installs requests globally before uvicorn spin-up
+    command: sh -c "python3 -m pip install --upgrade pip && pip install requests fastapi uvicorn huggingface_hub && uvicorn main:app --host 0.0.0.0 --port 8050 --reload"
 
   # 5. Central Orchestration Dashboard Frontend (React Web Space)
   dashboard-frontend:

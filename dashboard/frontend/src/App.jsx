@@ -23,7 +23,8 @@ export default function App() {
 
   const fetchStatus = async () => {
     try {
-      const res = await fetch('http://localhost:8050/api/status');
+      // FIXED: Appended dynamic timestamp to shatter browser cache frames instantly
+      const res = await fetch(`http://localhost:8050/api/status?t=${new Date().getTime()}`);
       const data = await res.json();
       setClusterStatus(data);
     } catch (err) {

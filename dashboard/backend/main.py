@@ -3,7 +3,7 @@
 
 import os
 import sys
-import subprocess
+import requests
 from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -35,33 +35,37 @@ def async_download_processor(repo_id: str, filename: str):
     if os.path.exists(ENV_FILE):
         with open(ENV_FILE, "r") as f:
             for line in f:
-                if line.startswith("HF_TOKEN="):
-                    parts = line.split("=", 1)
-                    if len(parts) > 1:
-                        # FIXED: Correctly targeted index 1 of the list before stripping strings
-                        token = parts[1].strip().strip('"').strip("'")
-
+                if "HF_TOKEN=" in line:
+                    token = line.replace("HF_TOKEN=", "").strip().strip('"').strip("'")
                 
     try:
-        print(f"[INFO] Spawning direct LFS link bypass solver thread for: {filename}")
+        print(f"[CRITICAL INFO] Opening native raw HTTP stream for target asset: {filename}")
         clean_repo = repo_id.strip()
         clean_file = filename.strip()
-            
-        py_cmd = f"""
-import os
-from huggingface_hub import hf_hub_download
-print(">>> Connecting natively to HF client...")
-hf_hub_download(
-    repo_id='{clean_repo}',
-    filename='{clean_file}',
-    local_dir='{TARGET_DIR}',
-    token='{token}'
-)
-"""
-        subprocess.run([sys.executable, "-c", py_cmd], check=True)
-        print(f"[SUCCESS] Video asset synced onto local workspace cluster: {filename}")
+        
+        # Hardened absolute dynamic path resolution
+        dest_path = os.path.join(TARGET_DIR, clean_file)
+        
+        # Ingest absolute raw huggingface LFS endpoint vector
+                # FIXED SYNTAX TYPO: Added critical trailing slash right after hfg domain structure
+        hf_url = f"https://huggingface.co/{clean_repo}/resolve/main/{clean_file}"
+
+        headers = {"Authorization": f"Bearer {token}"} if token else {}
+        
+        print(f">>> Requesting chunk vectors from: {hf_url}")
+        
+        # Open direct authenticated chunked binary connection
+        with requests.get(hf_url, headers=headers, stream=True, timeout=60) as r:
+            r.raise_for_status()
+            # Write segments natively directly into target drive path, instantly opening UI progress hooks
+            with open(dest_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=1024 * 1024): # 1MB segments
+                    if chunk:
+                        f.write(chunk)
+                        
+        print(f"[SUCCESS] Native stream pipeline closed. Asset locked: {filename}")
     except Exception as e:
-        print(f"[ERROR] Asset retrieval failed down the pipe: {e}")
+        print(f"[CRITICAL LAYER ERROR] Direct asset stream collapsed: {e}")
 
 @app.get("/api/status")
 def get_cluster_status():

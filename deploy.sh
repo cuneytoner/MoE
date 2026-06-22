@@ -70,6 +70,13 @@ for NODE_IP in $REMOTE_NODES; do
     echo "    [SUCCESS] Worker node ${NODE_IP} synchronized successfully."
 done
 
+
+# AUTOMATED REPRODUCIBILITY HOOK: Automatically reclaim user ownership of container-generated root assets
+if [ -d "$HOME/MoE/models/checkpoints" ]; then
+    sudo chown -R $USER:$USER "$HOME/MoE/models/checkpoints/" 2>/dev/null || true
+fi
+
 echo "========================================================================"
 echo "[SUCCESS] Deployment cycle terminated. Clean runtimes established."
 echo "========================================================================"
+
