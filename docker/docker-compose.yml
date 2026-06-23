@@ -34,9 +34,10 @@ services:
       - "8188:8188"
     volumes:
       - ~/MoE/media_outputs:/workspace/output
-      # Absolute host paths mapped safely into both traditional checkpoints and modern diffusion paths
       - ~/MoE/models/checkpoints:/workspace/models/checkpoints
       - ~/MoE/models/checkpoints:/workspace/models/diffusion_models
+      # SYSTEMIC FIXED: Direct host node mapping to ensure plug-and-play extensions
+      - ~/MoE/custom_nodes:/workspace/custom_nodes
       - comfyui-data:/workspace
     deploy:
       resources:
