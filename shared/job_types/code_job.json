@@ -1,0 +1,8 @@
+{
+  "id": "uuid",
+  "type": "code_generation",
+  "prompt": "...",
+  "context": "...",
+  "model": "qwen2.5-coder",
+  "target": "pc1"
+}

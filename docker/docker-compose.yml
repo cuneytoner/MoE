@@ -129,6 +129,13 @@ services:
     networks:
       - moe-cluster-net
 
+  #6. Redis Cache Service (In-Memory Data Store for Orchestrator)
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+
 volumes:
   open-webui-data:
 

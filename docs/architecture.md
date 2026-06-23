@@ -1,10 +1,65 @@
-# System Architecture Specification
+# MoE Architecture v1
 
-## 1. Physical Node Topography
-- **PC-1 (Master Core Orchestrator)**: Pop!_OS | Ryzen 7 7700X3D | 32GB System RAM | RTX 5060Ti (16GB VRAM). Hosts primary high-reasoning heavy inference engines (Llama 3.3 70B, Flux.1, CogVideoX).
-- **PC-2 (Autonomous Worker Node)**: Ubuntu 24.04 LTS | Ryzen 3 3100 | 32GB System RAM | GTX 1650 (4GB VRAM). Handles autonomous background pipelines, asynchronous web scrapers, and local vector indexing.
+## PC1 (Execution Node)
 
-## 2. Network Topology
-- Isolated 1Gbit Ethernet physical cross-connect.
-- Master node resolves target tasks to workers via keyless SSH handshakes.
-- System communication parameters are entirely parsed from the root configuration profile (`.env`).
+Hardware:
+
+* RTX 5060 Ti 16GB
+* Ryzen 7 7700X3D
+* 32GB DDR5
+
+Responsibilities:
+
+* Qwen2.5-Coder
+* DeepSeek-Coder
+* CogVideo GGUF
+* ComfyUI
+* llama.cpp server
+
+Services:
+
+* llama-cpp-engine
+* media-inference-engine
+* redis-worker
+
+---
+
+## PC2 (Brain Node)
+
+Hardware:
+
+* GTX 1650 4GB
+* Ryzen 3 3100
+* 32GB DDR4
+
+Responsibilities:
+
+* Scheduler
+* Night Learning
+* Research Processing
+* Memory Building
+* Routing
+
+Services:
+
+* dashboard-backend
+* redis
+* memory-worker
+
+---
+
+## Communication
+
+Dashboard → Brain API → Redis Queue → Execution Workers
+
+---
+
+## Memory Pipeline
+
+Night Learning Queue → Research Worker → Chunk Processor → Vector Store → Knowledge Memory
+
+---
+
+## Coding Pipeline
+
+VSCode/Aider → Brain Router → Qwen Worker → Result
