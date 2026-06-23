@@ -107,18 +107,22 @@ def async_download_processor(repo_id: str, filename: str):
 def get_cluster_status():
     models = os.listdir(TARGET_DIR) if os.path.exists(TARGET_DIR) else []
     
-    # DYNAMIC PROGRESS INTERPOLATION: Uses the exact on-disk byte footprint
+    # DYNAMIC MULTI-MODEL PROGRESS INTERPOLATION: Scans the active file segment in the persistent tier
     progress = 0
-    # Verified exact byte length for CogVideoX_5b_I2V_GGUF_Q4_0.safetensors on HuggingFace
-    target_size = 3544307088 
     
     if os.path.exists(TARGET_DIR):
         for f in os.listdir(TARGET_DIR):
-            if "CogVideoX_5b" in f and not f.endswith(".incomplete"):
-                current_size = os.path.getsize(os.path.join(TARGET_DIR, f))
-                calculated = min(int((current_size / target_size) * 100), 100)
-                if calculated > progress:
-                    progress = calculated
+            current_path = os.path.join(TARGET_DIR, f)
+            if os.path.isfile(current_path):
+                current_size = os.path.getsize(current_path)
+                
+                # Dynamic matching database profiles
+                if "CogVideoX_5b" in f:
+                    progress = min(int((current_size / 3544307088) * 100), 100)
+                elif "t5xxl" in f:
+                    progress = min(int((current_size / 4920000000) * 100), 100)
+                elif "vae" in f and "cogvideo" in f:
+                    progress = min(int((current_size / 210000000) * 100), 100)
                     
     return {
         "status": "healthy", 
@@ -127,7 +131,6 @@ def get_cluster_status():
         "pc1_telemetry": get_local_telemetry(),
         "pc2_telemetry": get_remote_telemetry()
     }
-
 
 @app.post("/api/download")
 def trigger_model_download(payload: ModelDownloadRequest, background_tasks: BackgroundTasks):

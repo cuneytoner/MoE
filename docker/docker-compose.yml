@@ -24,21 +24,36 @@ services:
       - media-inference-engine
 
   # 2. Heavy Media Inference Engine (Localized Dockerfile Build)
+  # 2. ComfyUI Media Inference Engine (Autonomous Hot-Injection Deployment Matrix)
+  # 2. ComfyUI Media Inference Engine (Hardened Autonomous Video Layer Cores)
   media-inference-engine:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: docker-media-inference-engine
     container_name: comfyui-media-engine
     restart: always
     ports:
       - "8188:8188"
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    # DEVOPS CORE FIX: Enforces explicit compilation of diffusers, accelerate, and transformers before execution
+    command: >
+      sh -c "
+      mkdir -p /workspace/custom_nodes/ &&
+      if [ -d /host_nodes/ComfyUI-GGUF ]; then
+        cp -r /host_nodes/ComfyUI-GGUF /workspace/custom_nodes/;
+      fi &&
+      if [ -d /host_nodes/ComfyUI-CogVideoXWrapper ]; then
+        cp -r /host_nodes/ComfyUI-CogVideoXWrapper /workspace/custom_nodes/;
+      fi &&
+      pip install --no-cache-dir gguf diffusers accelerate transformers &&
+      python3 main.py --listen 0.0.0.0 --port 8188 --fp8_e4m3fn-text-enc --fp8_e4m3fn-unet --fp16-vae --use-pytorch-cross-attention --enable-dynamic-vram
+      "
     volumes:
       - ~/MoE/media_outputs:/workspace/output
       - ~/MoE/models/checkpoints:/workspace/models/checkpoints
       - ~/MoE/models/checkpoints:/workspace/models/diffusion_models
-      # SYSTEMIC FIXED: Direct host node mapping to ensure plug-and-play extensions
-      - ~/MoE/custom_nodes:/workspace/custom_nodes
-      - comfyui-data:/workspace
+      - ~/MoE/models/checkpoints:/workspace/models/unet
+      - ~/MoE/custom_nodes:/host_nodes:ro
+
     deploy:
       resources:
         reservations:
@@ -49,7 +64,6 @@ services:
     networks:
       - moe-cluster-net
 
-  # 3. Native Llama.cpp Engine - INSANE SPEED MOE CONFIGURATION (Based on Video Guide)
   # 3. Native Llama.cpp Engine (Optimized Dense 32B Memory Allocation)
   llama-cpp-engine:
     image: ghcr.io/ggml-org/llama.cpp:server-cuda
@@ -63,8 +77,8 @@ services:
       - CUDA_VISIBLE_DEVICES=0
     # Context balanced to 32k to safely house the 7GB compressed KV cache alongside 32B model layers
     command:
-      - "--model"
-      - "/models/qwen2.5-coder-32b-instruct-q4_k_m.gguf"
+      #- "--model"
+      #- "/models/qwen2.5-coder-32b-instruct-q4_k_m.gguf"
       - "--host"
       - "0.0.0.0"
       - "--port"
