@@ -8,8 +8,10 @@ export default function App() {
     pc1_telemetry: { cpu: 0, ram: 0, gpu: 0, vram: 0 },
     pc2_telemetry: { cpu: 0, ram: 0, gpu: 0, vram: 0 }
   });
-  const [downloadRepo, setDownloadRepo] = useState("Kijai/CogVideoX_GGUF");
-  const [downloadFile, setDownloadFile] = useState("CogVideoX_5b_I2V_GGUF_Q4_0.safetensors");
+  // Fixed state defaults to the absolute raw binary repository source on HuggingFace
+  const [downloadRepo, setDownloadRepo] = useState("comfyanonymous/flux_text_encoders");
+  const [downloadFile, setDownloadFile] = useState("t5xxl_fp8_e4m3fn.safetensors");
+
   const [contextSize, setContextSize] = useState(131072);
   const [gpuLayers, setGpuLayers] = useState(48);
 
