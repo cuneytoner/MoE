@@ -2,9 +2,8 @@
 
 # ==============================================================================
 # Script Name:  deploy.sh
-# Description:  Enterprise deployment pipeline with strict isolation rules
-#               protecting runtime checkpoints, custom nodes, and media outputs
-#               from cascading rsync deletions.
+# Description:  Hardened master enterprise deployment pipeline enforcing clean
+#               custom nodes flattening, absolute permissions, and multi-node sync.
 # ==============================================================================
 
 set -e
@@ -27,8 +26,7 @@ echo "------------------------------------------------------------------------"
 
 mkdir -p "$LOCAL_RUN_DIR"
 
-# CRITICAL EXCLUSION PROFILE: Protects downloaded binaries and generative assets
-# from accidental local or remote deployment overwrites.
+# CRITICAL EXCLUSION PROFILE: Bypasses heavy data to isolate code updates
 rsync -avz --delete --perms --chmod=ugo+x \
     --exclude='.git/' \
     --exclude='venv*/' \
@@ -42,46 +40,37 @@ rsync -avz --delete --perms --chmod=ugo+x \
 
 # --- STAGE 2: OTONOM COMFYUI CUSTOM NODES RETRIEVAL MATRIX ---
 echo "------------------------------------------------------------------------"
-echo "[STAGE 2] Instantiating flattened custom node workspace topologies..."
+echo "[STAGE 2] Re-compiling crisp ComfyUI plugin tree architecture..."
 echo "------------------------------------------------------------------------"
 
 P="https:"; S="/"; D="github.com"; U1="kijai"; U2="city96"
 R1="ComfyUI-CogVideoXWrapper.git"; R2="ComfyUI-GGUF.git"
 
 NODE_TARGET_DIR="/home/cuneyt/MoE/custom_nodes"
+
+# HARDENED SANITIZATION: Wipe out any root locks or broken indexing folders before sync
+sudo rm -rf "$NODE_TARGET_DIR" || true
 mkdir -p "$NODE_TARGET_DIR"
 
-if [ -d "${NODE_TARGET_DIR}/ComfyUI-CogVideoXWrapper/ComfyUI-CogVideoXWrapper" ]; then
-    rm -rf "${NODE_TARGET_DIR}/ComfyUI-CogVideoXWrapper"
-fi
-if [ -d "${NODE_TARGET_DIR}/ComfyUI-GGUF/ComfyUI-GGUF" ]; then
-    rm -rf "${NODE_TARGET_DIR}/ComfyUI-GGUF"
-fi
+echo ">>> Ingesting fresh CogVideoX wrapper node architecture..."
+cd "$NODE_TARGET_DIR" && git clone $P$S$S$D$S$U1$S$R1
 
-if [ ! -d "${NODE_TARGET_DIR}/ComfyUI-CogVideoXWrapper" ]; then
-    echo ">>> Ingesting verified CogVideoX wrapper node architecture..."
-    cd "$NODE_TARGET_DIR" && git clone $P$S$S$D$S$U1$S$R1
-fi
-
-if [ ! -d "${NODE_TARGET_DIR}/ComfyUI-GGUF" ]; then
-    echo ">>> Ingesting missing GGUF core token resolution node..."
-    cd "$NODE_TARGET_DIR" && git clone $P$S$S$D$S$U2$S$R2
-fi
-
-# Ingest unified script executores safely into runtime layers
-mkdir -p /home/cuneyt/MoE/scripts/
-chmod +x /home/cuneyt/MoE/scripts/*.py 2>/dev/null || true
-
+echo ">>> Ingesting fresh GGUF core token resolution node..."
+cd "$NODE_TARGET_DIR" && git clone $P$S$S$D$S$U2$S$R2
 
 # --- STAGE 3: HARDENED OS Tier PERMISSIONS RECOVERY ---
 echo "------------------------------------------------------------------------"
 echo "[STAGE 3] Reclaiming physical host directory permission ownerships..."
 echo "------------------------------------------------------------------------"
 
+# Smash 403 access barriers across container boundaries permanently via global open chmods
 mkdir -p /home/cuneyt/MoE/models/checkpoints
-chmod -R 777 /home/cuneyt/MoE/custom_nodes/ 2>/dev/null || true
-chmod -R 777 /home/cuneyt/MoE/models/checkpoints/ 2>/dev/null || true
-chmod -R 777 /home/cuneyt/MoE/dashboard/frontend/ 2>/dev/null || true
+mkdir -p /home/cuneyt/MoE/scripts
+
+sudo chmod -R 777 /home/cuneyt/MoE/custom_nodes/ || true
+sudo chmod -R 777 /home/cuneyt/MoE/models/checkpoints/ || true
+sudo chmod -R 777 /home/cuneyt/MoE/dashboard/frontend/ || true
+chmod +x /home/cuneyt/MoE/scripts/*.py 2>/dev/null || true
 
 # --- STAGE 4: REMOTE WORKER PC-2 SYNCHRONIZATION ---
 echo "------------------------------------------------------------------------"

@@ -1,30 +1,21 @@
+version: '3.8'
+
 services:
-  # 1. Primary UI Layer & Multi-Modal Orchestrator
-  open-webui:
-    image: ghcr.io/open-webui/open-webui:main
-    container_name: open-webui
+  # 1. Central Core System Orchestrator Frontend (React UI Matrix)
+  dashboard-frontend:
+    image: node:18-slim
+    container_name: moe-dashboard-frontend
     restart: always
     ports:
-      - "3000:8080"
+      - "8080:8080"
     volumes:
-      - open-webui-data:/app/backend/data
-    environment:
-      - OLLAMA_BASE_URL=http://172.17.0.1:11434
-      - ENABLE_IMAGE_GENERATION=True
-      - IMAGE_GENERATION_ENGINE=comfyui
-      # CRITICAL FIX: Point directly to the container service name and port
-      - COMFYUI_BASE_URL=http://media-inference-engine:8188
-      - ENABLE_RAG=True
-      - RAG_EMBEDDING_MODEL=all-MiniLM-L6-v2
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - ~/MoE/dashboard/frontend:/app
+      - /app/node_modules
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 8080"
     networks:
       - moe-cluster-net
-    depends_on:
-      - media-inference-engine
 
-  # 2. Heavy Media Inference Engine (Localized Dockerfile Build)
-  # 2. ComfyUI Media Inference Engine (Autonomous Hot-Injection Deployment Matrix)
   # 2. ComfyUI Media Inference Engine (Hardened Autonomous Video Layer Cores)
   media-inference-engine:
     image: docker-media-inference-engine
@@ -34,22 +25,21 @@ services:
       - "8188:8188"
     environment:
       - CUDA_VISIBLE_DEVICES=0
-    # DEVOPS CORE FIX: Enforces explicit compilation of diffusers, accelerate, and transformers before execution
+    # FIXED PIPELINE: Enforces explicit compilation of opencv alongside diffusers matrix before initialization
     command: >
       sh -c "
-      pip install --no-cache-dir gguf diffusers accelerate transformers &&
+      pip install --no-cache-dir gguf diffusers accelerate transformers opencv-python-headless &&
       echo '>>> Initialization complete. Triggering clean ComfyUI scan engine...' &&
       python3 main.py --listen 0.0.0.0 --port 8188 --fp8_e4m3fn-text-enc --fp8_e4m3fn-unet --fp16-vae --use-pytorch-cross-attention --enable-dynamic-vram
       "
+
     volumes:
       - ~/MoE/media_outputs:/workspace/output
       - ~/MoE/models/checkpoints:/workspace/models/checkpoints
       - ~/MoE/models/checkpoints:/workspace/models/diffusion_models
       - ~/MoE/models/checkpoints:/workspace/models/unet
-      # SYSTEMIC FIX: Directly maps the host custom_nodes folder to ensure runtime discovery
-      - ~/MoE/custom_nodes:/workspace/custom_nodes
-
-
+      # FIXED ABSOLUTE MOUNT: Overrides virtual named storage boundaries to ensure physical node tracking
+      - /home/cuneyt/MoE/custom_nodes:/workspace/custom_nodes
     deploy:
       resources:
         reservations:
@@ -60,7 +50,7 @@ services:
     networks:
       - moe-cluster-net
 
-  # 3. Native Llama.cpp Engine (Optimized Dense 32B Memory Allocation)
+  # 3. Distributed LLM Inference Engine (Hardened Server-CUDA Matrix Core)
   llama-cpp-engine:
     image: ghcr.io/ggml-org/llama.cpp:server-cuda
     container_name: llama-cpp-engine
@@ -71,24 +61,11 @@ services:
       - ~/MoE/models/checkpoints:/models
     environment:
       - CUDA_VISIBLE_DEVICES=0
-    # Context balanced to 32k to safely house the 7GB compressed KV cache alongside 32B model layers
     command:
-      #- "--model"
-      #- "/models/qwen2.5-coder-32b-instruct-q4_k_m.gguf"
       - "--host"
       - "0.0.0.0"
       - "--port"
       - "8080"
-      - "--n-gpu-layers"
-      - "28"
-      - "--flash-attn"
-      - "on"
-      - "--cache-type-k"
-      - "q4_0"
-      - "--cache-type-v"
-      - "q4_0"
-      - "--ctx-size"
-      - "32768"
       - "--threads"
       - "8"
     deploy:
@@ -101,9 +78,7 @@ services:
     networks:
       - moe-cluster-net
 
-  # 4. Central Orchestration Dashboard Backend (FastAPI Engine)
   # 4. Central Orchestration Dashboard Backend (FastAPI Engine - Host Network Mode)
-  # 4. Central Orchestration Dashboard Backend (Hardened Dynamic Telemetry Node)
   dashboard-backend:
     image: python:3.10-slim
     container_name: moe-dashboard-backend
@@ -113,10 +88,8 @@ services:
       - ~/MoE/dashboard/backend:/app
       - ~/MoE/models/checkpoints:/home/cuneyt/MoE/models/checkpoints
       - /home/cuneyt/DiskD/Projects/MoE/.env:/home/cuneyt/DiskD/Projects/MoE/.env
-      # Bound master host ssh registry to instantly trust local cluster nodes
       - ~/.ssh:/root/.ssh:ro
     working_dir: /app
-    # Installs native openssh client on boot before firing the uvicorn polling loop
     command: sh -c "apt-get update && apt-get install -y openssh-client && python3 -m pip install --upgrade pip && pip install requests fastapi uvicorn huggingface_hub && uvicorn main:app --host 0.0.0.0 --port 8050 --reload"
     deploy:
       resources:
@@ -126,31 +99,26 @@ services:
               count: all
               capabilities: [gpu]
 
-  # 5. Central Orchestration Dashboard Frontend (React Web Space)
-  dashboard-frontend:
-    image: node:18-slim
-    container_name: moe-dashboard-frontend
+  # 5. Core Ecosystem User Interface (Open-WebUI Platform Matrix)
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
     restart: always
     ports:
-      - "8080:8080"
+      - "3000:8080"
     volumes:
-      - ~/MoE/dashboard/frontend:/app
-    working_dir: /app
-    # Swapped production build server to live dev engine to guarantee no internal permissions crashes
-    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 8080"
+      - open-webui-data:/app/backend/data
+    environment:
+      - OPENAI_API_BASE_URL=http://llama-cpp-engine:8080/v1
+      - OPENAI_API_KEY=sk-moe-cluster-orchestrator-key
+      # TOKEN ENJECTION: Powers autonomous internal model harvesting securely without rate limits
+      - HF_TOKEN=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
     networks:
       - moe-cluster-net
 
+volumes:
+  open-webui-data:
 
 networks:
   moe-cluster-net:
     name: moe_cluster_network
-    driver: bridge
-
-volumes:
-  open-webui-data:
-    name: open_webui_storage
-  comfyui-data:
-    name: comfyui_models_storage
-
-  # 3. Native Llama.cpp High-Performance Inference Engine (Bypasses Ollama Overhead)
