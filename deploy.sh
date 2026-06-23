@@ -68,6 +68,11 @@ if [ ! -d "${NODE_TARGET_DIR}/ComfyUI-GGUF" ]; then
     cd "$NODE_TARGET_DIR" && git clone $P$S$S$D$S$U2$S$R2
 fi
 
+# Ingest unified script executores safely into runtime layers
+mkdir -p /home/cuneyt/MoE/scripts/
+chmod +x /home/cuneyt/MoE/scripts/*.py 2>/dev/null || true
+
+
 # --- STAGE 3: HARDENED OS Tier PERMISSIONS RECOVERY ---
 echo "------------------------------------------------------------------------"
 echo "[STAGE 3] Reclaiming physical host directory permission ownerships..."
