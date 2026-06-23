@@ -37,14 +37,8 @@ services:
     # DEVOPS CORE FIX: Enforces explicit compilation of diffusers, accelerate, and transformers before execution
     command: >
       sh -c "
-      mkdir -p /workspace/custom_nodes/ &&
-      if [ -d /host_nodes/ComfyUI-GGUF ]; then
-        cp -r /host_nodes/ComfyUI-GGUF /workspace/custom_nodes/;
-      fi &&
-      if [ -d /host_nodes/ComfyUI-CogVideoXWrapper ]; then
-        cp -r /host_nodes/ComfyUI-CogVideoXWrapper /workspace/custom_nodes/;
-      fi &&
       pip install --no-cache-dir gguf diffusers accelerate transformers &&
+      echo '>>> Initialization complete. Triggering clean ComfyUI scan engine...' &&
       python3 main.py --listen 0.0.0.0 --port 8188 --fp8_e4m3fn-text-enc --fp8_e4m3fn-unet --fp16-vae --use-pytorch-cross-attention --enable-dynamic-vram
       "
     volumes:
@@ -52,7 +46,9 @@ services:
       - ~/MoE/models/checkpoints:/workspace/models/checkpoints
       - ~/MoE/models/checkpoints:/workspace/models/diffusion_models
       - ~/MoE/models/checkpoints:/workspace/models/unet
-      - ~/MoE/custom_nodes:/host_nodes:ro
+      # SYSTEMIC FIX: Directly maps the host custom_nodes folder to ensure runtime discovery
+      - ~/MoE/custom_nodes:/workspace/custom_nodes
+
 
     deploy:
       resources:
