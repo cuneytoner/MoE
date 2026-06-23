@@ -1,2 +1,0 @@
-Aider / Vibe Coding ortamının Git entegrasyonu ile ayağa kaldırılması 
-PC-1 üzerinde medya modellerini (Flux.1 / Görsel üretimi) ve arayüzü yönetecek Docker/Open-WebUI katmanın kurulması 
