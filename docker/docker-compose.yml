@@ -50,7 +50,7 @@ services:
     networks:
       - moe-cluster-net
 
-  # 3. Distributed LLM Inference Engine (Hardened Server-CUDA Matrix Core)
+    # 3. Distributed LLM Inference Engine (Hardened Server-CUDA Matrix Core)
   llama-cpp-engine:
     image: ghcr.io/ggml-org/llama.cpp:server-cuda
     container_name: llama-cpp-engine
@@ -61,13 +61,19 @@ services:
       - ~/MoE/models/checkpoints:/models
     environment:
       - CUDA_VISIBLE_DEVICES=0
+    # FIXED: Restored automated explicit model pinning for Aider and Open-WebUI linkage
+    # FIXED: Removed the redundant entrypoint path to prevent invalid argument loops
     command:
       - "--host"
       - "0.0.0.0"
       - "--port"
       - "8080"
+      - "--model"
+      - "/models/qwen2.5-coder-32b-instruct-q4_k_m.gguf"
       - "--threads"
       - "8"
+      - "--ngl"
+      - "48"
     deploy:
       resources:
         reservations:
@@ -77,7 +83,6 @@ services:
               capabilities: [gpu]
     networks:
       - moe-cluster-net
-
   # 4. Central Orchestration Dashboard Backend (FastAPI Engine - Host Network Mode)
   dashboard-backend:
     image: python:3.10-slim
