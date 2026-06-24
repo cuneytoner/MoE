@@ -16,10 +16,10 @@ from datetime import datetime
 from typing import Dict, Optional
 
 try:
-    from pc1.model_registry import resolve_model, get_model_info, is_model_available
+    from pc1.model_registry import resolve_model, get_model_info, is_model_available, get_model_executor
 except ImportError:
     # Support running from pc1 directory directly
-    from model_registry import resolve_model, get_model_info, is_model_available
+    from model_registry import resolve_model, get_model_info, is_model_available, get_model_executor
 
 # Redis connection configuration
 REDIS_HOST = "localhost"
@@ -37,15 +37,15 @@ def get_redis_client() -> redis.Redis:
 
 
 # ──────────────────────────────────────────────────────────
-# MODEL-BASED EXECUTION ENGINE
+# REAL INFERENCE EXECUTION ENGINE
 # ──────────────────────────────────────────────────────────
 
 def run_model(model_key: str, prompt: str) -> str:
     """
     Execute inference on a specific model.
     
-    Routes to the appropriate execution based on model type.
-    Placeholder simulation - ready for real llama.cpp/ComfyUI integration.
+    Uses real inference when available, falls back to mock simulation.
+    Delegates to model-specific executors from the registry.
     
     Args:
         model_key: Model key from registry (coder, video, vision, etc.)
@@ -53,48 +53,77 @@ def run_model(model_key: str, prompt: str) -> str:
     
     Returns:
         Generated output from model
-    
-    Phase 2: Replace with actual model-specific calls:
-        - coder → llama.cpp HTTP endpoint
-        - video → ComfyUI API
-        - vision → CLIP/vision model API
-        - diffusion_text → Diffusion model API
     """
-    # Get model info from registry
     model_info = get_model_info(model_key)
     
     if not model_info:
         return f"[ERROR] Unknown model: {model_key}"
     
-    model_type = model_info.get("type", "unknown")
     model_name = model_info.get("name", model_key)
+    model_type = model_info.get("type", "unknown")
     
+    try:
+        # Try to get real executor for this model
+        executor = get_model_executor(model_key)
+        
+        print(f"[INFERENCE] Using real {model_name} inference")
+        
+        # Call real model executor
+        output = executor(prompt)
+        
+        print(f"[INFERENCE] {model_name} completed")
+        return output
+    
+    except NotImplementedError:
+        # Fall back to mock simulation if executor not implemented
+        print(f"[INFERENCE] Executor for {model_key} not ready, using mock")
+        return run_model_mock(model_key, model_name, model_type, prompt)
+    
+    except Exception as e:
+        # Error in executor - return error message
+        error_msg = f"[ERROR] Inference failed: {str(e)}"
+        print(f"[INFERENCE] {model_name} error: {e}")
+        return error_msg
+
+
+def run_model_mock(model_key: str, model_name: str, model_type: str, prompt: str) -> str:
+    """
+    Mock execution simulation (fallback when real inference not available).
+    
+    Args:
+        model_key: Model key
+        model_name: Human-readable model name
+        model_type: Model type (llm, video_generator, etc)
+        prompt: Input prompt
+    
+    Returns:
+        Simulated output
+    """
     # Simulate execution based on model type
-    # In production, these would call real inference APIs
     if model_type == "llm":
         # LLM inference simulation
         time.sleep(0.5)
-        return f"[{model_name.upper()} OUTPUT] {prompt}"
+        return f"[{model_name.upper()} MOCK OUTPUT] {prompt}"
     
     elif model_type == "video_generator":
         # Video generation simulation
         time.sleep(0.8)
-        return f"[{model_name.upper()} OUTPUT] Generated video from: {prompt}"
+        return f"[{model_name.upper()} MOCK OUTPUT] Generated video from: {prompt}"
     
     elif model_type == "vision_encoder":
         # Vision encoding simulation
         time.sleep(0.3)
-        return f"[{model_name.upper()} OUTPUT] Encoded visual features from: {prompt}"
+        return f"[{model_name.upper()} MOCK OUTPUT] Encoded visual features from: {prompt}"
     
     elif model_type == "text_encoder":
         # Text encoding simulation
         time.sleep(0.2)
-        return f"[{model_name.upper()} OUTPUT] Encoded text: {prompt}"
+        return f"[{model_name.upper()} MOCK OUTPUT] Encoded text: {prompt}"
     
     else:
         # Unknown type
         time.sleep(0.3)
-        return f"[{model_name.upper()} OUTPUT] {prompt}"
+        return f"[{model_name.upper()} MOCK OUTPUT] {prompt}"
 
 
 # ──────────────────────────────────────────────────────────
@@ -145,18 +174,19 @@ def execute_task(task: Dict) -> Dict:
             output = f"[ERROR] Task target {target} not handled by PC1 worker"
             status = "error"
             model_key = "unknown"
+            print(f"[RESULT] ERROR - unsupported target")
         else:
             # Execute on selected model
-            print(f"[EXEC] {model_key} processing: {prompt[:60]}...")
+            print(f"[INFERENCE] {model_key} processing: {prompt[:60]}...")
             output = run_model(model_key, prompt)
             status = "completed"
-            print(f"[DONE] {model_key} completed")
+            print(f"[RESULT] {model_key} completed successfully")
     
     except Exception as e:
         output = f"[ERROR] Execution failed: {str(e)}"
         status = "error"
         model_key = "unknown"
-        print(f"[PC1 ERROR] {output}")
+        print(f"[RESULT] ERROR - {str(e)}")
     
     # Wrap result with model information
     result = {

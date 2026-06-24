@@ -151,3 +151,49 @@ def get_task_results():
             "count": 0,
             "results": []
         }
+
+
+@app.get("/api/models")
+def get_active_models():
+    """
+    Get information about currently active inference models and backend.
+    
+    Returns:
+        {
+            "active_model": "qwen2.5-coder-32b-instruct-q4_k_m",
+            "backend": "llama.cpp",
+            "status": "ready",
+            "inference_endpoint": "http://localhost:8000/v1"
+        }
+    """
+    try:
+        # Try to get real inference status from PC1
+        try:
+            from pc1.inference import LlamaCppClient
+            client = LlamaCppClient()
+            status = client.get_status()
+            
+            return {
+                "active_model": "qwen2.5-coder-32b-instruct-q4_k_m",
+                "backend": "llama.cpp",
+                "status": status.get("status", "unknown"),
+                "inference_endpoint": "http://localhost:8000/v1",
+                "engine_status": status
+            }
+        except ImportError:
+            # Inference layer not available yet
+            return {
+                "active_model": "qwen2.5-coder-32b-instruct-q4_k_m",
+                "backend": "mock",
+                "status": "mock_mode",
+                "inference_endpoint": None,
+                "message": "Running in mock simulation mode (real inference not available)"
+            }
+    
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "active_model": None,
+            "backend": None
+        }

@@ -46,6 +46,41 @@ MODELS: Dict[str, Dict[str, str]] = {
     }
 }
 
+# Model executors: Maps model keys to their inference adapters
+# Lazily initialized to avoid circular imports
+MODEL_EXECUTORS: Dict[str, Optional[callable]] = {
+    "coder": None,           # Will be: generate_qwen
+    "video": None,           # TODO: implement video inference
+    "vision": None,          # TODO: implement vision inference
+    "diffusion_text": None   # TODO: implement diffusion inference
+}
+
+
+def get_model_executor(model_key: str) -> callable:
+    """
+    Get the inference function for a model.
+    
+    Lazily initializes executors to avoid circular imports.
+    
+    Args:
+        model_key: Model key (coder, video, vision, etc)
+    
+    Returns:
+        Callable executor function
+    
+    Raises:
+        NotImplementedError: If model executor not yet implemented
+    """
+    # Lazy initialization to avoid circular imports
+    if MODEL_EXECUTORS[model_key] is None:
+        if model_key == "coder":
+            from pc1.inference.qwen import generate_qwen
+            MODEL_EXECUTORS[model_key] = generate_qwen
+        else:
+            raise NotImplementedError(f"Executor for model '{model_key}' not yet implemented")
+    
+    return MODEL_EXECUTORS[model_key]
+
 
 def resolve_model(task_type: str) -> str:
     """
