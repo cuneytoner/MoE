@@ -1,0 +1,3 @@
+Ağ Yapılandırması:
+  Makine-1 (Pc-1) ve Makine-2 (Pc-2) arasında SSH bağlantısı kurulacak.
+  Makine-2 (Pc-2) IP Adresi: 192.168.50.2
