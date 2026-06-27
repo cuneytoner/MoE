@@ -1,4 +1,0 @@
-Proje Adı: MoE Tabanlı AI Grid
-Amacı: Birlikte MoE tabanlı bir AI Grid oluşturmak
-Sistem Mimarı: [Sizin Adınız]
-Proje Durumu: Planlama Aşaması

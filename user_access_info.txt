@@ -1,3 +1,0 @@
-Kullanıcı Erişim Bilgileri:
-  Kullanıcı: cuneyt
-  SSH Bağlantısı: Passwordless SSH yapılandırması mevcut

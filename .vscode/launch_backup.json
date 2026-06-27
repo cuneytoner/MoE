@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "MoE Core Runner",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/core/runtime/main.py",
+            "console": "integratedTerminal"
+        }
+    ]
+}

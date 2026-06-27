@@ -1,7 +1,0 @@
-Makine-1 (Pc-1):
-  CPU: Ryzen 7 7700X3D
-  RAM: 32GB
-  GPU: 16GB 5060Ti
-
-Makine-2 (Pc-2):
-  IP Adresi: 192.168.50.2
