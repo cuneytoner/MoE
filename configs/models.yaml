@@ -1,0 +1,17 @@
+models:
+
+  chat:
+    name: qwen14b
+    endpoint: http://localhost:8000/v1
+
+  coder:
+    name: qwen35b-coder
+    endpoint: http://localhost:8000/v1
+
+  architect:
+    name: qwen35b
+    endpoint: http://localhost:8000/v1
+
+  reviewer:
+    name: deepseek33b
+    endpoint: http://localhost:8000/v1    

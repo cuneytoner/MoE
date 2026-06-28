@@ -1,0 +1,11 @@
+paths:
+
+  deployment: ~/MoE
+
+  memory_db: ~/MoE/data/moe.db
+
+  logs: ~/MoE/logs
+
+  cache: ~/MoE/cache
+
+  vector_db: ~/MoE/vector

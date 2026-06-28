@@ -1,0 +1,23 @@
+routing_rules:
+  architect_keywords:
+    - architecture
+    - system
+    - design
+    - milestone
+    - plan
+
+  code_keywords:
+    - code
+    - implement
+    - function
+    - class
+    - bug
+    - fix
+
+  review_keywords:
+    - review
+    - analyze
+    - risk
+    - audit
+
+default_model: qwen14b
