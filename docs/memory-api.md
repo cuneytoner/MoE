@@ -1,8 +1,8 @@
 # Memory API
 
-Milestone 3 adds the first Memory API skeleton.
+Milestone 4 adds configuration and infrastructure client layers to the Memory API.
 
-The API is intentionally limited to health and placeholder memory contracts. It does not connect to PostgreSQL, Qdrant, embedding models, or runtime persistence yet.
+The API is still intentionally limited to health and placeholder memory contracts. It can read PostgreSQL and Qdrant connection settings, and `/health/deep` can attempt lightweight connectivity checks. It does not create database tables, create Qdrant collections, implement embeddings, or persist memories yet.
 
 ## Service
 
@@ -11,6 +11,22 @@ The API is intentionally limited to health and placeholder memory contracts. It 
 - Framework: FastAPI
 - ASGI server: Uvicorn
 - Models: Pydantic
+
+## Configuration
+
+Settings are read from environment variables:
+
+- `MEMORY_API_PORT`
+- `POSTGRES_HOST`
+- `POSTGRES_PORT`
+- `POSTGRES_DB`
+- `POSTGRES_USER`
+- `POSTGRES_PASSWORD`
+- `QDRANT_HOST`
+- `QDRANT_PORT`
+- `QDRANT_GRPC_PORT`
+
+Documented local defaults live in `.env.example`.
 
 ## Endpoints
 
@@ -21,9 +37,32 @@ Response:
 ```json
 {
   "service": "memory-api",
-  "status": "ok"
+  "status": "ok",
+  "dependencies": {
+    "postgres": "configured",
+    "qdrant": "configured"
+  }
 }
 ```
+
+This endpoint does not open PostgreSQL or Qdrant connections.
+
+### GET /health/deep
+
+Response when dependencies are reachable:
+
+```json
+{
+  "service": "memory-api",
+  "status": "ok",
+  "dependencies": {
+    "postgres": "ok",
+    "qdrant": "ok"
+  }
+}
+```
+
+If a dependency is unavailable, `status` is `degraded` and the dependency value includes the failure class.
 
 ### POST /memory/add
 

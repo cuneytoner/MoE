@@ -1,41 +1,47 @@
-from typing import Any
-
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
 
+from app.clients.postgres import PostgresClient
+from app.clients.qdrant import QdrantClient
+from app.config import get_settings
+from app.models.memory import (
+    DeepHealthResponse,
+    HealthResponse,
+    MemoryAddRequest,
+    MemoryAddResponse,
+    MemorySearchRequest,
+    MemorySearchResponse,
+)
 
 app = FastAPI(title="MoE Memory API", version="0.1.0")
 
 
-class HealthResponse(BaseModel):
-    service: str
-    status: str
-
-
-class MemoryAddRequest(BaseModel):
-    text: str
-    source: str | None = None
-    metadata: dict[str, Any] | None = None
-
-
-class MemoryAddResponse(BaseModel):
-    status: str
-    message: str
-
-
-class MemorySearchRequest(BaseModel):
-    query: str
-    limit: int = Field(default=5, ge=1)
-
-
-class MemorySearchResponse(BaseModel):
-    status: str
-    results: list[dict[str, Any]]
-
-
 @app.get("/health", response_model=HealthResponse)
 def health() -> HealthResponse:
-    return HealthResponse(service="memory-api", status="ok")
+    settings = get_settings()
+    return HealthResponse(
+        service=settings.service_name,
+        status="ok",
+        dependencies={
+            "postgres": "configured",
+            "qdrant": "configured",
+        },
+    )
+
+
+@app.get("/health/deep", response_model=DeepHealthResponse)
+async def deep_health() -> DeepHealthResponse:
+    settings = get_settings()
+    dependencies = {
+        "postgres": await PostgresClient(settings).check(),
+        "qdrant": await QdrantClient(settings).check(),
+    }
+    status = "ok" if all(value == "ok" for value in dependencies.values()) else "degraded"
+
+    return DeepHealthResponse(
+        service=settings.service_name,
+        status=status,
+        dependencies=dependencies,
+    )
 
 
 @app.post("/memory/add", response_model=MemoryAddResponse)

@@ -28,7 +28,7 @@ data/
 logs/
 tmp/
 .cache/
-models/
+/models/
 checkpoints/
 volumes/
 *.sqlite

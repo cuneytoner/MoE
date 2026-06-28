@@ -5,8 +5,19 @@ services:
       dockerfile: Dockerfile
     container_name: ${PROJECT_NAME:-moe}-memory-api
     restart: unless-stopped
+    environment:
+      SERVICE_NAME: memory-api
+      MEMORY_API_PORT: 8101
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-moe}
+      POSTGRES_USER: ${POSTGRES_USER:-moe}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-moe_dev_password}
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: 6333
+      QDRANT_GRPC_PORT: 6334
     ports:
-      - "8101:8101"
+      - "${MEMORY_API_PORT:-8101}:8101"
     networks:
       - moe-net
     healthcheck:
