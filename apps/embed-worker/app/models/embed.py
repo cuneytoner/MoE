@@ -6,7 +6,9 @@ class HealthResponse(BaseModel):
     status: str
     backend: str
     embedding_dim: int
-    model_path_configured: bool
+    model_path: str
+    model_path_exists: bool
+    model_loading: str
 
 
 class EmbedRequest(BaseModel):

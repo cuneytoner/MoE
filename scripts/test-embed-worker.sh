@@ -40,6 +40,8 @@ health_service="$(jq -r '.service' <<<"$health_response")"
 health_status="$(jq -r '.status' <<<"$health_response")"
 health_backend="$(jq -r '.backend' <<<"$health_response")"
 health_dim="$(jq -r '.embedding_dim' <<<"$health_response")"
+health_model_path_exists="$(jq -r 'has("model_path_exists")' <<<"$health_response")"
+health_model_loading="$(jq -r '.model_loading // empty' <<<"$health_response")"
 
 if [ "$health_service" = "embed-worker" ] && [ "$health_status" = "ok" ] && [ "$health_backend" = "fake" ]; then
   pass "Embed Worker /health"
@@ -51,6 +53,12 @@ if [ "$health_dim" = "384" ]; then
   pass "Embed Worker default embedding_dim"
 else
   fail "Expected embedding_dim 384, got: $health_dim"
+fi
+
+if [ "$health_model_path_exists" = "true" ] && [ "$health_model_loading" = "not_required" ]; then
+  pass "Embed Worker model health fields"
+else
+  fail "Embed Worker /health missing expected model fields: $health_response"
 fi
 
 if ! embed_response="$(post_json "/embed" '{"text":"hello world"}')"; then

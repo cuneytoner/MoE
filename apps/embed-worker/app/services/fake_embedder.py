@@ -2,6 +2,8 @@ import hashlib
 
 
 class FakeEmbedder:
+    backend = "fake"
+
     def __init__(self, embedding_dim: int) -> None:
         self._embedding_dim = embedding_dim
 

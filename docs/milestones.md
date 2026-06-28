@@ -94,7 +94,7 @@ Goals:
 
 ## Milestone 7: Memory API + Embed Worker Integration
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Connect Memory API to Embed Worker for embedding requests.
@@ -104,7 +104,7 @@ Goals:
 
 ## Milestone 8: Real Embedding Backend Preparation
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Prepare configuration for a real local embedding backend.
@@ -112,3 +112,14 @@ Goals:
 - Add safe model path validation.
 - Do not download models into the repository.
 - Keep fallback fake embedding support.
+
+## Milestone 9: Real BGE-M3 Embedding Runtime
+
+Status: PLANNED
+
+Goals:
+- Add real BGE-M3 runtime loading.
+- Keep model files outside the codebase.
+- Add safe startup and fallback behavior.
+- Avoid downloading models into the repository.
+- Validate embedding dimension compatibility.

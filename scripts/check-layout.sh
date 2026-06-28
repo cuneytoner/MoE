@@ -27,6 +27,8 @@ required_paths=(
   "apps/embed-worker/app/models/__init__.py"
   "apps/embed-worker/app/models/embed.py"
   "apps/embed-worker/app/services/__init__.py"
+  "apps/embed-worker/app/services/bge_m3_embedder.py"
+  "apps/embed-worker/app/services/embedder_factory.py"
   "apps/embed-worker/app/services/fake_embedder.py"
   "apps/embed-worker/requirements.txt"
   "apps/embed-worker/Dockerfile"

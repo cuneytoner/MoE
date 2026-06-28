@@ -193,6 +193,32 @@ Expected boundaries:
 - Do not download models.
 - Do not introduce heavy inference behavior until explicitly requested.
 
+## Milestone 8 Prompt Summary
+
+Prepare Embed Worker backend selection for real embeddings without loading BGE-M3 yet.
+
+Scope:
+
+- Support `EMBEDDING_BACKEND=fake` and `EMBEDDING_BACKEND=bge-m3`.
+- Keep fake backend fully functional.
+- Add a safe BGE-M3 placeholder.
+- Validate configured model path and report whether it exists in `/health`.
+- Return HTTP 501 for `/embed` with `bge-m3`.
+- Do not add heavy ML dependencies.
+- Do not download, copy, or load model files.
+
+## Milestone 9 Next Prompt Placeholder
+
+Implement real BGE-M3 embedding runtime.
+
+Expected boundaries:
+
+- Load the existing local model from `/home/cuneyt/MoE_Models_Backup/bge-m3`.
+- Keep model files outside the codebase.
+- Add explicit fallback behavior if loading fails.
+- Do not download models into the repository.
+- Validate vector dimension before integrating with Memory API writes.
+
 ## Safe Codex Task Boundary
 
 Codex should work in small tasks.
