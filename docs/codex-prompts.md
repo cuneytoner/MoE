@@ -117,6 +117,31 @@ Rules:
 - Add minimal tests if appropriate.
 - Keep runtime state out of codebase.
 
+## Milestone 5.1 Prompt Summary
+
+Automate the current manual validation flow without creating runtime data inside the source repository.
+
+Scope:
+
+- Add `scripts/test-memory-api.sh`.
+- Add `scripts/test-stack.sh`.
+- Add `make test-memory`, `make test-stack`, and `make test`.
+- Update milestone documentation to reflect completed milestones through Milestone 5.
+- Mark Milestone 5.1 as in progress and Milestone 6 as planned.
+- Keep embeddings, semantic search, Gateway API, and Dashboard out of scope.
+
+## Milestone 6 Next Prompt Placeholder
+
+Create the first embed-worker service skeleton.
+
+Expected boundaries:
+
+- Add a small service with `/health`.
+- Add a local embedding interface placeholder.
+- Do not download models.
+- Do not implement heavy embedding inference.
+- Prepare future BGE-M3 or sentence-transformers integration.
+
 ## Safe Codex Task Boundary
 
 Codex should work in small tasks.

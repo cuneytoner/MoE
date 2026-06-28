@@ -5,94 +5,89 @@
 Status: DONE
 
 Goals:
-- Move old project into legacy backup.
-- Create clean source-only repository under `~/DiskD/Projects/MoE/codebase`.
-- Push clean `main` branch to GitHub.
-- Keep runtime separate from source code.
+- Create clean source-only codebase.
+- Reset GitHub `main` to the clean codebase.
+- Keep runtime data separate from source code.
 
 ## Milestone 1: Monorepo Skeleton
+
+Status: DONE
+
+Goals:
+- Create monorepo structure.
+- Define apps, packages, infra, deploy, docs, and scripts areas.
+- Add source/runtime separation rules.
+- Add layout validation.
+
+## Milestone 2: Docker Foundation
+
+Status: DONE
+
+Goals:
+- Add Docker Compose foundation.
+- Add PostgreSQL service.
+- Add Qdrant service.
+- Use runtime bind mounts under `~/MoE/runtime`.
+- Add Docker health and runtime preparation commands.
+
+## Milestone 3: Memory API Skeleton
+
+Status: DONE
+
+Goals:
+- Add FastAPI Memory API service.
+- Add `/health`.
+- Add `/memory/add`.
+- Add `/memory/search`.
+- Keep behavior placeholder-only.
+
+## Milestone 3.1: Qdrant Healthcheck Fix
+
+Status: DONE
+
+Goals:
+- Remove fragile Qdrant in-container healthcheck.
+- Check Qdrant externally with `make health`.
+- Avoid false unhealthy status when the Qdrant image lacks probe tools.
+
+## Milestone 4: Memory API Infrastructure Clients
+
+Status: DONE
+
+Goals:
+- Add environment-driven Memory API config.
+- Add PostgreSQL client placeholder.
+- Add Qdrant client placeholder.
+- Add `/health/deep`.
+
+## Milestone 5: Memory Storage Foundation
+
+Status: DONE
+
+Goals:
+- Add PostgreSQL `memories` table.
+- Store raw memory text, source, and metadata in PostgreSQL.
+- Add Qdrant collection configuration placeholder.
+- Keep embeddings and vector search intentionally unimplemented.
+
+## Milestone 5.1: Test Automation and Documentation Sync
 
 Status: IN PROGRESS
 
 Goals:
-- Create clean monorepo structure.
-- Define apps, packages, infra, deploy, docs, and scripts areas.
-- Add source/runtime separation rules.
-- Add basic layout validation script.
+- Automate stack tests.
+- Automate Memory API tests.
+- Update milestone docs.
+- Prepare safe checkpoint before embeddings.
 
-## Milestone 2: Docker Foundation
+## Milestone 6: Embedding Worker Skeleton
 
-Goals:
-- Add Docker Compose foundation.
-- Add Postgres service.
-- Add Qdrant service.
-- Add shared network and volume rules.
-- Ensure runtime data lives under `~/MoE`, not inside codebase.
-
-## Milestone 3: Memory API
+Status: PLANNED
 
 Goals:
-- Build FastAPI memory service.
-- Add `/health`.
-- Add `/memory/add`.
-- Add `/memory/search`.
-- Store metadata in Postgres.
-- Store vectors in Qdrant.
-
-## Milestone 4: Embed Worker
-
-Goals:
-- Add embedding worker service.
-- Support local embedding model.
-- Prepare BGE-M3 or sentence-transformers backend.
-- Add queue-ready structure.
-
-## Milestone 5: Gateway API
-
-Goals:
-- Build central FastAPI gateway.
-- Add `/health`.
-- Add `/models`.
-- Add `/route`.
-- Add `/chat`.
-- Prepare OpenAI-compatible routing later.
-
-## Milestone 6: MoE Router v1
-
-Goals:
-- Add rule-based expert routing.
-- Route coding, reasoning, memory, summary, and research tasks.
-- Keep router config-driven.
-
-## Milestone 7: Dashboard
-
-Goals:
-- Add management and monitoring dashboard.
-- Show PC1 and PC2 status.
-- Show Docker services.
-- Show GPU, CPU, RAM, disk status.
-- Show model endpoints and memory service status.
-
-## Milestone 8: Deploy System
-
-Goals:
-- Deploy from PC1 codebase to PC1 runtime `~/MoE`.
-- Deploy from PC1 codebase to PC2 runtime `~/MoE`.
-- Use passwordless SSH with user `cuneyt`.
-- Keep codebase clean.
-
-## Milestone 9: Continue / Codex Integration
-
-Goals:
-- Add prompts and workflows for Codex.
-- Add Continue config examples.
-- Add local model endpoint documentation.
-- Add safe task boundaries for agents.
-
-## Milestone 10: Tests and Health Checks
-
-Goals:
-- Add unit tests.
-- Add integration tests.
-- Add service health checks.
-- Add `make test` and `make health`.
+- Create embed-worker service skeleton.
+- Add `/health` endpoint.
+- Add local embedding interface placeholder.
+- Do not download models yet.
+- Do not implement heavy embedding inference yet.
+- Prepare future BGE-M3 or sentence-transformers integration.

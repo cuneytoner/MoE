@@ -47,6 +47,8 @@ required_paths=(
   "docs/memory-api.md"
   "scripts/runtime-prepare.sh"
   "scripts/health.sh"
+  "scripts/test-memory-api.sh"
+  "scripts/test-stack.sh"
 )
 
 for path in "${required_paths[@]}"; do
