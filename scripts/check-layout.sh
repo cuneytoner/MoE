@@ -12,8 +12,11 @@ required_paths=(
   "packages/schemas"
   "packages/clients"
   "infra/docker"
+  "infra/docker/docker-compose.yml"
   "infra/postgres"
+  "infra/postgres/init/01-init.sql"
   "infra/qdrant"
+  "infra/qdrant/README.md"
   "infra/scripts"
   "deploy/pc1"
   "deploy/pc2"
@@ -27,6 +30,9 @@ required_paths=(
   "docs/runtime-rules.md"
   "docs/deployment.md"
   "docs/codex-prompts.md"
+  "docs/docker-foundation.md"
+  "scripts/runtime-prepare.sh"
+  "scripts/health.sh"
 )
 
 for path in "${required_paths[@]}"; do
