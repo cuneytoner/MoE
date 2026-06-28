@@ -6,6 +6,11 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 required_paths=(
   "apps/gateway-api"
   "apps/memory-api"
+  "apps/memory-api/app/__init__.py"
+  "apps/memory-api/app/main.py"
+  "apps/memory-api/requirements.txt"
+  "apps/memory-api/Dockerfile"
+  "apps/memory-api/README.md"
   "apps/embed-worker"
   "apps/dashboard"
   "packages/shared"
@@ -31,6 +36,7 @@ required_paths=(
   "docs/deployment.md"
   "docs/codex-prompts.md"
   "docs/docker-foundation.md"
+  "docs/memory-api.md"
   "scripts/runtime-prepare.sh"
   "scripts/health.sh"
 )
@@ -45,6 +51,7 @@ done
 for forbidden in \
   "venv" \
   ".venv" \
+  "__pycache__" \
   "node_modules" \
   "logs" \
   "data" \
@@ -58,5 +65,14 @@ do
     exit 1
   fi
 done
+
+while IFS= read -r forbidden_path; do
+  if [ -n "$forbidden_path" ]; then
+    echo "Forbidden generated artifact in codebase: ${forbidden_path#$ROOT/}"
+    exit 1
+  fi
+done < <(find "$ROOT" \
+  \( -path "$ROOT/.git" -o -path "$ROOT/.git/*" \) -prune \
+  -o \( -name "__pycache__" -o -name "*.pyc" \) -print)
 
 echo "Layout OK"

@@ -1,4 +1,21 @@
 services:
+  memory-api:
+    build:
+      context: ../../apps/memory-api
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME:-moe}-memory-api
+    restart: unless-stopped
+    ports:
+      - "8101:8101"
+    networks:
+      - moe-net
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8101/health', timeout=2)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   postgres:
     image: postgres:16
     container_name: ${PROJECT_NAME:-moe}-postgres

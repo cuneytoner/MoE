@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout status tree runtime-prepare docker-up docker-down docker-ps docker-logs health
+.PHONY: help check-layout status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -19,6 +19,8 @@ help:
 > @echo "  make docker-ps      Show Docker services"
 > @echo "  make docker-logs    Tail Docker service logs"
 > @echo "  make health         Check Docker service health"
+> @echo "  make memory-dev     Run Memory API locally on port 8101"
+> @echo "  make memory-health  Check Memory API /health"
 
 check-layout:
 > @./scripts/check-layout.sh
@@ -46,3 +48,9 @@ docker-logs:
 
 health:
 > @./scripts/health.sh
+
+memory-dev:
+> @cd apps/memory-api && uvicorn app.main:app --host 0.0.0.0 --port 8101
+
+memory-health:
+> @curl -fsS http://127.0.0.1:8101/health
