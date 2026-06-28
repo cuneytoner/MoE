@@ -142,6 +142,31 @@ Expected boundaries:
 - Do not implement heavy embedding inference.
 - Prepare future BGE-M3 or sentence-transformers integration.
 
+## Milestone 6 Prompt Summary
+
+Create the Embed Worker skeleton with FastAPI, Uvicorn, Pydantic, and pydantic-settings.
+
+Scope:
+
+- Add `/health`.
+- Add `/embed`.
+- Use deterministic fake embeddings only.
+- Document `EMBEDDING_MODEL_PATH=/home/cuneyt/MoE_Models_Backup/bge-m3`.
+- Do not copy, mount, download, or load model files.
+- Add Docker Compose service on port `8102`.
+- Add `scripts/test-embed-worker.sh` and include it in stack tests.
+
+## Milestone 7 Next Prompt Placeholder
+
+Integrate Memory API with Embed Worker.
+
+Expected boundaries:
+
+- Add an Embed Worker client to Memory API.
+- Request embeddings from Embed Worker when adding memory.
+- Keep Qdrant writes small and explicit.
+- Do not implement full semantic search until the next milestone.
+
 ## Safe Codex Task Boundary
 
 Codex should work in small tasks.

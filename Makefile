@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health test-memory test-stack test
+.PHONY: help check-layout status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health test-embed test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -21,6 +21,7 @@ help:
 > @echo "  make health         Check Docker service health"
 > @echo "  make memory-dev     Run Memory API locally on port 8101"
 > @echo "  make memory-health  Check Memory API /health"
+> @echo "  make test-embed     Run Embed Worker contract tests"
 > @echo "  make test-memory    Run Memory API contract tests"
 > @echo "  make test-stack     Run stack smoke tests"
 > @echo "  make test           Run layout and stack tests"
@@ -60,6 +61,9 @@ memory-health:
 
 test-memory:
 > @./scripts/test-memory-api.sh
+
+test-embed:
+> @./scripts/test-embed-worker.sh
 
 test-stack:
 > @./scripts/test-stack.sh

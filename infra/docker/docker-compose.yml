@@ -1,4 +1,28 @@
 services:
+  embed-worker:
+    build:
+      context: ../../apps/embed-worker
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME:-moe}-embed-worker
+    restart: unless-stopped
+    environment:
+      SERVICE_NAME: embed-worker
+      EMBED_WORKER_HOST: ${EMBED_WORKER_HOST:-0.0.0.0}
+      EMBED_WORKER_PORT: 8102
+      EMBEDDING_BACKEND: ${EMBEDDING_BACKEND:-fake}
+      EMBEDDING_DIM: ${EMBEDDING_DIM:-384}
+      EMBEDDING_MODEL_PATH: ${EMBEDDING_MODEL_PATH:-/home/cuneyt/MoE_Models_Backup/bge-m3}
+    ports:
+      - "${EMBED_WORKER_PORT:-8102}:8102"
+    networks:
+      - moe-net
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8102/health', timeout=2)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   memory-api:
     build:
       context: ../../apps/memory-api

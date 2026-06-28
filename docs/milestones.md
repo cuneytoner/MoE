@@ -72,7 +72,7 @@ Goals:
 
 ## Milestone 5.1: Test Automation and Documentation Sync
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Automate stack tests.
@@ -82,7 +82,7 @@ Goals:
 
 ## Milestone 6: Embedding Worker Skeleton
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Create embed-worker service skeleton.
@@ -91,3 +91,13 @@ Goals:
 - Do not download models yet.
 - Do not implement heavy embedding inference yet.
 - Prepare future BGE-M3 or sentence-transformers integration.
+
+## Milestone 7: Memory API + Embed Worker Integration
+
+Status: PLANNED
+
+Goals:
+- Connect Memory API to Embed Worker for embedding requests.
+- Keep embedding generation behind a small client interface.
+- Store generated vector ids alongside memory rows.
+- Prepare Qdrant vector insertion without implementing semantic search yet.
