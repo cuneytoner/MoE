@@ -24,6 +24,7 @@ class MemoryAddRequest(BaseModel):
 class MemoryAddResponse(BaseModel):
     status: str
     id: str
+    vector_id: str
     message: str
 
 

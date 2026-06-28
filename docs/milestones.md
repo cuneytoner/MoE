@@ -82,7 +82,7 @@ Goals:
 
 ## Milestone 6: Embedding Worker Skeleton
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Create embed-worker service skeleton.
@@ -94,10 +94,21 @@ Goals:
 
 ## Milestone 7: Memory API + Embed Worker Integration
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Connect Memory API to Embed Worker for embedding requests.
 - Keep embedding generation behind a small client interface.
 - Store generated vector ids alongside memory rows.
 - Prepare Qdrant vector insertion without implementing semantic search yet.
+
+## Milestone 8: Real Embedding Backend Preparation
+
+Status: PLANNED
+
+Goals:
+- Prepare configuration for a real local embedding backend.
+- Keep model files outside the codebase.
+- Add safe model path validation.
+- Do not download models into the repository.
+- Keep fallback fake embedding support.

@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 
+from app.clients.embed_worker import EmbedWorkerClient
 from app.clients.postgres import PostgresClient
 from app.clients.qdrant import QdrantClient
 from app.config import get_settings
@@ -25,6 +26,7 @@ def health() -> HealthResponse:
         dependencies={
             "postgres": "configured",
             "qdrant": "configured",
+            "embed_worker": "configured",
         },
     )
 
@@ -35,6 +37,7 @@ async def deep_health() -> DeepHealthResponse:
     dependencies = {
         "postgres": await PostgresClient(settings).check(),
         "qdrant": await QdrantClient(settings).check(),
+        "embed_worker": await EmbedWorkerClient(settings).check(),
     }
     status = "ok" if all(value == "ok" for value in dependencies.values()) else "degraded"
 
@@ -48,20 +51,26 @@ async def deep_health() -> DeepHealthResponse:
 @app.post("/memory/add", response_model=MemoryAddResponse)
 async def add_memory(request: MemoryAddRequest) -> MemoryAddResponse:
     settings = get_settings()
-    store = MemoryStore(PostgresClient(settings))
+    store = MemoryStore(
+        embed_worker=EmbedWorkerClient(settings),
+        qdrant=QdrantClient(settings),
+        postgres=PostgresClient(settings),
+        embedding_dim=settings.embedding_dim,
+    )
 
     try:
-        memory_id = await store.add(request)
+        memory_id, vector_id = await store.add(request)
     except Exception as exc:
         raise HTTPException(
             status_code=503,
-            detail=f"postgres unavailable: {exc.__class__.__name__}",
+            detail=f"memory storage unavailable: {exc.__class__.__name__}",
         ) from exc
 
     return MemoryAddResponse(
         status="created",
         id=memory_id,
-        message="memory stored without embedding",
+        vector_id=vector_id,
+        message="memory stored with embedding",
     )
 
 

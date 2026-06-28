@@ -27,9 +27,11 @@ class PostgresClient:
 
     async def insert_memory(
         self,
+        memory_id: str,
         text: str,
         source: str | None,
         metadata: dict[str, Any],
+        vector_id: str | None,
     ) -> str:
         connection = await asyncpg.connect(
             dsn=self._settings.postgres_dsn,
@@ -38,13 +40,15 @@ class PostgresClient:
         try:
             memory_id = await connection.fetchval(
                 """
-                INSERT INTO memories (text, source, metadata)
-                VALUES ($1, $2, $3::jsonb)
+                INSERT INTO memories (id, text, source, metadata, vector_id)
+                VALUES ($1::uuid, $2, $3, $4::jsonb, $5)
                 RETURNING id::text
                 """,
+                memory_id,
                 text,
                 source,
                 json.dumps(metadata),
+                vector_id,
             )
         finally:
             await connection.close()

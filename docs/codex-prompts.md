@@ -167,6 +167,32 @@ Expected boundaries:
 - Keep Qdrant writes small and explicit.
 - Do not implement full semantic search until the next milestone.
 
+## Milestone 7 Prompt Summary
+
+Connect Memory API to the fake Embed Worker backend and Qdrant.
+
+Scope:
+
+- Add an Embed Worker client to Memory API.
+- Call `/embed` during `POST /memory/add`.
+- Ensure the Qdrant collection exists.
+- Upsert fake vectors into Qdrant.
+- Store `vector_id` in PostgreSQL.
+- Keep `/memory/search` as a safe placeholder.
+- Do not load BGE-M3 or implement real semantic ranking.
+
+## Milestone 8 Next Prompt Placeholder
+
+Prepare the real embedding backend.
+
+Expected boundaries:
+
+- Keep model files outside the codebase.
+- Validate configured model paths.
+- Preserve the fake backend as fallback.
+- Do not download models.
+- Do not introduce heavy inference behavior until explicitly requested.
+
 ## Safe Codex Task Boundary
 
 Codex should work in small tasks.

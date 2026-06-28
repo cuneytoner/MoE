@@ -1,8 +1,8 @@
 # Memory API
 
-Milestone 5 adds the first storage foundation for the Memory API.
+Milestone 7 integrates the Memory API with the Embed Worker and Qdrant.
 
-The API can persist raw memories to PostgreSQL. Qdrant configuration and reachability checks are present, but embeddings, vector inserts, vector search, and collection creation are not implemented yet.
+The API now requests deterministic fake embeddings from the Embed Worker, stores vectors in Qdrant, and stores text, source, metadata, and `vector_id` in PostgreSQL. Real model inference and semantic search ranking are not implemented yet.
 
 ## Service
 
@@ -27,6 +27,7 @@ Settings are read from environment variables:
 - `QDRANT_GRPC_PORT`
 - `QDRANT_COLLECTION`
 - `EMBEDDING_DIM`
+- `EMBED_WORKER_URL`
 
 Documented local defaults live in `.env.example`.
 
@@ -42,7 +43,8 @@ Response:
   "status": "ok",
   "dependencies": {
     "postgres": "configured",
-    "qdrant": "configured"
+    "qdrant": "configured",
+    "embed_worker": "configured"
   }
 }
 ```
@@ -59,7 +61,8 @@ Response when dependencies are reachable:
   "status": "ok",
   "dependencies": {
     "postgres": "ok",
-    "qdrant": "ok"
+    "qdrant": "ok",
+    "embed_worker": "ok"
   }
 }
 ```
@@ -86,11 +89,12 @@ Response:
 {
   "status": "created",
   "id": "5b924f77-2c2f-45ed-a0df-9dfbfefae3f4",
-  "message": "memory stored without embedding"
+  "vector_id": "07a6d39f-68f2-4ea4-85fb-8e8f6b45b6bd",
+  "message": "memory stored with embedding"
 }
 ```
 
-This endpoint inserts `text`, `source`, and `metadata` into PostgreSQL. It does not generate an embedding and does not insert a vector into Qdrant.
+This endpoint calls the Embed Worker, ensures the Qdrant collection exists, inserts the vector into Qdrant, and inserts `text`, `source`, `metadata`, and `vector_id` into PostgreSQL.
 
 ### POST /memory/search
 
@@ -112,7 +116,7 @@ Temporary response:
 }
 ```
 
-Semantic search is not implemented yet.
+Semantic search is not implemented yet. The endpoint keeps the stable placeholder response.
 
 ## Storage
 
@@ -126,12 +130,20 @@ PostgreSQL stores raw memory rows in the `memories` table:
 - `created_at`
 - `updated_at`
 
+Qdrant stores fake embedding vectors with payload:
+
+- `memory_id`
+- `text`
+- `source`
+- `metadata`
+- `created_at`
+
 Qdrant defaults:
 
 - Collection: `moe_memories`
-- Embedding dimension placeholder: `384`
+- Embedding dimension: `384`
 
-The Qdrant client can check reachability and exposes a placeholder `ensure_collection` function for future milestones.
+The Qdrant client checks reachability, creates the collection when needed, and upserts vectors from the fake Embed Worker backend.
 
 ## Local Run
 

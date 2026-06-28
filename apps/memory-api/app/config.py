@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     qdrant_grpc_port: int = Field(default=6334, alias="QDRANT_GRPC_PORT")
     qdrant_collection: str = Field(default="moe_memories", alias="QDRANT_COLLECTION")
     embedding_dim: int = Field(default=384, alias="EMBEDDING_DIM")
+    embed_worker_url: str = Field(
+        default="http://localhost:8102",
+        alias="EMBED_WORKER_URL",
+    )
 
     @property
     def postgres_dsn(self) -> str:

@@ -54,6 +54,8 @@ if ! deep_response="$(get_json "/health/deep")"; then
   fail "Memory API /health/deep request failed"
 fi
 deep_status="$(jq -r '.status' <<<"$deep_response")"
+deep_qdrant="$(jq -r '.dependencies.qdrant // empty' <<<"$deep_response")"
+deep_embed_worker="$(jq -r '.dependencies.embed_worker // empty' <<<"$deep_response")"
 
 case "$deep_status" in
   ok|degraded)
@@ -64,13 +66,20 @@ case "$deep_status" in
     ;;
 esac
 
+if [ -n "$deep_qdrant" ] && [ -n "$deep_embed_worker" ]; then
+  pass "Memory API /health/deep dependencies"
+else
+  fail "Memory API /health/deep missing dependency details: $deep_response"
+fi
+
 if ! add_response="$(post_json "/memory/add" '{"text":"automated memory test","source":"test-memory-api","metadata":{"test":true}}')"; then
   fail "Memory API /memory/add request failed"
 fi
 add_status="$(jq -r '.status' <<<"$add_response")"
 add_id="$(jq -r '.id // empty' <<<"$add_response")"
+add_vector_id="$(jq -r '.vector_id // empty' <<<"$add_response")"
 
-if [ "$add_status" = "created" ] && [ -n "$add_id" ]; then
+if [ "$add_status" = "created" ] && [ -n "$add_id" ] && [ -n "$add_vector_id" ]; then
   pass "Memory API /memory/add"
 else
   fail "Memory API /memory/add returned unexpected response: $add_response"

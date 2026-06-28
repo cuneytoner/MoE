@@ -4,6 +4,8 @@ Milestone 6 adds the Embed Worker service skeleton.
 
 The worker exposes a deterministic fake embedding backend. It prepares the API shape and configuration for future local model integration, but it does not download models, load BGE-M3, run heavy inference, or copy model files into the codebase.
 
+Milestone 7 connects the Memory API to this fake backend. The backend remains fake and deterministic.
+
 ## Service
 
 - Name: `embed-worker`

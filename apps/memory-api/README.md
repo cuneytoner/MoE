@@ -1,8 +1,8 @@
 # Memory API
 
-FastAPI skeleton for the MoE Memory API.
+FastAPI service for the MoE Memory API.
 
-This milestone exposes health, dependency configuration, lightweight deep health checks, and PostgreSQL storage for raw memory text. It does not create Qdrant collections, implement embeddings, insert vectors, or perform semantic search yet.
+This milestone connects Memory API to the fake Embed Worker backend and Qdrant. `POST /memory/add` stores fake embedding vectors in Qdrant and stores text, source, metadata, and `vector_id` in PostgreSQL. Real model inference and semantic search are not implemented yet.
 
 ## Local Development
 
@@ -26,7 +26,8 @@ Expected response:
   "status": "ok",
   "dependencies": {
     "postgres": "configured",
-    "qdrant": "configured"
+    "qdrant": "configured",
+    "embed_worker": "configured"
   }
 }
 ```
@@ -35,10 +36,10 @@ Expected response:
 
 `GET /health/deep`
 
-This endpoint attempts lightweight PostgreSQL and Qdrant connectivity checks. It reports `degraded` if a dependency is unavailable.
+This endpoint attempts lightweight PostgreSQL, Qdrant, and Embed Worker connectivity checks. It reports `degraded` if a dependency is unavailable.
 
 ## Add Memory
 
 `POST /memory/add`
 
-Stores `text`, `source`, and `metadata` in PostgreSQL and returns the created memory id. No embedding or Qdrant vector is created yet.
+Calls Embed Worker `/embed`, stores the vector in Qdrant, stores the memory row in PostgreSQL, and returns the created memory id plus `vector_id`.

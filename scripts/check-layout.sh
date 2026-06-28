@@ -10,6 +10,7 @@ required_paths=(
   "apps/memory-api/app/main.py"
   "apps/memory-api/app/config.py"
   "apps/memory-api/app/clients/__init__.py"
+  "apps/memory-api/app/clients/embed_worker.py"
   "apps/memory-api/app/clients/postgres.py"
   "apps/memory-api/app/clients/qdrant.py"
   "apps/memory-api/app/models/__init__.py"
