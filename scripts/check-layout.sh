@@ -14,6 +14,8 @@ required_paths=(
   "apps/memory-api/app/clients/qdrant.py"
   "apps/memory-api/app/models/__init__.py"
   "apps/memory-api/app/models/memory.py"
+  "apps/memory-api/app/services/__init__.py"
+  "apps/memory-api/app/services/memory_store.py"
   "apps/memory-api/requirements.txt"
   "apps/memory-api/Dockerfile"
   "apps/memory-api/README.md"

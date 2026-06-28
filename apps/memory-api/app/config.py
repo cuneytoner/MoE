@@ -22,6 +22,8 @@ class Settings(BaseSettings):
     qdrant_host: str = Field(default="127.0.0.1", alias="QDRANT_HOST")
     qdrant_port: int = Field(default=6333, alias="QDRANT_PORT")
     qdrant_grpc_port: int = Field(default=6334, alias="QDRANT_GRPC_PORT")
+    qdrant_collection: str = Field(default="moe_memories", alias="QDRANT_COLLECTION")
+    embedding_dim: int = Field(default=384, alias="EMBEDDING_DIM")
 
     @property
     def postgres_dsn(self) -> str:

@@ -23,6 +23,7 @@ class MemoryAddRequest(BaseModel):
 
 class MemoryAddResponse(BaseModel):
     status: str
+    id: str
     message: str
 
 

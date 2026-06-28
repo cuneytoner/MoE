@@ -1,8 +1,8 @@
 # Memory API
 
-Milestone 4 adds configuration and infrastructure client layers to the Memory API.
+Milestone 5 adds the first storage foundation for the Memory API.
 
-The API is still intentionally limited to health and placeholder memory contracts. It can read PostgreSQL and Qdrant connection settings, and `/health/deep` can attempt lightweight connectivity checks. It does not create database tables, create Qdrant collections, implement embeddings, or persist memories yet.
+The API can persist raw memories to PostgreSQL. Qdrant configuration and reachability checks are present, but embeddings, vector inserts, vector search, and collection creation are not implemented yet.
 
 ## Service
 
@@ -25,6 +25,8 @@ Settings are read from environment variables:
 - `QDRANT_HOST`
 - `QDRANT_PORT`
 - `QDRANT_GRPC_PORT`
+- `QDRANT_COLLECTION`
+- `EMBEDDING_DIM`
 
 Documented local defaults live in `.env.example`.
 
@@ -78,14 +80,17 @@ Request:
 }
 ```
 
-Temporary response:
+Response:
 
 ```json
 {
-  "status": "accepted",
-  "message": "memory add placeholder"
+  "status": "created",
+  "id": "5b924f77-2c2f-45ed-a0df-9dfbfefae3f4",
+  "message": "memory stored without embedding"
 }
 ```
+
+This endpoint inserts `text`, `source`, and `metadata` into PostgreSQL. It does not generate an embedding and does not insert a vector into Qdrant.
 
 ### POST /memory/search
 
@@ -106,6 +111,27 @@ Temporary response:
   "results": []
 }
 ```
+
+Semantic search is not implemented yet.
+
+## Storage
+
+PostgreSQL stores raw memory rows in the `memories` table:
+
+- `id`
+- `text`
+- `source`
+- `metadata`
+- `vector_id`
+- `created_at`
+- `updated_at`
+
+Qdrant defaults:
+
+- Collection: `moe_memories`
+- Embedding dimension placeholder: `384`
+
+The Qdrant client can check reachability and exposes a placeholder `ensure_collection` function for future milestones.
 
 ## Local Run
 

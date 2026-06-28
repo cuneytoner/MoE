@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 from app.clients.postgres import PostgresClient
 from app.clients.qdrant import QdrantClient
@@ -11,6 +11,7 @@ from app.models.memory import (
     MemorySearchRequest,
     MemorySearchResponse,
 )
+from app.services.memory_store import MemoryStore
 
 app = FastAPI(title="MoE Memory API", version="0.1.0")
 
@@ -45,10 +46,22 @@ async def deep_health() -> DeepHealthResponse:
 
 
 @app.post("/memory/add", response_model=MemoryAddResponse)
-def add_memory(_: MemoryAddRequest) -> MemoryAddResponse:
+async def add_memory(request: MemoryAddRequest) -> MemoryAddResponse:
+    settings = get_settings()
+    store = MemoryStore(PostgresClient(settings))
+
+    try:
+        memory_id = await store.add(request)
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=f"postgres unavailable: {exc.__class__.__name__}",
+        ) from exc
+
     return MemoryAddResponse(
-        status="accepted",
-        message="memory add placeholder",
+        status="created",
+        id=memory_id,
+        message="memory stored without embedding",
     )
 
 

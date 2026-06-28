@@ -2,7 +2,7 @@
 
 FastAPI skeleton for the MoE Memory API.
 
-This milestone exposes health, dependency configuration, lightweight deep health checks, and placeholder memory contracts. It does not create database tables, create Qdrant collections, implement embeddings, or persist memories yet.
+This milestone exposes health, dependency configuration, lightweight deep health checks, and PostgreSQL storage for raw memory text. It does not create Qdrant collections, implement embeddings, insert vectors, or perform semantic search yet.
 
 ## Local Development
 
@@ -36,3 +36,9 @@ Expected response:
 `GET /health/deep`
 
 This endpoint attempts lightweight PostgreSQL and Qdrant connectivity checks. It reports `degraded` if a dependency is unavailable.
+
+## Add Memory
+
+`POST /memory/add`
+
+Stores `text`, `source`, and `metadata` in PostgreSQL and returns the created memory id. No embedding or Qdrant vector is created yet.

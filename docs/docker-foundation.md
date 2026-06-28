@@ -13,6 +13,8 @@ Service data paths:
 - PostgreSQL: `/home/cuneyt/MoE/runtime/postgres`
 - Qdrant: `/home/cuneyt/MoE/runtime/qdrant`
 
+PostgreSQL initialization creates the `memories` table when a fresh runtime database is first started. Existing PostgreSQL runtime data is not automatically migrated by Docker entrypoint init scripts.
+
 ## Prepare Runtime Folders
 
 Run:

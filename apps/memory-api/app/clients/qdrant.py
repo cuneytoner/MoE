@@ -17,3 +17,10 @@ class QdrantClient:
             await client.close()
 
         return "ok"
+
+    async def ensure_collection(self) -> str:
+        return (
+            "not_created: embeddings are not implemented yet; "
+            f"collection={self._settings.qdrant_collection}; "
+            f"embedding_dim={self._settings.embedding_dim}"
+        )

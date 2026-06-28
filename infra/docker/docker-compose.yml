@@ -16,6 +16,8 @@ services:
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
       QDRANT_GRPC_PORT: 6334
+      QDRANT_COLLECTION: ${QDRANT_COLLECTION:-moe_memories}
+      EMBEDDING_DIM: ${EMBEDDING_DIM:-384}
     ports:
       - "${MEMORY_API_PORT:-8101}:8101"
     networks:
