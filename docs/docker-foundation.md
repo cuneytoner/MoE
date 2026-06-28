@@ -43,6 +43,8 @@ Run:
 
 The health script checks Docker availability, PostgreSQL port reachability when its container is running, and the Qdrant HTTP health endpoint when its container is running.
 
+Qdrant readiness is checked externally by `make health` instead of a Docker container-level healthcheck. The Qdrant image may not include tools such as `wget`, `curl`, or `nc`, so an in-container probe can incorrectly mark a reachable service as unhealthy.
+
 ## Environment
 
 Documented defaults live in `.env.example`. Do not create a real `.env` inside this repository.
