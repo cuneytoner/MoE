@@ -2,7 +2,7 @@
 
 Clean source code repository for the local multi-PC MoE system.
 
-## Repository rule
+## Repository Rule
 
 This folder is source code only.
 
@@ -11,7 +11,7 @@ Runtime files, database volumes, logs, model caches, temporary files, and genera
 ## Paths
 
 PC1 source code:
-```text
+
 /home/cuneyt/DiskD/Projects/MoE/codebase
 
 PC1 runtime:
@@ -21,7 +21,8 @@ PC1 runtime:
 PC2 runtime:
 
 /home/cuneyt/MoE
-Network
+
+## Network
 
 PC1:
 
@@ -37,8 +38,59 @@ cuneyt
 
 Passwordless SSH is expected between PC1 and PC2.
 
-Milestone 0
+## Components
 
-Goal: clean repository, clean source/runtime separation, no old runtime pollution inside codebase.
+apps:
 
+- gateway-api
+- memory-api
+- embed-worker
+- dashboard
 
+packages:
+
+- shared
+- schemas
+- clients
+
+infra:
+
+- docker
+- postgres
+- qdrant
+- scripts
+
+deploy:
+
+- pc1
+- pc2
+
+docs:
+
+- architecture.md
+- milestones.md
+- runtime-rules.md
+- deployment.md
+- codex-prompts.md
+
+scripts:
+
+- check-layout.sh
+
+## Commands
+
+Validate layout:
+
+make check-layout
+
+Show git status:
+
+make status
+
+Show repository tree:
+
+make tree
+
+## Current Milestone
+
+Milestone 1: Monorepo Skeleton
