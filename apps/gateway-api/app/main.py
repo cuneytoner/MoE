@@ -17,10 +17,13 @@ from app.models.gateway import (
     GatewayRuntimeStatusResponse,
     GatewayRuntimeSwitchPlanRequest,
     GatewayRuntimeSwitchPlanResponse,
+    GatewayToolExecuteRequest,
+    GatewayToolExecuteResponse,
     GatewayToolsResponse,
 )
 from app.services.model_mapping import ModelMapping, get_model_mapping
 from app.services.router import RouteDecision, route_message
+from app.services.tool_executor import execute_tool
 from app.services.tool_planner import tool_catalog
 
 app = FastAPI(title="MoE Gateway API", version="0.1.0")
@@ -71,7 +74,25 @@ def tools() -> GatewayToolsResponse:
         status="ok",
         tools=tool_catalog(),
         auto_execution_enabled=False,
+        read_only_execution_enabled=True,
     )
+
+
+@app.post(
+    "/gateway/tools/execute",
+    response_model=GatewayToolExecuteResponse,
+    response_model_exclude_none=True,
+)
+async def tools_execute(
+    request: GatewayToolExecuteRequest,
+) -> GatewayToolExecuteResponse:
+    settings = get_settings()
+    result = await execute_tool(
+        tool=request.tool,
+        arguments=request.arguments,
+        settings=settings,
+    )
+    return GatewayToolExecuteResponse(**result)
 
 
 @app.get("/gateway/runtime/status", response_model=GatewayRuntimeStatusResponse)

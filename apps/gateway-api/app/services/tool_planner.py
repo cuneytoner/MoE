@@ -21,29 +21,77 @@ class ToolPlan:
 
 
 TOOL_CATALOG: dict[str, dict[str, Any]] = {
+    "gateway_health_check": {
+        "description": "Read Gateway dependency health using internal HTTP clients.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "memory_health_check": {
+        "description": "Read Memory API /health status.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "embed_worker_health_check": {
+        "description": "Read Embed Worker /health status.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "runtime_status_check": {
+        "description": "Read model runtime status without switching models.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "model_routing_read": {
+        "description": "Read Gateway advisory model routing config.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "tools_read": {
+        "description": "Read Gateway tool registry.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
     "model_chat": {
         "description": "Send a chat completion request to the OpenAI-compatible model runtime.",
-        "auto_execution_supported": True,
+        "auto_execution_supported": False,
+        "executable": False,
+        "read_only": False,
     },
     "memory_search": {
         "description": "Search local Memory API for relevant stored context.",
-        "auto_execution_supported": True,
+        "auto_execution_supported": False,
+        "executable": False,
+        "read_only": False,
     },
     "runtime_switch_plan": {
         "description": "Return an advisory manual runtime switch command without executing it.",
         "auto_execution_supported": False,
+        "executable": False,
+        "read_only": False,
     },
     "docker_status_check": {
         "description": "Suggest Docker status checks for the user to run manually.",
         "auto_execution_supported": False,
+        "executable": False,
+        "read_only": False,
     },
     "shell_command_suggestion": {
         "description": "Suggest shell commands for the user to inspect before running.",
         "auto_execution_supported": False,
+        "executable": False,
+        "read_only": False,
     },
     "none": {
         "description": "No tool is recommended.",
         "auto_execution_supported": False,
+        "executable": False,
+        "read_only": False,
     },
 }
 

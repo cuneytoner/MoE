@@ -4,7 +4,7 @@ Milestone 12 adds `gateway-api` as the single API entry point for local AI stack
 
 This is the first simple gateway. It supports optional memory-augmented chat, but it does not implement the advanced MoE router and does not include Dashboard work.
 
-Gateway can now report tool-aware routing metadata. It does not execute shell commands, Docker commands, or host model runtime switches automatically.
+Gateway can report tool-aware routing metadata and execute a small allowlist of read-only internal HTTP checks. It does not execute shell commands, Docker commands, or host model runtime switches.
 
 ## Service
 
@@ -95,30 +95,100 @@ Example response:
   "tools": {
     "model_chat": {
       "description": "Send a chat completion request to the OpenAI-compatible model runtime.",
-      "auto_execution_supported": true
+      "auto_execution_supported": false,
+      "executable": false,
+      "read_only": false
     },
     "memory_search": {
       "description": "Search local Memory API for relevant stored context.",
-      "auto_execution_supported": true
+      "auto_execution_supported": false,
+      "executable": false,
+      "read_only": false
+    },
+    "gateway_health_check": {
+      "description": "Read Gateway dependency health using internal HTTP clients.",
+      "auto_execution_supported": false,
+      "executable": true,
+      "read_only": true
     },
     "runtime_switch_plan": {
       "description": "Return an advisory manual runtime switch command without executing it.",
-      "auto_execution_supported": false
+      "auto_execution_supported": false,
+      "executable": false,
+      "read_only": false
     },
     "docker_status_check": {
       "description": "Suggest Docker status checks for the user to run manually.",
-      "auto_execution_supported": false
+      "auto_execution_supported": false,
+      "executable": false,
+      "read_only": false
     },
     "shell_command_suggestion": {
       "description": "Suggest shell commands for the user to inspect before running.",
-      "auto_execution_supported": false
+      "auto_execution_supported": false,
+      "executable": false,
+      "read_only": false
     }
   },
-  "auto_execution_enabled": false
+  "auto_execution_enabled": false,
+  "read_only_execution_enabled": true
 }
 ```
 
-`auto_execution_enabled` is always `false`. Gateway does not execute shell commands, run Docker checks, or switch host runtime models automatically.
+`auto_execution_enabled` is always `false`. `read_only_execution_enabled` means Gateway may execute only tools marked with both `executable: true` and `read_only: true`.
+
+### POST /gateway/tools/execute
+
+Executes a controlled read-only tool from the allowlist.
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"tool":"runtime_status_check","arguments":{}}' \
+  http://localhost:8100/gateway/tools/execute | jq
+```
+
+Executable read-only tools:
+
+- `gateway_health_check`
+- `memory_health_check`
+- `embed_worker_health_check`
+- `runtime_status_check`
+- `model_routing_read`
+- `tools_read`
+
+Success response:
+
+```json
+{
+  "status": "ok",
+  "tool": "runtime_status_check",
+  "read_only": true,
+  "result": {
+    "runtime_available": false,
+    "model_runtime_url": "http://localhost:8000/v1",
+    "loaded_models": [],
+    "current_model": null
+  }
+}
+```
+
+Advisory tools are rejected:
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"tool":"shell_command_suggestion","arguments":{}}' \
+  http://localhost:8100/gateway/tools/execute | jq
+```
+
+```json
+{
+  "status": "rejected",
+  "tool": "shell_command_suggestion",
+  "reason": "Tool is advisory only and cannot be executed by Gateway"
+}
+```
+
+Rejected tools include `shell_command_suggestion`, `docker_status_check`, `runtime_switch_plan`, `model_chat`, and `memory_search`. Gateway still does not execute shell commands, Docker actions, model chat, memory search, or runtime switches through this endpoint.
 
 ### GET /gateway/runtime/status
 

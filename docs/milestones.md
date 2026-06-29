@@ -252,7 +252,7 @@ Goals:
 
 ## Milestone 18: Tool-Aware Routing Plan
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add tool-aware routing metadata using existing intent and model metadata.
@@ -260,17 +260,17 @@ Goals:
 - Keep Gateway behavior backward compatible.
 - Avoid advanced MoE routing until safe controls are proven.
 
-## Milestone 19: Controlled Tool Execution or Dashboard
+## Milestone 19: Controlled Read-Only Tool Execution
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Add a management dashboard for service and machine status.
-- Show Docker service health and runtime summaries.
-- Surface memory, embedding, gateway, and model runtime health.
-- Keep the dashboard operational rather than decorative.
+- Add explicit read-only Gateway tool execution for safe internal HTTP checks.
+- Keep shell commands, Docker actions, and runtime switches advisory only.
+- Keep automatic execution disabled globally.
+- Preserve default tests without requiring model runtime.
 
-## Milestone 20: Document RAG Ingestion
+## Milestone 20: Dashboard or Controlled Runtime Switch Approval Flow
 
 Status: PLANNED
 

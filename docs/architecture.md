@@ -70,7 +70,7 @@ SSH:
 
 apps/gateway-api:
 
-Central API and router entrypoint. It exposes Gateway health, model discovery, runtime status, safe runtime switch plans, chat proxying to the local OpenAI-compatible runtime, optional memory-augmented chat through Memory API search, deterministic intent-aware route decisions, router-aware chat prompt shaping, advisory model mapping metadata, and advisory tool planning metadata.
+Central API and router entrypoint. It exposes Gateway health, model discovery, runtime status, safe runtime switch plans, chat proxying to the local OpenAI-compatible runtime, optional memory-augmented chat through Memory API search, deterministic intent-aware route decisions, router-aware chat prompt shaping, advisory model mapping metadata, advisory tool planning metadata, and controlled read-only tool execution for internal HTTP checks.
 
 The Gateway routing flow is:
 
@@ -78,8 +78,17 @@ The Gateway routing flow is:
 - map intent to an advisory model target
 - attach an advisory tool plan
 - execute only already-supported safe paths such as model chat and optional memory search
+- execute allowlisted read-only internal status tools when explicitly requested
 
-The tool planning layer is metadata-only for shell, Docker, and runtime-switch actions. Future tool execution must be gated, explicit, observable, and reversible.
+The controlled tool execution layer has hard safety gates:
+
+- tools must be explicitly marked `executable: true`
+- tools must be explicitly marked `read_only: true`
+- shell command suggestions are never executed by Gateway
+- Docker checks are advisory and are not run by Gateway
+- runtime switch plans remain manual and are not executed by Gateway
+
+Future broader tool execution must remain gated, explicit, observable, and reversible.
 
 apps/memory-api:
 

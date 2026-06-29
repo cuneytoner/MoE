@@ -136,23 +136,94 @@ fi
 
 tools_status="$(jq -r '.status // empty' <<<"$tools_response")"
 tools_auto_execution="$(jq -r '.auto_execution_enabled' <<<"$tools_response")"
+tools_read_only_execution="$(jq -r '.read_only_execution_enabled' <<<"$tools_response")"
 tools_model_chat="$(jq -r 'if .tools.model_chat then "present" else "missing" end' <<<"$tools_response")"
 tools_memory_search="$(jq -r 'if .tools.memory_search then "present" else "missing" end' <<<"$tools_response")"
 tools_runtime_switch_plan="$(jq -r 'if .tools.runtime_switch_plan then "present" else "missing" end' <<<"$tools_response")"
 tools_docker_status_check="$(jq -r 'if .tools.docker_status_check then "present" else "missing" end' <<<"$tools_response")"
 tools_shell_command_suggestion="$(jq -r 'if .tools.shell_command_suggestion then "present" else "missing" end' <<<"$tools_response")"
+tools_gateway_health_check="$(jq -r 'if .tools.gateway_health_check then "present" else "missing" end' <<<"$tools_response")"
+tools_runtime_status_check="$(jq -r 'if .tools.runtime_status_check then "present" else "missing" end' <<<"$tools_response")"
 
 if [ "$tools_status" = "ok" ] \
   && [ "$tools_auto_execution" = "false" ] \
+  && [ "$tools_read_only_execution" = "true" ] \
   && [ "$tools_model_chat" = "present" ] \
   && [ "$tools_memory_search" = "present" ] \
   && [ "$tools_runtime_switch_plan" = "present" ] \
   && [ "$tools_docker_status_check" = "present" ] \
-  && [ "$tools_shell_command_suggestion" = "present" ]; then
+  && [ "$tools_shell_command_suggestion" = "present" ] \
+  && [ "$tools_gateway_health_check" = "present" ] \
+  && [ "$tools_runtime_status_check" = "present" ]; then
   pass "Gateway API /gateway/tools"
 else
   fail "Gateway API /gateway/tools returned unexpected response: $tools_response"
 fi
+
+assert_tool_execute_ok() {
+  local tool="$1"
+  local body
+  local response
+  local execute_status
+  local execute_tool_name
+  local execute_read_only
+  local execute_result_type
+
+  body="$(jq -nc --arg tool "$tool" '{tool: $tool, arguments: {}}')"
+  if ! response="$(post_json "/gateway/tools/execute" "$body")"; then
+    fail "Gateway API /gateway/tools/execute request failed for: $tool"
+  fi
+
+  execute_status="$(jq -r '.status // empty' <<<"$response")"
+  execute_tool_name="$(jq -r '.tool // empty' <<<"$response")"
+  execute_read_only="$(jq -r '.read_only' <<<"$response")"
+  execute_result_type="$(jq -r 'if (.result | type) == "object" then "object" else "other" end' <<<"$response")"
+
+  if [ "$execute_status" = "ok" ] \
+    && [ "$execute_tool_name" = "$tool" ] \
+    && [ "$execute_read_only" = "true" ] \
+    && [ "$execute_result_type" = "object" ]; then
+    pass "Gateway API /gateway/tools/execute $tool"
+  else
+    fail "Gateway API /gateway/tools/execute expected ok for $tool, got: $response"
+  fi
+}
+
+assert_tool_execute_rejected() {
+  local tool="$1"
+  local body
+  local response
+  local execute_status
+  local execute_tool_name
+  local execute_reason
+
+  body="$(jq -nc --arg tool "$tool" '{tool: $tool, arguments: {}}')"
+  if ! response="$(post_json "/gateway/tools/execute" "$body")"; then
+    fail "Gateway API /gateway/tools/execute rejection request failed for: $tool"
+  fi
+
+  execute_status="$(jq -r '.status // empty' <<<"$response")"
+  execute_tool_name="$(jq -r '.tool // empty' <<<"$response")"
+  execute_reason="$(jq -r '.reason // empty' <<<"$response")"
+
+  if [ "$execute_status" = "rejected" ] \
+    && [ "$execute_tool_name" = "$tool" ] \
+    && [ -n "$execute_reason" ]; then
+    pass "Gateway API /gateway/tools/execute rejects $tool"
+  else
+    fail "Gateway API /gateway/tools/execute expected rejection for $tool, got: $response"
+  fi
+}
+
+assert_tool_execute_ok "gateway_health_check"
+assert_tool_execute_ok "memory_health_check"
+assert_tool_execute_ok "embed_worker_health_check"
+assert_tool_execute_ok "runtime_status_check"
+assert_tool_execute_ok "model_routing_read"
+assert_tool_execute_ok "tools_read"
+assert_tool_execute_rejected "shell_command_suggestion"
+assert_tool_execute_rejected "docker_status_check"
+assert_tool_execute_rejected "runtime_switch_plan"
 
 if ! runtime_status_response="$(curl -fsS "$GATEWAY_API_URL/gateway/runtime/status")"; then
   fail "Gateway API /gateway/runtime/status request failed"

@@ -499,16 +499,29 @@ Scope:
 - Keep shell, Docker, and runtime-switch actions advisory only.
 - Do not implement Dashboard or advanced MoE routing.
 
-## Milestone 19 Prompt Placeholder
+## Milestone 19 Prompt Summary
 
-Add controlled tool execution or Dashboard.
+Add controlled read-only tool execution.
+
+Scope:
+
+- Add `/gateway/tools/execute`.
+- Execute only allowlisted read-only internal HTTP/status checks.
+- Reject shell, Docker, model chat, memory search, and runtime-switch advisory tools.
+- Keep automatic execution disabled globally.
+- Preserve source-only repository and runtime data boundaries.
+- Avoid advanced MoE routing until tool safety is proven.
+
+## Milestone 20 Prompt Placeholder
+
+Add Dashboard or controlled runtime switch approval flow.
 
 Expected boundaries:
 
-- Keep tool execution gated, explicit, observable, and reversible.
-- Do not let Gateway execute host shell commands without a deliberate control model.
+- Keep runtime switches explicit and reversible.
+- Do not let Gateway containers control host runtime without an approval model.
+- Keep Dashboard operational and monitoring-focused if chosen.
 - Preserve source-only repository and runtime data boundaries.
-- Avoid advanced MoE routing until tool safety is proven.
 
 ## Milestone 23 Prompt Placeholder
 

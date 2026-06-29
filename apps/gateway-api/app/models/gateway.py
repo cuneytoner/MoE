@@ -60,6 +60,20 @@ class GatewayToolsResponse(BaseModel):
     status: str
     tools: dict[str, dict[str, Any]]
     auto_execution_enabled: bool
+    read_only_execution_enabled: bool
+
+
+class GatewayToolExecuteRequest(BaseModel):
+    tool: str = Field(min_length=1)
+    arguments: dict[str, Any] = Field(default_factory=dict)
+
+
+class GatewayToolExecuteResponse(BaseModel):
+    status: str
+    tool: str
+    read_only: bool | None = None
+    result: dict[str, Any] | None = None
+    reason: str | None = None
 
 
 class GatewayChatRequest(BaseModel):
