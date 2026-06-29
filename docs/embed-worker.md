@@ -43,6 +43,13 @@ Supported backend values:
 - `fake`: fully functional deterministic fake vectors.
 - `bge-m3`: loads the local BGE-M3 model on the first `/embed` request and caches it in memory.
 
+Current dimension behavior:
+
+- `fake` uses the configured default `EMBEDDING_DIM=384`
+- local `bge-m3` currently returns runtime-detected vectors with dimension `1024`
+
+This means BGE-M3 validation is optional and separate from the default fake backend flow.
+
 Docker mounts the local model read-only:
 
 `${MODEL_BACKUP_DIR}/bge-m3:/models/bge-m3:ro`
@@ -109,3 +116,19 @@ Optional BGE-M3 runtime test:
 `RUN_BGE_M3_TEST=1 make test-embed`
 
 Run the optional test only when the service is already running with `EMBEDDING_BACKEND=bge-m3` and the local model path is available.
+
+Dedicated model integrity check:
+
+`make check-models`
+
+Dedicated optional BGE-M3 runtime check:
+
+`make test-bge-m3`
+
+Manual BGE-M3 Docker run:
+
+`EMBEDDING_BACKEND=bge-m3 EMBEDDING_MODEL_PATH=/models/bge-m3 MODEL_BACKUP_DIR=/home/cuneyt/MoE_Models_Backup docker compose -f infra/docker/docker-compose.yml up -d --build embed-worker`
+
+Return to fake default:
+
+`docker compose -f infra/docker/docker-compose.yml up -d --build embed-worker`

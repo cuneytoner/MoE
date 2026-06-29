@@ -50,3 +50,5 @@ Qdrant readiness is checked externally by `make health` instead of a Docker cont
 ## Environment
 
 Documented defaults live in `.env.example`. Do not create a real `.env` inside this repository.
+
+Model files remain outside the codebase. BGE-M3 validation and runtime checks should use the external backup path and read-only Docker mounts.

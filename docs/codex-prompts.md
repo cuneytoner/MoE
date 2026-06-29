@@ -246,17 +246,31 @@ Expected boundaries:
 - Keep runtime validation optional and outside default `make test`.
 - Do not download or copy model files.
 
+## Milestone 9.1 Prompt Summary
+
+Add model integrity and optional runtime validation around the working BGE-M3 backend.
+
+Scope:
+
+- Add `scripts/check-models.sh`.
+- Detect Git LFS pointer files.
+- Check required model files and approximate directory size.
+- Fail if `pytorch_model.bin` looks suspiciously small.
+- Add `scripts/test-bge-m3-runtime.sh`.
+- Keep BGE-M3 runtime validation optional and outside default `make test`.
+- Document the current dimension split: fake `384`, BGE-M3 `1024`.
+
 ## Milestone 10 Next Prompt Placeholder
 
 Implement Memory Search with real embeddings.
 
 Expected boundaries:
 
-- Embed search queries through Embed Worker.
-- Query Qdrant for nearest vectors.
-- Return simple ranked results from Memory API.
+- Prevent `384` and `1024` dimension mismatch in Qdrant.
+- Add collection validation or collection naming separation.
+- Embed queries through Embed Worker.
+- Query Qdrant and return PostgreSQL metadata.
 - Keep the search behavior small and explainable.
-- Do not implement Gateway API or Dashboard.
 
 ## Milestone 10 Prompt Placeholder
 

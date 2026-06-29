@@ -115,7 +115,7 @@ Goals:
 
 ## Milestone 9: Real BGE-M3 Embedding Runtime
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add real BGE-M3 runtime loading.
@@ -126,7 +126,7 @@ Goals:
 
 ## Milestone 9.1: Model Integrity and Runtime Validation
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Add script to validate local model paths.
@@ -142,11 +142,11 @@ Goals:
 Status: PLANNED
 
 Goals:
-- Embed search queries through Embed Worker.
-- Query Qdrant for candidate memories.
-- Return simple ranked memory search results.
-- Keep ranking behavior understandable and testable.
-- Keep Memory API search integration small and explicit.
+- Prevent `384` and `1024` dimension mismatch in Qdrant collections.
+- Add collection validation.
+- Decide collection naming strategy for fake versus BGE-M3 embeddings.
+- Implement `/memory/search` using the active embedder and Qdrant.
+- Return PostgreSQL metadata with Qdrant search results.
 
 ## Milestone 11: Model Runtime / OpenAI-Compatible Serving
 

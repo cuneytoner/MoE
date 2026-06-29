@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health test-embed test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -12,6 +12,7 @@ help:
 > @echo "Available commands:"
 > @echo "  make check-layout   Validate repository layout"
 > @echo "  make check-python-syntax Validate Python syntax without bytecode"
+> @echo "  make check-models   Validate local model files and Docker mount config"
 > @echo "  make status         Show git status"
 > @echo "  make tree           Show repository tree"
 > @echo "  make runtime-prepare Create runtime folders under /home/cuneyt/MoE/runtime"
@@ -32,6 +33,9 @@ check-layout:
 
 check-python-syntax:
 > @./scripts/check-python-syntax.sh
+
+check-models:
+> @./scripts/check-models.sh
 
 status:
 > @git status --short
@@ -68,6 +72,9 @@ test-memory:
 
 test-embed:
 > @./scripts/test-embed-worker.sh
+
+test-bge-m3:
+> @./scripts/test-bge-m3-runtime.sh
 
 test-stack:
 > @./scripts/test-stack.sh

@@ -145,6 +145,10 @@ Qdrant defaults:
 
 The Qdrant client checks reachability, creates the collection when needed, and upserts vectors from the fake Embed Worker backend.
 
+Compatibility note:
+
+The fake backend currently uses `384` dimensions, while local BGE-M3 currently returns `1024` dimensions. Future search work must validate Qdrant collection dimensions and avoid mixing `384` and `1024` vectors in the same collection.
+
 ## Local Run
 
 Install dependencies outside the repository source tree, then run:

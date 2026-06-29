@@ -62,7 +62,9 @@ required_paths=(
   "scripts/runtime-prepare.sh"
   "scripts/health.sh"
   "scripts/check-python-syntax.sh"
+  "scripts/check-models.sh"
   "scripts/test-memory-api.sh"
+  "scripts/test-bge-m3-runtime.sh"
   "scripts/test-embed-worker.sh"
   "scripts/test-stack.sh"
 )
