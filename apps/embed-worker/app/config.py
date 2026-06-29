@@ -30,7 +30,9 @@ class Settings(BaseSettings):
     def model_loading(self) -> str:
         if self.backend == "fake":
             return "not_required"
-        return "not_implemented"
+        if self.backend == "bge-m3":
+            return "lazy"
+        return "unsupported"
 
 
 @lru_cache

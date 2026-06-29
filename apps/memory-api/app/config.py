@@ -24,9 +24,9 @@ class Settings(BaseSettings):
     qdrant_grpc_port: int = Field(default=6334, alias="QDRANT_GRPC_PORT")
     qdrant_collection: str = Field(default="moe_memories", alias="QDRANT_COLLECTION")
     embedding_dim: int = Field(default=384, alias="EMBEDDING_DIM")
-    embed_worker_url: str = Field(
-        default="http://localhost:8102",
-        alias="EMBED_WORKER_URL",
+    embed_worker_internal_url: str = Field(
+        default="http://embed-worker:8102",
+        alias="EMBED_WORKER_INTERNAL_URL",
     )
 
     @property

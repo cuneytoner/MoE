@@ -27,7 +27,7 @@ Settings are read from environment variables:
 - `QDRANT_GRPC_PORT`
 - `QDRANT_COLLECTION`
 - `EMBEDDING_DIM`
-- `EMBED_WORKER_URL`
+- `EMBED_WORKER_INTERNAL_URL`
 
 Documented local defaults live in `.env.example`.
 

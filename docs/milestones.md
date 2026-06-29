@@ -104,7 +104,7 @@ Goals:
 
 ## Milestone 8: Real Embedding Backend Preparation
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Prepare configuration for a real local embedding backend.
@@ -115,7 +115,7 @@ Goals:
 
 ## Milestone 9: Real BGE-M3 Embedding Runtime
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Add real BGE-M3 runtime loading.
@@ -123,3 +123,14 @@ Goals:
 - Add safe startup and fallback behavior.
 - Avoid downloading models into the repository.
 - Validate embedding dimension compatibility.
+
+## Milestone 10: Memory Search with Real Embeddings
+
+Status: PLANNED
+
+Goals:
+- Embed search queries through Embed Worker.
+- Query Qdrant for candidate memories.
+- Return simple ranked memory search results.
+- Keep ranking behavior understandable and testable.
+- Do not implement Gateway API or Dashboard yet.

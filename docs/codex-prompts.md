@@ -219,6 +219,32 @@ Expected boundaries:
 - Do not download models into the repository.
 - Validate vector dimension before integrating with Memory API writes.
 
+## Milestone 9 Prompt Summary
+
+Implement the real BGE-M3 runtime in Embed Worker while keeping fake backend as the default.
+
+Scope:
+
+- Lazy-load the local model from `/home/cuneyt/MoE_Models_Backup/bge-m3`.
+- Use local files only.
+- Do not download models.
+- Do not copy model files into the codebase.
+- Cache the model after first load.
+- Keep `make test` on the fake backend.
+- Add optional `RUN_BGE_M3_TEST=1` validation.
+
+## Milestone 10 Next Prompt Placeholder
+
+Implement Memory Search with real embeddings.
+
+Expected boundaries:
+
+- Embed search queries through Embed Worker.
+- Query Qdrant for nearest vectors.
+- Return simple ranked results from Memory API.
+- Keep the search behavior small and explainable.
+- Do not implement Gateway API or Dashboard.
+
 ## Safe Codex Task Boundary
 
 Codex should work in small tasks.

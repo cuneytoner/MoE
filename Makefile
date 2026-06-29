@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health test-embed test-memory test-stack test
+.PHONY: help check-layout check-python-syntax status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health test-embed test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -11,6 +11,7 @@ help:
 > @echo ""
 > @echo "Available commands:"
 > @echo "  make check-layout   Validate repository layout"
+> @echo "  make check-python-syntax Validate Python syntax without bytecode"
 > @echo "  make status         Show git status"
 > @echo "  make tree           Show repository tree"
 > @echo "  make runtime-prepare Create runtime folders under /home/cuneyt/MoE/runtime"
@@ -28,6 +29,9 @@ help:
 
 check-layout:
 > @./scripts/check-layout.sh
+
+check-python-syntax:
+> @./scripts/check-python-syntax.sh
 
 status:
 > @git status --short
@@ -68,4 +72,4 @@ test-embed:
 test-stack:
 > @./scripts/test-stack.sh
 
-test: check-layout test-stack
+test: check-layout check-python-syntax test-stack

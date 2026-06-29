@@ -1,8 +1,8 @@
 # Embed Worker
 
-Milestone 8 prepares the Embed Worker for real embedding backends.
+Milestone 9 adds the real BGE-M3 embedding runtime.
 
-The worker exposes a deterministic fake embedding backend and a safe `bge-m3` placeholder. It prepares the API shape and configuration for future local model integration, but it does not download models, load BGE-M3, run heavy inference, or copy model files into the codebase.
+The worker exposes a deterministic fake embedding backend and a lazy `bge-m3` backend. It never downloads models and never copies model files into the codebase.
 
 Milestone 7 connects the Memory API to this fake backend. The backend remains fake and deterministic.
 
@@ -26,14 +26,24 @@ Settings are read from environment variables:
 
 Default model path:
 
-`/home/cuneyt/MoE_Models_Backup/bge-m3`
+`/models/bge-m3`
+
+Default host model backup directory:
+
+`/home/cuneyt/MoE_Models_Backup`
 
 This path is configuration only in this milestone. The model is not mounted into the container and is not loaded.
 
 Supported backend values:
 
 - `fake`: fully functional deterministic fake vectors.
-- `bge-m3`: validates model path configuration and existence in health, but `/embed` returns HTTP 501.
+- `bge-m3`: loads the local BGE-M3 model on the first `/embed` request and caches it in memory.
+
+Docker mounts the local model read-only:
+
+`${MODEL_BACKUP_DIR}/bge-m3:/models/bge-m3:ro`
+
+Inside the container, `EMBEDDING_MODEL_PATH` is `/models/bge-m3`.
 
 ## Endpoints
 
@@ -47,13 +57,13 @@ Response:
   "status": "ok",
   "backend": "fake",
   "embedding_dim": 384,
-  "model_path": "/home/cuneyt/MoE_Models_Backup/bge-m3",
+  "model_path": "/models/bge-m3",
   "model_path_exists": true,
   "model_loading": "not_required"
 }
 ```
 
-For `EMBEDDING_BACKEND=bge-m3`, `model_loading` is `not_implemented`.
+For `EMBEDDING_BACKEND=bge-m3`, `model_loading` is `lazy` and `model_loaded` reports whether the model is already cached in memory.
 
 ### POST /embed
 
@@ -76,6 +86,22 @@ Response:
 }
 ```
 
-The real response vector contains `EMBEDDING_DIM` float values. The same input text returns the same vector.
+The fake response vector contains `EMBEDDING_DIM` float values. The same input text returns the same vector.
 
-For `EMBEDDING_BACKEND=bge-m3`, this endpoint returns HTTP 501 with a clear message that real model loading is not implemented yet.
+For `EMBEDDING_BACKEND=bge-m3`, this endpoint returns the actual model vector. The response `embedding_dim` is the actual vector length, not a hardcoded value.
+
+## Tests
+
+Default fake backend test:
+
+`make test-embed`
+
+Host-side test scripts use:
+
+`EMBED_WORKER_URL=http://localhost:8102`
+
+Optional BGE-M3 runtime test:
+
+`RUN_BGE_M3_TEST=1 make test-embed`
+
+Run the optional test only when the service is already running with `EMBEDDING_BACKEND=bge-m3` and the local model path is available.

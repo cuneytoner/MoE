@@ -81,4 +81,27 @@ else
   fail "Expected vector length $embed_dim, got: $vector_length"
 fi
 
+if [ "${RUN_BGE_M3_TEST:-0}" = "1" ]; then
+  if ! bge_response="$(post_json "/embed" '{"text":"hello world"}')"; then
+    fail "Embed Worker bge-m3 /embed request failed"
+  fi
+
+  bge_status="$(jq -r '.status' <<<"$bge_response")"
+  bge_backend="$(jq -r '.backend' <<<"$bge_response")"
+  bge_dim="$(jq -r '.embedding_dim' <<<"$bge_response")"
+  bge_vector_length="$(jq -r '.vector | length' <<<"$bge_response")"
+
+  if [ "$bge_status" = "ok" ] && [ "$bge_backend" = "bge-m3" ]; then
+    pass "Embed Worker bge-m3 /embed status"
+  else
+    fail "Embed Worker bge-m3 /embed returned unexpected response: $bge_response"
+  fi
+
+  if [ "$bge_vector_length" -gt 0 ] && [ "$bge_dim" = "$bge_vector_length" ]; then
+    pass "Embed Worker bge-m3 vector length"
+  else
+    fail "Expected non-empty bge-m3 vector length $bge_dim, got: $bge_vector_length"
+  fi
+fi
+
 echo "Embed Worker tests passed"

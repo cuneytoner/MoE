@@ -12,7 +12,9 @@ class EmbedWorkerClient:
     async def check(self) -> str:
         try:
             async with httpx.AsyncClient(timeout=2) as client:
-                response = await client.get(f"{self._settings.embed_worker_url}/health")
+                response = await client.get(
+                    f"{self._settings.embed_worker_internal_url}/health"
+                )
                 response.raise_for_status()
         except Exception as exc:
             return f"unavailable: {exc.__class__.__name__}"
@@ -22,7 +24,7 @@ class EmbedWorkerClient:
     async def embed(self, text: str) -> list[float]:
         async with httpx.AsyncClient(timeout=10) as client:
             response = await client.post(
-                f"{self._settings.embed_worker_url}/embed",
+                f"{self._settings.embed_worker_internal_url}/embed",
                 json={"text": text},
             )
             response.raise_for_status()
