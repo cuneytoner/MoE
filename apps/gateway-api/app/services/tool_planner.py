@@ -33,6 +33,12 @@ TOOL_CATALOG: dict[str, dict[str, Any]] = {
         "executable": True,
         "read_only": True,
     },
+    "memory_deep_health_check": {
+        "description": "Read Memory API /health/deep status.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
     "embed_worker_health_check": {
         "description": "Read Embed Worker /health status.",
         "auto_execution_supported": False,

@@ -268,6 +268,7 @@ Goals:
 - Add explicit read-only Gateway tool execution for safe internal HTTP checks.
 - Keep shell commands, Docker actions, and runtime switches advisory only.
 - Keep automatic execution disabled globally.
+- Keep workspace file reading and file writes out of scope.
 - Preserve default tests without requiring model runtime.
 
 ## Milestone 20: Local Coding Workspace Integration

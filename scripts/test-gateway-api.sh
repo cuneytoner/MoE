@@ -143,6 +143,7 @@ tools_runtime_switch_plan="$(jq -r 'if .tools.runtime_switch_plan then "present"
 tools_docker_status_check="$(jq -r 'if .tools.docker_status_check then "present" else "missing" end' <<<"$tools_response")"
 tools_shell_command_suggestion="$(jq -r 'if .tools.shell_command_suggestion then "present" else "missing" end' <<<"$tools_response")"
 tools_gateway_health_check="$(jq -r 'if .tools.gateway_health_check then "present" else "missing" end' <<<"$tools_response")"
+tools_memory_deep_health_check="$(jq -r 'if .tools.memory_deep_health_check then "present" else "missing" end' <<<"$tools_response")"
 tools_runtime_status_check="$(jq -r 'if .tools.runtime_status_check then "present" else "missing" end' <<<"$tools_response")"
 
 if [ "$tools_status" = "ok" ] \
@@ -154,6 +155,7 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_docker_status_check" = "present" ] \
   && [ "$tools_shell_command_suggestion" = "present" ] \
   && [ "$tools_gateway_health_check" = "present" ] \
+  && [ "$tools_memory_deep_health_check" = "present" ] \
   && [ "$tools_runtime_status_check" = "present" ]; then
   pass "Gateway API /gateway/tools"
 else
@@ -215,8 +217,35 @@ assert_tool_execute_rejected() {
   fi
 }
 
+assert_tool_execute_error() {
+  local tool="$1"
+  local body
+  local response
+  local execute_status
+  local execute_tool_name
+  local execute_reason
+
+  body="$(jq -nc --arg tool "$tool" '{tool: $tool, arguments: {}}')"
+  if ! response="$(post_json "/gateway/tools/execute" "$body")"; then
+    fail "Gateway API /gateway/tools/execute error request failed for: $tool"
+  fi
+
+  execute_status="$(jq -r '.status // empty' <<<"$response")"
+  execute_tool_name="$(jq -r '.tool // empty' <<<"$response")"
+  execute_reason="$(jq -r '.reason // empty' <<<"$response")"
+
+  if [ "$execute_status" = "error" ] \
+    && [ "$execute_tool_name" = "$tool" ] \
+    && [ "$execute_reason" = "Unknown tool" ]; then
+    pass "Gateway API /gateway/tools/execute unknown $tool"
+  else
+    fail "Gateway API /gateway/tools/execute expected unknown-tool error for $tool, got: $response"
+  fi
+}
+
 assert_tool_execute_ok "gateway_health_check"
 assert_tool_execute_ok "memory_health_check"
+assert_tool_execute_ok "memory_deep_health_check"
 assert_tool_execute_ok "embed_worker_health_check"
 assert_tool_execute_ok "runtime_status_check"
 assert_tool_execute_ok "model_routing_read"
@@ -224,6 +253,10 @@ assert_tool_execute_ok "tools_read"
 assert_tool_execute_rejected "shell_command_suggestion"
 assert_tool_execute_rejected "docker_status_check"
 assert_tool_execute_rejected "runtime_switch_plan"
+assert_tool_execute_rejected "model_chat"
+assert_tool_execute_rejected "memory_search"
+assert_tool_execute_rejected "none"
+assert_tool_execute_error "unknown_tool"
 
 if ! runtime_status_response="$(curl -fsS "$GATEWAY_API_URL/gateway/runtime/status")"; then
   fail "Gateway API /gateway/runtime/status request failed"

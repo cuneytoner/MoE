@@ -507,8 +507,9 @@ Scope:
 
 - Add `/gateway/tools/execute`.
 - Execute only allowlisted read-only internal HTTP/status checks.
-- Reject shell, Docker, model chat, memory search, and runtime-switch advisory tools.
+- Reject shell, Docker, model chat, memory search, `none`, and runtime-switch advisory tools.
 - Keep automatic execution disabled globally.
+- Do not add workspace file reading or file writes.
 - Preserve source-only repository and runtime data boundaries.
 - Avoid advanced MoE routing until tool safety is proven.
 

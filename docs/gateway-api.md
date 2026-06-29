@@ -111,6 +111,12 @@ Example response:
       "executable": true,
       "read_only": true
     },
+    "memory_deep_health_check": {
+      "description": "Read Memory API /health/deep status.",
+      "auto_execution_supported": false,
+      "executable": true,
+      "read_only": true
+    },
     "runtime_switch_plan": {
       "description": "Return an advisory manual runtime switch command without executing it.",
       "auto_execution_supported": false,
@@ -151,6 +157,7 @@ Executable read-only tools:
 
 - `gateway_health_check`
 - `memory_health_check`
+- `memory_deep_health_check`
 - `embed_worker_health_check`
 - `runtime_status_check`
 - `model_routing_read`
@@ -188,7 +195,17 @@ curl -fsS -H "Content-Type: application/json" -X POST \
 }
 ```
 
-Rejected tools include `shell_command_suggestion`, `docker_status_check`, `runtime_switch_plan`, `model_chat`, and `memory_search`. Gateway still does not execute shell commands, Docker actions, model chat, memory search, or runtime switches through this endpoint.
+Rejected tools include `shell_command_suggestion`, `docker_status_check`, `runtime_switch_plan`, `model_chat`, `memory_search`, and `none`. Gateway still does not execute shell commands, Docker actions, file writes, model chat, memory search, or runtime switches through this endpoint.
+
+Unknown tools return an error response:
+
+```json
+{
+  "status": "error",
+  "tool": "unknown_tool",
+  "reason": "Unknown tool"
+}
+```
 
 ### GET /gateway/runtime/status
 

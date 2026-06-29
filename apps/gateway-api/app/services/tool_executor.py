@@ -19,7 +19,7 @@ async def execute_tool(
     details = catalog.get(tool)
     if not details:
         return {
-            "status": "rejected",
+            "status": "error",
             "tool": tool,
             "reason": "Unknown tool",
         }
@@ -57,6 +57,9 @@ async def _execute_read_only_tool(
             "service": "memory-api",
             "status": await MemoryApiClient(settings.memory_api_url).check(),
         }
+
+    if tool == "memory_deep_health_check":
+        return await MemoryApiClient(settings.memory_api_url).deep_health()
 
     if tool == "embed_worker_health_check":
         return {
