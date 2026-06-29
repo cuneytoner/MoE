@@ -399,6 +399,30 @@ Expected boundaries:
 - Keep model runtime, Memory API, and Embed Worker contracts stable.
 - Do not implement Dashboard in this milestone.
 
+## Milestone 14 Prompt Summary
+
+Replace placeholder Gateway routing with deterministic intent-aware routing.
+
+Scope:
+
+- Add a small router service with keyword-based scoring.
+- Detect `chat`, `code`, `memory`, `review`, and `ops` intents.
+- Return confidence, matched keyword signals, reason, model target, and memory recommendation.
+- Keep router deterministic with no LLM call.
+- Keep default tests independent from model runtime.
+- Do not implement Dashboard or advanced MoE routing.
+
+## Milestone 15 Prompt Placeholder
+
+Add router-aware chat or tool-aware routing.
+
+Expected boundaries:
+
+- Use `/gateway/route` decisions to shape chat behavior.
+- Keep tool calls explicit and simple.
+- Preserve existing Gateway chat and memory contracts.
+- Do not implement advanced MoE routing or Dashboard.
+
 ## Milestone 17 Prompt Placeholder
 
 Add an automation layer for local workflows.

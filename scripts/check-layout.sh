@@ -14,6 +14,8 @@ required_paths=(
   "apps/gateway-api/app/clients/model_runtime.py"
   "apps/gateway-api/app/models/__init__.py"
   "apps/gateway-api/app/models/gateway.py"
+  "apps/gateway-api/app/services/__init__.py"
+  "apps/gateway-api/app/services/router.py"
   "apps/gateway-api/requirements.txt"
   "apps/gateway-api/Dockerfile"
   "apps/memory-api"

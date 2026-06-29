@@ -114,23 +114,52 @@ case "$models_http_status" in
     ;;
 esac
 
-if ! route_response="$(post_json "/gateway/route" '{"message":"hello","use_memory":false}')"; then
-  fail "Gateway API /gateway/route request failed"
-fi
+assert_route_intent() {
+  local message="$1"
+  local expected_intent="$2"
+  local body
+  local response
+  local route_status
+  local route_intent
+  local route_model_target
+  local route_confidence
+  local route_reason
+  local route_memory_enabled
+  local route_keywords_type
+  local route_message_length
 
-route_status="$(jq -r '.status // empty' <<<"$route_response")"
-route_intent="$(jq -r '.intent // empty' <<<"$route_response")"
-route_model_target="$(jq -r '.model_target // empty' <<<"$route_response")"
-route_memory_enabled="$(jq -r '.memory_enabled' <<<"$route_response")"
+  body="$(jq -nc --arg message "$message" '{message: $message, use_memory: false}')"
+  if ! response="$(post_json "/gateway/route" "$body")"; then
+    fail "Gateway API /gateway/route request failed for: $message"
+  fi
 
-if [ "$route_status" = "ok" ] \
-  && [ "$route_intent" = "chat" ] \
-  && [ -n "$route_model_target" ] \
-  && [ "$route_memory_enabled" = "false" ]; then
-  pass "Gateway API /gateway/route"
-else
-  fail "Gateway API /gateway/route returned unexpected response: $route_response"
-fi
+  route_status="$(jq -r '.status // empty' <<<"$response")"
+  route_intent="$(jq -r '.intent // empty' <<<"$response")"
+  route_model_target="$(jq -r '.model_target // empty' <<<"$response")"
+  route_confidence="$(jq -r '.confidence // empty' <<<"$response")"
+  route_reason="$(jq -r '.reason // empty' <<<"$response")"
+  route_memory_enabled="$(jq -r '.memory_enabled' <<<"$response")"
+  route_keywords_type="$(jq -r 'if (.signals.matched_keywords | type) == "array" then "array" else "other" end' <<<"$response")"
+  route_message_length="$(jq -r '.signals.message_length // empty' <<<"$response")"
+
+  if [ "$route_status" = "ok" ] \
+    && [ "$route_intent" = "$expected_intent" ] \
+    && [ -n "$route_model_target" ] \
+    && [ -n "$route_confidence" ] \
+    && [ -n "$route_reason" ] \
+    && [ "$route_memory_enabled" = "false" ] \
+    && [ "$route_keywords_type" = "array" ] \
+    && [ -n "$route_message_length" ]; then
+    pass "Gateway API /gateway/route intent=$expected_intent"
+  else
+    fail "Gateway API /gateway/route expected $expected_intent, got: $response"
+  fi
+}
+
+assert_route_intent "hello how are you" "chat"
+assert_route_intent "fix this python traceback error" "code"
+assert_route_intent "what do you remember about my local AI runtime?" "memory"
+assert_route_intent "docker compose service cannot reach localhost port" "ops"
 
 if [ "${RUN_GATEWAY_CHAT_TEST:-0}" = "1" ]; then
   if ! chat_response="$(post_json "/gateway/chat" '{"message":"hello","temperature":0.2,"max_tokens":64}')"; then

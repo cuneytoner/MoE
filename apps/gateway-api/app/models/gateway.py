@@ -50,5 +50,9 @@ class GatewayRouteRequest(BaseModel):
 class GatewayRouteResponse(BaseModel):
     status: str
     intent: str
+    confidence: float
     model_target: str
+    use_memory_recommended: bool
     memory_enabled: bool
+    reason: str
+    signals: dict[str, Any]

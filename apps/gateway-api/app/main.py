@@ -14,6 +14,7 @@ from app.models.gateway import (
     GatewayRouteRequest,
     GatewayRouteResponse,
 )
+from app.services.router import route_message
 
 app = FastAPI(title="MoE Gateway API", version="0.1.0")
 
@@ -96,11 +97,16 @@ async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
 @app.post("/gateway/route", response_model=GatewayRouteResponse)
 def route(request: GatewayRouteRequest) -> GatewayRouteResponse:
     settings = get_settings()
+    decision = route_message(request.message)
     return GatewayRouteResponse(
         status="ok",
-        intent="chat",
+        intent=decision.intent,
+        confidence=decision.confidence,
         model_target=settings.default_model,
+        use_memory_recommended=decision.use_memory_recommended,
         memory_enabled=request.use_memory,
+        reason=decision.reason,
+        signals=decision.signals,
     )
 
 

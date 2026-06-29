@@ -98,16 +98,33 @@ This endpoint is optional in default tests because it requires the host model ru
 
 ### POST /gateway/route
 
-Returns the first simple route decision:
+Returns a deterministic intent-aware route decision. This router does not call an LLM; it uses readable keyword matching and simple confidence scoring.
 
 ```json
 {
   "status": "ok",
-  "intent": "chat",
+  "intent": "code",
+  "confidence": 0.82,
   "model_target": "deepseek-coder-lite",
-  "memory_enabled": false
+  "use_memory_recommended": false,
+  "memory_enabled": false,
+  "reason": "Matched coding/debugging terms",
+  "signals": {
+    "matched_keywords": ["traceback", "error"],
+    "message_length": 31
+  }
 }
 ```
+
+Supported intents:
+
+- `chat`: general conversation fallback
+- `code`: coding, debugging, implementation, refactors, tests
+- `memory`: recall, remember, previous context, memory search
+- `review`: code review, architecture, security, performance analysis
+- `ops`: Docker, Linux, deployment, runtime, servers, network, logs
+
+For now, all intents target `deepseek-coder-lite` or the configured default model. Future milestones can map intents to specific models, tools, or workflows.
 
 Advanced MoE routing is intentionally left for a future milestone.
 
