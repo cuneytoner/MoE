@@ -284,7 +284,7 @@ Goals:
 
 ## Milestone 21: Continue.dev / VS Code Gateway Integration
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Point Continue.dev to Gateway or model runtime.

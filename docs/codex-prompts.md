@@ -1,5 +1,13 @@
 # Codex Prompts
 
+## Codex New Chat Startup
+
+Primary rules live in `AGENTS.md`. The reusable startup prompt is also documented in `docs/codex-startup-prompt.md`.
+
+```text
+I am working in ~/DiskD/Projects/MoE/codebase on the local MoE / AI-Brain-OS project. First read AGENTS.md and the relevant docs/milestones.md, docs/architecture.md, and docs/codex-prompts.md sections. Respect source-only repo rules: runtime data stays in ~/MoE/runtime, models stay in ~/MoE_Models_Backup, no real .env files, no model downloads, no commits unless explicitly asked. Keep changes milestone-scoped. After changes, show changed files and exact verification commands.
+```
+
 ## Project Rule
 
 Always keep this rule in mind:
@@ -537,6 +545,7 @@ Scope:
 - Point Continue.dev to Gateway or the model runtime.
 - Add coding model profile templates.
 - Document editor usage as a local coding assistant.
+- Preserve Continue-style prior chat turns as Gateway conversation context.
 - Keep streaming unsupported unless explicitly implemented later.
 - Do not copy editor runtime state into the codebase.
 
