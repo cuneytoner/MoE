@@ -207,6 +207,83 @@ Unknown tools return an error response:
 }
 ```
 
+Read-only workspace tools are also available:
+
+- `workspace_status`
+- `workspace_tree`
+- `workspace_file_read`
+- `workspace_search`
+- `workspace_context`
+
+These tools use the same safety checks as the workspace endpoints below.
+
+### GET /gateway/workspace/status
+
+Returns read-only workspace provider status. Inside Docker, the source code is mounted into Gateway as `/workspace:ro`.
+
+```bash
+curl -fsS http://localhost:8100/gateway/workspace/status | jq
+```
+
+Example:
+
+```json
+{
+  "status": "ok",
+  "workspace_enabled": true,
+  "workspace_root": "/workspace",
+  "read_only": true,
+  "max_file_bytes": 200000,
+  "max_tree_items": 500
+}
+```
+
+### GET /gateway/workspace/tree
+
+Returns a bounded read-only file tree with workspace-relative paths.
+
+```bash
+curl -fsS "http://localhost:8100/gateway/workspace/tree?path=docs&max_items=50" | jq
+```
+
+### GET /gateway/workspace/file
+
+Reads one allowed text file.
+
+```bash
+curl -fsS "http://localhost:8100/gateway/workspace/file?path=docs/gateway-api.md" | jq
+```
+
+Rejected paths return JSON with `status: rejected`, for example when the path escapes `/workspace`, is ignored, is too large, is binary, or has a disallowed extension.
+
+### POST /gateway/workspace/search
+
+Searches allowed text files using pure Python. Gateway does not call shell `grep`.
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"query":"gateway","path":"docs","max_results":20}' \
+  http://localhost:8100/gateway/workspace/search | jq
+```
+
+### POST /gateway/workspace/context
+
+Builds a compact context bundle from selected safe files. This endpoint does not call a model and does not edit files.
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"task":"explain gateway routing","paths":["apps/gateway-api/app/main.py","docs/gateway-api.md"],"max_chars":12000}' \
+  http://localhost:8100/gateway/workspace/context | jq
+```
+
+Workspace safety rules:
+
+- Gateway never writes, edits, deletes, moves, renames, or chmods workspace files.
+- Gateway does not execute shell commands for workspace inspection.
+- All paths are resolved under `/workspace` and returned as workspace-relative paths.
+- Ignored directories include `.git`, `__pycache__`, `.pytest_cache`, `.mypy_cache`, `.ruff_cache`, `node_modules`, `dist`, `build`, `.venv`, `venv`, `models`, `runtime`, `data`, `checkpoints`, and `custom_nodes`.
+- Binary files and files larger than `WORKSPACE_MAX_FILE_BYTES` are rejected.
+
 ### GET /gateway/runtime/status
 
 Reports whether the host OpenAI-compatible model runtime is reachable and which model id is currently loaded:

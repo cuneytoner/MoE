@@ -20,11 +20,19 @@ from app.models.gateway import (
     GatewayToolExecuteRequest,
     GatewayToolExecuteResponse,
     GatewayToolsResponse,
+    GatewayWorkspaceContextRequest,
+    GatewayWorkspaceContextResponse,
+    GatewayWorkspaceFileResponse,
+    GatewayWorkspaceSearchRequest,
+    GatewayWorkspaceSearchResponse,
+    GatewayWorkspaceStatusResponse,
+    GatewayWorkspaceTreeResponse,
 )
 from app.services.model_mapping import ModelMapping, get_model_mapping
 from app.services.router import RouteDecision, route_message
 from app.services.tool_executor import execute_tool
 from app.services.tool_planner import tool_catalog
+from app.services.workspace import WorkspaceService
 
 app = FastAPI(title="MoE Gateway API", version="0.1.0")
 
@@ -106,6 +114,72 @@ async def runtime_status() -> GatewayRuntimeStatusResponse:
         model_runtime_url=settings.model_runtime_public_url,
         loaded_models=status["loaded_models"],
         current_model=status["current_model"],
+    )
+
+
+@app.get("/gateway/workspace/status", response_model=GatewayWorkspaceStatusResponse)
+def workspace_status() -> GatewayWorkspaceStatusResponse:
+    settings = get_settings()
+    return GatewayWorkspaceStatusResponse(**WorkspaceService(settings).status())
+
+
+@app.get(
+    "/gateway/workspace/tree",
+    response_model=GatewayWorkspaceTreeResponse,
+    response_model_exclude_none=True,
+)
+def workspace_tree(
+    path: str = ".",
+    max_items: int | None = None,
+) -> GatewayWorkspaceTreeResponse:
+    settings = get_settings()
+    return GatewayWorkspaceTreeResponse(
+        **WorkspaceService(settings).tree(path=path, max_items=max_items)
+    )
+
+
+@app.get(
+    "/gateway/workspace/file",
+    response_model=GatewayWorkspaceFileResponse,
+    response_model_exclude_none=True,
+)
+def workspace_file(path: str) -> GatewayWorkspaceFileResponse:
+    settings = get_settings()
+    return GatewayWorkspaceFileResponse(**WorkspaceService(settings).file(path=path))
+
+
+@app.post(
+    "/gateway/workspace/search",
+    response_model=GatewayWorkspaceSearchResponse,
+    response_model_exclude_none=True,
+)
+def workspace_search(
+    request: GatewayWorkspaceSearchRequest,
+) -> GatewayWorkspaceSearchResponse:
+    settings = get_settings()
+    return GatewayWorkspaceSearchResponse(
+        **WorkspaceService(settings).search(
+            query=request.query,
+            path=request.path,
+            max_results=request.max_results,
+        )
+    )
+
+
+@app.post(
+    "/gateway/workspace/context",
+    response_model=GatewayWorkspaceContextResponse,
+)
+def workspace_context(
+    request: GatewayWorkspaceContextRequest,
+) -> GatewayWorkspaceContextResponse:
+    settings = get_settings()
+    return GatewayWorkspaceContextResponse(
+        **WorkspaceService(settings).context(
+            task=request.task,
+            paths=request.paths,
+            max_chars=request.max_chars,
+        )
     )
 
 

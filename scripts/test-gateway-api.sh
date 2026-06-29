@@ -145,6 +145,7 @@ tools_shell_command_suggestion="$(jq -r 'if .tools.shell_command_suggestion then
 tools_gateway_health_check="$(jq -r 'if .tools.gateway_health_check then "present" else "missing" end' <<<"$tools_response")"
 tools_memory_deep_health_check="$(jq -r 'if .tools.memory_deep_health_check then "present" else "missing" end' <<<"$tools_response")"
 tools_runtime_status_check="$(jq -r 'if .tools.runtime_status_check then "present" else "missing" end' <<<"$tools_response")"
+tools_workspace_status="$(jq -r 'if .tools.workspace_status then "present" else "missing" end' <<<"$tools_response")"
 
 if [ "$tools_status" = "ok" ] \
   && [ "$tools_auto_execution" = "false" ] \
@@ -156,7 +157,8 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_shell_command_suggestion" = "present" ] \
   && [ "$tools_gateway_health_check" = "present" ] \
   && [ "$tools_memory_deep_health_check" = "present" ] \
-  && [ "$tools_runtime_status_check" = "present" ]; then
+  && [ "$tools_runtime_status_check" = "present" ] \
+  && [ "$tools_workspace_status" = "present" ]; then
   pass "Gateway API /gateway/tools"
 else
   fail "Gateway API /gateway/tools returned unexpected response: $tools_response"
@@ -164,6 +166,7 @@ fi
 
 assert_tool_execute_ok() {
   local tool="$1"
+  local arguments="${2:-{}}"
   local body
   local response
   local execute_status
@@ -171,7 +174,7 @@ assert_tool_execute_ok() {
   local execute_read_only
   local execute_result_type
 
-  body="$(jq -nc --arg tool "$tool" '{tool: $tool, arguments: {}}')"
+  body="$(jq -nc --arg tool "$tool" --argjson arguments "$arguments" '{tool: $tool, arguments: $arguments}')"
   if ! response="$(post_json "/gateway/tools/execute" "$body")"; then
     fail "Gateway API /gateway/tools/execute request failed for: $tool"
   fi
@@ -250,6 +253,11 @@ assert_tool_execute_ok "embed_worker_health_check"
 assert_tool_execute_ok "runtime_status_check"
 assert_tool_execute_ok "model_routing_read"
 assert_tool_execute_ok "tools_read"
+assert_tool_execute_ok "workspace_status"
+assert_tool_execute_ok "workspace_tree" '{"path":".","max_items":20}'
+assert_tool_execute_ok "workspace_search" '{"query":"gateway","path":"docs","max_results":5}'
+assert_tool_execute_ok "workspace_file_read" '{"path":"docs/gateway-api.md"}'
+assert_tool_execute_ok "workspace_context" '{"task":"explain gateway docs","paths":["docs/gateway-api.md"],"max_chars":4000}'
 assert_tool_execute_rejected "shell_command_suggestion"
 assert_tool_execute_rejected "docker_status_check"
 assert_tool_execute_rejected "runtime_switch_plan"
@@ -257,6 +265,89 @@ assert_tool_execute_rejected "model_chat"
 assert_tool_execute_rejected "memory_search"
 assert_tool_execute_rejected "none"
 assert_tool_execute_error "unknown_tool"
+
+if ! workspace_status_response="$(curl -fsS "$GATEWAY_API_URL/gateway/workspace/status")"; then
+  fail "Gateway API /gateway/workspace/status request failed"
+fi
+
+workspace_status="$(jq -r '.status // empty' <<<"$workspace_status_response")"
+workspace_read_only="$(jq -r '.read_only' <<<"$workspace_status_response")"
+
+if [ "$workspace_status" = "ok" ] && [ "$workspace_read_only" = "true" ]; then
+  pass "Gateway API /gateway/workspace/status"
+else
+  fail "Gateway API /gateway/workspace/status returned unexpected response: $workspace_status_response"
+fi
+
+if ! workspace_tree_response="$(curl -fsS "$GATEWAY_API_URL/gateway/workspace/tree?max_items=20")"; then
+  fail "Gateway API /gateway/workspace/tree request failed"
+fi
+
+workspace_tree_status="$(jq -r '.status // empty' <<<"$workspace_tree_response")"
+workspace_tree_items_type="$(jq -r 'if (.items | type) == "array" then "array" else "other" end' <<<"$workspace_tree_response")"
+
+if [ "$workspace_tree_status" = "ok" ] && [ "$workspace_tree_items_type" = "array" ]; then
+  pass "Gateway API /gateway/workspace/tree"
+else
+  fail "Gateway API /gateway/workspace/tree returned unexpected response: $workspace_tree_response"
+fi
+
+if ! workspace_file_response="$(curl -fsS "$GATEWAY_API_URL/gateway/workspace/file?path=docs/gateway-api.md")"; then
+  fail "Gateway API /gateway/workspace/file request failed"
+fi
+
+workspace_file_status="$(jq -r '.status // empty' <<<"$workspace_file_response")"
+workspace_file_path="$(jq -r '.path // empty' <<<"$workspace_file_response")"
+workspace_file_content="$(jq -r '.content // empty' <<<"$workspace_file_response")"
+
+if [ "$workspace_file_status" = "ok" ] \
+  && [ "$workspace_file_path" = "docs/gateway-api.md" ] \
+  && [ -n "$workspace_file_content" ]; then
+  pass "Gateway API /gateway/workspace/file"
+else
+  fail "Gateway API /gateway/workspace/file returned unexpected response: $workspace_file_response"
+fi
+
+if ! workspace_rejected_response="$(curl -fsS -G --data-urlencode "path=../../etc/passwd" "$GATEWAY_API_URL/gateway/workspace/file")"; then
+  fail "Gateway API /gateway/workspace/file traversal request failed"
+fi
+
+workspace_rejected_status="$(jq -r '.status // empty' <<<"$workspace_rejected_response")"
+
+if [ "$workspace_rejected_status" = "rejected" ]; then
+  pass "Gateway API /gateway/workspace/file rejects traversal"
+else
+  fail "Gateway API /gateway/workspace/file traversal returned unexpected response: $workspace_rejected_response"
+fi
+
+if ! workspace_search_response="$(post_json "/gateway/workspace/search" '{"query":"gateway","path":"docs","max_results":5}')"; then
+  fail "Gateway API /gateway/workspace/search request failed"
+fi
+
+workspace_search_status="$(jq -r '.status // empty' <<<"$workspace_search_response")"
+workspace_search_results_type="$(jq -r 'if (.results | type) == "array" then "array" else "other" end' <<<"$workspace_search_response")"
+
+if [ "$workspace_search_status" = "ok" ] && [ "$workspace_search_results_type" = "array" ]; then
+  pass "Gateway API /gateway/workspace/search"
+else
+  fail "Gateway API /gateway/workspace/search returned unexpected response: $workspace_search_response"
+fi
+
+if ! workspace_context_response="$(post_json "/gateway/workspace/context" '{"task":"explain gateway docs","paths":["docs/gateway-api.md"],"max_chars":4000}')"; then
+  fail "Gateway API /gateway/workspace/context request failed"
+fi
+
+workspace_context_status="$(jq -r '.status // empty' <<<"$workspace_context_response")"
+workspace_context_text="$(jq -r '.context // empty' <<<"$workspace_context_response")"
+workspace_context_files_type="$(jq -r 'if (.files | type) == "array" then "array" else "other" end' <<<"$workspace_context_response")"
+
+if [ "$workspace_context_status" = "ok" ] \
+  && [ -n "$workspace_context_text" ] \
+  && [ "$workspace_context_files_type" = "array" ]; then
+  pass "Gateway API /gateway/workspace/context"
+else
+  fail "Gateway API /gateway/workspace/context returned unexpected response: $workspace_context_response"
+fi
 
 if ! runtime_status_response="$(curl -fsS "$GATEWAY_API_URL/gateway/runtime/status")"; then
   fail "Gateway API /gateway/runtime/status request failed"

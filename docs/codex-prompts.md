@@ -513,16 +513,18 @@ Scope:
 - Preserve source-only repository and runtime data boundaries.
 - Avoid advanced MoE routing until tool safety is proven.
 
-## Milestone 20 Prompt Placeholder
+## Milestone 20 Prompt Summary
 
 Add local coding workspace integration.
 
-Expected boundaries:
+Scope:
 
-- Add read-only workspace context provider planning or implementation.
-- Add repo file tree and safe file search concepts.
-- Add code task prompt templates.
+- Add read-only workspace context provider.
+- Add workspace status, tree, file read, search, and context endpoints.
+- Mount the source code into Gateway as `/workspace:ro`.
+- Add read-only workspace tools.
 - Keep file writes disabled.
+- Do not execute shell commands from Gateway.
 - Preserve source-only repository and runtime data boundaries.
 
 ## Milestone 21 Prompt Placeholder

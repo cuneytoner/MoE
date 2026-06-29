@@ -143,3 +143,77 @@ class GatewayRouteResponse(BaseModel):
     reason: str
     signals: dict[str, Any]
     tool_plan: GatewayToolPlan
+
+
+class GatewayWorkspaceStatusResponse(BaseModel):
+    status: str
+    workspace_enabled: bool
+    read_only: bool
+    workspace_root: str | None = None
+    max_file_bytes: int | None = None
+    max_tree_items: int | None = None
+
+
+class GatewayWorkspaceTreeItem(BaseModel):
+    path: str
+    type: str
+    size: int | None = None
+
+
+class GatewayWorkspaceTreeResponse(BaseModel):
+    status: str
+    path: str
+    items: list[GatewayWorkspaceTreeItem] = Field(default_factory=list)
+    truncated: bool = False
+    reason: str | None = None
+
+
+class GatewayWorkspaceFileResponse(BaseModel):
+    status: str
+    path: str
+    size: int | None = None
+    content: str | None = None
+    reason: str | None = None
+
+
+class GatewayWorkspaceSearchRequest(BaseModel):
+    query: str = Field(min_length=1)
+    path: str = "."
+    max_results: int = Field(default=20, ge=1, le=100)
+
+
+class GatewayWorkspaceSearchResult(BaseModel):
+    path: str
+    line: int
+    snippet: str
+
+
+class GatewayWorkspaceSearchResponse(BaseModel):
+    status: str
+    query: str | None = None
+    path: str | None = None
+    results: list[GatewayWorkspaceSearchResult] = Field(default_factory=list)
+    truncated: bool = False
+    reason: str | None = None
+
+
+class GatewayWorkspaceContextRequest(BaseModel):
+    task: str = Field(min_length=1)
+    paths: list[str] = Field(min_length=1, max_length=20)
+    max_chars: int = Field(default=12000, ge=1, le=50000)
+
+
+class GatewayWorkspaceContextFile(BaseModel):
+    path: str
+    included: bool
+    size: int | None = None
+    reason: str | None = None
+    truncated: bool | None = None
+
+
+class GatewayWorkspaceContextResponse(BaseModel):
+    status: str
+    task: str
+    context: str
+    files: list[GatewayWorkspaceContextFile]
+    truncated: bool

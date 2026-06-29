@@ -13,17 +13,33 @@ Nightly learning begins later, after Milestone 24. It can summarize coding activ
 
 Goal: give Gateway safe read-only awareness of a repository without enabling file writes.
 
-Planned capabilities:
+Implemented scope:
 
 - Read-only workspace context provider.
-- Repo file tree endpoint.
-- Safe file search endpoint.
-- Code task prompt templates for explanation, debugging, review, and implementation planning.
+- Repo file tree endpoint: `GET /gateway/workspace/tree`.
+- Safe file read endpoint: `GET /gateway/workspace/file`.
+- Safe file search endpoint: `POST /gateway/workspace/search`.
+- Context bundle endpoint: `POST /gateway/workspace/context`.
+- Read-only workspace tools through `/gateway/tools/execute`.
 - No file writes.
 - No patch application.
 - No shell execution.
 
-The first workspace provider should only read allowed paths and return bounded context. It should avoid runtime folders, model files, caches, virtual environments, database data, Docker volumes, logs, and generated artifacts.
+The Gateway container mounts the source code as `/workspace:ro`. The provider only reads allowed paths and returns bounded context. It avoids runtime folders, model files, caches, virtual environments, database data, Docker volumes, logs, and generated artifacts.
+
+Security model:
+
+- Resolve every path under `WORKSPACE_ROOT`.
+- Reject path traversal and absolute paths.
+- Return workspace-relative paths only.
+- Exclude ignored directories such as `.git`, `node_modules`, `runtime`, `models`, `data`, and virtual environments.
+- Read only allowed text-like files.
+- Reject binary files.
+- Reject files larger than `WORKSPACE_MAX_FILE_BYTES`.
+
+Supported file names and extensions are configured with `WORKSPACE_ALLOWED_EXTENSIONS`.
+
+Current limitation: this milestone prepares context only. It does not generate patches, apply edits, or run commands.
 
 ## Milestone 21: Continue.dev / VS Code Gateway Integration
 

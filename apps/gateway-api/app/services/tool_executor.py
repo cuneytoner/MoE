@@ -6,6 +6,7 @@ from app.clients.model_runtime import ModelRuntimeClient
 from app.config import Settings
 from app.services.model_mapping import get_model_mapping
 from app.services.tool_planner import tool_catalog
+from app.services.workspace import WorkspaceService
 
 REJECTED_REASON = "Tool is advisory only and cannot be executed by Gateway"
 
@@ -87,6 +88,35 @@ async def _execute_read_only_tool(
             "read_only_execution_enabled": True,
         }
 
+    if tool == "workspace_status":
+        return WorkspaceService(settings).status()
+
+    if tool == "workspace_tree":
+        return WorkspaceService(settings).tree(
+            path=str(arguments.get("path") or "."),
+            max_items=_optional_int(arguments.get("max_items")),
+        )
+
+    if tool == "workspace_file_read":
+        return WorkspaceService(settings).file(path=str(arguments.get("path") or ""))
+
+    if tool == "workspace_search":
+        return WorkspaceService(settings).search(
+            query=str(arguments.get("query") or ""),
+            path=str(arguments.get("path") or "."),
+            max_results=_optional_int(arguments.get("max_results")) or 20,
+        )
+
+    if tool == "workspace_context":
+        paths = arguments.get("paths")
+        if not isinstance(paths, list):
+            paths = []
+        return WorkspaceService(settings).context(
+            task=str(arguments.get("task") or ""),
+            paths=[str(path) for path in paths],
+            max_chars=_optional_int(arguments.get("max_chars")) or 12000,
+        )
+
     return {
         "arguments": arguments,
         "message": "No read-only executor is registered for this tool.",
@@ -99,3 +129,10 @@ async def _dependency_statuses(settings: Settings) -> dict[str, str]:
         "embed_worker": await EmbedWorkerClient(settings.embed_worker_url).check(),
         "model_runtime": await ModelRuntimeClient(settings.model_runtime_url).check(),
     }
+
+
+def _optional_int(value: Any) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None

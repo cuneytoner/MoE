@@ -63,6 +63,36 @@ TOOL_CATALOG: dict[str, dict[str, Any]] = {
         "executable": True,
         "read_only": True,
     },
+    "workspace_status": {
+        "description": "Read workspace provider status.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "workspace_tree": {
+        "description": "Read a safe workspace file tree.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "workspace_file_read": {
+        "description": "Read one allowed text file from the workspace.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "workspace_search": {
+        "description": "Search allowed text files in the workspace.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "workspace_context": {
+        "description": "Build a compact context bundle from selected workspace files.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
     "model_chat": {
         "description": "Send a chat completion request to the OpenAI-compatible model runtime.",
         "auto_execution_supported": False,

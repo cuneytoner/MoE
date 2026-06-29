@@ -27,6 +27,20 @@ class Settings(BaseSettings):
         default_factory=lambda: _default_model_routing_config(),
         alias="MODEL_ROUTING_CONFIG",
     )
+    workspace_root: str = Field(default="/workspace", alias="WORKSPACE_ROOT")
+    workspace_enabled: bool = Field(default=True, alias="WORKSPACE_ENABLED")
+    workspace_max_file_bytes: int = Field(
+        default=200000,
+        alias="WORKSPACE_MAX_FILE_BYTES",
+    )
+    workspace_max_tree_items: int = Field(
+        default=500,
+        alias="WORKSPACE_MAX_TREE_ITEMS",
+    )
+    workspace_allowed_extensions: str = Field(
+        default=".py,.md,.txt,.yaml,.yml,.json,.toml,.sh,.env.example,.gitignore,.dockerignore,Dockerfile,Makefile",
+        alias="WORKSPACE_ALLOWED_EXTENSIONS",
+    )
 
 
 def _default_model_routing_config() -> str:

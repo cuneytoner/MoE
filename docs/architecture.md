@@ -125,9 +125,19 @@ Future local AI stack layers expected around it:
 - automation layer such as n8n
 - homelab operations and container management
 
-Coding workspace roadmap:
+Workspace context provider:
 
-The stack becomes practically useful for local code development after Milestone 20 and Milestone 21. The first coding workspace layer should be read-only: repo tree, safe file search, bounded context, and prompt templates. File writes and patch application remain disabled until the safe write/edit plan milestone.
+The stack becomes practically useful for local code development after Milestone 20 and Milestone 21. The workspace context provider mounts source code into Gateway as `/workspace:ro` and exposes read-only status, tree, file read, search, and context bundle endpoints.
+
+Coding flow:
+
+- user task
+- Gateway route decision
+- optional workspace search or context bundle
+- optional memory search
+- model chat through the host OpenAI-compatible runtime
+
+File writes and patch application remain disabled until the safe write/edit plan milestone.
 
 Nightly learning roadmap:
 

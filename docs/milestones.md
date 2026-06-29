@@ -262,7 +262,7 @@ Goals:
 
 ## Milestone 19: Controlled Read-Only Tool Execution
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add explicit read-only Gateway tool execution for safe internal HTTP checks.
@@ -273,7 +273,7 @@ Goals:
 
 ## Milestone 20: Local Coding Workspace Integration
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Add read-only workspace context provider.
@@ -301,7 +301,7 @@ Goals:
 - Support code explanation, debugging, review, and implementation planning.
 - Keep agent actions advisory until write safety is designed.
 
-## Milestone 23: Safe Write/Edit Plan for Code
+## Milestone 23: Safe Patch/Diff Workflow
 
 Status: PLANNED
 

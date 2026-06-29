@@ -15,10 +15,16 @@ services:
       MODEL_RUNTIME_PUBLIC_URL: ${MODEL_RUNTIME_PUBLIC_URL:-http://localhost:8000/v1}
       DEFAULT_MODEL: ${DEFAULT_MODEL:-deepseek-coder-lite}
       MODEL_ROUTING_CONFIG: /app/configs/model-routing.yaml
+      WORKSPACE_ROOT: ${WORKSPACE_ROOT:-/workspace}
+      WORKSPACE_ENABLED: ${WORKSPACE_ENABLED:-true}
+      WORKSPACE_MAX_FILE_BYTES: ${WORKSPACE_MAX_FILE_BYTES:-200000}
+      WORKSPACE_MAX_TREE_ITEMS: ${WORKSPACE_MAX_TREE_ITEMS:-500}
+      WORKSPACE_ALLOWED_EXTENSIONS: ${WORKSPACE_ALLOWED_EXTENSIONS:-.py,.md,.txt,.yaml,.yml,.json,.toml,.sh,.env.example,.gitignore,.dockerignore,Dockerfile,Makefile}
     ports:
       - "${GATEWAY_API_PORT:-8100}:8100"
     volumes:
       - ../../configs/model-routing.yaml:/app/configs/model-routing.yaml:ro
+      - ../../:/workspace:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
