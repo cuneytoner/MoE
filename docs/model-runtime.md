@@ -67,7 +67,35 @@ make model-health
 Current validation notes:
 
 - `deepseek-coder-lite` has been confirmed as a healthy runtime model.
-- `qwen-coder-14b-fast` had a corrupted or incomplete local GGUF file and should be retested after replacement.
+- `qwen-coder-14b-fast` is unavailable because the local file failed GGUF magic validation. Retest only after replacing the file.
+
+## GGUF Troubleshooting
+
+Valid GGUF model files must start with the magic bytes `GGUF`.
+
+If llama.cpp reports:
+
+`invalid magic characters: 'Entr', expected 'GGUF'`
+
+the file is probably not a model file. A common cause is saving a non-GGUF HTTP response or error page with a `.gguf` extension.
+
+Quick checks:
+
+```bash
+head -c 4 /home/cuneyt/MoE_Models_Backup/MODEL.gguf
+```
+
+```bash
+xxd -l 32 /home/cuneyt/MoE_Models_Backup/MODEL.gguf
+```
+
+Expected first four bytes:
+
+```text
+GGUF
+```
+
+Quarantine invalid model files outside the codebase instead of deleting them immediately. Keep model files under `/home/cuneyt/MoE_Models_Backup`, not in this repository.
 
 ## Client Integration
 

@@ -11,7 +11,7 @@ models:
     flash_attention: true
     cache_type_k: q8_0
     cache_type_v: q8_0
-    notes: Fast default option for coding workflows.
+    notes: Unavailable: local file failed GGUF magic validation. Do not use until replaced.
 
   - id: qwen-coder-32b-main
     name: Qwen2.5 Coder 32B Instruct IQ4 XS

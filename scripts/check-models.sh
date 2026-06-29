@@ -30,6 +30,7 @@ require_command du
 require_command grep
 require_command stat
 require_command awk
+require_command head
 
 runtime_value() {
   local key="$1"
@@ -95,16 +96,60 @@ else
   fail "llama-server binary missing or not executable: $LLAMA_SERVER"
 fi
 
-while IFS= read -r gguf_path; do
-  if [ -f "$gguf_path" ]; then
-    pass "GGUF model exists: $gguf_path"
+optional_gguf_ids=(
+  "qwen-coder-14b-fast"
+)
+
+is_optional_gguf() {
+  local model_id="$1"
+
+  for optional_id in "${optional_gguf_ids[@]}"; do
+    if [ "$model_id" = "$optional_id" ]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+warn_gguf() {
+  echo "WARN: $1"
+}
+
+while IFS=$'\t' read -r model_id gguf_path; do
+  if [ -z "$model_id" ] || [ -z "$gguf_path" ]; then
+    continue
+  fi
+
+  if [ ! -f "$gguf_path" ]; then
+    if is_optional_gguf "$model_id"; then
+      warn_gguf "GGUF model missing: id=$model_id path=$gguf_path"
+      continue
+    fi
+    fail "GGUF model missing: id=$model_id path=$gguf_path"
+  fi
+
+  gguf_size="$(stat -c %s "$gguf_path")"
+  gguf_magic="$(head -c 4 "$gguf_path")"
+  if [ "$gguf_magic" = "GGUF" ]; then
+    pass "GGUF magic OK: id=$model_id path=$gguf_path size=${gguf_size} magic=$gguf_magic"
+    continue
+  fi
+
+  message="invalid GGUF magic: id=$model_id path=$gguf_path size=${gguf_size} magic=${gguf_magic:-empty}"
+  if is_optional_gguf "$model_id"; then
+    warn_gguf "$message"
   else
-    fail "GGUF model missing: $gguf_path"
+    fail "$message"
   fi
 done < <(awk '
+  $1 == "-" && $2 == "id:" {
+    model_id = $3
+    next
+  }
   $1 == "path:" && $2 ~ /\.gguf$/ {
-    sub(/^[^:]+:[[:space:]]*/, "")
-    print
+    path = $0
+    sub(/^[^:]+:[[:space:]]*/, "", path)
+    print model_id "\t" path
   }
 ' "$MODELS_CONFIG")
 
