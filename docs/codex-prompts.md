@@ -566,16 +566,22 @@ Scope:
 - Do not switch model runtime from Gateway.
 
 
-## Milestone 23 Prompt Placeholder
+## Milestone 23 Prompt Summary
 
-Add safe write/edit planning for code.
+Add safe patch/diff suggestion workflow.
 
-Expected boundaries:
+Scope:
 
-- Generate patches only.
+- Add `/gateway/code/patch-plan` to build repo context and ask for a structured patch plan.
+- Add `/gateway/code/diff-suggest` to build repo context and ask for a unified diff suggestion.
+- Return selected files and route metadata.
+- Add read-only tool catalog entries for `code_patch_plan` and `code_diff_suggest`.
+- Set `apply_supported=false`.
+- Keep default tests independent from model runtime.
+- Generate suggestions only.
 - Do not auto-apply changes.
-- Add diff review workflow.
-- Keep user approval explicit.
+- Do not write, edit, delete, move, rename, chmod, or apply patches from Gateway.
+- Keep manual review explicit.
 
 ## Milestone 23.5 Prompt Placeholder
 

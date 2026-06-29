@@ -74,8 +74,7 @@ Never place runtime data, generated media, logs, pids, model files, checkpoints,
 
 ## 6. Current And Planned Milestones
 
-- Milestone 22: Repo-Aware Coding Agent in progress
-- Milestone 23: Safe Patch/Diff Workflow
+- Milestone 23: Safe Patch/Diff Workflow in progress
 - Milestone 23.5: PC-2 Worker Node Preparation
 - Milestone 24: Nightly Learning Worker
 - Milestone 25: Media Lab Foundation

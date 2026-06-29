@@ -77,16 +77,23 @@ The repo-aware agent remains read-only:
 
 If the model runtime is unavailable, `/gateway/code/ask` returns a controlled unavailable response. The default Gateway tests do not require generated model content.
 
-## Milestone 23: Safe Write/Edit Plan for Code
+## Milestone 23: Safe Patch / Diff Workflow
 
-Goal: design the write boundary before any editing automation exists.
+Goal: let Gateway suggest patch plans and unified diffs while keeping the write boundary closed.
 
-Planned safety model:
+Implemented safe suggestion workflow:
 
-- Generate patches only.
+- `POST /gateway/code/patch-plan` returns a summary, affected files, proposed steps, risks, tests to run, selected files, and route metadata.
+- `POST /gateway/code/diff-suggest` returns a unified diff suggestion or an explanation when no confident diff is available.
+- Tool catalog entries `code_patch_plan` and `code_diff_suggest` are read-only and report `apply_supported: false`.
+
+Safety model:
+
+- Generate plans and diff suggestions only.
 - Do not auto-apply changes.
-- Present diffs for review.
-- Keep edit approval explicit.
-- Preserve user changes and avoid unrelated rewrites.
+- Do not write, edit, delete, move, rename, chmod, or apply patches from Gateway.
+- Present diffs for human review.
+- The user must manually apply any accepted diff outside Gateway.
+- Preserve user changes and avoid unrelated rewrites when drafting suggestions.
 
 Automatic patch application belongs only after this workflow is reviewed and deliberately enabled.

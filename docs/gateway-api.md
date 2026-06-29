@@ -160,6 +160,22 @@ Example response:
       "read_only": true,
       "requires_runtime": true
     },
+    "code_patch_plan": {
+      "description": "Generate a human-reviewable patch plan without applying changes.",
+      "auto_execution_supported": false,
+      "executable": true,
+      "read_only": true,
+      "requires_runtime": true,
+      "apply_supported": false
+    },
+    "code_diff_suggest": {
+      "description": "Generate a unified diff suggestion without applying changes.",
+      "auto_execution_supported": false,
+      "executable": true,
+      "read_only": true,
+      "requires_runtime": true,
+      "apply_supported": false
+    },
     "runtime_switch_plan": {
       "description": "Return an advisory manual runtime switch command without executing it.",
       "auto_execution_supported": false,
@@ -259,6 +275,8 @@ Read-only workspace tools are also available:
 - `workspace_context`
 - `code_context`
 - `code_ask`
+- `code_patch_plan`
+- `code_diff_suggest`
 
 These tools use the same safety checks as the workspace endpoints below.
 
@@ -378,6 +396,34 @@ Read-only limitations:
 - Gateway does not execute shell commands.
 - Gateway does not switch the model runtime.
 - Suggested changes must be descriptive or patch-style suggestions only.
+
+### POST /gateway/code/patch-plan
+
+Builds repo context, asks the model for a human-reviewable patch plan, and returns structured planning fields. It does not write files and does not apply patches.
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"task":"Add validation for missing query in workspace search","query":"workspace search","paths":["apps/gateway-api/app/main.py","apps/gateway-api/app/services/workspace.py"],"max_files":8,"max_context_chars":20000,"temperature":0.1,"max_tokens":768}' \
+  http://localhost:8100/gateway/code/patch-plan | jq
+```
+
+Response fields include `summary`, `affected_files`, `proposed_steps`, `risks`, `tests_to_run`, `selected_files`, and `route`.
+
+If the model runtime is unavailable, Gateway returns `status: unavailable` with selected files and a reason.
+
+### POST /gateway/code/diff-suggest
+
+Builds repo context and asks the model for a unified diff suggestion only. The response always includes `apply_supported: false`. Gateway never applies the diff.
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"task":"Add validation for missing query in workspace search","query":"workspace search","paths":["apps/gateway-api/app/main.py","apps/gateway-api/app/services/workspace.py"],"max_files":8,"max_context_chars":20000,"temperature":0.1,"max_tokens":1200}' \
+  http://localhost:8100/gateway/code/diff-suggest | jq
+```
+
+Response fields include `diff`, `explanation`, `apply_supported: false`, `selected_files`, and `route`.
+
+The user must review any suggested diff and apply it manually outside Gateway. Future patch application, if added, must be approval-gated and implemented in a later milestone.
 
 ### GET /gateway/runtime/status
 

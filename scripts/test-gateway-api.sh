@@ -195,6 +195,8 @@ tools_runtime_status_check="$(jq -r 'if .tools.runtime_status_check then "presen
 tools_workspace_status="$(jq -r 'if .tools.workspace_status then "present" else "missing" end' <<<"$tools_response")"
 tools_code_context="$(jq -r 'if .tools.code_context then "present" else "missing" end' <<<"$tools_response")"
 tools_code_ask="$(jq -r 'if .tools.code_ask then "present" else "missing" end' <<<"$tools_response")"
+tools_code_patch_plan="$(jq -r 'if .tools.code_patch_plan then "present" else "missing" end' <<<"$tools_response")"
+tools_code_diff_suggest="$(jq -r 'if .tools.code_diff_suggest then "present" else "missing" end' <<<"$tools_response")"
 
 if [ "$tools_status" = "ok" ] \
   && [ "$tools_auto_execution" = "false" ] \
@@ -209,7 +211,9 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_runtime_status_check" = "present" ] \
   && [ "$tools_workspace_status" = "present" ] \
   && [ "$tools_code_context" = "present" ] \
-  && [ "$tools_code_ask" = "present" ]; then
+  && [ "$tools_code_ask" = "present" ] \
+  && [ "$tools_code_patch_plan" = "present" ] \
+  && [ "$tools_code_diff_suggest" = "present" ]; then
   pass "Gateway API /gateway/tools"
 else
   fail "Gateway API /gateway/tools returned unexpected response: $tools_response"
@@ -310,6 +314,8 @@ assert_tool_execute_ok "workspace_search" '{"query":"gateway","path":"docs","max
 assert_tool_execute_ok "workspace_file_read" '{"path":"docs/gateway-api.md"}'
 assert_tool_execute_ok "workspace_context" '{"task":"explain gateway docs","paths":["docs/gateway-api.md"],"max_chars":4000}'
 assert_tool_execute_ok "code_context" '{"task":"explain gateway routing","query":"gateway","paths":[],"max_files":4,"max_chars":8000}'
+assert_tool_execute_ok "code_patch_plan" '{"task":"Suggest a docs-only change","query":"gateway","paths":["docs/gateway-api.md"],"max_files":2,"max_context_chars":4000,"max_tokens":128}'
+assert_tool_execute_ok "code_diff_suggest" '{"task":"Suggest a docs-only diff","query":"gateway","paths":["docs/gateway-api.md"],"max_files":2,"max_context_chars":4000,"max_tokens":128}'
 assert_tool_execute_rejected "shell_command_suggestion"
 assert_tool_execute_rejected "docker_status_check"
 assert_tool_execute_rejected "runtime_switch_plan"
@@ -451,6 +457,54 @@ case "$code_ask_http_status" in
     ;;
   *)
     fail "Gateway API /gateway/code/ask expected controlled HTTP 200, got $code_ask_http_status: $code_ask_response"
+    ;;
+esac
+
+patch_plan_http_status="$(
+  curl -sS -o /tmp/moe-gateway-code-patch-plan-response.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"task":"Add validation for missing query in workspace search","query":"workspace search","paths":["apps/gateway-api/app/main.py","apps/gateway-api/app/services/workspace.py"],"max_files":8,"max_context_chars":12000,"temperature":0.1,"max_tokens":256}' \
+    "$GATEWAY_API_URL/gateway/code/patch-plan" || true
+)"
+patch_plan_response="$(cat /tmp/moe-gateway-code-patch-plan-response.json 2>/dev/null || true)"
+patch_plan_status="$(jq -r '.status // empty' <<<"$patch_plan_response")"
+
+case "$patch_plan_http_status" in
+  200)
+    if [ "$patch_plan_status" = "ok" ] || [ "$patch_plan_status" = "unavailable" ]; then
+      pass "Gateway API /gateway/code/patch-plan controlled response"
+    else
+      fail "Gateway API /gateway/code/patch-plan returned unexpected response: $patch_plan_response"
+    fi
+    ;;
+  *)
+    fail "Gateway API /gateway/code/patch-plan expected controlled HTTP 200, got $patch_plan_http_status: $patch_plan_response"
+    ;;
+esac
+
+diff_suggest_http_status="$(
+  curl -sS -o /tmp/moe-gateway-code-diff-suggest-response.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"task":"Add validation for missing query in workspace search","query":"workspace search","paths":["apps/gateway-api/app/main.py","apps/gateway-api/app/services/workspace.py"],"max_files":8,"max_context_chars":12000,"temperature":0.1,"max_tokens":256}' \
+    "$GATEWAY_API_URL/gateway/code/diff-suggest" || true
+)"
+diff_suggest_response="$(cat /tmp/moe-gateway-code-diff-suggest-response.json 2>/dev/null || true)"
+diff_suggest_status="$(jq -r '.status // empty' <<<"$diff_suggest_response")"
+diff_suggest_apply_supported="$(jq -r '.apply_supported' <<<"$diff_suggest_response")"
+
+case "$diff_suggest_http_status" in
+  200)
+    if { [ "$diff_suggest_status" = "ok" ] || [ "$diff_suggest_status" = "unavailable" ]; } \
+      && [ "$diff_suggest_apply_supported" = "false" ]; then
+      pass "Gateway API /gateway/code/diff-suggest controlled response"
+    else
+      fail "Gateway API /gateway/code/diff-suggest returned unexpected response: $diff_suggest_response"
+    fi
+    ;;
+  *)
+    fail "Gateway API /gateway/code/diff-suggest expected controlled HTTP 200, got $diff_suggest_http_status: $diff_suggest_response"
     ;;
 esac
 

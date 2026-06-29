@@ -15,6 +15,10 @@ from app.models.gateway import (
     GatewayCodeAskResponse,
     GatewayCodeContextRequest,
     GatewayCodeContextResponse,
+    GatewayCodeDiffSuggestRequest,
+    GatewayCodeDiffSuggestResponse,
+    GatewayCodePatchPlanRequest,
+    GatewayCodePatchPlanResponse,
     GatewayHealthResponse,
     GatewayModelRoutingResponse,
     GatewayModelsResponse,
@@ -40,6 +44,12 @@ from app.models.gateway import (
     OpenAIChatMessage,
 )
 from app.services.model_mapping import ModelMapping, get_model_mapping
+from app.services.patch_planner import (
+    diff_suggest_system_prompt,
+    parse_diff_suggestion,
+    parse_patch_plan,
+    patch_plan_system_prompt,
+)
 from app.services.repo_agent import RepoAgentService
 from app.services.router import RouteDecision, route_message
 from app.services.tool_executor import execute_tool
@@ -261,6 +271,98 @@ async def code_ask(request: GatewayCodeAskRequest) -> GatewayCodeAskResponse:
         memory=chat_response.memory,
         model=chat_response.model,
         truncated=bool(context["truncated"]),
+    )
+
+
+@app.post(
+    "/gateway/code/patch-plan",
+    response_model=GatewayCodePatchPlanResponse,
+    response_model_exclude_none=True,
+)
+async def code_patch_plan(
+    request: GatewayCodePatchPlanRequest,
+) -> GatewayCodePatchPlanResponse:
+    settings = get_settings()
+    context = RepoAgentService(settings).build_context(
+        task=request.task,
+        query=request.query,
+        paths=request.paths,
+        max_files=request.max_files,
+        max_chars=request.max_context_chars,
+    )
+    try:
+        chat_response = await _gateway_chat(
+            GatewayChatRequest(
+                message=request.task,
+                system=patch_plan_system_prompt(str(context["context"])),
+                temperature=request.temperature,
+                max_tokens=request.max_tokens,
+                use_memory=False,
+                auto_route=True,
+            )
+        )
+    except HTTPException as exc:
+        if exc.status_code == 503:
+            return GatewayCodePatchPlanResponse(
+                status="unavailable",
+                selected_files=context["selected_files"],
+                reason=str(exc.detail),
+            )
+        raise
+
+    plan = parse_patch_plan(chat_response.content, context["selected_files"])
+    return GatewayCodePatchPlanResponse(
+        status="ok",
+        selected_files=context["selected_files"],
+        route=chat_response.route,
+        **plan,
+    )
+
+
+@app.post(
+    "/gateway/code/diff-suggest",
+    response_model=GatewayCodeDiffSuggestResponse,
+    response_model_exclude_none=True,
+)
+async def code_diff_suggest(
+    request: GatewayCodeDiffSuggestRequest,
+) -> GatewayCodeDiffSuggestResponse:
+    settings = get_settings()
+    context = RepoAgentService(settings).build_context(
+        task=request.task,
+        query=request.query,
+        paths=request.paths,
+        max_files=request.max_files,
+        max_chars=request.max_context_chars,
+    )
+    try:
+        chat_response = await _gateway_chat(
+            GatewayChatRequest(
+                message=request.task,
+                system=diff_suggest_system_prompt(str(context["context"])),
+                temperature=request.temperature,
+                max_tokens=request.max_tokens,
+                use_memory=False,
+                auto_route=True,
+            )
+        )
+    except HTTPException as exc:
+        if exc.status_code == 503:
+            return GatewayCodeDiffSuggestResponse(
+                status="unavailable",
+                apply_supported=False,
+                selected_files=context["selected_files"],
+                reason=str(exc.detail),
+            )
+        raise
+
+    suggestion = parse_diff_suggestion(chat_response.content)
+    return GatewayCodeDiffSuggestResponse(
+        status="ok",
+        apply_supported=False,
+        selected_files=context["selected_files"],
+        route=chat_response.route,
+        **suggestion,
     )
 
 

@@ -93,8 +93,8 @@ make tree
 
 ## Current Milestone
 
-Milestone 22: Repo-Aware Coding Agent in progress
+Milestone 23: Safe Patch/Diff Workflow in progress
 
 Next planned milestone:
 
-Milestone 23: Safe Patch/Diff Workflow
+Milestone 23.5: PC-2 Worker Node Preparation

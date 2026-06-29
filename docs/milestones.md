@@ -295,7 +295,7 @@ Goals:
 
 ## Milestone 22: Repo-Aware Coding Agent
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Combine workspace context, memory, router, and model runtime.
@@ -307,12 +307,16 @@ Goals:
 
 ## Milestone 23: Safe Patch/Diff Workflow
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Generate patches only.
 - Do not auto-apply changes.
 - Add diff review workflow.
+- Add `/gateway/code/patch-plan` for human-reviewable patch planning.
+- Add `/gateway/code/diff-suggest` for unified diff suggestions.
+- Keep `apply_supported=false`.
+- Preserve default tests without requiring model runtime.
 
 ## Milestone 23.5: PC-2 Worker Node Preparation
 

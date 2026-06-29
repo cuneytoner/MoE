@@ -106,6 +106,22 @@ TOOL_CATALOG: dict[str, dict[str, Any]] = {
         "read_only": True,
         "requires_runtime": True,
     },
+    "code_patch_plan": {
+        "description": "Generate a human-reviewable patch plan without applying changes.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+        "requires_runtime": True,
+        "apply_supported": False,
+    },
+    "code_diff_suggest": {
+        "description": "Generate a unified diff suggestion without applying changes.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+        "requires_runtime": True,
+        "apply_supported": False,
+    },
     "model_chat": {
         "description": "Send a chat completion request to the OpenAI-compatible model runtime.",
         "auto_execution_supported": False,
@@ -154,7 +170,7 @@ TOOL_PLANS: dict[str, ToolPlan] = {
         reason="General chat can use the model runtime directly.",
     ),
     "code": ToolPlan(
-        recommended_tools=["code_context", "code_ask"],
+        recommended_tools=["code_context", "code_ask", "code_patch_plan"],
         requires_runtime=True,
         requires_memory=False,
         safe_to_auto_run=True,
@@ -168,7 +184,12 @@ TOOL_PLANS: dict[str, ToolPlan] = {
         reason="Memory requests should search local memory before model chat.",
     ),
     "review": ToolPlan(
-        recommended_tools=["code_context", "runtime_switch_plan", "code_ask"],
+        recommended_tools=[
+            "code_context",
+            "runtime_switch_plan",
+            "code_patch_plan",
+            "code_diff_suggest",
+        ],
         requires_runtime=True,
         requires_memory=False,
         safe_to_auto_run=False,
