@@ -12,6 +12,8 @@ case "$RUNTIME_DIR" in
 esac
 
 mkdir -p \
+  "$RUNTIME_DIR/logs" \
+  "$RUNTIME_DIR/pids" \
   "$RUNTIME_DIR/postgres" \
   "$RUNTIME_DIR/qdrant"
 

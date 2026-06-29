@@ -1,0 +1,10 @@
+model_runtime:
+  llama_server: /home/cuneyt/Apps/llama.cpp/build/bin/llama-server
+  host: 0.0.0.0
+  port: 8000
+  openai_base_url: http://localhost:8000/v1
+  runtime_dir: /home/cuneyt/MoE/runtime
+  log_file: /home/cuneyt/MoE/runtime/logs/llama-server.log
+  pid_file: /home/cuneyt/MoE/runtime/pids/llama-server.pid
+  metadata_file: /home/cuneyt/MoE/runtime/pids/llama-server.env
+  default_model: qwen-coder-32b-main

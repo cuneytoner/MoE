@@ -139,7 +139,7 @@ Goals:
 
 ## Milestone 10: Memory Search with Dimension-Aware Qdrant Collections
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Select Qdrant collections from active embedding backend and vector dimension.
@@ -150,12 +150,13 @@ Goals:
 
 ## Milestone 11: Model Runtime / OpenAI-Compatible Serving
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Add a local model runtime layer such as llama.cpp or similar model serving.
-- Expose an OpenAI-compatible local endpoint.
-- Prepare routing between embedding, chat, and future reasoning models.
+- Add host-managed llama.cpp serving scripts.
+- Expose an OpenAI-compatible local endpoint at `http://localhost:8000/v1`.
+- Track model runtime configuration in source-only YAML files.
+- Store logs and pid files under `/home/cuneyt/MoE/runtime`.
 - Keep model files outside the codebase.
 
 ## Milestone 12: Gateway API

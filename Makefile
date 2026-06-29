@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health model-start model-stop model-status model-health test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -23,6 +23,10 @@ help:
 > @echo "  make health         Check Docker service health"
 > @echo "  make memory-dev     Run Memory API locally on port 8101"
 > @echo "  make memory-health  Check Memory API /health"
+> @echo "  make model-start    Start host llama.cpp OpenAI-compatible runtime"
+> @echo "  make model-stop     Stop host llama.cpp runtime"
+> @echo "  make model-status   Show host llama.cpp runtime status"
+> @echo "  make model-health   Check host llama.cpp OpenAI-compatible endpoint"
 > @echo "  make test-embed     Run Embed Worker contract tests"
 > @echo "  make test-memory    Run Memory API contract tests"
 > @echo "  make test-stack     Run stack smoke tests"
@@ -66,6 +70,18 @@ memory-dev:
 
 memory-health:
 > @curl -fsS http://127.0.0.1:8101/health
+
+model-start:
+> @./scripts/model-runtime-start.sh $(MODEL)
+
+model-stop:
+> @./scripts/model-runtime-stop.sh
+
+model-status:
+> @./scripts/model-runtime-status.sh
+
+model-health:
+> @./scripts/model-runtime-health.sh
 
 test-memory:
 > @./scripts/test-memory-api.sh

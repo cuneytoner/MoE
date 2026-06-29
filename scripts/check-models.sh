@@ -6,6 +6,8 @@ MODEL_BACKUP_DIR="${MODEL_BACKUP_DIR:-/home/cuneyt/MoE_Models_Backup}"
 MODEL_DIR="$MODEL_BACKUP_DIR/bge-m3"
 COMPOSE_FILE="$ROOT/infra/docker/docker-compose.yml"
 ENV_FILE="$ROOT/.env.example"
+MODELS_CONFIG="$ROOT/configs/models.yaml"
+RUNTIME_CONFIG="$ROOT/configs/runtime.yaml"
 MIN_MODEL_BYTES=$((10 * 1024 * 1024))
 
 pass() {
@@ -27,6 +29,19 @@ require_command docker
 require_command du
 require_command grep
 require_command stat
+require_command awk
+
+runtime_value() {
+  local key="$1"
+
+  awk -v key="$key" '
+    $1 == key ":" {
+      sub(/^[^:]+:[[:space:]]*/, "")
+      print
+      exit
+    }
+  ' "$RUNTIME_CONFIG"
+}
 
 if [ -d "$MODEL_BACKUP_DIR" ]; then
   pass "Model backup directory exists: $MODEL_BACKUP_DIR"
@@ -72,6 +87,26 @@ if [ "$model_bytes" -le "$MIN_MODEL_BYTES" ]; then
 fi
 
 pass "pytorch_model.bin size looks plausible: ${model_bytes} bytes"
+
+LLAMA_SERVER="${LLAMA_SERVER:-$(runtime_value llama_server)}"
+if [ -x "$LLAMA_SERVER" ]; then
+  pass "llama-server binary exists: $LLAMA_SERVER"
+else
+  fail "llama-server binary missing or not executable: $LLAMA_SERVER"
+fi
+
+while IFS= read -r gguf_path; do
+  if [ -f "$gguf_path" ]; then
+    pass "GGUF model exists: $gguf_path"
+  else
+    fail "GGUF model missing: $gguf_path"
+  fi
+done < <(awk '
+  $1 == "path:" && $2 ~ /\.gguf$/ {
+    sub(/^[^:]+:[[:space:]]*/, "")
+    print
+  }
+' "$MODELS_CONFIG")
 
 compose_config="$(docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" config)"
 

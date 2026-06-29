@@ -85,10 +85,13 @@ The embedding layer now has two planning concerns:
 - runtime backend support for local models such as BGE-M3
 - model integrity validation so local mounts and files are trustworthy before other layers depend on them
 
+Host model runtime:
+
+Host-managed llama.cpp serving layer for local GGUF chat and coding models. It exposes an OpenAI-compatible endpoint at `http://localhost:8000/v1`, with model files loaded from `/home/cuneyt/MoE_Models_Backup` and runtime logs/pids stored under `/home/cuneyt/MoE/runtime`.
+
 Future local AI stack layers expected around it:
 
-- local model runtime / router such as llama.cpp or similar
-- OpenAI-compatible local endpoint
+- model routing through a future Gateway API
 - document RAG ingestion and vector workflows
 - local chat UI integration
 - coding agent integration

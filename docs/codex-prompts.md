@@ -310,9 +310,31 @@ Expected boundaries:
 - Keep model files outside the codebase.
 - Avoid bundling chat UI and gateway work into the same task.
 
-## Milestone 11 Prompt Summary Placeholder
+## Milestone 11 Prompt Summary
 
-Prepare model runtime and OpenAI-compatible serving after Memory API search is stable.
+Add host-based llama.cpp model runtime management.
+
+Scope:
+
+- Add source-only model and runtime config files.
+- Manage `/home/cuneyt/Apps/llama.cpp/build/bin/llama-server` from host scripts.
+- Start the default model on `0.0.0.0:8000`.
+- Expose OpenAI-compatible base URL `http://localhost:8000/v1`.
+- Keep GGUF model files in `/home/cuneyt/MoE_Models_Backup`.
+- Store logs and pid files under `/home/cuneyt/MoE/runtime`.
+- Add `make model-start`, `make model-stop`, `make model-status`, and `make model-health`.
+- Do not implement Gateway API or Dashboard in this milestone.
+
+## Milestone 12 Gateway API Placeholder
+
+Add a central Gateway API after the model runtime is stable.
+
+Expected boundaries:
+
+- Route chat/model requests to the local OpenAI-compatible runtime.
+- Expose model discovery and health aggregation.
+- Keep Memory API and Embed Worker as separate internal services.
+- Do not bundle Dashboard implementation into this milestone.
 
 ## Milestone 17 Prompt Placeholder
 
