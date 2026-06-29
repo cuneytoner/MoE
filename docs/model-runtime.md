@@ -67,7 +67,15 @@ make model-health
 Current validation notes:
 
 - `deepseek-coder-lite` has been confirmed as a healthy runtime model.
-- `qwen-coder-14b-fast` is unavailable because the local file failed GGUF magic validation. Retest only after replacing the file.
+- `qwen-coder-14b-fast` has been freshly replaced and validated. llama.cpp loaded it successfully, `/v1/models` worked, and `/v1/chat/completions` returned `OK`.
+- Earlier invalid or truncated Qwen 14B downloads were replaced. Keep using GGUF magic checks before trusting new model files.
+
+Qwen 14B validation metadata:
+
+- `n_params`: `14770033664`
+- `size`: `8113872896`
+- `n_ctx_train`: `32768`
+- `n_embd`: `5120`
 
 ## GGUF Troubleshooting
 

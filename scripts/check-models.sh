@@ -96,9 +96,7 @@ else
   fail "llama-server binary missing or not executable: $LLAMA_SERVER"
 fi
 
-optional_gguf_ids=(
-  "qwen-coder-14b-fast"
-)
+optional_gguf_ids=()
 
 is_optional_gguf() {
   local model_id="$1"
