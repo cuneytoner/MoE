@@ -89,6 +89,10 @@ Host model runtime:
 
 Host-managed llama.cpp serving layer for local GGUF chat and coding models. It exposes an OpenAI-compatible endpoint at `http://localhost:8000/v1`, with model files loaded from `/home/cuneyt/MoE_Models_Backup` and runtime logs/pids stored under `/home/cuneyt/MoE/runtime`.
 
+Backup and environment planning:
+
+Backup planning covers source, runtime, PostgreSQL, Qdrant, model backups, llama.cpp, and docs without copying runtime data into the codebase. Environment profile templates describe how PC1, PC2, single-machine, and future machines can own roles without rewriting the project.
+
 Future local AI stack layers expected around it:
 
 - model routing through a future Gateway API

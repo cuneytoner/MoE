@@ -325,6 +325,30 @@ Scope:
 - Add `make model-start`, `make model-stop`, `make model-status`, and `make model-health`.
 - Do not implement Gateway API or Dashboard in this milestone.
 
+## Milestone 11.1 Prompt Placeholder
+
+Add backup, restore, and disaster recovery planning.
+
+Expected boundaries:
+
+- Document what to back up and what to exclude.
+- Cover source, runtime data, Docker state, PostgreSQL, Qdrant, model backups, llama.cpp, environment templates, and docs.
+- Keep pid files out of backups and make logs optional.
+- Add model checksum manifest strategy.
+- Add new PC restore and disaster recovery checklist.
+- Do not implement actual backup scripts yet.
+
+## Milestone 11.2 Prompt Placeholder
+
+Add hardware role profiles and environment reassignment planning.
+
+Expected boundaries:
+
+- Add PC1, PC2, single-machine, and new-machine example/template profiles.
+- Document role reassignment for model runtime, Memory API, PostgreSQL, Qdrant, Dashboard, Gateway, and research workers.
+- Document IP, path, and default model selection updates.
+- Keep real local profile files out of the repository.
+
 ## Milestone 12 Gateway API Placeholder
 
 Add a central Gateway API after the model runtime is stable.

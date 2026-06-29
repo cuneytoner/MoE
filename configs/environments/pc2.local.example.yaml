@@ -1,0 +1,29 @@
+profile:
+  id: pc2
+  name: PC2 memory and worker node
+  ip: 192.168.50.2
+  ssh_user: cuneyt
+
+paths:
+  runtime: /home/cuneyt/MoE/runtime
+  model_backup: /home/cuneyt/MoE_Models_Backup
+
+roles:
+  codebase_owner: false
+  model_runtime: false
+  memory_api: true
+  postgres: true
+  qdrant: true
+  gateway: false
+  dashboard: false
+  research_worker: true
+
+services:
+  memory_api_url: http://192.168.50.2:8101
+  postgres_host: 192.168.50.2
+  qdrant_host: 192.168.50.2
+
+hardware_notes:
+  gpu: GTX 1650
+  ram_gb: 32
+  guidance: Prefer database, vector, and research-worker roles; use small models only if explicitly tested.

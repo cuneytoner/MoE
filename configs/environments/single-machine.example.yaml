@@ -1,0 +1,31 @@
+profile:
+  id: single-machine
+  name: Single-machine local stack
+  ip: 127.0.0.1
+  ssh_user: cuneyt
+
+paths:
+  codebase: /home/cuneyt/DiskD/Projects/MoE/codebase
+  runtime: /home/cuneyt/MoE/runtime
+  model_backup: /home/cuneyt/MoE_Models_Backup
+  llama_server: /home/cuneyt/Apps/llama.cpp/build/bin/llama-server
+
+roles:
+  codebase_owner: true
+  model_runtime: true
+  memory_api: true
+  postgres: true
+  qdrant: true
+  gateway: true
+  dashboard: true
+  research_worker: true
+
+services:
+  model_runtime_base_url: http://localhost:8000/v1
+  memory_api_url: http://localhost:8101
+  postgres_host: 127.0.0.1
+  qdrant_host: 127.0.0.1
+
+model_runtime:
+  default_model: deepseek-coder-lite
+  fallback_model: qwen-coder-32b-main

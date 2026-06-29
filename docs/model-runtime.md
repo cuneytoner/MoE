@@ -64,6 +64,11 @@ make model-health
 - `gemma-3-27b-general`: general reasoning
 - `qwen-35b-a3b-reasoning`: reasoning / MoE candidate
 
+Current validation notes:
+
+- `deepseek-coder-lite` has been confirmed as a healthy runtime model.
+- `qwen-coder-14b-fast` had a corrupted or incomplete local GGUF file and should be retested after replacement.
+
 ## Client Integration
 
 Tools that accept an OpenAI-compatible API base URL can point at:

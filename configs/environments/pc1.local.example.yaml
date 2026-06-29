@@ -1,0 +1,33 @@
+profile:
+  id: pc1
+  name: PC1 workstation and model runtime
+  ip: 192.168.50.1
+  ssh_user: cuneyt
+
+paths:
+  codebase: /home/cuneyt/DiskD/Projects/MoE/codebase
+  runtime: /home/cuneyt/MoE/runtime
+  model_backup: /home/cuneyt/MoE_Models_Backup
+  llama_server: /home/cuneyt/Apps/llama.cpp/build/bin/llama-server
+
+roles:
+  codebase_owner: true
+  model_runtime: true
+  memory_api: false
+  postgres: false
+  qdrant: false
+  gateway: false
+  dashboard: true
+  research_worker: true
+
+model_runtime:
+  host: 0.0.0.0
+  port: 8000
+  openai_base_url: http://localhost:8000/v1
+  default_model: deepseek-coder-lite
+  fallback_model: qwen-coder-32b-main
+
+hardware_notes:
+  gpu: RTX 5060 Ti
+  ram_gb: 32
+  guidance: Prefer models that fit GPU and system memory; retest qwen-coder-14b-fast after replacing the corrupted GGUF file.

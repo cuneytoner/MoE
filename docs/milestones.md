@@ -150,7 +150,7 @@ Goals:
 
 ## Milestone 11: Model Runtime / OpenAI-Compatible Serving
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add host-managed llama.cpp serving scripts.
@@ -158,6 +158,29 @@ Goals:
 - Track model runtime configuration in source-only YAML files.
 - Store logs and pid files under `/home/cuneyt/MoE/runtime`.
 - Keep model files outside the codebase.
+
+## Milestone 11.1: Backup / Restore / Disaster Recovery
+
+Status: IN PROGRESS
+
+Goals:
+- Define backup strategy for source, runtime, Docker state, PostgreSQL, Qdrant, models, llama.cpp, environment templates, and docs.
+- Keep source, runtime data, and model files in their assigned locations.
+- Exclude pid files from backups and make logs optional.
+- Add checksum manifest strategy for model files.
+- Add restore process for a new PC.
+- Add disaster recovery checklist.
+
+## Milestone 11.2: Hardware Role Profiles / Environment Reassignment
+
+Status: PLANNED
+
+Goals:
+- Add environment role profile plan for PC1, PC2, single-machine, and new-machine setups.
+- Allow future hardware changes without rewriting the project.
+- Document role reassignment for model runtime, Memory API, PostgreSQL, Qdrant, Dashboard, Gateway, and research workers.
+- Document how to update IPs, paths, and model defaults.
+- Document current PC1 and PC2 ownership assumptions.
 
 ## Milestone 12: Gateway API
 
