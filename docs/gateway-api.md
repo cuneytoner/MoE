@@ -77,6 +77,43 @@ curl -fsS http://localhost:8100/gateway/model-routing | jq
 
 The config comes from `configs/model-routing.yaml`. It maps router intents to advisory model targets and runtime model ids. It does not restart or hot-switch llama.cpp.
 
+### GET /gateway/runtime/status
+
+Reports whether the host OpenAI-compatible model runtime is reachable and which model id is currently loaded:
+
+```bash
+curl -fsS http://localhost:8100/gateway/runtime/status | jq
+```
+
+If the runtime is unavailable, Gateway still returns `status: ok` with `runtime_available: false`.
+
+### POST /gateway/runtime/switch-plan
+
+Returns a safe manual switch plan. Gateway does not execute host commands.
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"message":"review this architecture for risks"}' \
+  http://localhost:8100/gateway/runtime/switch-plan | jq
+```
+
+Example response fields:
+
+```json
+{
+  "status": "ok",
+  "intent": "review",
+  "target": "qwen-coder-32b-main",
+  "target_runtime_id": "/home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-32B-Instruct-IQ4_XS.gguf",
+  "current_runtime_model": "/home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-14B-Instruct-IQ4_XS.gguf",
+  "switch_required": true,
+  "manual_command": "make model-switch MODEL=qwen-coder-32b-main",
+  "reason": "Target model differs from current runtime model"
+}
+```
+
+Automatic switching is intentionally deferred. Run the returned command manually from the host when you want to switch models.
+
 ### POST /gateway/chat
 
 Calls the OpenAI-compatible model runtime `/chat/completions` endpoint.

@@ -130,6 +130,52 @@ else
   fail "Gateway API /gateway/model-routing returned unexpected response: $model_routing_response"
 fi
 
+if ! runtime_status_response="$(curl -fsS "$GATEWAY_API_URL/gateway/runtime/status")"; then
+  fail "Gateway API /gateway/runtime/status request failed"
+fi
+
+runtime_status="$(jq -r '.status // empty' <<<"$runtime_status_response")"
+runtime_available="$(jq -r '.runtime_available' <<<"$runtime_status_response")"
+runtime_models_type="$(jq -r 'if (.loaded_models | type) == "array" then "array" else "other" end' <<<"$runtime_status_response")"
+
+if [ "$runtime_status" = "ok" ] \
+  && { [ "$runtime_available" = "true" ] || [ "$runtime_available" = "false" ]; } \
+  && [ "$runtime_models_type" = "array" ]; then
+  pass "Gateway API /gateway/runtime/status"
+else
+  fail "Gateway API /gateway/runtime/status returned unexpected response: $runtime_status_response"
+fi
+
+assert_switch_plan() {
+  local message="$1"
+  local expected_target="$2"
+  local body
+  local response
+  local plan_status
+  local plan_target
+  local manual_command
+
+  body="$(jq -nc --arg message "$message" '{message: $message}')"
+  if ! response="$(post_json "/gateway/runtime/switch-plan" "$body")"; then
+    fail "Gateway API /gateway/runtime/switch-plan request failed for: $message"
+  fi
+
+  plan_status="$(jq -r '.status // empty' <<<"$response")"
+  plan_target="$(jq -r '.target // empty' <<<"$response")"
+  manual_command="$(jq -r '.manual_command // empty' <<<"$response")"
+
+  if [ "$plan_status" = "ok" ] \
+    && [ "$plan_target" = "$expected_target" ] \
+    && [ -n "$manual_command" ]; then
+    pass "Gateway API /gateway/runtime/switch-plan target=$expected_target"
+  else
+    fail "Gateway API /gateway/runtime/switch-plan expected $expected_target, got: $response"
+  fi
+}
+
+assert_switch_plan "review this architecture for risks" "qwen-coder-32b-main"
+assert_switch_plan "docker compose port issue" "deepseek-coder-lite"
+
 assert_route_intent() {
   local message="$1"
   local expected_intent="$2"

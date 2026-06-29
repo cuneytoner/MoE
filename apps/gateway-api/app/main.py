@@ -14,6 +14,9 @@ from app.models.gateway import (
     GatewayModelsResponse,
     GatewayRouteRequest,
     GatewayRouteResponse,
+    GatewayRuntimeStatusResponse,
+    GatewayRuntimeSwitchPlanRequest,
+    GatewayRuntimeSwitchPlanResponse,
 )
 from app.services.model_mapping import ModelMapping, get_model_mapping
 from app.services.router import RouteDecision, route_message
@@ -58,6 +61,57 @@ def model_routing() -> GatewayModelRoutingResponse:
     mapping = get_model_mapping(settings.model_routing_config)
     config = mapping.safe_config()
     return GatewayModelRoutingResponse(status="ok", **config)
+
+
+@app.get("/gateway/runtime/status", response_model=GatewayRuntimeStatusResponse)
+async def runtime_status() -> GatewayRuntimeStatusResponse:
+    settings = get_settings()
+    client = ModelRuntimeClient(settings.model_runtime_url)
+    status = await client.status()
+    return GatewayRuntimeStatusResponse(
+        status="ok",
+        runtime_available=bool(status["runtime_available"]),
+        model_runtime_url=settings.model_runtime_public_url,
+        loaded_models=status["loaded_models"],
+        current_model=status["current_model"],
+    )
+
+
+@app.post(
+    "/gateway/runtime/switch-plan",
+    response_model=GatewayRuntimeSwitchPlanResponse,
+)
+async def runtime_switch_plan(
+    request: GatewayRuntimeSwitchPlanRequest,
+) -> GatewayRuntimeSwitchPlanResponse:
+    settings = get_settings()
+    mapping = get_model_mapping(settings.model_routing_config)
+    client = ModelRuntimeClient(settings.model_runtime_url)
+    status = await client.status()
+    intent, target = _switch_plan_target(request, mapping)
+    target_runtime_id = mapping.runtime_id(target)
+    current_model = status["current_model"]
+    switch_required = current_model != target_runtime_id
+    manual_command = f"make model-switch MODEL={target}"
+    reason = (
+        "Target model differs from current runtime model"
+        if switch_required
+        else "Target model is already loaded"
+    )
+    if not status["runtime_available"]:
+        switch_required = True
+        reason = "Model runtime is unavailable"
+
+    return GatewayRuntimeSwitchPlanResponse(
+        status="ok",
+        intent=intent,
+        target=target,
+        target_runtime_id=target_runtime_id,
+        current_runtime_model=current_model,
+        switch_required=switch_required,
+        manual_command=manual_command,
+        reason=reason,
+    )
 
 
 @app.post("/gateway/chat", response_model=GatewayChatResponse)
@@ -209,6 +263,22 @@ def _model_alignment(
         if matched
         else "Gateway does not switch runtime models yet",
     }
+
+
+def _switch_plan_target(
+    request: GatewayRuntimeSwitchPlanRequest,
+    mapping: ModelMapping,
+) -> tuple[str, str]:
+    if request.target:
+        return request.intent or "manual", request.target
+
+    if request.intent:
+        target = mapping.target_for_intent(request.intent)
+        return request.intent, str(target["model_target"])
+
+    decision = route_message(request.message)
+    target = mapping.target_for_intent(decision.intent)
+    return decision.intent, str(target["model_target"])
 
 
 def _intent_guidance(intent: str) -> str:

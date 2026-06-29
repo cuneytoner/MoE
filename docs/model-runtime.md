@@ -58,6 +58,46 @@ Check the OpenAI-compatible `/v1/models` endpoint:
 make model-health
 ```
 
+Switch the host runtime manually:
+
+```bash
+make model-switch MODEL=qwen-coder-14b-fast
+make model-switch MODEL=deepseek-coder-lite
+make model-switch MODEL=qwen-coder-32b-main
+```
+
+`model-runtime-switch.sh` validates the selected model id, verifies the model file exists, checks the GGUF magic bytes, stops the current host `llama-server`, starts the selected model, then waits for `/v1/models` health. If health fails, it prints runtime status and the last 120 runtime log lines.
+
+Gateway never executes this script and never runs host shell commands from inside the container. Gateway only reports switch plans and manual commands.
+
+## Runtime Readiness
+
+Large GGUF models can take several seconds to load after the `llama-server` process starts. A pid file only means the host process exists; the runtime is not ready for clients until the OpenAI-compatible endpoint answers `/v1/models` with valid JSON.
+
+`make model-health` waits for `/v1/models` for up to 60 seconds by default. Override the wait when testing slower models:
+
+```bash
+MODEL_RUNTIME_HEALTH_TIMEOUT=120 make model-health
+```
+
+`make model-switch MODEL=...` uses the same health retry after starting the selected model. If readiness fails, it prints status details and the last 120 runtime log lines.
+
+`make model-status` reports pid state, endpoint readiness, the selected model when metadata is available, and the runtime log path. If the pid exists but `/v1/models` is not reachable yet, status reports `process exists but endpoint unavailable`.
+
+Troubleshooting commands:
+
+```bash
+ps -fp $(cat ~/MoE/runtime/pids/llama-server.pid)
+```
+
+```bash
+ss -ltnp | grep ':8000'
+```
+
+```bash
+curl http://localhost:8000/v1/models
+```
+
 ## Model IDs
 
 - `qwen-coder-14b-fast`: fast coding assistant
@@ -72,7 +112,13 @@ Current Gateway advisory targets:
 - `review`: `qwen-coder-32b-main`
 - `ops`: `deepseek-coder-lite`
 
-Hot switching between these models is a future milestone. Start the desired model manually with `make model-start MODEL=...`.
+Gateway-driven hot switching between these models is a future milestone. Start or switch the desired model manually with the host runtime scripts.
+
+For safer manual switches, prefer:
+
+```bash
+make model-switch MODEL=qwen-coder-14b-fast
+```
 
 Current validation notes:
 

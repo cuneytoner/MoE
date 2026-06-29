@@ -19,6 +19,28 @@ class ModelRuntimeClient:
 
         return "ok"
 
+    async def status(self) -> dict[str, Any]:
+        try:
+            models = await self.list_models()
+        except ModelRuntimeUnavailable:
+            return {
+                "runtime_available": False,
+                "loaded_models": [],
+                "current_model": None,
+            }
+
+        current_model = None
+        if models:
+            model_id = models[0].get("id")
+            if isinstance(model_id, str):
+                current_model = model_id
+
+        return {
+            "runtime_available": True,
+            "loaded_models": models,
+            "current_model": current_model,
+        }
+
     async def list_models(self) -> list[dict[str, Any]]:
         try:
             async with httpx.AsyncClient(timeout=5) as client:

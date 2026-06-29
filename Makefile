@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health model-start model-stop model-status model-health test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -28,6 +28,7 @@ help:
 > @echo "  make model-stop     Stop host llama.cpp runtime"
 > @echo "  make model-status   Show host llama.cpp runtime status"
 > @echo "  make model-health   Check host llama.cpp OpenAI-compatible endpoint"
+> @echo "  make model-switch   Safely switch host llama.cpp runtime model"
 > @echo "  make test-gateway   Run Gateway API contract tests"
 > @echo "  make test-gateway-chat Run optional Gateway chat test"
 > @echo "  make test-gateway-chat-memory Run optional memory-augmented Gateway chat test"
@@ -90,6 +91,9 @@ model-status:
 
 model-health:
 > @./scripts/model-runtime-health.sh
+
+model-switch:
+> @./scripts/model-runtime-switch.sh $(MODEL)
 
 test-gateway:
 > @./scripts/test-gateway-api.sh

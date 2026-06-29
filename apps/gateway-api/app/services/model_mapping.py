@@ -61,6 +61,9 @@ class ModelMapping:
             "model_mapping_status": "mapped",
         }
 
+    def runtime_id(self, model_target: str) -> str | None:
+        return self._runtime_id(model_target)
+
     def _runtime_id(self, model_target: str) -> str | None:
         target = self.model_targets.get(model_target, {})
         runtime_id = target.get("runtime_model_id")

@@ -122,7 +122,26 @@ echo "$PID" >"$PID_FILE"
   printf "LOG_FILE=%q\n" "$LOG_FILE"
 } >"$METADATA_FILE"
 
+sleep 2
+
+if ! kill -0 "$PID" >/dev/null 2>&1; then
+  rm -f "$PID_FILE" "$METADATA_FILE"
+  echo "llama-server exited before readiness checks completed." >&2
+  echo "Last 80 log lines from $LOG_FILE:" >&2
+  tail -n 80 "$LOG_FILE" >&2 || true
+  exit 1
+fi
+
+if [[ "$(ps -p "$PID" -o stat= 2>/dev/null | awk '{print $1}' || true)" == *Z* ]]; then
+  rm -f "$PID_FILE" "$METADATA_FILE"
+  echo "llama-server became a zombie before readiness checks completed." >&2
+  echo "Last 80 log lines from $LOG_FILE:" >&2
+  tail -n 80 "$LOG_FILE" >&2 || true
+  exit 1
+fi
+
 echo "Started llama-server with pid $PID"
 echo "Model: $MODEL_ID"
 echo "Endpoint: $OPENAI_BASE_URL"
 echo "Logs: $LOG_FILE"
+echo "Readiness: run make model-health"

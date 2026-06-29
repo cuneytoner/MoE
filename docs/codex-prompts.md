@@ -473,7 +473,32 @@ Expected boundaries:
 - Use intent metadata for simple tool-aware routing where appropriate.
 - Do not implement advanced MoE routing or Dashboard.
 
-## Milestone 22 Prompt Placeholder
+## Milestone 17 Prompt Summary
+
+Add safe runtime switch planning and host-side controls.
+
+Scope:
+
+- Add `scripts/model-runtime-switch.sh`.
+- Validate model id, file existence, and GGUF magic before switching.
+- Use existing host stop/start/health scripts.
+- Add Gateway runtime status endpoint.
+- Add Gateway switch-plan endpoint that returns manual commands only.
+- Do not let Gateway execute host shell commands.
+- Keep automatic switching deferred.
+
+## Milestone 18 Prompt Placeholder
+
+Add tool-aware routing or runtime switch automation.
+
+Expected boundaries:
+
+- Decide whether runtime switching should become automated.
+- Keep any automation explicit, observable, and reversible.
+- Use existing route and model mapping metadata.
+- Do not implement Dashboard or advanced MoE routing.
+
+## Milestone 23 Prompt Placeholder
 
 Add an automation layer for local workflows.
 
@@ -484,7 +509,7 @@ Expected boundaries:
 - Keep automation state outside the source repository.
 - Avoid mixing this work with dashboard or homelab ops changes.
 
-## Milestone 23 Prompt Placeholder
+## Milestone 24 Prompt Placeholder
 
 Add homelab operations support for the local AI stack.
 

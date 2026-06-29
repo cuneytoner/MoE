@@ -23,6 +23,31 @@ class GatewayModelRoutingResponse(BaseModel):
     model_targets: dict[str, dict[str, Any]]
 
 
+class GatewayRuntimeStatusResponse(BaseModel):
+    status: str
+    runtime_available: bool
+    model_runtime_url: str
+    loaded_models: list[dict[str, Any]]
+    current_model: str | None = None
+
+
+class GatewayRuntimeSwitchPlanRequest(BaseModel):
+    message: str = Field(default="")
+    intent: str | None = None
+    target: str | None = None
+
+
+class GatewayRuntimeSwitchPlanResponse(BaseModel):
+    status: str
+    intent: str
+    target: str
+    target_runtime_id: str | None = None
+    current_runtime_model: str | None = None
+    switch_required: bool
+    manual_command: str
+    reason: str
+
+
 class GatewayChatRequest(BaseModel):
     message: str = Field(min_length=1)
     system: str | None = None

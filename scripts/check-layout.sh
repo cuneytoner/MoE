@@ -95,6 +95,7 @@ required_paths=(
   "scripts/model-runtime-stop.sh"
   "scripts/model-runtime-status.sh"
   "scripts/model-runtime-health.sh"
+  "scripts/model-runtime-switch.sh"
   "scripts/test-gateway-api.sh"
   "scripts/test-memory-api.sh"
   "scripts/test-bge-m3-runtime.sh"
