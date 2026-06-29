@@ -310,6 +310,18 @@ Goals:
 - Do not auto-apply changes.
 - Add diff review workflow.
 
+## Milestone 23.5: PC-2 Worker Node Preparation
+
+Status: PLANNED
+
+Goals:
+- Prepare PC-2 as a background worker node before Nightly Learning.
+- Assign PC-2 to memory/vector services, learning jobs, research ingestion, reports, and long-running background tasks.
+- Keep PC-1 as the interactive coding, model runtime, Dashboard, and media GPU node.
+- Do not run heavy LLM inference on PC-2 by default.
+- Keep PC-2 runtime and data directories outside the codebase.
+- Make PC-2 deployment reproducible through Docker Compose profiles and docs.
+
 ## Milestone 24: Nightly Learning Worker
 
 Status: PLANNED

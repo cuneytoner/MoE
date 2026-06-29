@@ -560,6 +560,19 @@ Expected boundaries:
 - Add diff review workflow.
 - Keep user approval explicit.
 
+## Milestone 23.5 Prompt Placeholder
+
+Add PC-2 worker node preparation.
+
+Expected boundaries:
+
+- Prepare PC-2 as a background worker node before Nightly Learning.
+- Keep PC-1 as the interactive coding, model runtime, Dashboard, workspace, and media GPU node.
+- Plan PC-2 roles for memory/vector services, learning jobs, research ingestion, reports, backups, maintenance, and telemetry.
+- Do not run heavy LLM inference on PC-2 by default.
+- Keep PC-2 runtime data outside the codebase.
+- Prefer Docker Compose profiles and docs before moving services.
+
 ## Milestone 24 Prompt Placeholder
 
 Add nightly learning worker planning or implementation.

@@ -2,6 +2,8 @@
 
 Nightly learning begins after Milestone 24. It is read-only and report-first.
 
+Milestone 23.5 prepares PC-2 as the preferred background worker node before Nightly Learning begins. PC-2 can host scheduled learning jobs, research ingestion, report generation, and supporting storage services while PC-1 remains the interactive coding and model runtime node.
+
 The goal is to help the local AI stack learn from project activity without giving it authority to modify code, run shell commands, restart services, or change runtime state beyond approved report and memory writes.
 
 ## Safety Model
@@ -11,6 +13,7 @@ The goal is to help the local AI stack learn from project activity without givin
 - No Docker stop/start/restart actions.
 - No model runtime stop/start/switch actions.
 - No automatic edits to Gateway, Memory API, Embed Worker, configs, or docs.
+- No heavy LLM inference on PC-2 by default.
 - Human review is required before any recommendation becomes a code or config change.
 
 Allowed outputs:

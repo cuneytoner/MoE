@@ -24,6 +24,10 @@ Role:
 - Strong GPU inference node
 - Deployment controller
 - Dashboard access point
+- Gateway API
+- Model runtime
+- Workspace context
+- Media Lab GPU workloads
 
 Specs:
 
@@ -45,6 +49,12 @@ Role:
 - Memory services
 - Database services
 - Future worker and fallback services
+- PostgreSQL/Qdrant optional migration target
+- Nightly Learning Worker
+- Research Ingestion Worker
+- Report generation
+- Backup and maintenance jobs
+- Telemetry source
 
 Specs:
 
@@ -119,6 +129,7 @@ Future local AI stack layers expected around it:
 - Continue.dev and VS Code Gateway integration
 - repo-aware coding agent workflows
 - safe patch-only edit planning
+- PC-2 worker node activation
 - nightly learning and self-improvement reports
 - media lab services for image, video, 3D, rigging, animation, and workflow orchestration
 - local chat UI integration
@@ -138,6 +149,10 @@ Coding flow:
 - model chat through the host OpenAI-compatible runtime
 
 File writes and patch application remain disabled until the safe write/edit plan milestone.
+
+PC-2 worker node roadmap:
+
+Milestone 23.5 prepares PC-2 as a background worker node before Nightly Learning begins. PC-1 remains the interactive coding, model runtime, Dashboard, workspace context, and media GPU node. PC-2 is planned for memory/vector services, Nightly Learning, research ingestion, reports, backups, maintenance, and telemetry. PC-2 should not run heavy LLM inference by default.
 
 Nightly learning roadmap:
 
