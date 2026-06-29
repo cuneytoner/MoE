@@ -78,8 +78,16 @@ fi
 add_status="$(jq -r '.status' <<<"$add_response")"
 add_id="$(jq -r '.id // empty' <<<"$add_response")"
 add_vector_id="$(jq -r '.vector_id // empty' <<<"$add_response")"
+add_collection_name="$(jq -r '.collection_name // empty' <<<"$add_response")"
+add_embedding_backend="$(jq -r '.embedding_backend // empty' <<<"$add_response")"
+add_embedding_dim="$(jq -r '.embedding_dim // empty' <<<"$add_response")"
 
-if [ "$add_status" = "created" ] && [ -n "$add_id" ] && [ -n "$add_vector_id" ]; then
+if [ "$add_status" = "created" ] \
+  && [ -n "$add_id" ] \
+  && [ -n "$add_vector_id" ] \
+  && [ "$add_collection_name" = "moe_memories_fake_384" ] \
+  && [ -n "$add_embedding_backend" ] \
+  && [ "$add_embedding_dim" = "384" ]; then
   pass "Memory API /memory/add"
 else
   fail "Memory API /memory/add returned unexpected response: $add_response"
@@ -89,9 +97,16 @@ if ! search_response="$(post_json "/memory/search" '{"query":"automated memory t
   fail "Memory API /memory/search request failed"
 fi
 search_status="$(jq -r '.status' <<<"$search_response")"
+search_collection_name="$(jq -r '.collection_name // empty' <<<"$search_response")"
+search_embedding_backend="$(jq -r '.embedding_backend // empty' <<<"$search_response")"
+search_embedding_dim="$(jq -r '.embedding_dim // empty' <<<"$search_response")"
 search_results_type="$(jq -r 'if (.results | type) == "array" then "array" else "other" end' <<<"$search_response")"
 
-if [ "$search_status" = "ok" ] && [ "$search_results_type" = "array" ]; then
+if [ "$search_status" = "ok" ] \
+  && [ "$search_collection_name" = "moe_memories_fake_384" ] \
+  && [ -n "$search_embedding_backend" ] \
+  && [ "$search_embedding_dim" = "384" ] \
+  && [ "$search_results_type" = "array" ]; then
   pass "Memory API /memory/search"
 else
   fail "Memory API /memory/search returned unexpected response: $search_response"

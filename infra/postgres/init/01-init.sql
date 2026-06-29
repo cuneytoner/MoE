@@ -6,9 +6,17 @@ CREATE TABLE IF NOT EXISTS memories (
   source TEXT NULL,
   metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
   vector_id TEXT NULL,
+  collection_name TEXT NULL,
+  embedding_backend TEXT NULL,
+  embedding_dim INTEGER NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+ALTER TABLE memories
+  ADD COLUMN IF NOT EXISTS collection_name TEXT NULL,
+  ADD COLUMN IF NOT EXISTS embedding_backend TEXT NULL,
+  ADD COLUMN IF NOT EXISTS embedding_dim INTEGER NULL;
 
 CREATE INDEX IF NOT EXISTS idx_memories_created_at
   ON memories (created_at);

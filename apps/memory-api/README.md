@@ -2,7 +2,7 @@
 
 FastAPI service for the MoE Memory API.
 
-This milestone connects Memory API to the fake Embed Worker backend and Qdrant. `POST /memory/add` stores fake embedding vectors in Qdrant and stores text, source, metadata, and `vector_id` in PostgreSQL. Real model inference and semantic search are not implemented yet.
+This milestone connects Memory API to the Embed Worker and Qdrant with dimension-aware collections. `POST /memory/add` stores vectors in a collection selected from the active embedding backend and vector dimension, and `POST /memory/search` embeds the query before searching the matching collection.
 
 ## Local Development
 
@@ -42,4 +42,18 @@ This endpoint attempts lightweight PostgreSQL, Qdrant, and Embed Worker connecti
 
 `POST /memory/add`
 
-Calls Embed Worker `/embed`, stores the vector in Qdrant, stores the memory row in PostgreSQL, and returns the created memory id plus `vector_id`.
+Calls Embed Worker `/embed`, stores the vector in Qdrant, stores the memory row in PostgreSQL, and returns the created memory id, `vector_id`, collection name, backend, and embedding dimension.
+
+Default fake backend collection:
+
+`moe_memories_fake_384`
+
+Local BGE-M3 backend collection:
+
+`moe_memories_bge_m3_1024`
+
+## Search Memory
+
+`POST /memory/search`
+
+Embeds the query with the active Embed Worker backend, resolves the same collection name, and searches Qdrant. If the matching collection does not exist yet, the response is `ok` with an empty results array.

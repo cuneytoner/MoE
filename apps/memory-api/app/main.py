@@ -1,8 +1,10 @@
+import logging
+
 from fastapi import FastAPI, HTTPException
 
 from app.clients.embed_worker import EmbedWorkerClient
 from app.clients.postgres import PostgresClient
-from app.clients.qdrant import QdrantClient
+from app.clients.qdrant import QdrantClient, QdrantCollectionError
 from app.config import get_settings
 from app.models.memory import (
     DeepHealthResponse,
@@ -15,6 +17,7 @@ from app.models.memory import (
 from app.services.memory_store import MemoryStore
 
 app = FastAPI(title="MoE Memory API", version="0.1.0")
+logger = logging.getLogger(__name__)
 
 
 @app.get("/health", response_model=HealthResponse)
@@ -55,25 +58,54 @@ async def add_memory(request: MemoryAddRequest) -> MemoryAddResponse:
         embed_worker=EmbedWorkerClient(settings),
         qdrant=QdrantClient(settings),
         postgres=PostgresClient(settings),
-        embedding_dim=settings.embedding_dim,
     )
 
     try:
-        memory_id, vector_id = await store.add(request)
+        result = await store.add(request)
+    except QdrantCollectionError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
     except Exception as exc:
+        logger.exception("memory storage failed")
         raise HTTPException(
             status_code=503,
-            detail=f"memory storage unavailable: {exc.__class__.__name__}",
+            detail=f"memory storage unavailable: {exc.__class__.__name__}: {exc}",
         ) from exc
 
     return MemoryAddResponse(
         status="created",
-        id=memory_id,
-        vector_id=vector_id,
+        id=str(result["id"]),
+        vector_id=str(result["vector_id"]),
+        collection_name=str(result["collection_name"]),
+        embedding_backend=str(result["embedding_backend"]),
+        embedding_dim=int(result["embedding_dim"]),
         message="memory stored with embedding",
     )
 
 
 @app.post("/memory/search", response_model=MemorySearchResponse)
-def search_memory(_: MemorySearchRequest) -> MemorySearchResponse:
-    return MemorySearchResponse(status="ok", results=[])
+async def search_memory(request: MemorySearchRequest) -> MemorySearchResponse:
+    settings = get_settings()
+    store = MemoryStore(
+        embed_worker=EmbedWorkerClient(settings),
+        qdrant=QdrantClient(settings),
+        postgres=PostgresClient(settings),
+    )
+
+    try:
+        collection_name, backend, embedding_dim, results = await store.search(request)
+    except QdrantCollectionError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.exception("memory search failed")
+        raise HTTPException(
+            status_code=503,
+            detail=f"memory search unavailable: {exc.__class__.__name__}: {exc}",
+        ) from exc
+
+    return MemorySearchResponse(
+        status="ok",
+        collection_name=collection_name,
+        embedding_backend=backend,
+        embedding_dim=embedding_dim,
+        results=results,
+    )

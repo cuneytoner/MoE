@@ -1,8 +1,15 @@
 from typing import Any
 
 import httpx
+from pydantic import BaseModel
 
 from app.config import Settings
+
+
+class EmbedResult(BaseModel):
+    backend: str
+    embedding_dim: int
+    vector: list[float]
 
 
 class EmbedWorkerClient:
@@ -21,7 +28,7 @@ class EmbedWorkerClient:
 
         return "ok"
 
-    async def embed(self, text: str) -> list[float]:
+    async def embed(self, text: str) -> EmbedResult:
         async with httpx.AsyncClient(timeout=10) as client:
             response = await client.post(
                 f"{self._settings.embed_worker_internal_url}/embed",
@@ -34,4 +41,22 @@ class EmbedWorkerClient:
         if not isinstance(vector, list):
             raise ValueError("embed worker response missing vector")
 
-        return [float(value) for value in vector]
+        backend = data.get("backend")
+        if not isinstance(backend, str) or not backend:
+            raise ValueError("embed worker response missing backend")
+
+        embedding_dim = data.get("embedding_dim")
+        if not isinstance(embedding_dim, int):
+            raise ValueError("embed worker response missing embedding_dim")
+
+        normalized_vector = [float(value) for value in vector]
+        if len(normalized_vector) != embedding_dim:
+            raise ValueError(
+                f"embed worker dimension mismatch: reported {embedding_dim}, got {len(normalized_vector)}"
+            )
+
+        return EmbedResult(
+            backend=backend,
+            embedding_dim=embedding_dim,
+            vector=normalized_vector,
+        )

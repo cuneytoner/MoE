@@ -284,6 +284,21 @@ Expected boundaries:
 - Keep ranking logic understandable and easy to test.
 - Avoid broad routing or UI work in this step.
 
+## Milestone 10 Prompt Summary
+
+Implement dimension-aware Memory API add/search with Qdrant.
+
+Scope:
+
+- Resolve Qdrant collection names from Embed Worker `backend` and `embedding_dim`.
+- Use `moe_memories_fake_384` for fake vectors.
+- Use `moe_memories_bge_m3_1024` for BGE-M3 vectors.
+- Validate existing Qdrant collection vector size before reuse.
+- Implement `/memory/search` by embedding the query and searching the matching collection.
+- Store and return collection, backend, and dimension metadata.
+- Keep fake as the default backend and keep BGE-M3 optional.
+- Do not implement Gateway API or Dashboard.
+
 ## Milestone 11 Prompt Placeholder
 
 Add a local model runtime and OpenAI-compatible serving layer.
@@ -294,6 +309,10 @@ Expected boundaries:
 - Expose an OpenAI-compatible endpoint.
 - Keep model files outside the codebase.
 - Avoid bundling chat UI and gateway work into the same task.
+
+## Milestone 11 Prompt Summary Placeholder
+
+Prepare model runtime and OpenAI-compatible serving after Memory API search is stable.
 
 ## Milestone 17 Prompt Placeholder
 

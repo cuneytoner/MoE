@@ -126,7 +126,7 @@ Goals:
 
 ## Milestone 9.1: Model Integrity and Runtime Validation
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add script to validate local model paths.
@@ -137,16 +137,16 @@ Goals:
 - Add optional BGE-M3 runtime test.
 - Keep BGE-M3 test optional and not part of default `make test` yet.
 
-## Milestone 10: Memory Search with Real Embeddings
+## Milestone 10: Memory Search with Dimension-Aware Qdrant Collections
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Prevent `384` and `1024` dimension mismatch in Qdrant collections.
-- Add collection validation.
-- Decide collection naming strategy for fake versus BGE-M3 embeddings.
-- Implement `/memory/search` using the active embedder and Qdrant.
-- Return PostgreSQL metadata with Qdrant search results.
+- Select Qdrant collections from active embedding backend and vector dimension.
+- Keep fake `384` vectors and BGE-M3 `1024` vectors in separate collections.
+- Validate collection dimensions before write and search.
+- Implement `/memory/search` using Embed Worker query embeddings and Qdrant.
+- Return collection, backend, dimension, score, and payload metadata with search results.
 
 ## Milestone 11: Model Runtime / OpenAI-Compatible Serving
 

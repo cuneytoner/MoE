@@ -48,7 +48,7 @@ Current dimension behavior:
 - `fake` uses the configured default `EMBEDDING_DIM=384`
 - local `bge-m3` currently returns runtime-detected vectors with dimension `1024`
 
-This means BGE-M3 validation is optional and separate from the default fake backend flow.
+This means BGE-M3 validation is optional and separate from the default fake backend flow. Memory API uses these returned dimensions to select separate Qdrant collections: `moe_memories_fake_384` for fake and `moe_memories_bge_m3_1024` for BGE-M3.
 
 Docker mounts the local model read-only:
 
