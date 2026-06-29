@@ -14,7 +14,7 @@ from app.models.gateway import (
     GatewayRouteRequest,
     GatewayRouteResponse,
 )
-from app.services.router import route_message
+from app.services.router import RouteDecision, route_message
 
 app = FastAPI(title="MoE Gateway API", version="0.1.0")
 
@@ -55,16 +55,25 @@ async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
     settings = get_settings()
     client = ModelRuntimeClient(settings.model_runtime_url)
     model = request.model or await _detect_model(client, settings.default_model)
+    decision = route_message(request.message) if request.auto_route else _default_route()
+    route_metadata = _route_metadata(decision, settings.default_model)
+    use_memory = request.use_memory or (
+        request.auto_route and decision.use_memory_recommended
+    )
     memory_client = MemoryApiClient(settings.memory_api_url)
     memory = await _memory_context(
         client=memory_client,
         message=request.message,
-        use_memory=request.use_memory,
+        use_memory=use_memory,
         limit=request.memory_limit,
     )
     messages: list[dict[str, str]] = []
     if request.system:
         messages.append({"role": "system", "content": request.system})
+    if request.auto_route:
+        messages.append(
+            {"role": "system", "content": _intent_guidance(decision.intent)}
+        )
     if memory["context"]:
         messages.append({"role": "system", "content": str(memory["context"])})
     messages.append({"role": "user", "content": request.message})
@@ -89,6 +98,7 @@ async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
         status="ok",
         model=model,
         content=content,
+        route=route_metadata,
         memory=memory["metadata"],
         raw={key: value for key, value in raw.items() if value is not None} or None,
     )
@@ -98,15 +108,16 @@ async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
 def route(request: GatewayRouteRequest) -> GatewayRouteResponse:
     settings = get_settings()
     decision = route_message(request.message)
+    route_metadata = _route_metadata(decision, settings.default_model)
     return GatewayRouteResponse(
         status="ok",
-        intent=decision.intent,
-        confidence=decision.confidence,
-        model_target=settings.default_model,
-        use_memory_recommended=decision.use_memory_recommended,
+        intent=route_metadata["intent"],
+        confidence=route_metadata["confidence"],
+        model_target=route_metadata["model_target"],
+        use_memory_recommended=route_metadata["use_memory_recommended"],
         memory_enabled=request.use_memory,
-        reason=decision.reason,
-        signals=decision.signals,
+        reason=route_metadata["reason"],
+        signals=route_metadata["signals"],
     )
 
 
@@ -137,6 +148,41 @@ def _extract_content(response: dict[str, Any]) -> str:
             if isinstance(text, str):
                 return text
     return ""
+
+
+def _default_route() -> RouteDecision:
+    return RouteDecision(
+        intent="chat",
+        confidence=0.0,
+        use_memory_recommended=False,
+        reason="Auto routing disabled",
+        signals={"matched_keywords": [], "message_length": 0},
+    )
+
+
+def _route_metadata(
+    decision: RouteDecision,
+    model_target: str,
+) -> dict[str, Any]:
+    return {
+        "intent": decision.intent,
+        "confidence": decision.confidence,
+        "model_target": model_target,
+        "use_memory_recommended": decision.use_memory_recommended,
+        "reason": decision.reason,
+        "signals": decision.signals,
+    }
+
+
+def _intent_guidance(intent: str) -> str:
+    guidance = {
+        "chat": "Answer naturally and concisely.",
+        "code": "You are in coding mode. Prefer precise, actionable steps. When code is needed, provide usable code.",
+        "memory": "Use local memory when relevant. If memory is empty or irrelevant, say so briefly.",
+        "review": "You are in review mode. Look for correctness, risks, missing cases, and concrete improvements.",
+        "ops": "You are in operations mode. Prefer terminal-safe commands, verification steps, and rollback notes.",
+    }
+    return guidance.get(intent, guidance["chat"])
 
 
 async def _memory_context(

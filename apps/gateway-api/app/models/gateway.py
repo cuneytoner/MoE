@@ -23,6 +23,7 @@ class GatewayChatRequest(BaseModel):
     max_tokens: int = Field(default=512, ge=1, le=8192)
     use_memory: bool = False
     memory_limit: int = Field(default=5, ge=1, le=20)
+    auto_route: bool = True
 
 
 class GatewayChatMemory(BaseModel):
@@ -34,10 +35,20 @@ class GatewayChatMemory(BaseModel):
     embedding_dim: int | None = None
 
 
+class GatewayRouteMetadata(BaseModel):
+    intent: str
+    confidence: float
+    model_target: str
+    use_memory_recommended: bool
+    reason: str
+    signals: dict[str, Any]
+
+
 class GatewayChatResponse(BaseModel):
     status: str
     model: str
     content: str
+    route: GatewayRouteMetadata
     memory: GatewayChatMemory
     raw: dict[str, Any] | None = None
 

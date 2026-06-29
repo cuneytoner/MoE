@@ -94,6 +94,38 @@ The injected context includes only compact memory text, source, and score when a
 
 If Memory API is unavailable or search fails, Gateway continues chat without memory and returns memory metadata with `status: unavailable`. If memory search succeeds but returns no results, the status is `empty`.
 
+Router-aware chat is enabled by default with `auto_route: true`. Gateway calls the internal deterministic router directly and includes route metadata in the chat response:
+
+```json
+{
+  "route": {
+    "intent": "code",
+    "confidence": 0.82,
+    "model_target": "deepseek-coder-lite",
+    "use_memory_recommended": false,
+    "reason": "Matched coding/debugging terms",
+    "signals": {
+      "matched_keywords": ["traceback", "error"],
+      "message_length": 31
+    }
+  }
+}
+```
+
+If `auto_route` is false, Gateway skips router-derived system prompt additions and preserves the older chat behavior as much as possible. Explicit `use_memory: true` still works.
+
+When the router intent is `memory`, Gateway automatically enables memory search unless `use_memory` was already true. Other intents do not auto-enable memory yet.
+
+Gateway adds one concise intent-specific system hint when `auto_route` is enabled:
+
+- `chat`: answer naturally and concisely
+- `code`: prefer precise, actionable coding help
+- `memory`: use local memory only when relevant
+- `review`: look for correctness, risks, missing cases, and improvements
+- `ops`: prefer terminal-safe commands, verification, and rollback notes
+
+`model_target` is advisory for now. Gateway does not hot-switch llama.cpp models in this milestone. If `model` is provided in the request, that model is sent to the OpenAI-compatible runtime. Otherwise Gateway keeps the current behavior: first model from `/models` when available, then `DEFAULT_MODEL`.
+
 This endpoint is optional in default tests because it requires the host model runtime to be running and loaded.
 
 ### POST /gateway/route
@@ -148,6 +180,13 @@ Optional memory-augmented chat test:
 ```bash
 make model-start MODEL=deepseek-coder-lite
 make test-gateway-chat-memory
+```
+
+Optional router-aware chat test:
+
+```bash
+make model-start MODEL=qwen-coder-14b-fast
+make test-gateway-chat-router
 ```
 
 Default `make test` does not require the host model runtime to be running.

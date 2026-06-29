@@ -423,6 +423,31 @@ Expected boundaries:
 - Preserve existing Gateway chat and memory contracts.
 - Do not implement advanced MoE routing or Dashboard.
 
+## Milestone 15 Prompt Summary
+
+Make Gateway chat router-aware.
+
+Scope:
+
+- Add `auto_route` to `/gateway/chat`, defaulting to true.
+- Reuse the internal router service directly, without HTTP calls to `/gateway/route`.
+- Include route metadata in chat responses.
+- Auto-enable memory search for memory intent.
+- Add concise intent-specific system prompt guidance.
+- Keep actual llama.cpp model switching out of scope.
+- Keep default tests independent from model runtime.
+
+## Milestone 16 Prompt Placeholder
+
+Add model mapping, runtime profiles, or simple tool-aware routing.
+
+Expected boundaries:
+
+- Use router intent metadata to choose advisory model/runtime profiles or tools.
+- Keep hot switching explicit and observable.
+- Preserve current Gateway fallback behavior.
+- Do not implement advanced MoE routing or Dashboard.
+
 ## Milestone 17 Prompt Placeholder
 
 Add an automation layer for local workflows.

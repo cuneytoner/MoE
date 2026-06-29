@@ -206,7 +206,7 @@ Goals:
 
 ## Milestone 14: Simple Router / Intent-Aware Routing
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Replace placeholder Gateway route decisions with deterministic intent-aware routing.
@@ -215,17 +215,29 @@ Goals:
 - Keep advanced MoE routing optional and incremental.
 - Preserve the current model runtime and memory API contracts.
 
-## Milestone 15: Router-Aware Chat / Tool-Aware Routing
+## Milestone 15: Router-Aware Gateway Chat
+
+Status: IN PROGRESS
+
+Goals:
+- Use deterministic route decisions to influence Gateway chat behavior.
+- Add route metadata to `/gateway/chat` responses.
+- Auto-enable memory search for memory intent.
+- Add concise intent-specific system prompt guidance.
+- Keep actual model hot-switching out of scope.
+- Preserve default tests without requiring model runtime.
+
+## Milestone 16: Model Mapping / Runtime Profiles or Tool-Aware Routing
 
 Status: PLANNED
 
 Goals:
-- Use route decisions to influence chat behavior.
-- Prepare simple tool-aware routing without requiring an advanced MoE router.
-- Keep model and memory calls explicit and observable.
-- Preserve default tests without requiring model runtime.
+- Map route intents to model/runtime profiles or tools.
+- Keep model switching explicit and observable.
+- Preserve current fallback behavior for default tests.
+- Avoid advanced MoE routing until simpler routing is stable.
 
-## Milestone 16: Dashboard
+## Milestone 17: Dashboard
 
 Status: PLANNED
 
@@ -235,7 +247,7 @@ Goals:
 - Surface memory, embedding, gateway, and model runtime health.
 - Keep the dashboard operational rather than decorative.
 
-## Milestone 17: Document RAG Ingestion
+## Milestone 18: Document RAG Ingestion
 
 Status: PLANNED
 
@@ -245,7 +257,7 @@ Goals:
 - Track document metadata and ingestion state.
 - Prepare safe local RAG workflows.
 
-## Milestone 18: Local Chat UI Integration
+## Milestone 19: Local Chat UI Integration
 
 Status: PLANNED
 
@@ -255,7 +267,7 @@ Goals:
 - Keep memory and RAG hooks explicit.
 - Avoid copying external UI runtime state into the codebase.
 
-## Milestone 19: Coding Agent Integration
+## Milestone 20: Coding Agent Integration
 
 Status: PLANNED
 
@@ -265,7 +277,7 @@ Goals:
 - Route coding-context requests into the local AI stack safely.
 - Keep source/runtime separation strict for agent workflows.
 
-## Milestone 20: Automation Layer
+## Milestone 21: Automation Layer
 
 Status: PLANNED
 
@@ -275,7 +287,7 @@ Goals:
 - Support repeatable local task automation.
 - Keep automation state out of the source repository.
 
-## Milestone 21: Homelab Ops
+## Milestone 22: Homelab Ops
 
 Status: PLANNED
 

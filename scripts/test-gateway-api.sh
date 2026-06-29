@@ -201,4 +201,42 @@ if [ "${RUN_GATEWAY_CHAT_MEMORY_TEST:-0}" = "1" ]; then
   fi
 fi
 
+if [ "${RUN_GATEWAY_CHAT_ROUTER_TEST:-0}" = "1" ]; then
+  if ! router_code_response="$(post_json "/gateway/chat" '{"message":"fix this python traceback error","auto_route":true,"use_memory":false,"temperature":0.2,"max_tokens":128}')"; then
+    fail "Gateway API /gateway/chat router code request failed"
+  fi
+
+  router_code_status="$(jq -r '.status // empty' <<<"$router_code_response")"
+  router_code_intent="$(jq -r '.route.intent // empty' <<<"$router_code_response")"
+  router_code_content="$(jq -r '.content // empty' <<<"$router_code_response")"
+
+  if [ "$router_code_status" = "ok" ] \
+    && [ "$router_code_intent" = "code" ] \
+    && [ -n "$router_code_content" ]; then
+    pass "Gateway API /gateway/chat router code"
+  else
+    fail "Gateway API /gateway/chat router code returned unexpected response: $router_code_response"
+  fi
+
+  if ! router_memory_response="$(post_json "/gateway/chat" '{"message":"what do you remember about my local AI runtime?","auto_route":true,"temperature":0.2,"max_tokens":128}')"; then
+    fail "Gateway API /gateway/chat router memory request failed"
+  fi
+
+  router_memory_status="$(jq -r '.status // empty' <<<"$router_memory_response")"
+  router_memory_intent="$(jq -r '.route.intent // empty' <<<"$router_memory_response")"
+  router_memory_enabled="$(jq -r '.memory.enabled' <<<"$router_memory_response")"
+  router_memory_memory_status="$(jq -r '.memory.status // empty' <<<"$router_memory_response")"
+  router_memory_content="$(jq -r '.content // empty' <<<"$router_memory_response")"
+
+  if [ "$router_memory_status" = "ok" ] \
+    && [ "$router_memory_intent" = "memory" ] \
+    && [ "$router_memory_enabled" = "true" ] \
+    && [ -n "$router_memory_memory_status" ] \
+    && [ -n "$router_memory_content" ]; then
+    pass "Gateway API /gateway/chat router memory"
+  else
+    fail "Gateway API /gateway/chat router memory returned unexpected response: $router_memory_response"
+  fi
+fi
+
 echo "Gateway API tests passed"
