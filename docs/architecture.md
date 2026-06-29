@@ -80,6 +80,21 @@ apps/embed-worker:
 
 Embedding generation worker. It will create vectors from text using local embedding models.
 
+The embedding layer now has two planning concerns:
+
+- runtime backend support for local models such as BGE-M3
+- model integrity validation so local mounts and files are trustworthy before other layers depend on them
+
+Future local AI stack layers expected around it:
+
+- local model runtime / router such as llama.cpp or similar
+- OpenAI-compatible local endpoint
+- document RAG ingestion and vector workflows
+- local chat UI integration
+- coding agent integration
+- automation layer such as n8n
+- homelab operations and container management
+
 apps/dashboard:
 
 Management and monitoring UI. It will show service health, machine status, GPU status, model endpoints, and memory system status.

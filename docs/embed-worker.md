@@ -6,6 +6,10 @@ The worker exposes a deterministic fake embedding backend and a lazy `bge-m3` ba
 
 Milestone 7 connects the Memory API to this fake backend. The backend remains fake and deterministic.
 
+Current runtime issue:
+
+Real BGE-M3 embedding can fail even when the configured path exists if the local model directory is incomplete or contains Git LFS pointer files. The next planning checkpoint adds explicit model integrity and Docker mount validation before relying on the real runtime in default workflows.
+
 ## Service
 
 - Name: `embed-worker`

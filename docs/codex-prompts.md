@@ -233,6 +233,19 @@ Scope:
 - Keep `make test` on the fake backend.
 - Add optional `RUN_BGE_M3_TEST=1` validation.
 
+## Milestone 9.1 Prompt Placeholder
+
+Validate local embedding model integrity and runtime visibility before relying on real BGE-M3 embeddings.
+
+Expected boundaries:
+
+- Add a model validation script only.
+- Detect Git LFS pointer files.
+- Check required model files and approximate directory size.
+- Verify Docker mount visibility for `/models/bge-m3`.
+- Keep runtime validation optional and outside default `make test`.
+- Do not download or copy model files.
+
 ## Milestone 10 Next Prompt Placeholder
 
 Implement Memory Search with real embeddings.
@@ -244,6 +257,51 @@ Expected boundaries:
 - Return simple ranked results from Memory API.
 - Keep the search behavior small and explainable.
 - Do not implement Gateway API or Dashboard.
+
+## Milestone 10 Prompt Placeholder
+
+Add Memory API search using real embeddings and Qdrant lookup.
+
+Expected boundaries:
+
+- Embed search queries through Embed Worker.
+- Query Qdrant for nearest vectors.
+- Return simple ranked memory candidates.
+- Keep ranking logic understandable and easy to test.
+- Avoid broad routing or UI work in this step.
+
+## Milestone 11 Prompt Placeholder
+
+Add a local model runtime and OpenAI-compatible serving layer.
+
+Expected boundaries:
+
+- Prepare llama.cpp or a similar local model server.
+- Expose an OpenAI-compatible endpoint.
+- Keep model files outside the codebase.
+- Avoid bundling chat UI and gateway work into the same task.
+
+## Milestone 17 Prompt Placeholder
+
+Add an automation layer for local workflows.
+
+Expected boundaries:
+
+- Prepare n8n or a similar automation service.
+- Connect it to local APIs with explicit credentials and URLs.
+- Keep automation state outside the source repository.
+- Avoid mixing this work with dashboard or homelab ops changes.
+
+## Milestone 18 Prompt Placeholder
+
+Add homelab operations support for the local AI stack.
+
+Expected boundaries:
+
+- Document and prepare Tailscale-style remote access.
+- Add container management planning such as Portainer or Arcane.
+- Keep security and operational visibility explicit.
+- Avoid changing application business logic in this step.
 
 ## Safe Codex Task Boundary
 

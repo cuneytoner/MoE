@@ -124,6 +124,19 @@ Goals:
 - Avoid downloading models into the repository.
 - Validate embedding dimension compatibility.
 
+## Milestone 9.1: Model Integrity and Runtime Validation
+
+Status: PLANNED
+
+Goals:
+- Add script to validate local model paths.
+- Detect Git LFS pointer files.
+- Check model directory size.
+- Check required model files exist.
+- Check Docker mount visibility.
+- Add optional BGE-M3 runtime test.
+- Keep BGE-M3 test optional and not part of default `make test` yet.
+
 ## Milestone 10: Memory Search with Real Embeddings
 
 Status: PLANNED
@@ -133,4 +146,84 @@ Goals:
 - Query Qdrant for candidate memories.
 - Return simple ranked memory search results.
 - Keep ranking behavior understandable and testable.
-- Do not implement Gateway API or Dashboard yet.
+- Keep Memory API search integration small and explicit.
+
+## Milestone 11: Model Runtime / OpenAI-Compatible Serving
+
+Status: PLANNED
+
+Goals:
+- Add a local model runtime layer such as llama.cpp or similar model serving.
+- Expose an OpenAI-compatible local endpoint.
+- Prepare routing between embedding, chat, and future reasoning models.
+- Keep model files outside the codebase.
+
+## Milestone 12: Gateway API
+
+Status: PLANNED
+
+Goals:
+- Add a central API entrypoint for local AI services.
+- Route requests to memory, embedding, and model runtime layers.
+- Expose health, model discovery, and future chat endpoints.
+- Keep the interface compatible with local tool and client integrations.
+
+## Milestone 13: Dashboard
+
+Status: PLANNED
+
+Goals:
+- Add a management dashboard for service and machine status.
+- Show Docker service health and runtime summaries.
+- Surface memory, embedding, and model runtime health.
+- Keep the dashboard operational rather than decorative.
+
+## Milestone 14: Document RAG Ingestion
+
+Status: PLANNED
+
+Goals:
+- Add document ingestion and chunking flow.
+- Embed chunks and store vectors in Qdrant.
+- Track document metadata and ingestion state.
+- Prepare safe local RAG workflows.
+
+## Milestone 15: Local Chat UI Integration
+
+Status: PLANNED
+
+Goals:
+- Integrate a local chat UI layer such as OpenWebUI or AnythingLLM.
+- Connect the UI to the local OpenAI-compatible endpoint.
+- Keep memory and RAG hooks explicit.
+- Avoid copying external UI runtime state into the codebase.
+
+## Milestone 16: Coding Agent Integration
+
+Status: PLANNED
+
+Goals:
+- Integrate local coding agents and editor workflows.
+- Support Codex, Continue, and related local agent tooling.
+- Route coding-context requests into the local AI stack safely.
+- Keep source/runtime separation strict for agent workflows.
+
+## Milestone 17: Automation Layer
+
+Status: PLANNED
+
+Goals:
+- Add an automation layer such as n8n.
+- Connect memory, model runtime, and future gateway endpoints into workflows.
+- Support repeatable local task automation.
+- Keep automation state out of the source repository.
+
+## Milestone 18: Homelab Ops
+
+Status: PLANNED
+
+Goals:
+- Add homelab operations support such as Tailscale and always-on access patterns.
+- Add container management visibility with tools such as Portainer or Arcane.
+- Prepare safe remote monitoring and maintenance.
+- Keep operational access explicit and documented.
