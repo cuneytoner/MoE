@@ -72,9 +72,9 @@ Never place runtime data, generated media, logs, pids, model files, checkpoints,
 - Read-only coding workspace context
 - Continue.dev / VS Code integration
 
-## 6. Planned Milestones
+## 6. Current And Planned Milestones
 
-- Milestone 22: Repo-Aware Coding Agent
+- Milestone 22: Repo-Aware Coding Agent in progress
 - Milestone 23: Safe Patch/Diff Workflow
 - Milestone 23.5: PC-2 Worker Node Preparation
 - Milestone 24: Nightly Learning Worker

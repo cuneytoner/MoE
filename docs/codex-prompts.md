@@ -549,16 +549,21 @@ Scope:
 - Keep streaming unsupported unless explicitly implemented later.
 - Do not copy editor runtime state into the codebase.
 
-## Milestone 22 Prompt Placeholder
+## Milestone 22 Prompt Summary
 
-Add repo-aware coding agent workflows.
+Add a read-only repo-aware coding agent.
 
-Expected boundaries:
+Scope:
 
-- Combine workspace context, memory, router, and model runtime.
-- Support explanation, debugging, review, and implementation planning.
-- Keep file writes disabled.
-- Avoid advanced autonomous editing.
+- Add `/gateway/code/context` to search workspace files, include explicit paths, de-duplicate selected files, and build compact context.
+- Add `/gateway/code/ask` to build repo context and call the existing router-aware Gateway chat flow.
+- Return selected files, route metadata, memory metadata, model id, and truncation status.
+- Add read-only tool catalog entries for `code_context` and `code_ask`.
+- Keep default tests independent from model runtime.
+- Do not write files.
+- Do not apply patches.
+- Do not execute shell commands.
+- Do not switch model runtime from Gateway.
 
 
 ## Milestone 23 Prompt Placeholder

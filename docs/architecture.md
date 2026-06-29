@@ -140,12 +140,16 @@ Workspace context provider:
 
 The stack becomes practically useful for local code development after Milestone 20 and Milestone 21. The workspace context provider mounts source code into Gateway as `/workspace:ro` and exposes read-only status, tree, file read, search, and context bundle endpoints.
 
+Repo-aware coding agent:
+
+Milestone 22 adds a read-only coding agent layer inside Gateway. It classifies coding tasks through the existing router, searches workspace files, selects relevant safe files, builds a compact repository context bundle, and can call the existing router-aware Gateway chat flow. It returns selected file references, route metadata, memory metadata, and model information when runtime-backed asking succeeds. It does not write files, apply patches, execute shell commands, control Docker, or switch host model runtime.
+
 Coding flow:
 
 - user task
 - Continue.dev or VS Code sends chat to Gateway's OpenAI-compatible adapter
 - Gateway route decision
-- optional workspace search or context bundle
+- optional repo-aware workspace search or context bundle
 - optional memory search
 - model chat through the host OpenAI-compatible runtime
 

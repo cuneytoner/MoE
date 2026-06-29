@@ -93,4 +93,8 @@ make tree
 
 ## Current Milestone
 
-Milestone 1: Monorepo Skeleton
+Milestone 22: Repo-Aware Coding Agent in progress
+
+Next planned milestone:
+
+Milestone 23: Safe Patch/Diff Workflow

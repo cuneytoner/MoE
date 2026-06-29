@@ -5,6 +5,7 @@ from app.clients.memory_api import MemoryApiClient
 from app.clients.model_runtime import ModelRuntimeClient
 from app.config import Settings
 from app.services.model_mapping import get_model_mapping
+from app.services.repo_agent import RepoAgentService
 from app.services.tool_planner import tool_catalog
 from app.services.workspace import WorkspaceService
 
@@ -117,6 +118,24 @@ async def _execute_read_only_tool(
             max_chars=_optional_int(arguments.get("max_chars")) or 12000,
         )
 
+    if tool == "code_context":
+        paths = arguments.get("paths")
+        if not isinstance(paths, list):
+            paths = []
+        return RepoAgentService(settings).build_context(
+            task=str(arguments.get("task") or ""),
+            query=_optional_str(arguments.get("query")),
+            paths=[str(path) for path in paths],
+            max_files=_optional_int(arguments.get("max_files")) or 8,
+            max_chars=_optional_int(arguments.get("max_chars")) or 20000,
+        )
+
+    if tool == "code_ask":
+        return {
+            "status": "unavailable",
+            "reason": "Use POST /gateway/code/ask so Gateway can attach route and memory metadata.",
+        }
+
     return {
         "arguments": arguments,
         "message": "No read-only executor is registered for this tool.",
@@ -136,3 +155,10 @@ def _optional_int(value: Any) -> int | None:
         return int(value)
     except (TypeError, ValueError):
         return None
+
+
+def _optional_str(value: Any) -> str | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    return text or None

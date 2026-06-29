@@ -60,14 +60,22 @@ The default editor workflow should be read-first: Continue.dev calls Gateway's O
 
 Goal: combine workspace context, memory, router metadata, and model runtime into a coherent coding assistant.
 
-Initial tasks:
+Implemented read-only agent layer:
 
-- Explain selected code.
-- Debug errors and tracebacks.
-- Review code and docs.
-- Produce implementation plans.
+- `POST /gateway/code/context` searches the workspace, includes explicit paths, de-duplicates files, and builds selected-file context.
+- `POST /gateway/code/ask` builds selected-file context, adds a repo-aware system prompt, and calls the existing Gateway chat flow.
+- Selected files include workspace-relative paths and reasons such as query matches or explicit selection.
+- Responses include routing and memory metadata when the model-backed ask endpoint succeeds.
 
-This milestone should still avoid automatic file writes.
+The repo-aware agent remains read-only:
+
+- No file writes.
+- No shell execution.
+- No patch application.
+- No automatic editing.
+- No host runtime control or model switching.
+
+If the model runtime is unavailable, `/gateway/code/ask` returns a controlled unavailable response. The default Gateway tests do not require generated model content.
 
 ## Milestone 23: Safe Write/Edit Plan for Code
 

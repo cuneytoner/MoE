@@ -11,6 +11,10 @@ from app.config import get_settings
 from app.models.gateway import (
     GatewayChatRequest,
     GatewayChatResponse,
+    GatewayCodeAskRequest,
+    GatewayCodeAskResponse,
+    GatewayCodeContextRequest,
+    GatewayCodeContextResponse,
     GatewayHealthResponse,
     GatewayModelRoutingResponse,
     GatewayModelsResponse,
@@ -36,6 +40,7 @@ from app.models.gateway import (
     OpenAIChatMessage,
 )
 from app.services.model_mapping import ModelMapping, get_model_mapping
+from app.services.repo_agent import RepoAgentService
 from app.services.router import RouteDecision, route_message
 from app.services.tool_executor import execute_tool
 from app.services.tool_planner import tool_catalog
@@ -187,6 +192,75 @@ def workspace_context(
             paths=request.paths,
             max_chars=request.max_chars,
         )
+    )
+
+
+@app.post("/gateway/code/context", response_model=GatewayCodeContextResponse)
+def code_context(request: GatewayCodeContextRequest) -> GatewayCodeContextResponse:
+    settings = get_settings()
+    return GatewayCodeContextResponse(
+        **RepoAgentService(settings).build_context(
+            task=request.task,
+            query=request.query,
+            paths=request.paths,
+            max_files=request.max_files,
+            max_chars=request.max_chars,
+        )
+    )
+
+
+@app.post(
+    "/gateway/code/ask",
+    response_model=GatewayCodeAskResponse,
+    response_model_exclude_none=True,
+)
+async def code_ask(request: GatewayCodeAskRequest) -> GatewayCodeAskResponse:
+    settings = get_settings()
+    context = RepoAgentService(settings).build_context(
+        task=request.task,
+        query=request.query,
+        paths=request.paths,
+        max_files=request.max_files,
+        max_chars=request.max_context_chars,
+    )
+    system = "\n\n".join(
+        [
+            "You are a repo-aware coding assistant.",
+            "Use the provided read-only repository context.",
+            "Do not claim files were edited.",
+            "When suggesting changes, describe them or provide patch-style suggestions only.",
+            str(context["context"]),
+        ]
+    )
+    try:
+        chat_response = await _gateway_chat(
+            GatewayChatRequest(
+                message=request.task,
+                system=system,
+                temperature=request.temperature,
+                max_tokens=request.max_tokens,
+                use_memory=request.use_memory,
+                auto_route=request.auto_route,
+            )
+        )
+    except HTTPException as exc:
+        if exc.status_code == 503:
+            return GatewayCodeAskResponse(
+                status="unavailable",
+                selected_files=context["selected_files"],
+                truncated=bool(context["truncated"]),
+                reason=str(exc.detail),
+            )
+        raise
+
+    return GatewayCodeAskResponse(
+        status="ok",
+        content=chat_response.content,
+        selected_files=context["selected_files"],
+        route=chat_response.route,
+        memory=chat_response.memory,
+        model=chat_response.model,
+        truncated=bool(context["truncated"]),
     )
 
 
@@ -390,16 +464,60 @@ def _openai_to_gateway_chat_request(
             detail="at least one user message is required",
         )
 
-    model = None if request.model == "local-gateway" else request.model
+    system = "\n\n".join(
+        message
+        for message in [
+            "\n\n".join(system_messages),
+            _openai_conversation_context(request.messages),
+        ]
+        if message
+    )
+    model = _openai_runtime_model(request.model)
     return GatewayChatRequest(
         message=user_messages[-1],
-        system="\n\n".join(system_messages) or None,
+        system=system or None,
         model=model,
         temperature=request.temperature,
         max_tokens=request.max_tokens,
         use_memory=False,
         auto_route=True,
     )
+
+
+def _openai_runtime_model(model: str) -> str | None:
+    if model == "local-gateway":
+        return None
+
+    settings = get_settings()
+    runtime_id = get_model_mapping(settings.model_routing_config).runtime_id(model)
+    return runtime_id or model
+
+
+def _openai_conversation_context(messages: list[OpenAIChatMessage]) -> str | None:
+    context_lines: list[str] = []
+    last_user_index = max(
+        (
+            index
+            for index, message in enumerate(messages)
+            if message.role == "user" and message.content.strip()
+        ),
+        default=-1,
+    )
+
+    for index, message in enumerate(messages):
+        content = message.content.strip()
+        if not content or message.role == "system":
+            continue
+        if index == last_user_index and message.role == "user":
+            continue
+        if message.role not in {"user", "assistant"}:
+            continue
+        context_lines.append(f"{message.role}: {content}")
+
+    if not context_lines:
+        return None
+
+    return "Conversation so far:\n" + "\n".join(context_lines)
 
 
 def _default_route() -> RouteDecision:

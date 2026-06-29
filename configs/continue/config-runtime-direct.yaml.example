@@ -19,4 +19,12 @@ models:
     temperature: 0.2
     contextLength: 16384
 
+  - name: Qwen32B Direct Review
+    provider: openai
+    model: qwen-coder-32b-main
+    apiBase: http://localhost:8000/v1
+    apiKey: local
+    temperature: 0.2
+    contextLength: 32768
+
 defaultModel: Qwen14B Direct

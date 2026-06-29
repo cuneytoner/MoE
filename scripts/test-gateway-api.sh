@@ -193,6 +193,8 @@ tools_gateway_health_check="$(jq -r 'if .tools.gateway_health_check then "presen
 tools_memory_deep_health_check="$(jq -r 'if .tools.memory_deep_health_check then "present" else "missing" end' <<<"$tools_response")"
 tools_runtime_status_check="$(jq -r 'if .tools.runtime_status_check then "present" else "missing" end' <<<"$tools_response")"
 tools_workspace_status="$(jq -r 'if .tools.workspace_status then "present" else "missing" end' <<<"$tools_response")"
+tools_code_context="$(jq -r 'if .tools.code_context then "present" else "missing" end' <<<"$tools_response")"
+tools_code_ask="$(jq -r 'if .tools.code_ask then "present" else "missing" end' <<<"$tools_response")"
 
 if [ "$tools_status" = "ok" ] \
   && [ "$tools_auto_execution" = "false" ] \
@@ -205,7 +207,9 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_gateway_health_check" = "present" ] \
   && [ "$tools_memory_deep_health_check" = "present" ] \
   && [ "$tools_runtime_status_check" = "present" ] \
-  && [ "$tools_workspace_status" = "present" ]; then
+  && [ "$tools_workspace_status" = "present" ] \
+  && [ "$tools_code_context" = "present" ] \
+  && [ "$tools_code_ask" = "present" ]; then
   pass "Gateway API /gateway/tools"
 else
   fail "Gateway API /gateway/tools returned unexpected response: $tools_response"
@@ -305,6 +309,7 @@ assert_tool_execute_ok "workspace_tree" '{"path":".","max_items":20}'
 assert_tool_execute_ok "workspace_search" '{"query":"gateway","path":"docs","max_results":5}'
 assert_tool_execute_ok "workspace_file_read" '{"path":"docs/gateway-api.md"}'
 assert_tool_execute_ok "workspace_context" '{"task":"explain gateway docs","paths":["docs/gateway-api.md"],"max_chars":4000}'
+assert_tool_execute_ok "code_context" '{"task":"explain gateway routing","query":"gateway","paths":[],"max_files":4,"max_chars":8000}'
 assert_tool_execute_rejected "shell_command_suggestion"
 assert_tool_execute_rejected "docker_status_check"
 assert_tool_execute_rejected "runtime_switch_plan"
@@ -395,6 +400,59 @@ if [ "$workspace_context_status" = "ok" ] \
 else
   fail "Gateway API /gateway/workspace/context returned unexpected response: $workspace_context_response"
 fi
+
+if ! code_context_response="$(post_json "/gateway/code/context" '{"task":"explain how gateway routing works","query":"gateway","paths":[],"max_files":8,"max_chars":20000}')"; then
+  fail "Gateway API /gateway/code/context request failed"
+fi
+
+code_context_status="$(jq -r '.status // empty' <<<"$code_context_response")"
+code_context_files_count="$(jq -r '.selected_files | length' <<<"$code_context_response")"
+code_context_text="$(jq -r '.context // empty' <<<"$code_context_response")"
+
+if [ "$code_context_status" = "ok" ] \
+  && [ "$code_context_files_count" -gt 0 ] \
+  && [ -n "$code_context_text" ]; then
+  pass "Gateway API /gateway/code/context"
+else
+  fail "Gateway API /gateway/code/context returned unexpected response: $code_context_response"
+fi
+
+if ! code_context_traversal_response="$(post_json "/gateway/code/context" '{"task":"check traversal safety","query":null,"paths":["../../etc/passwd"],"max_files":8,"max_chars":4000}')"; then
+  fail "Gateway API /gateway/code/context traversal request failed"
+fi
+
+code_context_traversal_status="$(jq -r '.status // empty' <<<"$code_context_traversal_response")"
+code_context_traversal_files_count="$(jq -r '.selected_files | length' <<<"$code_context_traversal_response")"
+
+if [ "$code_context_traversal_status" = "ok" ] \
+  && [ "$code_context_traversal_files_count" -eq 0 ]; then
+  pass "Gateway API /gateway/code/context skips traversal path"
+else
+  fail "Gateway API /gateway/code/context traversal returned unexpected response: $code_context_traversal_response"
+fi
+
+code_ask_http_status="$(
+  curl -sS -o /tmp/moe-gateway-code-ask-response.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"task":"explain how gateway routing works","query":"gateway","paths":[],"max_files":4,"max_context_chars":8000,"temperature":0.1,"max_tokens":128,"use_memory":false,"auto_route":true}' \
+    "$GATEWAY_API_URL/gateway/code/ask" || true
+)"
+code_ask_response="$(cat /tmp/moe-gateway-code-ask-response.json 2>/dev/null || true)"
+code_ask_status="$(jq -r '.status // empty' <<<"$code_ask_response")"
+
+case "$code_ask_http_status" in
+  200)
+    if [ "$code_ask_status" = "ok" ] || [ "$code_ask_status" = "unavailable" ]; then
+      pass "Gateway API /gateway/code/ask controlled response"
+    else
+      fail "Gateway API /gateway/code/ask returned unexpected response: $code_ask_response"
+    fi
+    ;;
+  *)
+    fail "Gateway API /gateway/code/ask expected controlled HTTP 200, got $code_ask_http_status: $code_ask_response"
+    ;;
+esac
 
 if ! runtime_status_response="$(curl -fsS "$GATEWAY_API_URL/gateway/runtime/status")"; then
   fail "Gateway API /gateway/runtime/status request failed"

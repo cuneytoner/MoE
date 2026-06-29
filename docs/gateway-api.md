@@ -147,6 +147,19 @@ Example response:
       "executable": true,
       "read_only": true
     },
+    "code_context": {
+      "description": "Build read-only repo-aware coding context from selected workspace files.",
+      "auto_execution_supported": false,
+      "executable": true,
+      "read_only": true
+    },
+    "code_ask": {
+      "description": "Ask the repo-aware coding assistant using read-only workspace context.",
+      "auto_execution_supported": false,
+      "executable": true,
+      "read_only": true,
+      "requires_runtime": true
+    },
     "runtime_switch_plan": {
       "description": "Return an advisory manual runtime switch command without executing it.",
       "auto_execution_supported": false,
@@ -244,6 +257,8 @@ Read-only workspace tools are also available:
 - `workspace_file_read`
 - `workspace_search`
 - `workspace_context`
+- `code_context`
+- `code_ask`
 
 These tools use the same safety checks as the workspace endpoints below.
 
@@ -313,6 +328,56 @@ Workspace safety rules:
 - All paths are resolved under `/workspace` and returned as workspace-relative paths.
 - Ignored directories include `.git`, `__pycache__`, `.pytest_cache`, `.mypy_cache`, `.ruff_cache`, `node_modules`, `dist`, `build`, `.venv`, `venv`, `models`, `runtime`, `data`, `checkpoints`, and `custom_nodes`.
 - Binary files and files larger than `WORKSPACE_MAX_FILE_BYTES` are rejected.
+
+### POST /gateway/code/context
+
+Builds read-only repo-aware coding context. It searches workspace files when `query` is provided, includes explicit `paths`, de-duplicates selected files, applies the same workspace safety rules as `/gateway/workspace/*`, and returns a compact context bundle. It does not call the model runtime and never writes files.
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"task":"explain how gateway routing works","query":"gateway routing","paths":[],"max_files":8,"max_chars":20000}' \
+  http://localhost:8100/gateway/code/context | jq
+```
+
+Example response shape:
+
+```json
+{
+  "status": "ok",
+  "task": "explain how gateway routing works",
+  "query": "gateway routing",
+  "selected_files": [
+    {
+      "path": "apps/gateway-api/app/main.py",
+      "reason": "Matched query 'gateway routing' at line 1"
+    }
+  ],
+  "context": "Task: explain how gateway routing works\n\n--- apps/gateway-api/app/main.py ---\n...",
+  "truncated": false
+}
+```
+
+Path traversal, ignored directories, binary files, oversized files, and unsupported extensions are safely skipped by the underlying workspace context builder.
+
+### POST /gateway/code/ask
+
+Builds repo context with the same logic as `/gateway/code/context`, then calls the existing router-aware Gateway chat flow with a repo-aware system prompt. It returns the model answer, selected files, route metadata, memory metadata, loaded model id, and truncation status.
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"task":"explain how gateway routing works","query":"gateway routing","paths":[],"max_files":8,"max_context_chars":20000,"temperature":0.1,"max_tokens":512,"use_memory":false,"auto_route":true}' \
+  http://localhost:8100/gateway/code/ask | jq
+```
+
+If the model runtime is unavailable, Gateway returns a controlled JSON response with `status: unavailable` and a reason instead of a server error.
+
+Read-only limitations:
+
+- Gateway does not edit files.
+- Gateway does not apply patches.
+- Gateway does not execute shell commands.
+- Gateway does not switch the model runtime.
+- Suggested changes must be descriptive or patch-style suggestions only.
 
 ### GET /gateway/runtime/status
 

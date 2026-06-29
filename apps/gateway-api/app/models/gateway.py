@@ -219,6 +219,51 @@ class GatewayWorkspaceContextResponse(BaseModel):
     truncated: bool
 
 
+class GatewayCodeSelectedFile(BaseModel):
+    path: str
+    reason: str
+
+
+class GatewayCodeContextRequest(BaseModel):
+    task: str = Field(min_length=1)
+    query: str | None = None
+    paths: list[str] = Field(default_factory=list, max_length=20)
+    max_files: int = Field(default=8, ge=1, le=20)
+    max_chars: int = Field(default=20000, ge=1, le=50000)
+
+
+class GatewayCodeContextResponse(BaseModel):
+    status: str
+    task: str
+    query: str | None = None
+    selected_files: list[GatewayCodeSelectedFile] = Field(default_factory=list)
+    context: str
+    truncated: bool
+
+
+class GatewayCodeAskRequest(BaseModel):
+    task: str = Field(min_length=1)
+    query: str | None = None
+    paths: list[str] = Field(default_factory=list, max_length=20)
+    max_files: int = Field(default=8, ge=1, le=20)
+    max_context_chars: int = Field(default=20000, ge=1, le=50000)
+    temperature: float = Field(default=0.1, ge=0.0, le=2.0)
+    max_tokens: int = Field(default=512, ge=1, le=8192)
+    use_memory: bool = False
+    auto_route: bool = True
+
+
+class GatewayCodeAskResponse(BaseModel):
+    status: str
+    content: str | None = None
+    selected_files: list[GatewayCodeSelectedFile] = Field(default_factory=list)
+    route: GatewayRouteMetadata | None = None
+    memory: GatewayChatMemory | None = None
+    model: str | None = None
+    truncated: bool = False
+    reason: str | None = None
+
+
 class OpenAIChatMessage(BaseModel):
     role: str
     content: str

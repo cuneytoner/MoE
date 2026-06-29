@@ -166,7 +166,7 @@ class WorkspaceService:
         paths: list[str],
         max_chars: int = 12000,
     ) -> dict[str, Any]:
-        limit = _positive_limit(max_chars, 12000)
+        limit = _bounded_limit(max_chars, default=12000, maximum=50000)
         remaining = limit
         chunks: list[str] = []
         files: list[dict[str, Any]] = []
@@ -341,6 +341,12 @@ def _positive_limit(value: int | None, default: int) -> int:
     if value is None or value < 1:
         return default
     return min(value, default)
+
+
+def _bounded_limit(value: int | None, default: int, maximum: int) -> int:
+    if value is None or value < 1:
+        return default
+    return min(value, maximum)
 
 
 def _relative_path(root: Path, path: Path) -> str:

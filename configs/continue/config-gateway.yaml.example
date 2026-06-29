@@ -11,4 +11,28 @@ models:
     temperature: 0.2
     contextLength: 16384
 
+  - name: MoE Gateway Qwen 14B Fast
+    provider: openai
+    model: qwen-coder-14b-fast
+    apiBase: http://localhost:8100/v1
+    apiKey: local
+    temperature: 0.2
+    contextLength: 32768
+
+  - name: MoE Gateway DeepSeek Lite
+    provider: openai
+    model: deepseek-coder-lite
+    apiBase: http://localhost:8100/v1
+    apiKey: local
+    temperature: 0.2
+    contextLength: 16384
+
+  - name: MoE Gateway Qwen 32B Review
+    provider: openai
+    model: qwen-coder-32b-main
+    apiBase: http://localhost:8100/v1
+    apiKey: local
+    temperature: 0.2
+    contextLength: 32768
+
 defaultModel: MoE Gateway

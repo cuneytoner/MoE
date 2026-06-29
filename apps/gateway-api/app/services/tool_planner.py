@@ -93,6 +93,19 @@ TOOL_CATALOG: dict[str, dict[str, Any]] = {
         "executable": True,
         "read_only": True,
     },
+    "code_context": {
+        "description": "Build read-only repo-aware coding context from selected workspace files.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
+    "code_ask": {
+        "description": "Ask the repo-aware coding assistant using read-only workspace context.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+        "requires_runtime": True,
+    },
     "model_chat": {
         "description": "Send a chat completion request to the OpenAI-compatible model runtime.",
         "auto_execution_supported": False,
@@ -141,11 +154,11 @@ TOOL_PLANS: dict[str, ToolPlan] = {
         reason="General chat can use the model runtime directly.",
     ),
     "code": ToolPlan(
-        recommended_tools=["model_chat"],
+        recommended_tools=["code_context", "code_ask"],
         requires_runtime=True,
         requires_memory=False,
         safe_to_auto_run=True,
-        reason="Coding requests can use the model runtime directly.",
+        reason="Coding requests should build read-only repo context before model chat.",
     ),
     "memory": ToolPlan(
         recommended_tools=["memory_search", "model_chat"],
@@ -155,7 +168,7 @@ TOOL_PLANS: dict[str, ToolPlan] = {
         reason="Memory requests should search local memory before model chat.",
     ),
     "review": ToolPlan(
-        recommended_tools=["runtime_switch_plan", "model_chat"],
+        recommended_tools=["code_context", "runtime_switch_plan", "code_ask"],
         requires_runtime=True,
         requires_memory=False,
         safe_to_auto_run=False,

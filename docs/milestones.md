@@ -295,12 +295,15 @@ Goals:
 
 ## Milestone 22: Repo-Aware Coding Agent
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Combine workspace context, memory, router, and model runtime.
 - Support code explanation, debugging, review, and implementation planning.
 - Keep agent actions advisory until write safety is designed.
+- Add read-only `/gateway/code/context` and `/gateway/code/ask` endpoints.
+- Add read-only `code_context` and `code_ask` tool entries.
+- Preserve default tests without requiring model runtime.
 
 ## Milestone 23: Safe Patch/Diff Workflow
 

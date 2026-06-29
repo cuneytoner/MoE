@@ -40,6 +40,7 @@ It defines:
 - Model: `local-gateway`
 - API base: `http://localhost:8100/v1`
 - API key: `local`
+- Optional named profiles for Qwen 14B fast, DeepSeek Lite fallback, and Qwen 32B review
 
 Gateway receives Continue.dev chat requests at:
 
@@ -47,7 +48,15 @@ Gateway receives Continue.dev chat requests at:
 POST /v1/chat/completions
 ```
 
-Gateway converts the OpenAI-compatible request into the existing router-aware `/gateway/chat` flow. Runtime model switching remains manual.
+Gateway converts the OpenAI-compatible request into the existing router-aware `/gateway/chat` flow. It keeps system messages and prior user/assistant turns as conversation context, then sends the latest user turn through the Gateway chat path. Runtime model switching remains manual.
+
+Use the default `MoE Gateway` profile for normal editor chat. Use a model-specific Gateway profile only after manually switching the host runtime to that model:
+
+```bash
+make model-switch MODEL=qwen-coder-14b-fast
+```
+
+Gateway reports model alignment metadata, but it does not switch the runtime automatically.
 
 ## Direct Runtime Fallback
 
