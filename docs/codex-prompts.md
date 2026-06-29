@@ -360,6 +360,20 @@ Expected boundaries:
 - Keep Memory API and Embed Worker as separate internal services.
 - Do not bundle Dashboard implementation into this milestone.
 
+## Milestone 12 Prompt Summary
+
+Add the first Gateway API service.
+
+Scope:
+
+- Create `apps/gateway-api` as a FastAPI service on port `8100`.
+- Add `/gateway/health`, `/gateway/models`, `/gateway/chat`, and `/gateway/route`.
+- Use Memory API, Embed Worker, and the host llama.cpp OpenAI-compatible runtime as dependencies.
+- Use `host.docker.internal:8000/v1` from Docker and `localhost:8000/v1` for host docs.
+- Keep `deepseek-coder-lite` as the current healthy default model.
+- Keep `/gateway/chat` out of default tests because it requires the host model runtime.
+- Do not implement advanced MoE routing or Dashboard.
+
 ## Milestone 17 Prompt Placeholder
 
 Add an automation layer for local workflows.

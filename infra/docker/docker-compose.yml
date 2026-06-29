@@ -1,4 +1,35 @@
 services:
+  gateway-api:
+    build:
+      context: ../../apps/gateway-api
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME:-moe}-gateway-api
+    restart: unless-stopped
+    environment:
+      SERVICE_NAME: gateway-api
+      GATEWAY_API_HOST: ${GATEWAY_API_HOST:-0.0.0.0}
+      GATEWAY_API_PORT: 8100
+      MEMORY_API_URL: http://memory-api:8101
+      EMBED_WORKER_URL: http://embed-worker:8102
+      MODEL_RUNTIME_URL: ${MODEL_RUNTIME_URL:-http://host.docker.internal:8000/v1}
+      MODEL_RUNTIME_PUBLIC_URL: ${MODEL_RUNTIME_PUBLIC_URL:-http://localhost:8000/v1}
+      DEFAULT_MODEL: ${DEFAULT_MODEL:-deepseek-coder-lite}
+    ports:
+      - "${GATEWAY_API_PORT:-8100}:8100"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - moe-net
+    depends_on:
+      - memory-api
+      - embed-worker
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8100/gateway/health', timeout=2)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   embed-worker:
     build:
       context: ../../apps/embed-worker

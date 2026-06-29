@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health memory-dev memory-health model-start model-stop model-status model-health test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health model-start model-stop model-status model-health test-gateway test-gateway-chat test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -21,12 +21,15 @@ help:
 > @echo "  make docker-ps      Show Docker services"
 > @echo "  make docker-logs    Tail Docker service logs"
 > @echo "  make health         Check Docker service health"
+> @echo "  make gateway-health Check Gateway API /gateway/health"
 > @echo "  make memory-dev     Run Memory API locally on port 8101"
 > @echo "  make memory-health  Check Memory API /health"
 > @echo "  make model-start    Start host llama.cpp OpenAI-compatible runtime"
 > @echo "  make model-stop     Stop host llama.cpp runtime"
 > @echo "  make model-status   Show host llama.cpp runtime status"
 > @echo "  make model-health   Check host llama.cpp OpenAI-compatible endpoint"
+> @echo "  make test-gateway   Run Gateway API contract tests"
+> @echo "  make test-gateway-chat Run optional Gateway chat test"
 > @echo "  make test-embed     Run Embed Worker contract tests"
 > @echo "  make test-memory    Run Memory API contract tests"
 > @echo "  make test-stack     Run stack smoke tests"
@@ -65,6 +68,9 @@ docker-logs:
 health:
 > @./scripts/health.sh
 
+gateway-health:
+> @curl -fsS http://127.0.0.1:8100/gateway/health
+
 memory-dev:
 > @cd apps/memory-api && uvicorn app.main:app --host 0.0.0.0 --port 8101
 
@@ -82,6 +88,12 @@ model-status:
 
 model-health:
 > @./scripts/model-runtime-health.sh
+
+test-gateway:
+> @./scripts/test-gateway-api.sh
+
+test-gateway-chat:
+> @RUN_GATEWAY_CHAT_TEST=1 ./scripts/test-gateway-api.sh
 
 test-memory:
 > @./scripts/test-memory-api.sh

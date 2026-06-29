@@ -70,7 +70,7 @@ SSH:
 
 apps/gateway-api:
 
-Central API and router entrypoint. It will eventually expose chat, routing, health, and model discovery endpoints.
+Central API and router entrypoint. It exposes Gateway health, model discovery, chat proxying to the local OpenAI-compatible runtime, and a first simple route decision endpoint.
 
 apps/memory-api:
 
@@ -95,7 +95,7 @@ Backup planning covers source, runtime, PostgreSQL, Qdrant, model backups, llama
 
 Future local AI stack layers expected around it:
 
-- model routing through a future Gateway API
+- advanced model routing through future Gateway work
 - document RAG ingestion and vector workflows
 - local chat UI integration
 - coding agent integration

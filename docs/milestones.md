@@ -161,7 +161,7 @@ Goals:
 
 ## Milestone 11.1: Backup / Restore / Disaster Recovery
 
-Status: IN PROGRESS
+Status: PLANNED
 
 Goals:
 - Define backup strategy for source, runtime, Docker state, PostgreSQL, Qdrant, models, llama.cpp, environment templates, and docs.
@@ -184,13 +184,14 @@ Goals:
 
 ## Milestone 12: Gateway API
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Add a central API entrypoint for local AI services.
-- Route requests to memory, embedding, and model runtime layers.
-- Expose health, model discovery, and future chat endpoints.
-- Keep the interface compatible with local tool and client integrations.
+- Expose Gateway health and dependency status.
+- Proxy model discovery and chat requests to the host OpenAI-compatible runtime.
+- Add a first simple route decision endpoint.
+- Keep advanced MoE routing and Dashboard work out of scope.
 
 ## Milestone 13: Dashboard
 
