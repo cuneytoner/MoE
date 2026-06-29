@@ -14,8 +14,11 @@ services:
       MODEL_RUNTIME_URL: ${MODEL_RUNTIME_URL:-http://host.docker.internal:8000/v1}
       MODEL_RUNTIME_PUBLIC_URL: ${MODEL_RUNTIME_PUBLIC_URL:-http://localhost:8000/v1}
       DEFAULT_MODEL: ${DEFAULT_MODEL:-deepseek-coder-lite}
+      MODEL_ROUTING_CONFIG: /app/configs/model-routing.yaml
     ports:
       - "${GATEWAY_API_PORT:-8100}:8100"
+    volumes:
+      - ../../configs/model-routing.yaml:/app/configs/model-routing.yaml:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:

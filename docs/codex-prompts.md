@@ -448,7 +448,32 @@ Expected boundaries:
 - Preserve current Gateway fallback behavior.
 - Do not implement advanced MoE routing or Dashboard.
 
+## Milestone 16 Prompt Summary
+
+Add explicit model mapping and runtime profile metadata.
+
+Scope:
+
+- Add `configs/model-routing.yaml`.
+- Map Gateway route intents to advisory model targets.
+- Return `model_target`, `model_target_runtime_id`, and mapping status from route/chat responses.
+- Add `/gateway/model-routing`.
+- Include model alignment metadata when the actual runtime model differs from the advisory target.
+- Do not hot-switch llama.cpp models from Gateway.
+- Keep default tests independent from model runtime.
+
 ## Milestone 17 Prompt Placeholder
+
+Add runtime model switching or tool-aware routing.
+
+Expected boundaries:
+
+- Decide whether Gateway may request runtime model changes.
+- Keep model switching explicit, observable, and reversible.
+- Use intent metadata for simple tool-aware routing where appropriate.
+- Do not implement advanced MoE routing or Dashboard.
+
+## Milestone 22 Prompt Placeholder
 
 Add an automation layer for local workflows.
 
@@ -459,7 +484,7 @@ Expected boundaries:
 - Keep automation state outside the source repository.
 - Avoid mixing this work with dashboard or homelab ops changes.
 
-## Milestone 18 Prompt Placeholder
+## Milestone 23 Prompt Placeholder
 
 Add homelab operations support for the local AI stack.
 

@@ -10,10 +10,12 @@ from app.models.gateway import (
     GatewayChatRequest,
     GatewayChatResponse,
     GatewayHealthResponse,
+    GatewayModelRoutingResponse,
     GatewayModelsResponse,
     GatewayRouteRequest,
     GatewayRouteResponse,
 )
+from app.services.model_mapping import ModelMapping, get_model_mapping
 from app.services.router import RouteDecision, route_message
 
 app = FastAPI(title="MoE Gateway API", version="0.1.0")
@@ -50,13 +52,23 @@ async def models() -> GatewayModelsResponse:
     )
 
 
+@app.get("/gateway/model-routing", response_model=GatewayModelRoutingResponse)
+def model_routing() -> GatewayModelRoutingResponse:
+    settings = get_settings()
+    mapping = get_model_mapping(settings.model_routing_config)
+    config = mapping.safe_config()
+    return GatewayModelRoutingResponse(status="ok", **config)
+
+
 @app.post("/gateway/chat", response_model=GatewayChatResponse)
 async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
     settings = get_settings()
+    mapping = get_model_mapping(settings.model_routing_config)
     client = ModelRuntimeClient(settings.model_runtime_url)
     model = request.model or await _detect_model(client, settings.default_model)
     decision = route_message(request.message) if request.auto_route else _default_route()
-    route_metadata = _route_metadata(decision, settings.default_model)
+    route_metadata = _route_metadata(decision, mapping)
+    model_alignment = _model_alignment(route_metadata, model)
     use_memory = request.use_memory or (
         request.auto_route and decision.use_memory_recommended
     )
@@ -99,6 +111,7 @@ async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
         model=model,
         content=content,
         route=route_metadata,
+        model_alignment=model_alignment,
         memory=memory["metadata"],
         raw={key: value for key, value in raw.items() if value is not None} or None,
     )
@@ -107,13 +120,16 @@ async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
 @app.post("/gateway/route", response_model=GatewayRouteResponse)
 def route(request: GatewayRouteRequest) -> GatewayRouteResponse:
     settings = get_settings()
+    mapping = get_model_mapping(settings.model_routing_config)
     decision = route_message(request.message)
-    route_metadata = _route_metadata(decision, settings.default_model)
+    route_metadata = _route_metadata(decision, mapping)
     return GatewayRouteResponse(
         status="ok",
         intent=route_metadata["intent"],
         confidence=route_metadata["confidence"],
         model_target=route_metadata["model_target"],
+        model_target_runtime_id=route_metadata["model_target_runtime_id"],
+        model_mapping_status=route_metadata["model_mapping_status"],
         use_memory_recommended=route_metadata["use_memory_recommended"],
         memory_enabled=request.use_memory,
         reason=route_metadata["reason"],
@@ -162,15 +178,36 @@ def _default_route() -> RouteDecision:
 
 def _route_metadata(
     decision: RouteDecision,
-    model_target: str,
+    mapping: ModelMapping,
 ) -> dict[str, Any]:
+    target = mapping.target_for_intent(decision.intent)
     return {
         "intent": decision.intent,
         "confidence": decision.confidence,
-        "model_target": model_target,
+        "model_target": target["model_target"],
+        "model_target_runtime_id": target["model_target_runtime_id"],
+        "model_mapping_status": target["model_mapping_status"],
         "use_memory_recommended": decision.use_memory_recommended,
         "reason": decision.reason,
         "signals": decision.signals,
+    }
+
+
+def _model_alignment(
+    route_metadata: dict[str, Any],
+    actual_model: str,
+) -> dict[str, Any]:
+    target = str(route_metadata["model_target"])
+    target_runtime_id = route_metadata.get("model_target_runtime_id")
+    matched = actual_model in {target, target_runtime_id}
+    return {
+        "target": target,
+        "target_runtime_id": target_runtime_id,
+        "actual": actual_model,
+        "matched": matched,
+        "reason": "Actual runtime model matches advisory target"
+        if matched
+        else "Gateway does not switch runtime models yet",
     }
 
 

@@ -18,6 +18,8 @@ Model files are referenced from `configs/models.yaml`. They are never copied int
 
 Runtime defaults live in `configs/runtime.yaml`. Environment variables in `.env.example` document the common overrides.
 
+Advisory Gateway model routing lives in `configs/model-routing.yaml`. It maps intents such as `code`, `review`, and `ops` to model target names and runtime model ids. Gateway reports these mappings, but it does not hot-switch llama.cpp models yet.
+
 ## Commands
 
 Prepare runtime folders:
@@ -63,6 +65,14 @@ make model-health
 - `deepseek-coder-lite`: coding alternative
 - `gemma-3-27b-general`: general reasoning
 - `qwen-35b-a3b-reasoning`: reasoning / MoE candidate
+
+Current Gateway advisory targets:
+
+- `chat`, `code`, `memory`: `qwen-coder-14b-fast`
+- `review`: `qwen-coder-32b-main`
+- `ops`: `deepseek-coder-lite`
+
+Hot switching between these models is a future milestone. Start the desired model manually with `make model-start MODEL=...`.
 
 Current validation notes:
 
@@ -113,4 +123,4 @@ Tools that accept an OpenAI-compatible API base URL can point at:
 
 This includes local clients such as Continue, Codex-compatible tooling, OpenWebUI, and AnythingLLM when configured for an OpenAI-compatible endpoint.
 
-The Gateway API is not implemented in this milestone. Clients connect directly to the model runtime endpoint for now.
+Gateway API can also proxy chat requests to the model runtime while reporting advisory model mapping metadata.

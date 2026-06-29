@@ -114,14 +114,33 @@ case "$models_http_status" in
     ;;
 esac
 
+if ! model_routing_response="$(curl -fsS "$GATEWAY_API_URL/gateway/model-routing")"; then
+  fail "Gateway API /gateway/model-routing request failed"
+fi
+
+model_routing_status="$(jq -r '.status // empty' <<<"$model_routing_response")"
+model_routing_default="$(jq -r '.default_model_target // empty' <<<"$model_routing_response")"
+model_routing_intents_type="$(jq -r 'if (.intent_model_targets | type) == "object" then "object" else "other" end' <<<"$model_routing_response")"
+
+if [ "$model_routing_status" = "ok" ] \
+  && [ -n "$model_routing_default" ] \
+  && [ "$model_routing_intents_type" = "object" ]; then
+  pass "Gateway API /gateway/model-routing"
+else
+  fail "Gateway API /gateway/model-routing returned unexpected response: $model_routing_response"
+fi
+
 assert_route_intent() {
   local message="$1"
   local expected_intent="$2"
+  local expected_model_target="$3"
   local body
   local response
   local route_status
   local route_intent
   local route_model_target
+  local route_runtime_id
+  local route_mapping_status
   local route_confidence
   local route_reason
   local route_memory_enabled
@@ -136,6 +155,8 @@ assert_route_intent() {
   route_status="$(jq -r '.status // empty' <<<"$response")"
   route_intent="$(jq -r '.intent // empty' <<<"$response")"
   route_model_target="$(jq -r '.model_target // empty' <<<"$response")"
+  route_runtime_id="$(jq -r '.model_target_runtime_id // empty' <<<"$response")"
+  route_mapping_status="$(jq -r '.model_mapping_status // empty' <<<"$response")"
   route_confidence="$(jq -r '.confidence // empty' <<<"$response")"
   route_reason="$(jq -r '.reason // empty' <<<"$response")"
   route_memory_enabled="$(jq -r '.memory_enabled' <<<"$response")"
@@ -144,7 +165,9 @@ assert_route_intent() {
 
   if [ "$route_status" = "ok" ] \
     && [ "$route_intent" = "$expected_intent" ] \
-    && [ -n "$route_model_target" ] \
+    && [ "$route_model_target" = "$expected_model_target" ] \
+    && [ -n "$route_runtime_id" ] \
+    && [ "$route_mapping_status" = "mapped" ] \
     && [ -n "$route_confidence" ] \
     && [ -n "$route_reason" ] \
     && [ "$route_memory_enabled" = "false" ] \
@@ -156,10 +179,11 @@ assert_route_intent() {
   fi
 }
 
-assert_route_intent "hello how are you" "chat"
-assert_route_intent "fix this python traceback error" "code"
-assert_route_intent "what do you remember about my local AI runtime?" "memory"
-assert_route_intent "docker compose service cannot reach localhost port" "ops"
+assert_route_intent "hello how are you" "chat" "qwen-coder-14b-fast"
+assert_route_intent "fix this python traceback error" "code" "qwen-coder-14b-fast"
+assert_route_intent "what do you remember about my local AI runtime?" "memory" "qwen-coder-14b-fast"
+assert_route_intent "review this architecture for security risks" "review" "qwen-coder-32b-main"
+assert_route_intent "docker compose service cannot reach localhost port" "ops" "deepseek-coder-lite"
 
 if [ "${RUN_GATEWAY_CHAT_TEST:-0}" = "1" ]; then
   if ! chat_response="$(post_json "/gateway/chat" '{"message":"hello","temperature":0.2,"max_tokens":64}')"; then
@@ -208,10 +232,14 @@ if [ "${RUN_GATEWAY_CHAT_ROUTER_TEST:-0}" = "1" ]; then
 
   router_code_status="$(jq -r '.status // empty' <<<"$router_code_response")"
   router_code_intent="$(jq -r '.route.intent // empty' <<<"$router_code_response")"
+  router_code_target="$(jq -r '.route.model_target // empty' <<<"$router_code_response")"
+  router_code_alignment_actual="$(jq -r '.model_alignment.actual // empty' <<<"$router_code_response")"
   router_code_content="$(jq -r '.content // empty' <<<"$router_code_response")"
 
   if [ "$router_code_status" = "ok" ] \
     && [ "$router_code_intent" = "code" ] \
+    && [ "$router_code_target" = "qwen-coder-14b-fast" ] \
+    && [ -n "$router_code_alignment_actual" ] \
     && [ -n "$router_code_content" ]; then
     pass "Gateway API /gateway/chat router code"
   else
@@ -224,12 +252,16 @@ if [ "${RUN_GATEWAY_CHAT_ROUTER_TEST:-0}" = "1" ]; then
 
   router_memory_status="$(jq -r '.status // empty' <<<"$router_memory_response")"
   router_memory_intent="$(jq -r '.route.intent // empty' <<<"$router_memory_response")"
+  router_memory_target="$(jq -r '.route.model_target // empty' <<<"$router_memory_response")"
+  router_memory_alignment_actual="$(jq -r '.model_alignment.actual // empty' <<<"$router_memory_response")"
   router_memory_enabled="$(jq -r '.memory.enabled' <<<"$router_memory_response")"
   router_memory_memory_status="$(jq -r '.memory.status // empty' <<<"$router_memory_response")"
   router_memory_content="$(jq -r '.content // empty' <<<"$router_memory_response")"
 
   if [ "$router_memory_status" = "ok" ] \
     && [ "$router_memory_intent" = "memory" ] \
+    && [ "$router_memory_target" = "qwen-coder-14b-fast" ] \
+    && [ -n "$router_memory_alignment_actual" ] \
     && [ "$router_memory_enabled" = "true" ] \
     && [ -n "$router_memory_memory_status" ] \
     && [ -n "$router_memory_content" ]; then

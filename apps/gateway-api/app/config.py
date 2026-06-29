@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -22,6 +23,18 @@ class Settings(BaseSettings):
         alias="MODEL_RUNTIME_PUBLIC_URL",
     )
     default_model: str = Field(default="deepseek-coder-lite", alias="DEFAULT_MODEL")
+    model_routing_config: str = Field(
+        default_factory=lambda: _default_model_routing_config(),
+        alias="MODEL_ROUTING_CONFIG",
+    )
+
+
+def _default_model_routing_config() -> str:
+    for parent in Path(__file__).resolve().parents:
+        candidate = parent / "configs/model-routing.yaml"
+        if candidate.exists():
+            return str(candidate)
+    return "/app/configs/model-routing.yaml"
 
 
 @lru_cache

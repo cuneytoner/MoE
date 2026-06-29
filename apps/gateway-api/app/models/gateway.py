@@ -15,6 +15,14 @@ class GatewayModelsResponse(BaseModel):
     models: list[dict[str, Any]]
 
 
+class GatewayModelRoutingResponse(BaseModel):
+    status: str
+    default_model_target: str
+    fallback_model_target: str
+    intent_model_targets: dict[str, str]
+    model_targets: dict[str, dict[str, Any]]
+
+
 class GatewayChatRequest(BaseModel):
     message: str = Field(min_length=1)
     system: str | None = None
@@ -39,9 +47,19 @@ class GatewayRouteMetadata(BaseModel):
     intent: str
     confidence: float
     model_target: str
+    model_target_runtime_id: str | None = None
+    model_mapping_status: str
     use_memory_recommended: bool
     reason: str
     signals: dict[str, Any]
+
+
+class GatewayModelAlignment(BaseModel):
+    target: str
+    target_runtime_id: str | None = None
+    actual: str
+    matched: bool
+    reason: str
 
 
 class GatewayChatResponse(BaseModel):
@@ -49,6 +67,7 @@ class GatewayChatResponse(BaseModel):
     model: str
     content: str
     route: GatewayRouteMetadata
+    model_alignment: GatewayModelAlignment
     memory: GatewayChatMemory
     raw: dict[str, Any] | None = None
 
@@ -63,6 +82,8 @@ class GatewayRouteResponse(BaseModel):
     intent: str
     confidence: float
     model_target: str
+    model_target_runtime_id: str | None = None
+    model_mapping_status: str
     use_memory_recommended: bool
     memory_enabled: bool
     reason: str

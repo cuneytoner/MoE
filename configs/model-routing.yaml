@@ -1,0 +1,28 @@
+default_model_target: qwen-coder-14b-fast
+fallback_model_target: deepseek-coder-lite
+
+intent_model_targets:
+  chat: qwen-coder-14b-fast
+  code: qwen-coder-14b-fast
+  memory: qwen-coder-14b-fast
+  review: qwen-coder-32b-main
+  ops: deepseek-coder-lite
+
+model_targets:
+  qwen-coder-14b-fast:
+    role: fast coding assistant
+    runtime_model_id: /home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-14B-Instruct-IQ4_XS.gguf
+    status: healthy
+    notes: validated with llama.cpp chat completion
+
+  deepseek-coder-lite:
+    role: coding fallback / ops
+    runtime_model_id: /home/cuneyt/MoE_Models_Backup/DeepSeek-Coder-V2-Lite-Instruct-IQ4_XS.gguf
+    status: healthy
+    notes: validated fallback model
+
+  qwen-coder-32b-main:
+    role: main coding brain / review
+    runtime_model_id: /home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-32B-Instruct-IQ4_XS.gguf
+    status: available
+    notes: heavier model, not required for default tests

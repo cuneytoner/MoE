@@ -217,7 +217,7 @@ Goals:
 
 ## Milestone 15: Router-Aware Gateway Chat
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Use deterministic route decisions to influence Gateway chat behavior.
@@ -229,15 +229,27 @@ Goals:
 
 ## Milestone 16: Model Mapping / Runtime Profiles or Tool-Aware Routing
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Map route intents to model/runtime profiles or tools.
+- Add explicit model routing config for Gateway intents.
+- Return advisory model target and runtime id metadata from route and chat endpoints.
+- Report actual model alignment without switching the runtime model.
 - Keep model switching explicit and observable.
 - Preserve current fallback behavior for default tests.
 - Avoid advanced MoE routing until simpler routing is stable.
 
-## Milestone 17: Dashboard
+## Milestone 17: Runtime Model Switching or Tool-Aware Routing
+
+Status: PLANNED
+
+Goals:
+- Decide whether and how Gateway can request runtime model changes.
+- Keep model switching explicit, observable, and reversible.
+- Explore simple tool-aware routing using existing intent metadata.
+- Avoid advanced MoE routing until runtime profiles are stable.
+
+## Milestone 18: Dashboard
 
 Status: PLANNED
 
@@ -247,7 +259,7 @@ Goals:
 - Surface memory, embedding, gateway, and model runtime health.
 - Keep the dashboard operational rather than decorative.
 
-## Milestone 18: Document RAG Ingestion
+## Milestone 19: Document RAG Ingestion
 
 Status: PLANNED
 
@@ -257,7 +269,7 @@ Goals:
 - Track document metadata and ingestion state.
 - Prepare safe local RAG workflows.
 
-## Milestone 19: Local Chat UI Integration
+## Milestone 20: Local Chat UI Integration
 
 Status: PLANNED
 
@@ -267,7 +279,7 @@ Goals:
 - Keep memory and RAG hooks explicit.
 - Avoid copying external UI runtime state into the codebase.
 
-## Milestone 20: Coding Agent Integration
+## Milestone 21: Coding Agent Integration
 
 Status: PLANNED
 
@@ -277,7 +289,7 @@ Goals:
 - Route coding-context requests into the local AI stack safely.
 - Keep source/runtime separation strict for agent workflows.
 
-## Milestone 21: Automation Layer
+## Milestone 22: Automation Layer
 
 Status: PLANNED
 
@@ -287,7 +299,7 @@ Goals:
 - Support repeatable local task automation.
 - Keep automation state out of the source repository.
 
-## Milestone 22: Homelab Ops
+## Milestone 23: Homelab Ops
 
 Status: PLANNED
 
