@@ -4,6 +4,8 @@ Milestone 12 adds `gateway-api` as the single API entry point for local AI stack
 
 This is the first simple gateway. It supports optional memory-augmented chat, but it does not implement the advanced MoE router and does not include Dashboard work.
 
+Gateway can now report tool-aware routing metadata. It does not execute shell commands, Docker commands, or host model runtime switches automatically.
+
 ## Service
 
 - Name: `gateway-api`
@@ -76,6 +78,47 @@ curl -fsS http://localhost:8100/gateway/model-routing | jq
 ```
 
 The config comes from `configs/model-routing.yaml`. It maps router intents to advisory model targets and runtime model ids. It does not restart or hot-switch llama.cpp.
+
+### GET /gateway/tools
+
+Returns the advisory tool catalog:
+
+```bash
+curl -fsS http://localhost:8100/gateway/tools | jq
+```
+
+Example response:
+
+```json
+{
+  "status": "ok",
+  "tools": {
+    "model_chat": {
+      "description": "Send a chat completion request to the OpenAI-compatible model runtime.",
+      "auto_execution_supported": true
+    },
+    "memory_search": {
+      "description": "Search local Memory API for relevant stored context.",
+      "auto_execution_supported": true
+    },
+    "runtime_switch_plan": {
+      "description": "Return an advisory manual runtime switch command without executing it.",
+      "auto_execution_supported": false
+    },
+    "docker_status_check": {
+      "description": "Suggest Docker status checks for the user to run manually.",
+      "auto_execution_supported": false
+    },
+    "shell_command_suggestion": {
+      "description": "Suggest shell commands for the user to inspect before running.",
+      "auto_execution_supported": false
+    }
+  },
+  "auto_execution_enabled": false
+}
+```
+
+`auto_execution_enabled` is always `false`. Gateway does not execute shell commands, run Docker checks, or switch host runtime models automatically.
 
 ### GET /gateway/runtime/status
 
@@ -155,6 +198,13 @@ Router-aware chat is enabled by default with `auto_route: true`. Gateway calls t
     "signals": {
       "matched_keywords": ["traceback", "error"],
       "message_length": 31
+    },
+    "tool_plan": {
+      "recommended_tools": ["model_chat"],
+      "requires_runtime": true,
+      "requires_memory": false,
+      "safe_to_auto_run": true,
+      "reason": "Coding requests can use the model runtime directly."
     }
   }
 }
@@ -208,6 +258,13 @@ Returns a deterministic intent-aware route decision. This router does not call a
   "signals": {
     "matched_keywords": ["traceback", "error"],
     "message_length": 31
+  },
+  "tool_plan": {
+    "recommended_tools": ["model_chat"],
+    "requires_runtime": true,
+    "requires_memory": false,
+    "safe_to_auto_run": true,
+    "reason": "Coding requests can use the model runtime directly."
   }
 }
 ```
@@ -228,7 +285,17 @@ Current advisory model targets:
 - `review`: `qwen-coder-32b-main`
 - `ops`: `deepseek-coder-lite`
 
-Future milestones can use these mappings to switch models or call tools, but this milestone only reports the advisory target.
+Tool plans are advisory:
+
+- `chat`: `model_chat`
+- `code`: `model_chat`
+- `memory`: `memory_search`, `model_chat`
+- `review`: `runtime_switch_plan`, `model_chat`
+- `ops`: `docker_status_check`, `shell_command_suggestion`, `model_chat`
+
+For `review`, a heavier model may be recommended, but runtime switching remains manual. For `ops`, shell and Docker actions are suggestions only.
+
+Future milestones can add controlled tool execution, but this milestone only reports the plan.
 
 Advanced MoE routing is intentionally left for a future milestone.
 

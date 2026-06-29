@@ -130,6 +130,30 @@ else
   fail "Gateway API /gateway/model-routing returned unexpected response: $model_routing_response"
 fi
 
+if ! tools_response="$(curl -fsS "$GATEWAY_API_URL/gateway/tools")"; then
+  fail "Gateway API /gateway/tools request failed"
+fi
+
+tools_status="$(jq -r '.status // empty' <<<"$tools_response")"
+tools_auto_execution="$(jq -r '.auto_execution_enabled' <<<"$tools_response")"
+tools_model_chat="$(jq -r 'if .tools.model_chat then "present" else "missing" end' <<<"$tools_response")"
+tools_memory_search="$(jq -r 'if .tools.memory_search then "present" else "missing" end' <<<"$tools_response")"
+tools_runtime_switch_plan="$(jq -r 'if .tools.runtime_switch_plan then "present" else "missing" end' <<<"$tools_response")"
+tools_docker_status_check="$(jq -r 'if .tools.docker_status_check then "present" else "missing" end' <<<"$tools_response")"
+tools_shell_command_suggestion="$(jq -r 'if .tools.shell_command_suggestion then "present" else "missing" end' <<<"$tools_response")"
+
+if [ "$tools_status" = "ok" ] \
+  && [ "$tools_auto_execution" = "false" ] \
+  && [ "$tools_model_chat" = "present" ] \
+  && [ "$tools_memory_search" = "present" ] \
+  && [ "$tools_runtime_switch_plan" = "present" ] \
+  && [ "$tools_docker_status_check" = "present" ] \
+  && [ "$tools_shell_command_suggestion" = "present" ]; then
+  pass "Gateway API /gateway/tools"
+else
+  fail "Gateway API /gateway/tools returned unexpected response: $tools_response"
+fi
+
 if ! runtime_status_response="$(curl -fsS "$GATEWAY_API_URL/gateway/runtime/status")"; then
   fail "Gateway API /gateway/runtime/status request failed"
 fi
@@ -180,6 +204,7 @@ assert_route_intent() {
   local message="$1"
   local expected_intent="$2"
   local expected_model_target="$3"
+  local expected_tool="$4"
   local body
   local response
   local route_status
@@ -192,6 +217,8 @@ assert_route_intent() {
   local route_memory_enabled
   local route_keywords_type
   local route_message_length
+  local route_tool_plan_type
+  local route_tool_match
 
   body="$(jq -nc --arg message "$message" '{message: $message, use_memory: false}')"
   if ! response="$(post_json "/gateway/route" "$body")"; then
@@ -208,6 +235,8 @@ assert_route_intent() {
   route_memory_enabled="$(jq -r '.memory_enabled' <<<"$response")"
   route_keywords_type="$(jq -r 'if (.signals.matched_keywords | type) == "array" then "array" else "other" end' <<<"$response")"
   route_message_length="$(jq -r '.signals.message_length // empty' <<<"$response")"
+  route_tool_plan_type="$(jq -r 'if (.tool_plan.recommended_tools | type) == "array" then "array" else "other" end' <<<"$response")"
+  route_tool_match="$(jq -r --arg tool "$expected_tool" 'if (.tool_plan.recommended_tools | index($tool)) then "present" else "missing" end' <<<"$response")"
 
   if [ "$route_status" = "ok" ] \
     && [ "$route_intent" = "$expected_intent" ] \
@@ -218,18 +247,20 @@ assert_route_intent() {
     && [ -n "$route_reason" ] \
     && [ "$route_memory_enabled" = "false" ] \
     && [ "$route_keywords_type" = "array" ] \
-    && [ -n "$route_message_length" ]; then
+    && [ -n "$route_message_length" ] \
+    && [ "$route_tool_plan_type" = "array" ] \
+    && [ "$route_tool_match" = "present" ]; then
     pass "Gateway API /gateway/route intent=$expected_intent"
   else
     fail "Gateway API /gateway/route expected $expected_intent, got: $response"
   fi
 }
 
-assert_route_intent "hello how are you" "chat" "qwen-coder-14b-fast"
-assert_route_intent "fix this python traceback error" "code" "qwen-coder-14b-fast"
-assert_route_intent "what do you remember about my local AI runtime?" "memory" "qwen-coder-14b-fast"
-assert_route_intent "review this architecture for security risks" "review" "qwen-coder-32b-main"
-assert_route_intent "docker compose service cannot reach localhost port" "ops" "deepseek-coder-lite"
+assert_route_intent "hello how are you" "chat" "qwen-coder-14b-fast" "model_chat"
+assert_route_intent "fix this python traceback error" "code" "qwen-coder-14b-fast" "model_chat"
+assert_route_intent "what do you remember about my local AI runtime?" "memory" "qwen-coder-14b-fast" "memory_search"
+assert_route_intent "review this architecture for security risks" "review" "qwen-coder-32b-main" "runtime_switch_plan"
+assert_route_intent "docker compose service cannot reach localhost port" "ops" "deepseek-coder-lite" "docker_status_check"
 
 if [ "${RUN_GATEWAY_CHAT_TEST:-0}" = "1" ]; then
   if ! chat_response="$(post_json "/gateway/chat" '{"message":"hello","temperature":0.2,"max_tokens":64}')"; then

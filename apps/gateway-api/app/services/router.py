@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from app.services.tool_planner import plan_tools
+
 
 @dataclass(frozen=True)
 class RouteDecision:
@@ -8,6 +10,7 @@ class RouteDecision:
     use_memory_recommended: bool
     reason: str
     signals: dict[str, object]
+    tool_plan: dict[str, object]
 
 
 KEYWORDS: dict[str, list[str]] = {
@@ -124,6 +127,7 @@ def route_message(message: str) -> RouteDecision:
             "matched_keywords": matched_keywords,
             "message_length": len(message),
         },
+        tool_plan=plan_tools(intent).as_dict(),
     )
 
 

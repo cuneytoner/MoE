@@ -241,7 +241,7 @@ Goals:
 
 ## Milestone 17: Runtime Model Switch Plan and Safe Runtime Controls
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add host-side safe model runtime switch script.
@@ -250,17 +250,17 @@ Goals:
 - Keep Gateway from executing host shell commands.
 - Keep automatic runtime switching deferred.
 
-## Milestone 18: Tool-Aware Routing or Runtime Switch Automation
+## Milestone 18: Tool-Aware Routing Plan
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Explore tool-aware routing using existing intent and model metadata.
-- Decide whether runtime switch automation should exist.
-- Keep automation explicit, observable, and reversible.
+- Add tool-aware routing metadata using existing intent and model metadata.
+- Report recommended tools without executing shell, Docker, or runtime-switch actions.
+- Keep Gateway behavior backward compatible.
 - Avoid advanced MoE routing until safe controls are proven.
 
-## Milestone 19: Dashboard
+## Milestone 19: Controlled Tool Execution or Dashboard
 
 Status: PLANNED
 

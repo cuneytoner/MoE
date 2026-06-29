@@ -48,6 +48,20 @@ class GatewayRuntimeSwitchPlanResponse(BaseModel):
     reason: str
 
 
+class GatewayToolPlan(BaseModel):
+    recommended_tools: list[str]
+    requires_runtime: bool
+    requires_memory: bool
+    safe_to_auto_run: bool
+    reason: str
+
+
+class GatewayToolsResponse(BaseModel):
+    status: str
+    tools: dict[str, dict[str, Any]]
+    auto_execution_enabled: bool
+
+
 class GatewayChatRequest(BaseModel):
     message: str = Field(min_length=1)
     system: str | None = None
@@ -77,6 +91,7 @@ class GatewayRouteMetadata(BaseModel):
     use_memory_recommended: bool
     reason: str
     signals: dict[str, Any]
+    tool_plan: GatewayToolPlan
 
 
 class GatewayModelAlignment(BaseModel):
@@ -113,3 +128,4 @@ class GatewayRouteResponse(BaseModel):
     memory_enabled: bool
     reason: str
     signals: dict[str, Any]
+    tool_plan: GatewayToolPlan

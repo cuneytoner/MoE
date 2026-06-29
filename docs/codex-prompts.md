@@ -487,16 +487,28 @@ Scope:
 - Do not let Gateway execute host shell commands.
 - Keep automatic switching deferred.
 
-## Milestone 18 Prompt Placeholder
+## Milestone 18 Prompt Summary
 
-Add tool-aware routing or runtime switch automation.
+Add tool-aware routing metadata without automatic tool execution.
+
+Scope:
+
+- Add a Gateway tool planner service.
+- Include `tool_plan` in `/gateway/route` and router-aware chat metadata.
+- Add `/gateway/tools` with `auto_execution_enabled=false`.
+- Keep shell, Docker, and runtime-switch actions advisory only.
+- Do not implement Dashboard or advanced MoE routing.
+
+## Milestone 19 Prompt Placeholder
+
+Add controlled tool execution or Dashboard.
 
 Expected boundaries:
 
-- Decide whether runtime switching should become automated.
-- Keep any automation explicit, observable, and reversible.
-- Use existing route and model mapping metadata.
-- Do not implement Dashboard or advanced MoE routing.
+- Keep tool execution gated, explicit, observable, and reversible.
+- Do not let Gateway execute host shell commands without a deliberate control model.
+- Preserve source-only repository and runtime data boundaries.
+- Avoid advanced MoE routing until tool safety is proven.
 
 ## Milestone 23 Prompt Placeholder
 

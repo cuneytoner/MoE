@@ -17,9 +17,11 @@ from app.models.gateway import (
     GatewayRuntimeStatusResponse,
     GatewayRuntimeSwitchPlanRequest,
     GatewayRuntimeSwitchPlanResponse,
+    GatewayToolsResponse,
 )
 from app.services.model_mapping import ModelMapping, get_model_mapping
 from app.services.router import RouteDecision, route_message
+from app.services.tool_planner import tool_catalog
 
 app = FastAPI(title="MoE Gateway API", version="0.1.0")
 
@@ -61,6 +63,15 @@ def model_routing() -> GatewayModelRoutingResponse:
     mapping = get_model_mapping(settings.model_routing_config)
     config = mapping.safe_config()
     return GatewayModelRoutingResponse(status="ok", **config)
+
+
+@app.get("/gateway/tools", response_model=GatewayToolsResponse)
+def tools() -> GatewayToolsResponse:
+    return GatewayToolsResponse(
+        status="ok",
+        tools=tool_catalog(),
+        auto_execution_enabled=False,
+    )
 
 
 @app.get("/gateway/runtime/status", response_model=GatewayRuntimeStatusResponse)
@@ -188,6 +199,7 @@ def route(request: GatewayRouteRequest) -> GatewayRouteResponse:
         memory_enabled=request.use_memory,
         reason=route_metadata["reason"],
         signals=route_metadata["signals"],
+        tool_plan=route_metadata["tool_plan"],
     )
 
 
@@ -227,6 +239,13 @@ def _default_route() -> RouteDecision:
         use_memory_recommended=False,
         reason="Auto routing disabled",
         signals={"matched_keywords": [], "message_length": 0},
+        tool_plan={
+            "recommended_tools": ["model_chat"],
+            "requires_runtime": True,
+            "requires_memory": False,
+            "safe_to_auto_run": True,
+            "reason": "Auto routing disabled; defaulting to model chat.",
+        },
     )
 
 
@@ -244,6 +263,7 @@ def _route_metadata(
         "use_memory_recommended": decision.use_memory_recommended,
         "reason": decision.reason,
         "signals": decision.signals,
+        "tool_plan": decision.tool_plan,
     }
 
 
