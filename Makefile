@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -33,6 +33,7 @@ help:
 > @echo "  make test-gateway-chat Run optional Gateway chat test"
 > @echo "  make test-gateway-chat-memory Run optional memory-augmented Gateway chat test"
 > @echo "  make test-gateway-chat-router Run optional router-aware Gateway chat test"
+> @echo "  make test-continue-gateway Run optional Continue.dev Gateway chat smoke test"
 > @echo "  make test-embed     Run Embed Worker contract tests"
 > @echo "  make test-memory    Run Memory API contract tests"
 > @echo "  make test-stack     Run stack smoke tests"
@@ -106,6 +107,9 @@ test-gateway-chat-memory:
 
 test-gateway-chat-router:
 > @RUN_GATEWAY_CHAT_ROUTER_TEST=1 ./scripts/test-gateway-api.sh
+
+test-continue-gateway:
+> @./scripts/test-continue-gateway.sh
 
 test-memory:
 > @./scripts/test-memory-api.sh

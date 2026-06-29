@@ -273,7 +273,7 @@ Goals:
 
 ## Milestone 20: Local Coding Workspace Integration
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add read-only workspace context provider.
@@ -284,13 +284,14 @@ Goals:
 
 ## Milestone 21: Continue.dev / VS Code Gateway Integration
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Point Continue.dev to Gateway or model runtime.
 - Add coding model profiles.
 - Add local prompt templates.
 - Add docs for using the stack as a coding assistant.
+- Add Gateway OpenAI-compatible chat adapter for Continue.dev.
 
 ## Milestone 22: Repo-Aware Coding Agent
 

@@ -527,15 +527,17 @@ Scope:
 - Do not execute shell commands from Gateway.
 - Preserve source-only repository and runtime data boundaries.
 
-## Milestone 21 Prompt Placeholder
+## Milestone 21 Prompt Summary
 
 Add Continue.dev / VS Code Gateway integration.
 
-Expected boundaries:
+Scope:
 
+- Add Gateway OpenAI-compatible `/v1/chat/completions` adapter.
 - Point Continue.dev to Gateway or the model runtime.
-- Add coding model profiles and local prompt templates.
+- Add coding model profile templates.
 - Document editor usage as a local coding assistant.
+- Keep streaming unsupported unless explicitly implemented later.
 - Do not copy editor runtime state into the codebase.
 
 ## Milestone 22 Prompt Placeholder
@@ -548,6 +550,7 @@ Expected boundaries:
 - Support explanation, debugging, review, and implementation planning.
 - Keep file writes disabled.
 - Avoid advanced autonomous editing.
+
 
 ## Milestone 23 Prompt Placeholder
 

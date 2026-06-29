@@ -1,0 +1,22 @@
+name: Runtime Direct Config
+version: 1.0.0
+schema: v1
+
+models:
+  - name: Qwen14B Direct
+    provider: openai
+    model: qwen-coder-14b-fast
+    apiBase: http://localhost:8000/v1
+    apiKey: local
+    temperature: 0.2
+    contextLength: 32768
+
+  - name: DeepSeek Direct
+    provider: openai
+    model: deepseek-coder-lite
+    apiBase: http://localhost:8000/v1
+    apiKey: local
+    temperature: 0.2
+    contextLength: 16384
+
+defaultModel: Qwen14B Direct

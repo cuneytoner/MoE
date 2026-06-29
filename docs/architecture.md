@@ -143,6 +143,7 @@ The stack becomes practically useful for local code development after Milestone 
 Coding flow:
 
 - user task
+- Continue.dev or VS Code sends chat to Gateway's OpenAI-compatible adapter
 - Gateway route decision
 - optional workspace search or context bundle
 - optional memory search

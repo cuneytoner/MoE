@@ -1,4 +1,6 @@
+import time
 from typing import Any
+from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 
@@ -27,6 +29,11 @@ from app.models.gateway import (
     GatewayWorkspaceSearchResponse,
     GatewayWorkspaceStatusResponse,
     GatewayWorkspaceTreeResponse,
+    OpenAIChatCompletionChoice,
+    OpenAIChatCompletionRequest,
+    OpenAIChatCompletionResponse,
+    OpenAIChatCompletionUsage,
+    OpenAIChatMessage,
 )
 from app.services.model_mapping import ModelMapping, get_model_mapping
 from app.services.router import RouteDecision, route_message
@@ -222,6 +229,42 @@ async def runtime_switch_plan(
 
 @app.post("/gateway/chat", response_model=GatewayChatResponse)
 async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
+    return await _gateway_chat(request)
+
+
+@app.post("/v1/chat/completions", response_model=OpenAIChatCompletionResponse)
+async def openai_chat_completions(
+    request: OpenAIChatCompletionRequest,
+) -> OpenAIChatCompletionResponse:
+    if request.stream:
+        raise HTTPException(
+            status_code=400,
+            detail="streaming is not supported by the Gateway OpenAI compatibility adapter yet",
+        )
+
+    gateway_request = _openai_to_gateway_chat_request(request)
+    response = await _gateway_chat(gateway_request)
+
+    return OpenAIChatCompletionResponse(
+        id=f"chatcmpl-local-{uuid4().hex}",
+        object="chat.completion",
+        created=int(time.time()),
+        model=request.model,
+        choices=[
+            OpenAIChatCompletionChoice(
+                index=0,
+                message=OpenAIChatMessage(
+                    role="assistant",
+                    content=response.content,
+                ),
+                finish_reason="stop",
+            )
+        ],
+        usage=OpenAIChatCompletionUsage(),
+    )
+
+
+async def _gateway_chat(request: GatewayChatRequest) -> GatewayChatResponse:
     settings = get_settings()
     mapping = get_model_mapping(settings.model_routing_config)
     client = ModelRuntimeClient(settings.model_runtime_url)
@@ -325,6 +368,38 @@ def _extract_content(response: dict[str, Any]) -> str:
             if isinstance(text, str):
                 return text
     return ""
+
+
+def _openai_to_gateway_chat_request(
+    request: OpenAIChatCompletionRequest,
+) -> GatewayChatRequest:
+    system_messages = [
+        message.content
+        for message in request.messages
+        if message.role == "system" and message.content.strip()
+    ]
+    user_messages = [
+        message.content
+        for message in request.messages
+        if message.role == "user" and message.content.strip()
+    ]
+
+    if not user_messages:
+        raise HTTPException(
+            status_code=400,
+            detail="at least one user message is required",
+        )
+
+    model = None if request.model == "local-gateway" else request.model
+    return GatewayChatRequest(
+        message=user_messages[-1],
+        system="\n\n".join(system_messages) or None,
+        model=model,
+        temperature=request.temperature,
+        max_tokens=request.max_tokens,
+        use_memory=False,
+        auto_route=True,
+    )
 
 
 def _default_route() -> RouteDecision:

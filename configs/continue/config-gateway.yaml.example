@@ -1,0 +1,14 @@
+name: Main Config
+version: 1.0.0
+schema: v1
+
+models:
+  - name: MoE Gateway
+    provider: openai
+    model: local-gateway
+    apiBase: http://localhost:8100/v1
+    apiKey: local
+    temperature: 0.2
+    contextLength: 16384
+
+defaultModel: MoE Gateway

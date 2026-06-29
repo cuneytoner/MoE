@@ -85,6 +85,53 @@ else
   fail "Gateway API /gateway/health missing dependency details: $health_response"
 fi
 
+openai_chat_http_status="$(
+  curl -sS -o /tmp/moe-gateway-openai-chat-response.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"model":"local-gateway","messages":[{"role":"system","content":"You are concise."},{"role":"user","content":"Return only OK."}],"temperature":0.2,"max_tokens":16,"stream":false}' \
+    "$GATEWAY_API_URL/v1/chat/completions" || true
+)"
+openai_chat_response="$(cat /tmp/moe-gateway-openai-chat-response.json 2>/dev/null || true)"
+
+case "$openai_chat_http_status" in
+  200)
+    openai_chat_object="$(jq -r '.object // empty' <<<"$openai_chat_response")"
+    openai_chat_choices_type="$(jq -r 'if (.choices | type) == "array" then "array" else "other" end' <<<"$openai_chat_response")"
+    if [ "$openai_chat_object" = "chat.completion" ] && [ "$openai_chat_choices_type" = "array" ]; then
+      pass "Gateway API /v1/chat/completions"
+    else
+      fail "Gateway API /v1/chat/completions returned unexpected response: $openai_chat_response"
+    fi
+    ;;
+  503)
+    openai_chat_detail="$(jq -r '.detail // empty' <<<"$openai_chat_response")"
+    if [ -n "$openai_chat_detail" ]; then
+      pass "Gateway API /v1/chat/completions controlled unavailable"
+    else
+      fail "Gateway API /v1/chat/completions missing unavailable detail: $openai_chat_response"
+    fi
+    ;;
+  *)
+    fail "Gateway API /v1/chat/completions returned HTTP $openai_chat_http_status: $openai_chat_response"
+    ;;
+esac
+
+openai_stream_http_status="$(
+  curl -sS -o /tmp/moe-gateway-openai-stream-response.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"model":"local-gateway","messages":[{"role":"user","content":"hello"}],"stream":true}' \
+    "$GATEWAY_API_URL/v1/chat/completions" || true
+)"
+
+if [ "$openai_stream_http_status" = "400" ]; then
+  pass "Gateway API /v1/chat/completions rejects streaming"
+else
+  openai_stream_response="$(cat /tmp/moe-gateway-openai-stream-response.json 2>/dev/null || true)"
+  fail "Gateway API /v1/chat/completions expected HTTP 400 for stream=true, got $openai_stream_http_status: $openai_stream_response"
+fi
+
 models_http_status="$(
   curl -sS -o /tmp/moe-gateway-models-response.json -w "%{http_code}" \
     "$GATEWAY_API_URL/gateway/models" || true

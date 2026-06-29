@@ -69,6 +69,36 @@ curl -fsS http://localhost:8100/gateway/models | jq
 
 If the model runtime is unavailable, this returns a controlled `503` with a clear detail message.
 
+### POST /v1/chat/completions
+
+OpenAI-compatible chat adapter for Continue.dev and similar local clients.
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{
+    "model":"local-gateway",
+    "messages":[
+      {"role":"system","content":"You are a concise local coding assistant."},
+      {"role":"user","content":"Return only the word OK."}
+    ],
+    "temperature":0.2,
+    "max_tokens":16,
+    "stream":false
+  }' \
+  http://localhost:8100/v1/chat/completions | jq
+```
+
+Gateway converts the request into the existing router-aware `/gateway/chat` flow:
+
+- last `user` message becomes the Gateway `message`
+- `system` messages are combined into the Gateway `system` prompt
+- `model: local-gateway` lets Gateway use the currently loaded runtime model
+- non-`local-gateway` model values are passed through to the model runtime
+
+Streaming is not supported yet. Requests with `stream: true` return HTTP 400 with a clear JSON error.
+
+This adapter does not edit files, execute shell commands, or switch the model runtime.
+
 ### GET /gateway/model-routing
 
 Returns the loaded advisory model routing config:
@@ -490,6 +520,13 @@ Optional router-aware chat test:
 ```bash
 make model-start MODEL=qwen-coder-14b-fast
 make test-gateway-chat-router
+```
+
+Optional Continue.dev Gateway compatibility test:
+
+```bash
+make model-start MODEL=qwen-coder-14b-fast
+make test-continue-gateway
 ```
 
 Default `make test` does not require the host model runtime to be running.

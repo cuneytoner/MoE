@@ -217,3 +217,37 @@ class GatewayWorkspaceContextResponse(BaseModel):
     context: str
     files: list[GatewayWorkspaceContextFile]
     truncated: bool
+
+
+class OpenAIChatMessage(BaseModel):
+    role: str
+    content: str
+
+
+class OpenAIChatCompletionRequest(BaseModel):
+    model: str = "local-gateway"
+    messages: list[OpenAIChatMessage] = Field(min_length=1)
+    temperature: float = Field(default=0.2, ge=0.0, le=2.0)
+    max_tokens: int = Field(default=512, ge=1, le=8192)
+    stream: bool = False
+
+
+class OpenAIChatCompletionChoice(BaseModel):
+    index: int
+    message: OpenAIChatMessage
+    finish_reason: str
+
+
+class OpenAIChatCompletionUsage(BaseModel):
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    total_tokens: int = 0
+
+
+class OpenAIChatCompletionResponse(BaseModel):
+    id: str
+    object: str
+    created: int
+    model: str
+    choices: list[OpenAIChatCompletionChoice]
+    usage: OpenAIChatCompletionUsage

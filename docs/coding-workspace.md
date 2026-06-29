@@ -45,14 +45,16 @@ Current limitation: this milestone prepares context only. It does not generate p
 
 Goal: make the local stack comfortable from the editor.
 
-Planned capabilities:
+Implemented integration docs:
 
 - Point Continue.dev to Gateway or directly to the host OpenAI-compatible model runtime.
 - Add coding model profiles for `qwen-coder-14b-fast`, `qwen-coder-32b-main`, and `deepseek-coder-lite`.
 - Add local prompt templates for common coding tasks.
 - Document how to use the stack as a coding assistant from VS Code.
 
-The default editor workflow should be read-first: gather workspace context, route the request, optionally use memory, and call the current model runtime.
+See `docs/continue-dev.md` and the templates under `configs/continue/`.
+
+The default editor workflow should be read-first: Continue.dev calls Gateway's OpenAI-compatible adapter, Gateway routes the request, optionally uses memory, and calls the current model runtime. Workspace context is available through Gateway endpoints and read-only tools; automatic repo-aware context selection is planned for Milestone 22.
 
 ## Milestone 22: Repo-Aware Coding Agent
 
