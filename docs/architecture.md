@@ -70,7 +70,7 @@ SSH:
 
 apps/gateway-api:
 
-Central API and router entrypoint. It exposes Gateway health, model discovery, chat proxying to the local OpenAI-compatible runtime, and a first simple route decision endpoint.
+Central API and router entrypoint. It exposes Gateway health, model discovery, chat proxying to the local OpenAI-compatible runtime, optional memory-augmented chat through Memory API search, and a first simple route decision endpoint.
 
 apps/memory-api:
 

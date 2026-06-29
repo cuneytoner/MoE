@@ -18,6 +18,23 @@ require_command() {
   fi
 }
 
+wait_for_http() {
+  local url="$1"
+  local name="$2"
+  local attempts=30
+
+  for attempt in $(seq 1 "$attempts"); do
+    if curl -fsS "$url" >/dev/null 2>&1; then
+      return 0
+    fi
+    if [ "$attempt" -lt "$attempts" ]; then
+      sleep 1
+    fi
+  done
+
+  fail "$name did not become reachable within ${attempts}s: $url"
+}
+
 post_json() {
   local path="$1"
   local body="$2"
@@ -31,6 +48,8 @@ post_json() {
 
 require_command curl
 require_command jq
+
+wait_for_http "$EMBED_WORKER_URL/health" "Embed Worker /health"
 
 if ! health_response="$(curl -fsS "$EMBED_WORKER_URL/health")"; then
   fail "Embed Worker /health request failed"

@@ -21,12 +21,24 @@ class GatewayChatRequest(BaseModel):
     model: str | None = None
     temperature: float = Field(default=0.2, ge=0.0, le=2.0)
     max_tokens: int = Field(default=512, ge=1, le=8192)
+    use_memory: bool = False
+    memory_limit: int = Field(default=5, ge=1, le=20)
+
+
+class GatewayChatMemory(BaseModel):
+    enabled: bool
+    status: str
+    results_count: int
+    collection_name: str | None = None
+    embedding_backend: str | None = None
+    embedding_dim: int | None = None
 
 
 class GatewayChatResponse(BaseModel):
     status: str
     model: str
     content: str
+    memory: GatewayChatMemory
     raw: dict[str, Any] | None = None
 
 

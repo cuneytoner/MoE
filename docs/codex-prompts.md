@@ -374,6 +374,31 @@ Scope:
 - Keep `/gateway/chat` out of default tests because it requires the host model runtime.
 - Do not implement advanced MoE routing or Dashboard.
 
+## Milestone 13 Prompt Summary
+
+Add optional memory-augmented Gateway chat.
+
+Scope:
+
+- Extend `/gateway/chat` with `use_memory` and `memory_limit`.
+- Search Memory API when memory is requested.
+- Inject concise memory context into the system prompt only when relevant results exist.
+- Continue without memory when Memory API is unavailable.
+- Return compact memory metadata in the Gateway chat response.
+- Keep memory-chat tests optional because they require model runtime and Memory API.
+- Do not implement Dashboard or advanced MoE routing.
+
+## Milestone 14 Prompt Placeholder
+
+Add simple Gateway router and intent-aware routing.
+
+Expected boundaries:
+
+- Extend `/gateway/route` beyond the current placeholder.
+- Add simple intent classification for chat and memory-oriented requests.
+- Keep model runtime, Memory API, and Embed Worker contracts stable.
+- Do not implement Dashboard in this milestone.
+
 ## Milestone 17 Prompt Placeholder
 
 Add an automation layer for local workflows.

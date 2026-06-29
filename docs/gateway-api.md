@@ -2,7 +2,7 @@
 
 Milestone 12 adds `gateway-api` as the single API entry point for local AI stack clients.
 
-This is the first simple gateway. It does not implement the advanced MoE router and does not include Dashboard work.
+This is the first simple gateway. It supports optional memory-augmented chat, but it does not implement the advanced MoE router and does not include Dashboard work.
 
 ## Service
 
@@ -44,6 +44,8 @@ Start Docker services:
 make docker-up
 ```
 
+Containers may report `health: starting` for a few seconds after a fresh build. The Gateway test script waits up to 30 seconds for `/gateway/health` before failing.
+
 Start the host model runtime when chat/model calls are needed:
 
 ```bash
@@ -76,6 +78,22 @@ curl -fsS -H "Content-Type: application/json" -X POST \
   http://localhost:8100/gateway/chat | jq
 ```
 
+Memory-augmented chat can be enabled per request:
+
+```bash
+curl -fsS -H "Content-Type: application/json" -X POST \
+  -d '{"message":"What is my current local AI runtime model?","use_memory":true,"memory_limit":5,"temperature":0.2,"max_tokens":128}' \
+  http://localhost:8100/gateway/chat | jq
+```
+
+When `use_memory` is true, Gateway searches Memory API with the chat message and `memory_limit`. If results are found, Gateway injects a concise system message:
+
+`Use the following local memory only if relevant. If it is not relevant, ignore it.`
+
+The injected context includes only compact memory text, source, and score when available. Gateway does not return the full raw memory payload by default.
+
+If Memory API is unavailable or search fails, Gateway continues chat without memory and returns memory metadata with `status: unavailable`. If memory search succeeds but returns no results, the status is `empty`.
+
 This endpoint is optional in default tests because it requires the host model runtime to be running and loaded.
 
 ### POST /gateway/route
@@ -106,6 +124,13 @@ Optional runtime-dependent chat test:
 ```bash
 make model-start MODEL=deepseek-coder-lite
 make test-gateway-chat
+```
+
+Optional memory-augmented chat test:
+
+```bash
+make model-start MODEL=deepseek-coder-lite
+make test-gateway-chat-memory
 ```
 
 Default `make test` does not require the host model runtime to be running.

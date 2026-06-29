@@ -184,7 +184,7 @@ Goals:
 
 ## Milestone 12: Gateway API
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add a central API entrypoint for local AI services.
@@ -193,17 +193,38 @@ Goals:
 - Add a first simple route decision endpoint.
 - Keep advanced MoE routing and Dashboard work out of scope.
 
-## Milestone 13: Dashboard
+## Milestone 13: Memory-Augmented Gateway Chat
+
+Status: IN PROGRESS
+
+Goals:
+- Add optional memory search to `/gateway/chat`.
+- Inject concise local memory context only when requested.
+- Continue chat without memory if Memory API search is unavailable.
+- Return memory metadata without exposing large raw memory payloads.
+- Keep advanced MoE routing and Dashboard work out of scope.
+
+## Milestone 14: Simple Router / Intent-Aware Routing
+
+Status: PLANNED
+
+Goals:
+- Extend Gateway route decisions beyond the current placeholder.
+- Add simple intent-aware routing between chat, memory, and future research workflows.
+- Keep advanced MoE routing optional and incremental.
+- Preserve the current model runtime and memory API contracts.
+
+## Milestone 15: Dashboard
 
 Status: PLANNED
 
 Goals:
 - Add a management dashboard for service and machine status.
 - Show Docker service health and runtime summaries.
-- Surface memory, embedding, and model runtime health.
+- Surface memory, embedding, gateway, and model runtime health.
 - Keep the dashboard operational rather than decorative.
 
-## Milestone 14: Document RAG Ingestion
+## Milestone 16: Document RAG Ingestion
 
 Status: PLANNED
 
@@ -213,7 +234,7 @@ Goals:
 - Track document metadata and ingestion state.
 - Prepare safe local RAG workflows.
 
-## Milestone 15: Local Chat UI Integration
+## Milestone 17: Local Chat UI Integration
 
 Status: PLANNED
 
@@ -223,7 +244,7 @@ Goals:
 - Keep memory and RAG hooks explicit.
 - Avoid copying external UI runtime state into the codebase.
 
-## Milestone 16: Coding Agent Integration
+## Milestone 18: Coding Agent Integration
 
 Status: PLANNED
 
@@ -233,7 +254,7 @@ Goals:
 - Route coding-context requests into the local AI stack safely.
 - Keep source/runtime separation strict for agent workflows.
 
-## Milestone 17: Automation Layer
+## Milestone 19: Automation Layer
 
 Status: PLANNED
 
@@ -243,7 +264,7 @@ Goals:
 - Support repeatable local task automation.
 - Keep automation state out of the source repository.
 
-## Milestone 18: Homelab Ops
+## Milestone 20: Homelab Ops
 
 Status: PLANNED
 

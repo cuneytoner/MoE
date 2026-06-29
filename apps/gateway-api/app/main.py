@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import FastAPI, HTTPException
 
 from app.clients.embed_worker import EmbedWorkerClient
-from app.clients.memory_api import MemoryApiClient
+from app.clients.memory_api import MemoryApiClient, MemoryApiUnavailable
 from app.clients.model_runtime import ModelRuntimeClient, ModelRuntimeUnavailable
 from app.config import get_settings
 from app.models.gateway import (
@@ -54,9 +54,18 @@ async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
     settings = get_settings()
     client = ModelRuntimeClient(settings.model_runtime_url)
     model = request.model or await _detect_model(client, settings.default_model)
-    messages = []
+    memory_client = MemoryApiClient(settings.memory_api_url)
+    memory = await _memory_context(
+        client=memory_client,
+        message=request.message,
+        use_memory=request.use_memory,
+        limit=request.memory_limit,
+    )
+    messages: list[dict[str, str]] = []
     if request.system:
         messages.append({"role": "system", "content": request.system})
+    if memory["context"]:
+        messages.append({"role": "system", "content": str(memory["context"])})
     messages.append({"role": "user", "content": request.message})
 
     try:
@@ -79,6 +88,7 @@ async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
         status="ok",
         model=model,
         content=content,
+        memory=memory["metadata"],
         raw={key: value for key, value in raw.items() if value is not None} or None,
     )
 
@@ -121,3 +131,63 @@ def _extract_content(response: dict[str, Any]) -> str:
             if isinstance(text, str):
                 return text
     return ""
+
+
+async def _memory_context(
+    client: MemoryApiClient,
+    message: str,
+    use_memory: bool,
+    limit: int,
+) -> dict[str, Any]:
+    metadata: dict[str, Any] = {
+        "enabled": use_memory,
+        "status": "disabled",
+        "results_count": 0,
+    }
+    if not use_memory:
+        return {"metadata": metadata, "context": None}
+
+    try:
+        response = await client.search(query=message, limit=limit)
+    except MemoryApiUnavailable:
+        metadata["status"] = "unavailable"
+        return {"metadata": metadata, "context": None}
+
+    results = response.get("results")
+    if not isinstance(results, list):
+        results = []
+    selected = results[:limit]
+
+    metadata.update(
+        {
+            "status": "ok" if selected else "empty",
+            "results_count": len(selected),
+            "collection_name": response.get("collection_name"),
+            "embedding_backend": response.get("embedding_backend"),
+            "embedding_dim": response.get("embedding_dim"),
+        }
+    )
+
+    if not selected:
+        return {"metadata": metadata, "context": None}
+
+    lines = [
+        "Use the following local memory only if relevant. If it is not relevant, ignore it.",
+    ]
+    for index, item in enumerate(selected, start=1):
+        if not isinstance(item, dict):
+            continue
+        text = str(item.get("text") or "").strip()
+        if not text:
+            continue
+        source = item.get("source") or "unknown"
+        score = item.get("score")
+        score_text = f", score={score:.4f}" if isinstance(score, (int, float)) else ""
+        lines.append(f"{index}. source={source}{score_text}: {text}")
+
+    if len(lines) == 1:
+        metadata["status"] = "empty"
+        metadata["results_count"] = 0
+        return {"metadata": metadata, "context": None}
+
+    return {"metadata": metadata, "context": "\n".join(lines)}

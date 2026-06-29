@@ -2,6 +2,7 @@
 set -euo pipefail
 
 GATEWAY_API_URL="${GATEWAY_API_URL:-http://localhost:8100}"
+MEMORY_API_URL="${MEMORY_API_URL:-http://localhost:8101}"
 
 pass() {
   echo "PASS: $1"
@@ -18,6 +19,23 @@ require_command() {
   fi
 }
 
+wait_for_http() {
+  local url="$1"
+  local name="$2"
+  local attempts=30
+
+  for attempt in $(seq 1 "$attempts"); do
+    if curl -fsS "$url" >/dev/null 2>&1; then
+      return 0
+    fi
+    if [ "$attempt" -lt "$attempts" ]; then
+      sleep 1
+    fi
+  done
+
+  fail "$name did not become reachable within ${attempts}s: $url"
+}
+
 post_json() {
   local path="$1"
   local body="$2"
@@ -29,8 +47,21 @@ post_json() {
     "$GATEWAY_API_URL$path"
 }
 
+post_memory_json() {
+  local path="$1"
+  local body="$2"
+
+  curl -fsS \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d "$body" \
+    "$MEMORY_API_URL$path"
+}
+
 require_command curl
 require_command jq
+
+wait_for_http "$GATEWAY_API_URL/gateway/health" "Gateway API /gateway/health"
 
 if ! health_response="$(curl -fsS "$GATEWAY_API_URL/gateway/health")"; then
   fail "Gateway API /gateway/health request failed"
@@ -114,6 +145,30 @@ if [ "${RUN_GATEWAY_CHAT_TEST:-0}" = "1" ]; then
     pass "Gateway API /gateway/chat"
   else
     fail "Gateway API /gateway/chat returned unexpected response: $chat_response"
+  fi
+fi
+
+if [ "${RUN_GATEWAY_CHAT_MEMORY_TEST:-0}" = "1" ]; then
+  if ! post_memory_json "/memory/add" '{"text":"Cuneyt'\''s current local AI runtime model is deepseek-coder-lite.","source":"test","metadata":{"test":"gateway-memory-chat"}}' >/dev/null; then
+    fail "Memory API /memory/add setup request failed"
+  fi
+
+  if ! memory_chat_response="$(post_json "/gateway/chat" '{"message":"What is my current local AI runtime model?","use_memory":true,"memory_limit":5,"temperature":0.2,"max_tokens":128}')"; then
+    fail "Gateway API /gateway/chat memory request failed"
+  fi
+
+  memory_chat_status="$(jq -r '.status // empty' <<<"$memory_chat_response")"
+  memory_enabled="$(jq -r '.memory.enabled' <<<"$memory_chat_response")"
+  memory_status="$(jq -r '.memory.status // empty' <<<"$memory_chat_response")"
+  memory_content="$(jq -r '.content // empty' <<<"$memory_chat_response")"
+
+  if [ "$memory_chat_status" = "ok" ] \
+    && [ "$memory_enabled" = "true" ] \
+    && [ -n "$memory_status" ] \
+    && [ -n "$memory_content" ]; then
+    pass "Gateway API /gateway/chat with memory"
+  else
+    fail "Gateway API /gateway/chat memory returned unexpected response: $memory_chat_response"
   fi
 fi
 

@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health model-start model-stop model-status model-health test-gateway test-gateway-chat test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health model-start model-stop model-status model-health test-gateway test-gateway-chat test-gateway-chat-memory test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -30,6 +30,7 @@ help:
 > @echo "  make model-health   Check host llama.cpp OpenAI-compatible endpoint"
 > @echo "  make test-gateway   Run Gateway API contract tests"
 > @echo "  make test-gateway-chat Run optional Gateway chat test"
+> @echo "  make test-gateway-chat-memory Run optional memory-augmented Gateway chat test"
 > @echo "  make test-embed     Run Embed Worker contract tests"
 > @echo "  make test-memory    Run Memory API contract tests"
 > @echo "  make test-stack     Run stack smoke tests"
@@ -94,6 +95,9 @@ test-gateway:
 
 test-gateway-chat:
 > @RUN_GATEWAY_CHAT_TEST=1 ./scripts/test-gateway-api.sh
+
+test-gateway-chat-memory:
+> @RUN_GATEWAY_CHAT_MEMORY_TEST=1 ./scripts/test-gateway-api.sh
 
 test-memory:
 > @./scripts/test-memory-api.sh
