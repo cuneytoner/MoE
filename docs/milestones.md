@@ -270,47 +270,154 @@ Goals:
 - Keep automatic execution disabled globally.
 - Preserve default tests without requiring model runtime.
 
-## Milestone 20: Dashboard or Controlled Runtime Switch Approval Flow
+## Milestone 20: Local Coding Workspace Integration
 
 Status: PLANNED
 
 Goals:
-- Add document ingestion and chunking flow.
-- Embed chunks and store vectors in Qdrant.
-- Track document metadata and ingestion state.
-- Prepare safe local RAG workflows.
+- Add read-only workspace context provider.
+- Add repo file tree endpoint.
+- Add safe file search endpoint.
+- Add code task prompt templates.
+- Keep file writes disabled.
 
-## Milestone 21: Local Chat UI Integration
-
-Status: PLANNED
-
-Goals:
-- Integrate a local chat UI layer such as OpenWebUI or AnythingLLM.
-- Connect the UI to the local OpenAI-compatible endpoint.
-- Keep memory and RAG hooks explicit.
-- Avoid copying external UI runtime state into the codebase.
-
-## Milestone 22: Coding Agent Integration
+## Milestone 21: Continue.dev / VS Code Gateway Integration
 
 Status: PLANNED
 
 Goals:
-- Integrate local coding agents and editor workflows.
-- Support Codex, Continue, and related local agent tooling.
-- Route coding-context requests into the local AI stack safely.
-- Keep source/runtime separation strict for agent workflows.
+- Point Continue.dev to Gateway or model runtime.
+- Add coding model profiles.
+- Add local prompt templates.
+- Add docs for using the stack as a coding assistant.
 
-## Milestone 23: Automation Layer
+## Milestone 22: Repo-Aware Coding Agent
 
 Status: PLANNED
 
 Goals:
-- Add an automation layer such as n8n.
-- Connect memory, model runtime, and future gateway endpoints into workflows.
-- Support repeatable local task automation.
-- Keep automation state out of the source repository.
+- Combine workspace context, memory, router, and model runtime.
+- Support code explanation, debugging, review, and implementation planning.
+- Keep agent actions advisory until write safety is designed.
 
-## Milestone 24: Homelab Ops
+## Milestone 23: Safe Write/Edit Plan for Code
+
+Status: PLANNED
+
+Goals:
+- Generate patches only.
+- Do not auto-apply changes.
+- Add diff review workflow.
+
+## Milestone 24: Nightly Learning Worker
+
+Status: PLANNED
+
+Goals:
+- Add a scheduled read-only learning worker.
+- Analyze recent git activity, tests, Gateway route decisions, Memory API records, and runtime/model health reports.
+- Produce nightly reports under `/home/cuneyt/MoE/runtime/reports/nightly`.
+- Store useful lessons into Memory API.
+- Never modify code automatically.
+- Never execute shell commands automatically.
+- Never restart Docker or model runtime.
+- Keep reports safe, observable, and manually reviewable.
+
+## Milestone 24.1: Research Ingestion Worker
+
+Status: PLANNED
+
+Goals:
+- Add optional research, news, and document ingestion.
+- Support user-approved sources only.
+- Summarize findings.
+- Store useful findings in Memory API.
+- Keep all outputs under runtime data.
+- Make no automatic code changes.
+
+## Milestone 24.2: Feedback / Success Memory
+
+Status: PLANNED
+
+Goals:
+- Track which tasks succeeded or failed.
+- Store routing decisions, selected model target, actual model used, tests run, and final status.
+- Use this history to improve future routing and prompts.
+- Keep feedback memory transparent and inspectable.
+
+## Milestone 24.3: Prompt & Routing Improvement Reports
+
+Status: PLANNED
+
+Goals:
+- Generate recommendations for router keywords, model mapping, prompt templates, test improvements, and docs gaps.
+- Output reports only.
+- Require human approval before changing code or config.
+
+## Milestone 25: Media Lab Foundation
+
+Status: PLANNED
+
+Goals:
+- Define `media-api` / `media-worker` architecture.
+- Define runtime output directories under `/home/cuneyt/MoE/runtime/media`.
+- Define model paths under `/home/cuneyt/MoE_Models_Backup`.
+- Keep generated media out of the codebase.
+
+## Milestone 26: Image Generation Service
+
+Status: PLANNED
+
+Goals:
+- Integrate ComfyUI or an image worker.
+- Support Flux-style image generation.
+- Add job, status, and assets model.
+
+## Milestone 27: Video Generation Service
+
+Status: PLANNED
+
+Goals:
+- Support CogVideoX-style video and image-to-video workflows.
+- Use queued jobs.
+- Store outputs under the runtime media directory.
+
+## Milestone 28: 3D Model Generation Pipeline
+
+Status: PLANNED
+
+Goals:
+- Start with parametric Blender Python generation.
+- Export `.blend`, `.glb`, and `.obj`.
+- Support technical structures such as pergola.
+
+## Milestone 29: Rigging Pipeline
+
+Status: PLANNED
+
+Goals:
+- Add basic Blender rig and armature pipeline.
+- Start with mechanical and object rigs before character rigs.
+
+## Milestone 30: Animation Pipeline
+
+Status: PLANNED
+
+Goals:
+- Convert text requests into keyframe plans.
+- Support Blender camera and object animation.
+- Render preview outputs.
+
+## Milestone 31: Media Workflow Orchestrator
+
+Status: PLANNED
+
+Goals:
+- Chain image, video, 3D, rig, and animation jobs.
+- Add workflow status and asset tracking.
+- Keep generated assets under runtime media storage.
+
+## Future Homelab Ops
 
 Status: PLANNED
 

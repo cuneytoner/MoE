@@ -12,6 +12,7 @@ Milestone 11.1 defines the backup and restore plan. It does not add backup scrip
 - llama.cpp source/build location: `/home/cuneyt/Apps/llama.cpp`
 - Environment templates: `.env.example`, `configs/runtime.yaml`, `configs/models.yaml`, and `configs/environments/*.example.yaml`
 - Project docs under `docs/`
+- Nightly learning reports under `/home/cuneyt/MoE/runtime/reports/nightly`, when they become useful enough to preserve
 
 ## What Not To Back Up
 
@@ -24,6 +25,8 @@ Milestone 11.1 defines the backup and restore plan. It does not add backup scrip
 - Real secrets or local `.env` files
 
 Logs under `/home/cuneyt/MoE/runtime/logs` are optional. Keep them only when debugging history matters.
+
+Nightly reports under `/home/cuneyt/MoE/runtime/reports/nightly` are runtime artifacts. Back them up when their review history matters, but never copy them into the source repository.
 
 ## Backup Commands Draft
 

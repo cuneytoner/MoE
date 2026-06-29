@@ -514,16 +514,169 @@ Scope:
 
 ## Milestone 20 Prompt Placeholder
 
-Add Dashboard or controlled runtime switch approval flow.
+Add local coding workspace integration.
 
 Expected boundaries:
 
-- Keep runtime switches explicit and reversible.
-- Do not let Gateway containers control host runtime without an approval model.
-- Keep Dashboard operational and monitoring-focused if chosen.
+- Add read-only workspace context provider planning or implementation.
+- Add repo file tree and safe file search concepts.
+- Add code task prompt templates.
+- Keep file writes disabled.
 - Preserve source-only repository and runtime data boundaries.
 
+## Milestone 21 Prompt Placeholder
+
+Add Continue.dev / VS Code Gateway integration.
+
+Expected boundaries:
+
+- Point Continue.dev to Gateway or the model runtime.
+- Add coding model profiles and local prompt templates.
+- Document editor usage as a local coding assistant.
+- Do not copy editor runtime state into the codebase.
+
+## Milestone 22 Prompt Placeholder
+
+Add repo-aware coding agent workflows.
+
+Expected boundaries:
+
+- Combine workspace context, memory, router, and model runtime.
+- Support explanation, debugging, review, and implementation planning.
+- Keep file writes disabled.
+- Avoid advanced autonomous editing.
+
 ## Milestone 23 Prompt Placeholder
+
+Add safe write/edit planning for code.
+
+Expected boundaries:
+
+- Generate patches only.
+- Do not auto-apply changes.
+- Add diff review workflow.
+- Keep user approval explicit.
+
+## Milestone 24 Prompt Placeholder
+
+Add nightly learning worker planning or implementation.
+
+Expected boundaries:
+
+- Analyze recent git activity, tests, Gateway route decisions, Memory API records, and runtime/model health reports.
+- Produce reports under `/home/cuneyt/MoE/runtime/reports/nightly`.
+- Store useful lessons into Memory API.
+- Do not modify code automatically.
+- Do not execute shell commands automatically.
+- Do not restart Docker or model runtime.
+- Keep the workflow safe, observable, and manually reviewable.
+
+## Milestone 24.1 Prompt Placeholder
+
+Add optional research ingestion worker.
+
+Expected boundaries:
+
+- Use user-approved sources only.
+- Summarize findings.
+- Store useful findings in Memory API.
+- Keep outputs under runtime data.
+- Make no automatic code changes.
+
+## Milestone 24.2 Prompt Placeholder
+
+Add feedback / success memory.
+
+Expected boundaries:
+
+- Track task success and failure.
+- Store routing decisions, selected model target, actual model used, tests run, and final status.
+- Keep feedback memory transparent and inspectable.
+- Use the data to improve future routing and prompts.
+
+## Milestone 24.3 Prompt Placeholder
+
+Add prompt and routing improvement reports.
+
+Expected boundaries:
+
+- Recommend router keyword, model mapping, prompt template, test, and docs improvements.
+- Output reports only.
+- Require human approval before changing code or config.
+
+## Milestone 25 Prompt Placeholder
+
+Add media lab foundation.
+
+Expected boundaries:
+
+- Define `media-api` and `media-worker` architecture.
+- Keep outputs under `/home/cuneyt/MoE/runtime/media`.
+- Keep media models under `/home/cuneyt/MoE_Models_Backup`.
+- Do not generate media into the codebase.
+
+## Milestone 26 Prompt Placeholder
+
+Add image generation service.
+
+Expected boundaries:
+
+- Integrate ComfyUI or an image worker.
+- Support Flux-style image generation.
+- Use queued jobs and asset tracking.
+- Keep outputs under runtime media storage.
+
+## Milestone 27 Prompt Placeholder
+
+Add video generation service.
+
+Expected boundaries:
+
+- Support CogVideoX-style video and image-to-video workflows.
+- Use queued jobs.
+- Store outputs under runtime media storage.
+
+## Milestone 28 Prompt Placeholder
+
+Add 3D model generation pipeline.
+
+Expected boundaries:
+
+- Start with parametric Blender Python generation.
+- Export `.blend`, `.glb`, and `.obj`.
+- Support technical structures such as pergola.
+
+## Milestone 29 Prompt Placeholder
+
+Add rigging pipeline.
+
+Expected boundaries:
+
+- Add basic Blender rig and armature planning.
+- Start with mechanical and object rigs before character rigs.
+- Keep generated files under runtime media storage.
+
+## Milestone 30 Prompt Placeholder
+
+Add animation pipeline.
+
+Expected boundaries:
+
+- Convert text requests into keyframe plans.
+- Support Blender camera and object animation.
+- Render preview outputs under runtime media storage.
+
+## Milestone 31 Prompt Placeholder
+
+Add media workflow orchestrator.
+
+Expected boundaries:
+
+- Chain image, video, 3D, rig, and animation jobs.
+- Add workflow status and asset tracking.
+- Keep orchestration state outside the codebase.
+
+## Future Automation Placeholder
 
 Add an automation layer for local workflows.
 
@@ -534,7 +687,7 @@ Expected boundaries:
 - Keep automation state outside the source repository.
 - Avoid mixing this work with dashboard or homelab ops changes.
 
-## Milestone 24 Prompt Placeholder
+## Future Homelab Ops Placeholder
 
 Add homelab operations support for the local AI stack.
 

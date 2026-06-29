@@ -115,10 +115,27 @@ Future local AI stack layers expected around it:
 
 - advanced model routing through future Gateway work
 - document RAG ingestion and vector workflows
+- local coding workspace integration
+- Continue.dev and VS Code Gateway integration
+- repo-aware coding agent workflows
+- safe patch-only edit planning
+- nightly learning and self-improvement reports
+- media lab services for image, video, 3D, rigging, animation, and workflow orchestration
 - local chat UI integration
-- coding agent integration
 - automation layer such as n8n
 - homelab operations and container management
+
+Coding workspace roadmap:
+
+The stack becomes practically useful for local code development after Milestone 20 and Milestone 21. The first coding workspace layer should be read-only: repo tree, safe file search, bounded context, and prompt templates. File writes and patch application remain disabled until the safe write/edit plan milestone.
+
+Nightly learning roadmap:
+
+Nightly learning begins after Milestone 24. It is read-only and report-first: analyze recent project activity, tests, Gateway routing, Memory API records, and runtime health, then write reports under `/home/cuneyt/MoE/runtime/reports/nightly` and store useful lessons through Memory API. Automatic self-modification is out of scope until a later approval-gated milestone.
+
+Media lab roadmap:
+
+Future media services should keep generated assets under `/home/cuneyt/MoE/runtime/media`, keep media models under `/home/cuneyt/MoE_Models_Backup`, and keep source-only service code in this repository. The planned sequence is foundation, image generation, video generation, 3D generation, rigging, animation, then workflow orchestration.
 
 apps/dashboard:
 
