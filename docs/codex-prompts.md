@@ -758,6 +758,45 @@ Expected boundaries:
 - Use queued jobs and asset tracking.
 - Keep outputs under runtime media storage.
 
+## Milestone 26.1.5 Prompt Summary
+
+Add Control Plane Dashboard and Runtime Mode Manager.
+
+Scope:
+
+- Add `apps/control-api` on port `8400`.
+- Add `configs/runtime-modes.example.yaml`.
+- Expose `/health`, `/control/status`, `/control/modes`, `/control/mode/plan`, and `/control/mode/apply`.
+- Keep status collection read-only.
+- Define `coding`, `image`, `video`, `3d_suite`, and `media_off` modes.
+- Document PC-1 as generation host and PC-2 as helper host.
+- Keep mode application rejected by default.
+- Do not execute arbitrary shell commands.
+- Do not start generation or download models.
+- Do not let Gateway control PC-2.
+
+## Milestone 26.1.6 Prompt Placeholder
+
+Add Prompt Interpreter Worker on PC-2.
+
+Expected boundaries:
+
+- Rule/template-based first version.
+- No model required.
+- Produce structured job specs for media workflows.
+- Do not execute generation jobs directly.
+
+## Milestone 26.1.7 Prompt Placeholder
+
+Add optional Mini Model Prompt Interpreter on PC-2.
+
+Expected boundaries:
+
+- Use a small local model only if rule/template interpretation is insufficient.
+- Keep heavy generation on PC-1.
+- Return structured job specs.
+- Keep model files outside the codebase.
+
 ## Milestone 27 Prompt Placeholder
 
 Add video generation service.

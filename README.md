@@ -50,6 +50,7 @@ apps:
 - feedback-worker
 - media-api
 - media-worker
+- control-api
 - dashboard
 
 packages:
@@ -79,6 +80,7 @@ docs:
 - codex-prompts.md
 - research-ingestion.md
 - feedback-success-memory.md
+- control-plane.md
 - media-lab.md
 
 scripts:
@@ -101,11 +103,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.1: ComfyUI Runtime and Flux Schnell Activation Plan in progress
+Milestone 26.1.5: Control Plane Dashboard and Runtime Mode Manager in progress
 
 Next planned milestone:
 
-Milestone 26.2: First Real Image Generation
+Milestone 26.1.6: Prompt Interpreter Worker
 
 Optional image planning commands:
 
@@ -114,3 +116,12 @@ make plan-image-model-downloads
 make plan-flux-schnell-models
 make check-comfyui-layout
 make check-comfyui-runtime
+
+Optional control planning commands:
+
+make runtime-status
+make runtime-mode-coding-plan
+make runtime-mode-image-plan
+make runtime-mode-video-plan
+make runtime-mode-3d-suite-plan
+make runtime-mode-media-off-plan

@@ -449,7 +449,7 @@ Goals:
 
 ## Milestone 26.1: Real Image Generation Service
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add optional user-run ComfyUI runtime installation under `/home/cuneyt/MoE/runtime/media-engines/comfyui`.
@@ -459,6 +459,39 @@ Goals:
 - Keep source-only repo separation.
 - Keep real image generation disabled.
 - Do not run actual image generation or GPU jobs.
+
+## Milestone 26.1.5: Control Plane Dashboard and Runtime Mode Manager
+
+Status: IN PROGRESS
+
+Goals:
+- Add `control-api` on port `8400`.
+- Expose read-only runtime status for known services.
+- Define safe runtime modes: `coding`, `image`, `video`, `3d_suite`, and `media_off`.
+- Return dry-run mode plans with host roles, prompt interpreter state, start/stop lists, and VRAM recommendations.
+- Keep `/control/mode/apply` rejected by default.
+- Document PC-1 as generation host and PC-2 as helper host.
+- Keep Gateway from becoming the system control surface.
+- Do not implement arbitrary shell execution, automatic self-modification, model downloads, or real media generation.
+
+## Milestone 26.1.6: Prompt Interpreter Worker
+
+Status: PLANNED
+
+Goals:
+- Add a PC-2 prompt interpreter worker.
+- Start with rule/template-based interpretation.
+- Produce structured media job specs.
+- Require no local model.
+
+## Milestone 26.1.7: Mini Model Prompt Interpreter on PC-2
+
+Status: PLANNED
+
+Goals:
+- Evaluate a small local model for prompt interpretation only if needed.
+- Keep output structured and reviewable.
+- Keep heavy generation on PC-1.
 
 ## Milestone 26.2: First Real Image Generation
 

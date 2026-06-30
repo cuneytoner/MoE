@@ -1,0 +1,118 @@
+modes:
+  coding:
+    description: Coding and chat runtime mode with media generation stopped.
+    generation_host: pc1
+    helper_host: pc2
+    prompt_interpreter: disabled
+    exclusive_gpu_mode: false
+    grouped_capabilities: []
+    start:
+      - gateway-api
+      - memory-api
+      - embed-worker
+      - llama-server
+    stop:
+      - comfyui
+      - media-api
+      - media-worker
+      - image-worker
+      - video-worker
+      - 3d-worker
+      - rigging-worker
+      - animation-worker
+    recommended_stop_for_vram: []
+    notes:
+      - Default interactive coding mode.
+
+  image:
+    description: Image generation preparation mode with PC-1 as generation host.
+    generation_host: pc1
+    helper_host: pc2
+    prompt_interpreter: enabled
+    exclusive_gpu_mode: true
+    grouped_capabilities: []
+    start:
+      - comfyui
+      - media-api
+      - media-worker
+      - prompt-interpreter-worker
+    recommended_stop_for_vram:
+      - llama-server
+    stop:
+      - video-worker
+      - 3d-worker
+      - rigging-worker
+      - animation-worker
+    notes:
+      - Real generation remains disabled until Milestone 26.2.
+
+  video:
+    description: Future video generation mode.
+    generation_host: pc1
+    helper_host: pc2
+    prompt_interpreter: enabled
+    exclusive_gpu_mode: true
+    grouped_capabilities: []
+    start:
+      - media-api
+      - media-worker
+      - video-worker
+      - prompt-interpreter-worker
+    stop:
+      - llama-server
+      - comfyui
+      - image-worker
+      - 3d-worker
+      - rigging-worker
+      - animation-worker
+    recommended_stop_for_vram: []
+    notes:
+      - Video generation is a future milestone.
+
+  3d_suite:
+    description: Future 3D model, rigging, and animation grouped mode.
+    generation_host: pc1
+    helper_host: pc2
+    prompt_interpreter: enabled
+    exclusive_gpu_mode: true
+    grouped_capabilities:
+      - 3d_model
+      - rigging
+      - animation
+    start:
+      - media-api
+      - media-worker
+      - 3d-worker
+      - rigging-worker
+      - animation-worker
+      - prompt-interpreter-worker
+    stop:
+      - llama-server
+      - comfyui
+      - image-worker
+      - video-worker
+    recommended_stop_for_vram: []
+    notes:
+      - Blender/3D execution is not implemented in this milestone.
+
+  media_off:
+    description: Stop planned media workers and leave generation disabled.
+    generation_host: none
+    helper_host: pc2
+    prompt_interpreter: disabled
+    exclusive_gpu_mode: false
+    grouped_capabilities: []
+    start: []
+    stop:
+      - comfyui
+      - media-api
+      - media-worker
+      - image-worker
+      - video-worker
+      - 3d-worker
+      - rigging-worker
+      - animation-worker
+      - prompt-interpreter-worker
+    recommended_stop_for_vram: []
+    notes:
+      - Media generation remains off.

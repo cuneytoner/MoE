@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-media-api test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health control-api-test control-api-up control-api-down runtime-status runtime-mode-coding-plan runtime-mode-image-plan runtime-mode-video-plan runtime-mode-3d-suite-plan runtime-mode-media-off-plan check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-media-api test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -25,6 +25,15 @@ help:
 > @echo "  make comfyui-up     Optional start local ComfyUI on 127.0.0.1:8188"
 > @echo "  make comfyui-down   Optional stop local ComfyUI from runtime PID"
 > @echo "  make comfyui-health Optional check local ComfyUI HTTP health"
+> @echo "  make control-api-test Run local Control API tests"
+> @echo "  make control-api-up Optional run Control API locally on port 8400"
+> @echo "  make control-api-down Optional placeholder; stop Ctrl-C local process"
+> @echo "  make runtime-status Read-only runtime status"
+> @echo "  make runtime-mode-coding-plan Print coding mode plan"
+> @echo "  make runtime-mode-image-plan Print image mode plan"
+> @echo "  make runtime-mode-video-plan Print video mode plan"
+> @echo "  make runtime-mode-3d-suite-plan Print 3D suite mode plan"
+> @echo "  make runtime-mode-media-off-plan Print media-off mode plan"
 > @echo "  make check-models   Validate local model files and Docker mount config"
 > @echo "  make status         Show git status"
 > @echo "  make tree           Show repository tree"
@@ -124,6 +133,33 @@ comfyui-down:
 
 comfyui-health:
 > @./scripts/comfyui-health.sh
+
+control-api-test:
+> @./scripts/test-control-api.sh
+
+control-api-up:
+> @cd apps/control-api && uvicorn app.main:app --host 127.0.0.1 --port 8400
+
+control-api-down:
+> @echo "Control API local dev server is stopped with Ctrl-C in the terminal running make control-api-up."
+
+runtime-status:
+> @./scripts/runtime-status.sh
+
+runtime-mode-coding-plan:
+> @./scripts/runtime-mode-coding.sh
+
+runtime-mode-image-plan:
+> @./scripts/runtime-mode-image.sh
+
+runtime-mode-video-plan:
+> @./scripts/runtime-mode-video.sh
+
+runtime-mode-3d-suite-plan:
+> @./scripts/runtime-mode-3d-suite.sh
+
+runtime-mode-media-off-plan:
+> @./scripts/runtime-mode-media-off.sh
 
 check-models:
 > @./scripts/check-models.sh

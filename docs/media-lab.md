@@ -197,3 +197,15 @@ make comfyui-down
 ```
 
 The runtime install target writes only under `/home/cuneyt/MoE/runtime/media-engines/comfyui`. Model files stay under `/home/cuneyt/MoE_Models_Backup` and are exposed to ComfyUI by symlink only. Real generation remains disabled until Milestone 26.2.
+
+## Runtime Mode Separation
+
+Milestone 26.1.5 adds Control Plane runtime modes before real generation:
+
+- `coding`: excludes image, video, and 3D generation workers so coding and chat resources stay predictable.
+- `image`: focuses on image generation services and recommends stopping `llama-server` for VRAM.
+- `video`: focuses on future video generation and stops image/3D workers.
+- `3d_suite`: groups 3D model generation, rigging, and animation as one future mode.
+- `media_off`: stops planned media workers.
+
+Mode plans are dry-run by default and do not start generation.

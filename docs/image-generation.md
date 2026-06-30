@@ -287,3 +287,5 @@ MEDIA_ALLOW_GPU_JOBS=false
 ```
 
 Real generation must remain rejected until Milestone 26.2 explicitly sets the engine, validates model inventory, confirms runtime layout, and adds tests.
+
+M26.2 must also wait for Control Plane mode gates from Milestone 26.1.5. Image generation should only proceed when the `image` mode plan is explicit, ComfyUI is healthy, model components are validated, and real generation safety variables are enabled.
