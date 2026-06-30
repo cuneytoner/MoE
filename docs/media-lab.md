@@ -168,3 +168,16 @@ make check-image-models
 Image dry-run jobs can include width, height, steps, seed, engine, and model id metadata. Reports include prompt length, requested size, workflow, engine, model id, and explicit `generation_performed=false`.
 
 Real image generation remains disabled until a later explicit milestone.
+
+## Image Engine Decision Prep
+
+Milestone 26.1-pre recommends ComfyUI as the primary future image engine while keeping generation disabled. ComfyUI is preferred for workflow orchestration, Flux support, future video workflows, image-to-video bridging, node workflow exportability, and debugging. Diffusers remains a deferred alternative for simpler direct Python generation.
+
+Optional planning commands:
+
+```bash
+make check-comfyui-layout
+make plan-image-model-downloads
+```
+
+These commands do not install ComfyUI, download models, create symlinks, run GPU jobs, or generate media. Runtime engine files belong under `/home/cuneyt/MoE/runtime/media-engines/comfyui`; model files remain under `/home/cuneyt/MoE_Models_Backup`.

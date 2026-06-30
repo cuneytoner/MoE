@@ -22,11 +22,11 @@ matches="$(find "$MODEL_BACKUP_DIR" -maxdepth 3 \( \
 \) -print 2>/dev/null | sort || true)"
 
 if [ -n "$matches" ]; then
-  echo "PASS: possible image model candidates found:"
+  echo "PASS: possible image or media model candidates found:"
   printf '%s\n' "$matches"
 else
   echo "WARN: no likely image model files found yet."
 fi
 
-echo "INFO: M26.0 is preparation-only and does not require an image model."
-echo "INFO: M26.1 will require an explicitly selected engine/model before real generation."
+echo "INFO: M26.1-pre is decision/probe-only and does not require an image model."
+echo "INFO: Use scripts/plan-image-model-downloads.sh for component-level planning without downloads."

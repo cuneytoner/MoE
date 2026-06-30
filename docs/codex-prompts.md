@@ -722,10 +722,25 @@ Add image generation service.
 
 Expected boundaries:
 
-- Integrate ComfyUI or an image worker.
+- Integrate ComfyUI as the selected image workflow engine.
 - Support Flux-style image generation.
 - Use queued jobs and asset tracking.
 - Keep outputs under runtime media storage.
+
+## Milestone 26.1-pre Prompt Summary
+
+Prepare image engine decision and runtime probes.
+
+Scope:
+
+- Recommend ComfyUI as the primary future image engine.
+- Defer Diffusers as an alternative for direct Python generation.
+- Document planned ComfyUI runtime layout under `/home/cuneyt/MoE/runtime/media-engines/comfyui`.
+- Keep model storage under `/home/cuneyt/MoE_Models_Backup`.
+- Add read-only model component planning for Flux Schnell and SDXL.
+- Add optional ComfyUI layout probe with `CREATE=1` directory creation limited to runtime.
+- Document future safety gates: `MEDIA_REAL_GENERATION_ENABLED=false`, `MEDIA_IMAGE_ENGINE=disabled`, `MEDIA_COMFYUI_URL=http://127.0.0.1:8188`, and `MEDIA_ALLOW_GPU_JOBS=false`.
+- Do not install ComfyUI, install Blender, download models, modify model files, create symlinks, run image generation, or execute GPU jobs.
 
 ## Milestone 27 Prompt Placeholder
 

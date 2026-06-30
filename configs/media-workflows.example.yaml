@@ -8,6 +8,13 @@ workflows:
     default_steps: 4
     engine: disabled
 
+  image_real_generation_placeholder:
+    job_type: image
+    enabled: false
+    real_generation_enabled: false
+    engine: comfyui
+    dry_run_only: true
+
   video_default:
     job_type: video
     enabled: false

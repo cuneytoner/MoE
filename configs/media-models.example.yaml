@@ -1,10 +1,31 @@
 image:
   enabled: false
+  real_generation_enabled: false
   default_engine: disabled
+  selected_track: flux-schnell-comfyui-placeholder
   allowed_engines:
     - disabled
     - comfyui-placeholder
     - diffusers-placeholder
+    - comfyui
+  tracks:
+    flux_schnell_comfyui:
+      enabled: false
+      engine: comfyui
+      requires:
+        - main_flux_model
+        - clip_l
+        - t5xxl
+        - vae
+      notes: "Planning only. Do not download in 26.1-pre."
+
+    sdxl_comfyui:
+      enabled: false
+      engine: comfyui
+      requires:
+        - sdxl_checkpoint
+        - vae_optional
+      notes: "Fallback planning only."
   models:
     - id: flux-schnell-placeholder
       enabled: false

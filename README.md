@@ -101,8 +101,14 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.0: Image Generation Service Preparation in progress
+Milestone 26.1-pre: Image Engine Decision and Runtime Probe in progress
 
 Next planned milestone:
 
 Milestone 26.1: Real Image Generation Service
+
+Optional image planning commands:
+
+make check-image-models
+make plan-image-model-downloads
+make check-comfyui-layout

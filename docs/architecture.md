@@ -133,7 +133,7 @@ apps/media-api and apps/media-worker:
 
 Dry-run-only Media Lab foundation for Milestone 25. Media API exposes job creation and dry-run processing on port `8300`; Media Worker exposes dry-run worker processing on port `8310`. Jobs and media reports are JSON files under `/home/cuneyt/MoE/runtime/media` and `/home/cuneyt/MoE/runtime/reports/media`. The foundation does not install or call ComfyUI, Blender, GPU jobs, model runtime, or media generation backends.
 
-Milestone 26.0 adds image generation preparation only: image job metadata validation, placeholder model/workflow configs, image model inventory checks, and dry-run image report fields. Real image generation remains disabled.
+Milestone 26.0 adds image generation preparation only: image job metadata validation, placeholder model/workflow configs, image model inventory checks, and dry-run image report fields. Milestone 26.1-pre selects ComfyUI as the recommended future image engine, adds runtime layout and model download planning probes, and keeps real generation disabled. The planned ComfyUI runtime root is `/home/cuneyt/MoE/runtime/media-engines/comfyui`; model storage remains `/home/cuneyt/MoE_Models_Backup`.
 
 Backup and environment planning:
 

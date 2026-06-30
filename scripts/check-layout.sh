@@ -172,6 +172,8 @@ required_paths=(
   "scripts/check-python-syntax.sh"
   "scripts/check-media-layout.sh"
   "scripts/check-image-models.sh"
+  "scripts/check-comfyui-layout.sh"
+  "scripts/plan-image-model-downloads.sh"
   "scripts/check-models.sh"
   "scripts/model-runtime-start.sh"
   "scripts/model-runtime-stop.sh"

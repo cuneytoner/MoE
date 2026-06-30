@@ -423,7 +423,7 @@ Goals:
 
 ## Milestone 26.0: Image Generation Service Preparation
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add image generation configuration placeholders.
@@ -433,12 +433,26 @@ Goals:
 - Keep real image generation disabled by default.
 - Do not install ComfyUI, Diffusers, Blender, or execute GPU jobs.
 
+## Milestone 26.1-pre: Image Engine Decision and Runtime Probe
+
+Status: IN PROGRESS
+
+Goals:
+- Recommend ComfyUI as the primary future image engine and defer Diffusers.
+- Document planned ComfyUI runtime layout under `/home/cuneyt/MoE/runtime/media-engines/comfyui`.
+- Keep media outputs under `/home/cuneyt/MoE/runtime/media`.
+- Keep media models under `/home/cuneyt/MoE_Models_Backup`.
+- Add read-only image model download planning report format.
+- Add optional ComfyUI layout probe that exits successfully when directories are missing.
+- Add optional runtime directory creation mode limited to the planned runtime path.
+- Keep real generation, model downloads, ComfyUI installation, symlink creation, and GPU jobs disabled.
+
 ## Milestone 26.1: Real Image Generation Service
 
 Status: PLANNED
 
 Goals:
-- Integrate ComfyUI or an image worker.
+- Integrate ComfyUI as the selected image workflow engine.
 - Support Flux-style image generation.
 - Add job, status, and assets model.
 

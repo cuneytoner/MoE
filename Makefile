@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-media-api test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create plan-image-model-downloads check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-media-api test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -14,6 +14,9 @@ help:
 > @echo "  make check-python-syntax Validate Python syntax without bytecode"
 > @echo "  make check-media-layout Prepare/validate runtime media directories"
 > @echo "  make check-image-models Inspect optional local image model candidates"
+> @echo "  make check-comfyui-layout Inspect optional ComfyUI runtime layout"
+> @echo "  make check-comfyui-layout-create Create optional ComfyUI runtime layout"
+> @echo "  make plan-image-model-downloads Print image model component plan without downloads"
 > @echo "  make check-models   Validate local model files and Docker mount config"
 > @echo "  make status         Show git status"
 > @echo "  make tree           Show repository tree"
@@ -80,6 +83,15 @@ check-media-layout:
 
 check-image-models:
 > @./scripts/check-image-models.sh
+
+check-comfyui-layout:
+> @./scripts/check-comfyui-layout.sh
+
+check-comfyui-layout-create:
+> @CREATE=1 ./scripts/check-comfyui-layout.sh
+
+plan-image-model-downloads:
+> @./scripts/plan-image-model-downloads.sh
 
 check-models:
 > @./scripts/check-models.sh
