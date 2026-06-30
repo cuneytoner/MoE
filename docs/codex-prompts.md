@@ -667,15 +667,21 @@ Scope:
 - Do not modify source files, prompt templates, router config, model mappings, Docker, PC-2, or model runtime.
 - Keep PC-2 feedback activation behind explicit helper scripts and the Docker Compose `feedback` profile.
 
-## Milestone 24.3 Prompt Placeholder
+## Milestone 24.3 Prompt Summary
 
-Add prompt and routing improvement reports.
+Add Prompt and Routing Improvement Reports.
 
-Expected boundaries:
+Scope:
 
-- Recommend router keyword, model mapping, prompt template, test, and docs improvements.
-- Output reports only.
-- Require human approval before changing code or config.
+- Extend `apps/feedback-worker` with `/improvement/report` and `/improvement/latest-report`.
+- Read recent feedback events from runtime JSONL storage.
+- Generate deterministic recommendations for router keywords, intent examples, model mapping alignment, prompt templates, tool planning, docs gaps, tests, and common failures.
+- Write reports only under `IMPROVEMENT_REPORTS_DIR`.
+- Return `apply_supported=false`.
+- Support `dry_run` only and reject other modes.
+- Keep `store_lessons=false` by default and make Memory API storage optional.
+- Do not call model runtime, fetch internet data, modify source files, modify router config, modify prompt templates, modify model mappings, control Docker, control PC-2, or switch model runtime.
+- Require human approval before any recommendation becomes a code or config change.
 
 ## Milestone 25 Prompt Placeholder
 

@@ -26,6 +26,10 @@ class Settings(BaseSettings):
         default="/home/cuneyt/MoE/runtime/reports/feedback",
         alias="FEEDBACK_REPORTS_DIR",
     )
+    improvement_reports_dir: str = Field(
+        default="/home/cuneyt/MoE/runtime/reports/improvements",
+        alias="IMPROVEMENT_REPORTS_DIR",
+    )
     memory_api_url: str = Field(
         default="http://memory-api:8101",
         alias="FEEDBACK_MEMORY_API_URL",

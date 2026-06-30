@@ -383,7 +383,7 @@ Goals:
 
 ## Milestone 24.2: Feedback / Success Memory
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add the first Feedback Worker skeleton.
@@ -397,11 +397,14 @@ Goals:
 
 ## Milestone 24.3: Prompt & Routing Improvement Reports
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Generate recommendations for router keywords, model mapping, prompt templates, test improvements, and docs gaps.
-- Output reports only.
+- Generate deterministic recommendations from feedback events.
+- Cover router keywords, intent examples, model mapping alignment, prompt templates, tool planning, docs gaps, test coverage, and common failure patterns.
+- Write improvement reports under `/home/cuneyt/MoE/runtime/reports/improvements`.
+- Keep `apply_supported=false`.
+- Do not automatically modify source, router config, prompt templates, model mappings, Docker, PC-2, or model runtime.
 - Require human approval before changing code or config.
 
 ## Milestone 25: Media Lab Foundation

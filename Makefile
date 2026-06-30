@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -42,6 +42,7 @@ help:
 > @echo "  make pc2-feedback-down Optional stop PC-2 Feedback Worker"
 > @echo "  make pc2-feedback-health Optional check PC-2 Feedback Worker health"
 > @echo "  make pc2-feedback-sample Optional post sample PC-2 Feedback Worker event/report"
+> @echo "  make pc2-improvement-report Optional generate PC-2 prompt/routing improvement report"
 > @echo "  make model-start    Start host llama.cpp OpenAI-compatible runtime"
 > @echo "  make model-stop     Stop host llama.cpp runtime"
 > @echo "  make model-status   Show host llama.cpp runtime status"
@@ -164,6 +165,9 @@ pc2-feedback-health:
 
 pc2-feedback-sample:
 > @./scripts/pc2-feedback-worker-sample.sh
+
+pc2-improvement-report:
+> @./scripts/pc2-improvement-report.sh
 
 model-start:
 > @./scripts/model-runtime-start.sh $(MODEL)

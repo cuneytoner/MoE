@@ -16,7 +16,7 @@ echo "  service: nightly-learning-worker"
 ssh -o BatchMode=yes "${PC2_USER}@${PC2_HOST}" \
   "mkdir -p '${PC2_RUNTIME_ROOT}/reports/nightly' '${PC2_RUNTIME_ROOT}/logs' && \
    cd '${PC2_SOURCE_ROOT}' && \
-   docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile learning up -d nightly-learning-worker && \
+   docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile learning up -d --build nightly-learning-worker && \
    docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile learning ps nightly-learning-worker"
 
 echo "PASS: PC-2 Nightly Learning Worker start command completed"

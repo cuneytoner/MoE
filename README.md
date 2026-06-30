@@ -98,8 +98,8 @@ make tree
 
 ## Current Milestone
 
-Milestone 24.2: Feedback / Success Memory in progress
+Milestone 24.3: Prompt & Routing Improvement Reports in progress
 
 Next planned milestone:
 
-Milestone 24.3: Prompt & Routing Improvement Reports
+Milestone 25: Media Lab Foundation

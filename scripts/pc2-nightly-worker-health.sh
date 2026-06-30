@@ -8,23 +8,30 @@ PC2_COMPOSE_FILE="${PC2_COMPOSE_FILE:-${PC2_SOURCE_ROOT}/deploy/pc2/docker-compo
 PC2_ENV_FILE="${PC2_ENV_FILE:-${PC2_SOURCE_ROOT}/deploy/pc2/.env.example}"
 NIGHTLY_PORT="${NIGHTLY_PORT:-8200}"
 HEALTH_URL="http://${PC2_HOST}:${NIGHTLY_PORT}/health"
+MAX_ATTEMPTS="${PC2_HTTP_MAX_ATTEMPTS:-20}"
+SLEEP_SECONDS="${PC2_HTTP_SLEEP_SECONDS:-1}"
 
 echo "Checking PC-2 Nightly Learning Worker health"
 echo "  url: ${HEALTH_URL}"
 
-if curl -fsS "${HEALTH_URL}"; then
-  echo ""
-  echo "PASS: PC-2 Nightly Learning Worker HTTP health is reachable"
-  exit 0
-fi
+for attempt in $(seq 1 "$MAX_ATTEMPTS"); do
+  echo "Attempt ${attempt}/${MAX_ATTEMPTS}: GET ${HEALTH_URL}"
+  if response="$(curl -fsS "${HEALTH_URL}" 2>/dev/null)" && printf '%s' "$response" | grep -q '"status"[[:space:]]*:[[:space:]]*"ok"'; then
+    printf '%s\n' "$response"
+    echo "PASS: PC-2 Nightly Learning Worker HTTP health is reachable"
+    exit 0
+  fi
+  if [ "$attempt" -lt "$MAX_ATTEMPTS" ]; then
+    sleep "$SLEEP_SECONDS"
+  fi
+done
 
-echo "WARN: HTTP health check failed; checking PC-2 Docker service status over SSH" >&2
-
-if ssh -o BatchMode=yes "${PC2_USER}@${PC2_HOST}" \
-  "cd '${PC2_SOURCE_ROOT}' && docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile learning ps nightly-learning-worker"; then
-  echo "FAIL: HTTP health check failed, but Docker service status was printed above" >&2
-else
-  echo "FAIL: HTTP health check and SSH Docker status check both failed" >&2
-fi
+echo "FAIL: PC-2 Nightly Learning Worker HTTP health is not reachable" >&2
+echo "PC-2 Docker status:" >&2
+ssh -o BatchMode=yes "${PC2_USER}@${PC2_HOST}" \
+  "cd '${PC2_SOURCE_ROOT}' && docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile learning ps nightly-learning-worker" >&2 || true
+echo "PC-2 recent nightly-learning-worker logs:" >&2
+ssh -o BatchMode=yes "${PC2_USER}@${PC2_HOST}" \
+  "cd '${PC2_SOURCE_ROOT}' && docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile learning logs --tail=80 nightly-learning-worker" >&2 || true
 
 exit 1

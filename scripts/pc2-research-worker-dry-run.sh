@@ -6,6 +6,8 @@ RESEARCH_PORT="${RESEARCH_PORT:-8210}"
 RUN_URL="http://${PC2_HOST}:${RESEARCH_PORT}/research/run"
 PAYLOAD='{"mode":"dry_run","source_set":"default","store_findings":false}'
 
+./scripts/pc2-research-worker-health.sh
+
 echo "Running PC-2 Research Ingestion Worker dry run"
 echo "  url: ${RUN_URL}"
 echo "  store_findings: false"

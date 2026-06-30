@@ -7,6 +7,8 @@ BASE_URL="http://${PC2_HOST}:${FEEDBACK_PORT}"
 EVENT_PAYLOAD='{"task_type":"coding","goal":"sample PC-2 feedback event","route_intent":"code","model_target":"qwen-coder-14b-fast","actual_model":"qwen-coder-14b-fast","tools":["code_context"],"selected_files":["docs/feedback-success-memory.md"],"tests_run":["make test"],"outcome":"success","failure_reason":"","notes":"sample event from pc2-feedback-worker-sample.sh"}'
 REPORT_PAYLOAD='{"mode":"dry_run","limit":100,"store_lessons":false}'
 
+./scripts/pc2-feedback-worker-health.sh
+
 echo "Posting sample PC-2 Feedback Worker event"
 echo "  url: ${BASE_URL}/feedback/event"
 curl -fsS \
@@ -27,3 +29,4 @@ curl -fsS \
 
 echo ""
 echo "PASS: PC-2 Feedback Worker sample event and dry-run report completed"
+echo "Hint: run 'make pc2-improvement-report' to generate advisory prompt/routing recommendations."

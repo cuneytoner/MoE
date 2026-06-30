@@ -127,6 +127,8 @@ Feedback events are another future input for Nightly Learning reports. The Feedb
 
 Nightly Learning may later summarize reviewed feedback reports, but it must not automatically change router rules, prompt templates, model mappings, source files, or runtime controls.
 
+Prompt and Routing Improvement Reports are also future Nightly Learning inputs. They are advisory JSON reports under `/home/cuneyt/MoE/runtime/reports/improvements` with `apply_supported=false`.
+
 ## Milestone 24.1: Research Ingestion Worker
 
 Research ingestion is optional and source-approved.

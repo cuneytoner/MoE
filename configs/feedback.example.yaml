@@ -4,6 +4,7 @@ feedback:
     data_dir: /home/cuneyt/MoE/runtime/feedback
     events_file: /home/cuneyt/MoE/runtime/feedback/events.jsonl
     reports_dir: /home/cuneyt/MoE/runtime/reports/feedback
+    improvement_reports_dir: /home/cuneyt/MoE/runtime/reports/improvements
   memory:
     store_lessons_default: false
   safety:

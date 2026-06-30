@@ -4,9 +4,10 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DATA_DIR="$(mktemp -d /tmp/moe-feedback-data.XXXXXX)"
 REPORTS_DIR="$(mktemp -d /tmp/moe-feedback-reports.XXXXXX)"
+IMPROVEMENT_REPORTS_DIR="$(mktemp -d /tmp/moe-improvement-reports.XXXXXX)"
 
 cleanup() {
-  rm -rf "$DATA_DIR" "$REPORTS_DIR"
+  rm -rf "$DATA_DIR" "$REPORTS_DIR" "$IMPROVEMENT_REPORTS_DIR"
 }
 trap cleanup EXIT
 
@@ -15,9 +16,10 @@ export FEEDBACK_RUNTIME_ROOT="/tmp/moe-feedback-runtime"
 export FEEDBACK_DATA_DIR="$DATA_DIR"
 export FEEDBACK_EVENTS_FILE="$DATA_DIR/events.jsonl"
 export FEEDBACK_REPORTS_DIR="$REPORTS_DIR"
+export IMPROVEMENT_REPORTS_DIR="$IMPROVEMENT_REPORTS_DIR"
 export FEEDBACK_MEMORY_API_URL="http://127.0.0.1:9"
 
-python3 - "$ROOT" "$DATA_DIR" "$REPORTS_DIR" <<'PY'
+python3 - "$ROOT" "$DATA_DIR" "$REPORTS_DIR" "$IMPROVEMENT_REPORTS_DIR" <<'PY'
 import json
 import pathlib
 import sys
@@ -25,6 +27,7 @@ import sys
 root = pathlib.Path(sys.argv[1])
 data_dir = pathlib.Path(sys.argv[2]).resolve()
 reports_dir = pathlib.Path(sys.argv[3]).resolve()
+improvement_reports_dir = pathlib.Path(sys.argv[4]).resolve()
 sys.path.insert(0, str(root / "apps/feedback-worker"))
 
 try:
@@ -119,6 +122,43 @@ rejected = client.post("/feedback/report", json={"mode": "apply"})
 if rejected.status_code != 200 or rejected.json().get("status") != "rejected":
     fail(f"/feedback/report unsupported mode was not rejected: {rejected.text}")
 print("PASS: Feedback Worker rejects non-dry_run report mode")
+
+improvement = client.post(
+    "/improvement/report",
+    json={
+        "mode": "dry_run",
+        "limit": 100,
+        "include_router_recommendations": True,
+        "include_model_mapping_recommendations": True,
+        "include_prompt_recommendations": True,
+        "include_test_recommendations": True,
+        "store_lessons": False,
+    },
+)
+if improvement.status_code != 200 or improvement.json().get("status") != "ok":
+    fail(f"/improvement/report returned unexpected response: {improvement.text}")
+improvement_body = improvement.json()
+if improvement_body.get("apply_supported") is not False:
+    fail(f"/improvement/report must return apply_supported=false: {improvement_body}")
+improvement_path = pathlib.Path(improvement_body["report_path"]).resolve()
+if not improvement_path.is_file():
+    fail(f"improvement report file was not created: {improvement_path}")
+if not improvement_path.is_relative_to(improvement_reports_dir):
+    fail(f"improvement report escaped allowed reports dir: {improvement_path}")
+improvement_data = json.loads(improvement_path.read_text(encoding="utf-8"))
+if improvement_data.get("safety", {}).get("apply_supported") is not False:
+    fail(f"improvement report safety block unexpected: {improvement_data.get('safety')}")
+print("PASS: Feedback Worker /improvement/report dry_run")
+
+latest_improvement = client.get("/improvement/latest-report")
+if latest_improvement.status_code != 200 or latest_improvement.json().get("status") != "ok":
+    fail(f"/improvement/latest-report returned unexpected response: {latest_improvement.text}")
+print("PASS: Feedback Worker /improvement/latest-report")
+
+rejected_improvement = client.post("/improvement/report", json={"mode": "apply"})
+if rejected_improvement.status_code != 200 or rejected_improvement.json().get("status") != "rejected":
+    fail(f"/improvement/report unsupported mode was not rejected: {rejected_improvement.text}")
+print("PASS: Feedback Worker rejects non-dry_run improvement mode")
 
 print("Feedback Worker tests passed")
 PY

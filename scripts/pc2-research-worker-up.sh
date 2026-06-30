@@ -16,7 +16,7 @@ echo "  service: research-ingestion-worker"
 ssh -o BatchMode=yes "${PC2_USER}@${PC2_HOST}" \
   "mkdir -p '${PC2_RUNTIME_ROOT}/reports/research' '${PC2_RUNTIME_ROOT}/logs' && \
    cd '${PC2_SOURCE_ROOT}' && \
-   docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile research up -d research-ingestion-worker && \
+   docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile research up -d --build research-ingestion-worker && \
    docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile research ps research-ingestion-worker"
 
 echo "PASS: PC-2 Research Ingestion Worker start command completed"

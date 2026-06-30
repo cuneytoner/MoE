@@ -5,6 +5,11 @@ from pydantic import BaseModel, Field, field_validator
 
 from app.clients import check_memory_api, store_lesson
 from app.config import get_settings
+from app.improvement import (
+    build_improvement_report,
+    latest_improvement_report_metadata,
+    write_improvement_report,
+)
 from app.report import build_report, latest_report_metadata, write_report
 from app.store import VALID_OUTCOMES, VALID_TASK_TYPES, append_event, read_events, summarize_events
 
@@ -51,6 +56,16 @@ class FeedbackEventRequest(BaseModel):
 class FeedbackReportRequest(BaseModel):
     mode: str = "dry_run"
     limit: int = Field(default=100, ge=1, le=1000)
+    store_lessons: bool = False
+
+
+class ImprovementReportRequest(BaseModel):
+    mode: str = "dry_run"
+    limit: int = Field(default=100, ge=1, le=1000)
+    include_router_recommendations: bool = True
+    include_model_mapping_recommendations: bool = True
+    include_prompt_recommendations: bool = True
+    include_test_recommendations: bool = True
     store_lessons: bool = False
 
 
@@ -119,6 +134,51 @@ async def feedback_report(request: FeedbackReportRequest) -> dict:
 def feedback_latest_report() -> dict:
     settings = get_settings()
     latest = latest_report_metadata(settings)
+    if latest is None:
+        return {"status": "empty"}
+    return latest
+
+
+@app.post("/improvement/report")
+async def improvement_report(request: ImprovementReportRequest) -> dict:
+    settings = get_settings()
+    if request.mode != "dry_run":
+        return {
+            "status": "rejected",
+            "mode": request.mode,
+            "reason": "only dry_run mode is supported",
+        }
+
+    events = read_events(settings, limit=request.limit)
+    report = build_improvement_report(
+        settings,
+        mode=request.mode,
+        events=events,
+        include_router_recommendations=request.include_router_recommendations,
+        include_model_mapping_recommendations=request.include_model_mapping_recommendations,
+        include_prompt_recommendations=request.include_prompt_recommendations,
+        include_test_recommendations=request.include_test_recommendations,
+    )
+
+    lessons_stored = False
+    if request.store_lessons and await check_memory_api(settings):
+        lessons_stored = await store_lesson(settings, report)
+
+    report["summary"]["lessons_stored"] = lessons_stored
+    report_path = write_improvement_report(settings, report)
+    return {
+        "status": "ok",
+        "mode": request.mode,
+        "report_path": str(report_path),
+        "summary": report["summary"],
+        "apply_supported": False,
+    }
+
+
+@app.get("/improvement/latest-report")
+def improvement_latest_report() -> dict:
+    settings = get_settings()
+    latest = latest_improvement_report_metadata(settings)
     if latest is None:
         return {"status": "empty"}
     return latest

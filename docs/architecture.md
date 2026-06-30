@@ -127,7 +127,7 @@ Read-only approved-source ingestion skeleton for Milestone 24.1. It exposes Fast
 
 apps/feedback-worker:
 
-Runtime-only feedback and success memory skeleton for Milestone 24.2. It exposes FastAPI on port `8220`, appends task outcome events to `/home/cuneyt/MoE/runtime/feedback/events.jsonl`, and writes feedback reports under `/home/cuneyt/MoE/runtime/reports/feedback`. It summarizes outcomes by task type, route intent, model target, and failure reason. It does not modify source, prompts, router config, model mappings, Docker, PC-2, or model runtime.
+Runtime-only feedback and success memory skeleton for Milestone 24.2. It exposes FastAPI on port `8220`, appends task outcome events to `/home/cuneyt/MoE/runtime/feedback/events.jsonl`, and writes feedback reports under `/home/cuneyt/MoE/runtime/reports/feedback`. Milestone 24.3 extends it with advisory prompt and routing improvement reports under `/home/cuneyt/MoE/runtime/reports/improvements`. It summarizes outcomes by task type, route intent, model target, and failure reason. It does not modify source, prompts, router config, model mappings, Docker, PC-2, or model runtime.
 
 Backup and environment planning:
 
@@ -191,6 +191,10 @@ Research ingestion begins at Milestone 24.1 with approved local markdown/text so
 Feedback / success memory roadmap:
 
 Feedback memory begins at Milestone 24.2 with runtime-only JSONL event storage and report generation. It tracks task outcomes, tests run, route intent, model target, actual model, selected files, and notes. Future integration may move this to PostgreSQL or Memory API, but automatic router, prompt, config, and model mapping changes remain out of scope.
+
+Prompt and routing improvement reports:
+
+Milestone 24.3 uses feedback events to generate deterministic recommendations for router keywords, intent examples, model mapping alignment, prompt templates, docs gaps, test coverage, and common failure patterns. Reports are advisory, have `apply_supported=false`, and require human review before any source or config change.
 
 Media lab roadmap:
 

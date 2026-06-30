@@ -125,6 +125,35 @@ Feedback reports summarize:
 
 Reports are advisory. They do not modify source files, router configs, model mappings, prompts, Docker, PC-2, or model runtime.
 
+## Improvement Reports
+
+Milestone 24.3 adds advisory Prompt and Routing Improvement Reports through the Feedback Worker.
+
+Endpoint:
+
+```bash
+curl -fsS -H "Content-Type: application/json" \
+  -X POST \
+  -d '{"mode":"dry_run","limit":100,"include_router_recommendations":true,"include_model_mapping_recommendations":true,"include_prompt_recommendations":true,"include_test_recommendations":true,"store_lessons":false}' \
+  http://127.0.0.1:8220/improvement/report
+```
+
+Latest report:
+
+```bash
+curl -fsS http://127.0.0.1:8220/improvement/latest-report
+```
+
+Improvement reports are written under:
+
+```text
+/home/cuneyt/MoE/runtime/reports/improvements
+```
+
+The recommendations are deterministic and local. They may mention router keywords, intent examples, model mapping alignment, prompt templates, tool planning, docs gaps, test coverage, and common failure patterns. They never call model runtime and never fetch external data.
+
+Every recommendation has `apply_supported=false`. The worker must not modify router config, prompt templates, model mappings, source files, Docker, PC-2, or model runtime.
+
 ## Memory API
 
 `store_lessons=false` is the default. When `store_lessons=true`, the worker may store a short report summary through Memory API if it is configured and reachable.
@@ -169,6 +198,7 @@ make pc2-sync-code
 make pc2-feedback-up
 make pc2-feedback-health
 make pc2-feedback-sample
+make pc2-improvement-report
 ssh cuneyt@192.168.50.2 'ls -lah /home/cuneyt/MoE/runtime/feedback /home/cuneyt/MoE/runtime/reports/feedback'
 ```
 
