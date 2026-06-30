@@ -11,6 +11,7 @@ class HealthResponse(BaseModel):
     status: str
     service: str
     dry_run_only: bool
+    real_generation_enabled: bool = False
     media_root: str
     jobs_dir: str
     outputs_dir: str
@@ -59,4 +60,5 @@ class DryRunProcessResponse(BaseModel):
     status: Literal["ok", "not_found", "rejected"]
     job_id: str
     report_path: str | None = None
+    outputs: list[str] = []
     reason: str | None = None

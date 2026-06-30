@@ -774,6 +774,31 @@ Scope:
 - Keep PC-2 as prompt/job helper only.
 - Do not write generated outputs into the repository.
 
+## Milestone 26.3 Prompt Summary
+
+Add Media API to Prompt Interpreter to ComfyUI bridge.
+
+Scope:
+
+- Keep Media API dry-run jobs enabled by default.
+- Reject real jobs unless `MEDIA_REAL_GENERATION_ENABLED=true`.
+- Add Media Worker ComfyUI client for health, prompt submit, and output discovery.
+- Surface image outputs under `/home/cuneyt/MoE/runtime/media/outputs/images/<job_id>`.
+- Add helper scripts for dry-run, real-run, bridge tests, and latest images.
+- Keep Prompt Interpreter as optional upstream input.
+- Do not let Gateway trigger generation yet.
+
+## Milestone 26.4 Prompt Placeholder
+
+Add Gateway-to-Media guarded integration.
+
+Expected boundaries:
+
+- Gateway may plan or request media jobs only through explicit guarded endpoints.
+- Real generation remains approval-gated.
+- No arbitrary shell execution.
+- Keep generated media under runtime media outputs.
+
 ## Milestone 26.1.5 Prompt Summary
 
 Add Control Plane Dashboard and Runtime Mode Manager.

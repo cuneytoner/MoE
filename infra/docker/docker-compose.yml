@@ -150,6 +150,8 @@ services:
       MEDIA_JOBS_DIR: ${MEDIA_JOBS_DIR:-/home/cuneyt/MoE/runtime/media/jobs}
       MEDIA_OUTPUTS_DIR: ${MEDIA_OUTPUTS_DIR:-/home/cuneyt/MoE/runtime/media/outputs}
       MEDIA_REPORTS_DIR: ${MEDIA_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/media}
+      MEDIA_REAL_GENERATION_ENABLED: ${MEDIA_REAL_GENERATION_ENABLED:-false}
+      MEDIA_WORKER_URL: ${MEDIA_WORKER_URL:-http://media-worker:8310}
     ports:
       - "${MEDIA_API_PORT:-8300}:8300"
     volumes:
@@ -157,6 +159,8 @@ services:
       - ${MEDIA_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/media}:/home/cuneyt/MoE/runtime/reports/media
     networks:
       - moe-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   media-worker:
     build:
@@ -171,6 +175,10 @@ services:
       MEDIA_WORKER_PORT: 8310
       MEDIA_JOBS_DIR: ${MEDIA_JOBS_DIR:-/home/cuneyt/MoE/runtime/media/jobs}
       MEDIA_REPORTS_DIR: ${MEDIA_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/media}
+      MEDIA_REAL_GENERATION_ENABLED: ${MEDIA_REAL_GENERATION_ENABLED:-false}
+      MEDIA_OUTPUT_ROOT: ${MEDIA_OUTPUT_ROOT:-/home/cuneyt/MoE/runtime/media/outputs}
+      COMFYUI_URL: ${COMFYUI_URL:-http://host.docker.internal:8188}
+      COMFYUI_OUTPUT_DIR: ${COMFYUI_OUTPUT_DIR:-/home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI/output}
     ports:
       - "${MEDIA_WORKER_PORT:-8310}:8310"
     volumes:
@@ -178,6 +186,8 @@ services:
       - ${MEDIA_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/media}:/home/cuneyt/MoE/runtime/reports/media
     networks:
       - moe-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 networks:
   moe-net:

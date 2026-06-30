@@ -327,6 +327,27 @@ This command prints `nvidia-smi` and warns if `llama-server` appears to be runni
 
 PC-2 does not generate images. PC-2 Prompt Interpreter only prepares dry-run job specs.
 
+## Media API Bridge
+
+Milestone 26.3 adds a Media API to Media Worker to ComfyUI bridge for image jobs.
+
+Dry-run jobs are always allowed. Real jobs require `MEDIA_REAL_GENERATION_ENABLED=true` on Media API and Media Worker.
+
+Real image job outputs are surfaced under:
+
+```text
+/home/cuneyt/MoE/runtime/media/outputs/images/<job_id>
+```
+
+The real-run helper prints VRAM status and does not stop `llama-server` automatically.
+
+When running Media API and Media Worker in Docker, the bridge uses Docker-safe addresses:
+
+- Media API to Media Worker: `http://media-worker:8310`
+- Media Worker to host ComfyUI: `http://host.docker.internal:8188`
+
+On Linux, the Compose media services define `host.docker.internal:host-gateway` so containers can reach the host ComfyUI process.
+
 ## Runtime Paths
 
 Future image outputs belong under:

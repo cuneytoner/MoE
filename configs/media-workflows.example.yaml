@@ -31,6 +31,20 @@ workflows:
     apply_required: true
     notes: "M26.2 first-image workflow. Enable only through explicit user-run APPLY=1 script."
 
+  flux_schnell:
+    job_type: image
+    enabled: false
+    real_generation_enabled: false
+    engine: comfyui
+    model_track: flux_schnell_comfyui
+    comfyui_url: http://127.0.0.1:8188
+    width: 512
+    height: 512
+    steps: 4
+    output_root: /home/cuneyt/MoE/runtime/media/outputs/images
+    output_grouping: job_id
+    notes: "M26.3 Media API to Media Worker to ComfyUI bridge. Requires MEDIA_REAL_GENERATION_ENABLED=true."
+
   video_default:
     job_type: video
     enabled: false

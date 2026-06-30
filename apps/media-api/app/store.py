@@ -27,7 +27,7 @@ def create_job(settings: Settings, request: Any) -> dict[str, Any]:
         "state": "queued",
         "created_at": datetime.now(UTC).isoformat(),
         "updated_at": datetime.now(UTC).isoformat(),
-        "dry_run_only": True,
+        "dry_run_only": request.mode == "dry_run",
         "job_path": str(job_path),
     }
     job_path.write_text(json.dumps(job, indent=2, sort_keys=True) + "\n", encoding="utf-8")

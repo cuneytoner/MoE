@@ -23,8 +23,8 @@ def validate_image_metadata(metadata: dict[str, Any]) -> tuple[bool, str | None,
     engine = normalized.get("engine")
     if not isinstance(engine, str):
         return False, "engine must be a string", normalized
-    if engine not in {"disabled", "comfyui-placeholder", "diffusers-placeholder"}:
-        return False, "engine must be disabled or a placeholder engine in M26.0", normalized
+    if engine not in {"disabled", "comfyui-placeholder", "diffusers-placeholder", "comfyui"}:
+        return False, "engine must be disabled, comfyui, or a placeholder engine", normalized
 
     return True, None, normalized
 

@@ -30,6 +30,14 @@ class Settings(BaseSettings):
         default="/home/cuneyt/MoE/runtime/reports/media",
         alias="MEDIA_REPORTS_DIR",
     )
+    media_worker_url: str = Field(
+        default="http://media-worker:8310",
+        alias="MEDIA_WORKER_URL",
+    )
+    real_generation_enabled: bool = Field(
+        default=False,
+        alias="MEDIA_REAL_GENERATION_ENABLED",
+    )
 
 
 @lru_cache

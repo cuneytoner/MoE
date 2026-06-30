@@ -8,6 +8,8 @@ The worker converts natural language media prompts into safe structured dry-run 
 
 It does not call a model, ComfyUI, llama-server, Media API, or any generation engine.
 
+In Milestone 26.3, Prompt Interpreter output can be used manually as input to Media API image jobs. The interpreter still does not submit jobs or trigger generation by itself.
+
 ## PC-2 Role
 
 PC-2 is the helper host for:

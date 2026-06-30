@@ -105,11 +105,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.2: First Real Image Generation with ComfyUI and Flux Schnell in progress
+Milestone 26.3: Media API to Prompt Interpreter to ComfyUI Bridge in progress
 
 Next planned milestone:
 
-Milestone 27: Video Generation Service
+Milestone 26.4: Gateway-to-Media Guarded Integration
 
 Optional image planning commands:
 
@@ -122,6 +122,8 @@ make check-comfyui-layout
 make check-comfyui-runtime
 make comfyui-flux-smoke-test
 make comfyui-first-image-plan
+make media-image-dry-run
+make media-latest-images
 
 Optional control planning commands:
 

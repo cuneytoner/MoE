@@ -20,8 +20,11 @@ case "$COMFYUI_RUNTIME_DIR" in
     ;;
 esac
 
-if [ "$COMFYUI_HOST" != "127.0.0.1" ]; then
-  echo "FAIL: COMFYUI_HOST defaults to 127.0.0.1 and must not expose to LAN in this milestone."
+if [ "$COMFYUI_HOST" != "127.0.0.1" ] && [ "${COMFYUI_ALLOW_EXTERNAL:-0}" != "1" ]; then
+  echo "FAIL: COMFYUI_HOST=$COMFYUI_HOST requires COMFYUI_ALLOW_EXTERNAL=1."
+  echo "This is needed for Docker media-worker bridge mode, for example:"
+  echo "  COMFYUI_ALLOW_EXTERNAL=1 COMFYUI_HOST=0.0.0.0 make comfyui-up"
+  echo "Use only on trusted local/LAN development machines."
   exit 1
 fi
 

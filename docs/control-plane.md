@@ -125,6 +125,8 @@ Not allowed:
 - Runtime config modification.
 - Gateway control of PC-2.
 
+M26.3 image mode should include Media API, Media Worker, ComfyUI, and Prompt Interpreter in the planned service set. Coding mode should keep generation disabled. The Media API bridge still requires explicit `MEDIA_REAL_GENERATION_ENABLED=true`; image mode alone is not an approval to generate.
+
 ## Service Allowlist
 
 Known services:

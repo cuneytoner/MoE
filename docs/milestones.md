@@ -497,7 +497,7 @@ Goals:
 
 ## Milestone 26.2: First Real Image Generation
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add explicit Flux Schnell model download plan/apply scripts.
@@ -509,6 +509,28 @@ Goals:
 - Support queued image jobs and asset tracking.
 - Store generated images under `/home/cuneyt/MoE/runtime/media/outputs/images`.
 - Keep Gateway from controlling PC-2 or executing arbitrary shell commands.
+
+## Milestone 26.3: Media API to Prompt Interpreter to ComfyUI Bridge
+
+Status: IN PROGRESS
+
+Goals:
+- Connect Media API image jobs to Media Worker processing.
+- Keep dry-run as the default safe path.
+- Gate real image generation behind `MEDIA_REAL_GENERATION_ENABLED=true`.
+- Submit Flux Schnell workflows to ComfyUI from Media Worker.
+- Surface generated outputs under `/home/cuneyt/MoE/runtime/media/outputs/images/<job_id>`.
+- Keep Prompt Interpreter as an optional upstream job-spec helper.
+- Do not let Gateway trigger generation.
+
+## Milestone 26.4: Gateway-to-Media Guarded Integration
+
+Status: PLANNED
+
+Goals:
+- Add explicit Gateway-to-Media planning/dispatch integration.
+- Keep generation approval-gated and observable.
+- Preserve PC-1 generation host and PC-2 helper roles.
 
 ## Milestone 27: Video Generation Service
 

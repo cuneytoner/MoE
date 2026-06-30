@@ -18,6 +18,22 @@ class Settings(BaseSettings):
         default="/home/cuneyt/MoE/runtime/reports/media",
         alias="MEDIA_REPORTS_DIR",
     )
+    output_root: str = Field(
+        default="/home/cuneyt/MoE/runtime/media/outputs",
+        alias="MEDIA_OUTPUT_ROOT",
+    )
+    comfyui_url: str = Field(
+        default="http://host.docker.internal:8188",
+        alias="COMFYUI_URL",
+    )
+    comfyui_output_dir: str = Field(
+        default="/home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI/output",
+        alias="COMFYUI_OUTPUT_DIR",
+    )
+    real_generation_enabled: bool = Field(
+        default=False,
+        alias="MEDIA_REAL_GENERATION_ENABLED",
+    )
 
 
 @lru_cache

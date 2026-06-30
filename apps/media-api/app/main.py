@@ -1,4 +1,7 @@
 from fastapi import FastAPI
+import json
+import urllib.error
+import urllib.request
 
 from app.config import get_settings
 from app.schemas import (
@@ -19,7 +22,8 @@ def health() -> HealthResponse:
     return HealthResponse(
         status="ok",
         service=settings.service_name,
-        dry_run_only=True,
+        dry_run_only=not settings.real_generation_enabled,
+        real_generation_enabled=settings.real_generation_enabled,
         media_root=settings.media_root,
         jobs_dir=settings.jobs_dir,
         outputs_dir=settings.outputs_dir,
@@ -28,8 +32,13 @@ def health() -> HealthResponse:
 
 @app.post("/media/jobs", response_model=MediaJobResponse, response_model_exclude_none=True)
 def media_jobs(request: MediaJobRequest) -> MediaJobResponse:
-    if request.mode != "dry_run":
-        return MediaJobResponse(status="rejected", reason="only dry_run mode is supported")
+    if request.mode not in {"dry_run", "real"}:
+        return MediaJobResponse(status="rejected", reason="mode must be dry_run or real")
+    if request.mode == "real" and not get_settings().real_generation_enabled:
+        return MediaJobResponse(
+            status="rejected",
+            reason="MEDIA_REAL_GENERATION_ENABLED must be true for real generation",
+        )
     settings = get_settings()
     job = create_job(settings, request)
     return MediaJobResponse(
@@ -64,6 +73,60 @@ def media_job_dry_run_process(job_id: str) -> DryRunProcessResponse:
         status="ok",
         job_id=job_id,
         report_path=str(report_path),
+    )
+
+
+@app.post("/media/jobs/{job_id}/process", response_model=DryRunProcessResponse)
+def media_job_process(job_id: str) -> DryRunProcessResponse:
+    settings = get_settings()
+    job = load_job(settings, job_id)
+    if job is None:
+        return DryRunProcessResponse(status="not_found", job_id=job_id)
+    if job.get("mode") == "dry_run":
+        result = mark_processed_dry_run(settings, job_id)
+        if result is None:
+            return DryRunProcessResponse(status="not_found", job_id=job_id)
+        _, report_path = result
+        return DryRunProcessResponse(status="ok", job_id=job_id, report_path=str(report_path))
+    if job.get("mode") != "real":
+        return DryRunProcessResponse(status="rejected", job_id=job_id, reason="unsupported job mode")
+    if not settings.real_generation_enabled:
+        return DryRunProcessResponse(
+            status="rejected",
+            job_id=job_id,
+            reason="MEDIA_REAL_GENERATION_ENABLED must be true for real generation",
+        )
+    payload = json.dumps({"job_id": job_id, "mode": "real"}).encode("utf-8")
+    request = urllib.request.Request(
+        f"{settings.media_worker_url.rstrip('/')}/worker/process",
+        data=payload,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=300) as response:
+            data = json.loads(response.read().decode("utf-8"))
+    except (OSError, urllib.error.URLError, json.JSONDecodeError) as exc:
+        attempted_url = f"{settings.media_worker_url.rstrip('/')}/worker/process"
+        return DryRunProcessResponse(
+            status="rejected",
+            job_id=job_id,
+            reason=(
+                "media worker request failed: "
+                f"url={attempted_url} exception={exc.__class__.__name__}"
+            ),
+        )
+    if data.get("status") != "ok":
+        return DryRunProcessResponse(
+            status="rejected",
+            job_id=job_id,
+            reason=data.get("reason", "media worker rejected job"),
+        )
+    return DryRunProcessResponse(
+        status="ok",
+        job_id=job_id,
+        report_path=data.get("report_path"),
+        outputs=data.get("outputs", []),
     )
 
 

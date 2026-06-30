@@ -1,0 +1,17 @@
+service:
+  name: media-worker
+  port: 8310
+
+runtime:
+  jobs_dir: /home/cuneyt/MoE/runtime/media/jobs
+  output_root: /home/cuneyt/MoE/runtime/media/outputs
+  reports_dir: /home/cuneyt/MoE/runtime/reports/media
+
+comfyui:
+  url: http://host.docker.internal:8188
+  output_dir: /home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI/output
+
+safety:
+  real_generation_enabled: false
+  shell_executed: false
+  delete_comfyui_outputs: false

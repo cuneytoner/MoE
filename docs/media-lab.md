@@ -221,3 +221,22 @@ The interpreter does not call Media API by default. It is a safe preparation lay
 Milestone 26.2 adds a guarded first-image path through ComfyUI and Flux Schnell. Downloads, model linking, smoke checks, and workflow submission are all explicit user-run commands. Default tests do not download models, start ComfyUI, or run GPU jobs.
 
 Generated images must stay under `/home/cuneyt/MoE/runtime/media/outputs/images`. PC-2 remains a helper host and does not run generation.
+
+## Media Image Bridge
+
+Milestone 26.3 connects Media API, Media Worker, and ComfyUI in a gated bridge:
+
+- Media API creates image jobs under `/home/cuneyt/MoE/runtime/media/jobs`.
+- Dry-run jobs are always allowed.
+- Real image jobs are rejected unless `MEDIA_REAL_GENERATION_ENABLED=true`.
+- Media API delegates real processing to Media Worker.
+- Media Worker submits Flux Schnell workflows to ComfyUI on PC-1.
+- Outputs are copied into `/home/cuneyt/MoE/runtime/media/outputs/images/<job_id>/`.
+
+PC-2 Prompt Interpreter can prepare structured job specs upstream, but M26.3 still uses a manual bridge. Gateway does not trigger generation.
+
+Docker networking for the media bridge:
+
+- Media API calls Media Worker at `http://media-worker:8310` inside the Docker network.
+- Media Worker calls host ComfyUI at `http://host.docker.internal:8188`.
+- Linux Docker uses `extra_hosts: host.docker.internal:host-gateway` for the media services.

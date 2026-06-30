@@ -1,0 +1,18 @@
+service:
+  name: media-api
+  port: 8300
+
+runtime:
+  media_root: /home/cuneyt/MoE/runtime/media
+  jobs_dir: /home/cuneyt/MoE/runtime/media/jobs
+  outputs_dir: /home/cuneyt/MoE/runtime/media/outputs
+  reports_dir: /home/cuneyt/MoE/runtime/reports/media
+
+bridge:
+  media_worker_url: http://media-worker:8310
+  real_generation_enabled: false
+
+safety:
+  default_mode: dry_run
+  generated_outputs_in_repo: false
+  arbitrary_shell_enabled: false

@@ -135,6 +135,8 @@ Dry-run-only Media Lab foundation for Milestone 25. Media API exposes job creati
 
 Milestone 26.0 adds image generation preparation only: image job metadata validation, placeholder model/workflow configs, image model inventory checks, and dry-run image report fields. Milestone 26.1-pre selects ComfyUI as the recommended future image engine, adds runtime layout and model download planning probes, and keeps real generation disabled. Milestone 26.1 adds optional user-run scripts to install, check, start, stop, and health-check a local ComfyUI runtime under `/home/cuneyt/MoE/runtime/media-engines/comfyui`, plus symlink-only Flux Schnell model planning. Model storage remains `/home/cuneyt/MoE_Models_Backup`; real generation is deferred to Milestone 26.2.
 
+Milestone 26.3 connects Media API to Media Worker to ComfyUI for gated real image generation. Media API remains the job entry point, Media Worker owns ComfyUI submission and output discovery, and generated images are surfaced under `/home/cuneyt/MoE/runtime/media/outputs/images/<job_id>`. Real generation is disabled by default and requires explicit environment gates. Gateway does not trigger media generation in this milestone.
+
 apps/control-api:
 
 Control Plane API for Milestone 26.1.5. It exposes read-only runtime status, configured runtime modes, and dry-run mode plans on port `8400`. The Control Plane is the planned system coordination surface; Gateway remains a chat/routing/workspace API and must not become the system start/stop controller. PC-1 is the generation host for heavy GPU work, `llama-server`, ComfyUI, and future video/3D engines. PC-2 is the helper host for prompt interpretation, queue metadata, feedback, reports, and future optional mini-model interpretation.
