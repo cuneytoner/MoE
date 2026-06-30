@@ -47,6 +47,7 @@ apps:
 - embed-worker
 - nightly-learning-worker
 - research-ingestion-worker
+- feedback-worker
 - dashboard
 
 packages:
@@ -75,6 +76,7 @@ docs:
 - deployment.md
 - codex-prompts.md
 - research-ingestion.md
+- feedback-success-memory.md
 
 scripts:
 
@@ -96,8 +98,8 @@ make tree
 
 ## Current Milestone
 
-Milestone 24.1: Research Ingestion Worker in progress
+Milestone 24.2: Feedback / Success Memory in progress
 
 Next planned milestone:
 
-Milestone 24.2: Feedback / Success Memory
+Milestone 24.3: Prompt & Routing Improvement Reports

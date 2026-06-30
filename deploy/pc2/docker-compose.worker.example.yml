@@ -51,6 +51,25 @@ services:
       - ${RESEARCH_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/research}:/home/cuneyt/MoE/runtime/reports/research
       - ${PC2_SOURCE_ROOT:-/home/cuneyt/MoE/codebase}:/workspace:ro
 
+  feedback-worker:
+    build:
+      context: ../../apps/feedback-worker
+    profiles:
+      - feedback
+    restart: "no"
+    environment:
+      FEEDBACK_RUNTIME_ROOT: ${FEEDBACK_RUNTIME_ROOT:-/home/cuneyt/MoE/runtime}
+      FEEDBACK_DATA_DIR: ${FEEDBACK_DATA_DIR:-/home/cuneyt/MoE/runtime/feedback}
+      FEEDBACK_EVENTS_FILE: ${FEEDBACK_EVENTS_FILE:-/home/cuneyt/MoE/runtime/feedback/events.jsonl}
+      FEEDBACK_REPORTS_DIR: ${FEEDBACK_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/feedback}
+      FEEDBACK_MEMORY_API_URL: ${FEEDBACK_MEMORY_API_URL:-http://192.168.50.1:8101}
+    ports:
+      - "${FEEDBACK_PORT:-8220}:8220"
+    volumes:
+      - ${FEEDBACK_DATA_DIR:-/home/cuneyt/MoE/runtime/feedback}:/home/cuneyt/MoE/runtime/feedback
+      - ${FEEDBACK_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/feedback}:/home/cuneyt/MoE/runtime/reports/feedback
+      - ${PC2_SOURCE_ROOT:-/home/cuneyt/MoE/codebase}:/workspace:ro
+
   memory-services-placeholder:
     image: alpine:3.20
     profiles:

@@ -651,16 +651,21 @@ Scope:
 - Do not fetch arbitrary URLs, crawl the web, modify source files, apply patches, execute shell commands, control Docker, control PC-2, or switch model runtime.
 - Keep PC-2 research activation behind explicit helper scripts and the Docker Compose `research` profile.
 
-## Milestone 24.2 Prompt Placeholder
+## Milestone 24.2 Prompt Summary
 
-Add feedback / success memory.
+Add Feedback / Success Memory.
 
-Expected boundaries:
+Scope:
 
-- Track task success and failure.
-- Store routing decisions, selected model target, actual model used, tests run, and final status.
-- Keep feedback memory transparent and inspectable.
-- Use the data to improve future routing and prompts.
+- Create `apps/feedback-worker` as a FastAPI service on port `8220`.
+- Add `/health`, `/feedback/event`, `/feedback/events`, `/feedback/report`, and `/feedback/latest-report`.
+- Store events as JSONL under `FEEDBACK_EVENTS_FILE` inside `FEEDBACK_DATA_DIR`.
+- Generate reports only under `FEEDBACK_REPORTS_DIR`.
+- Support `dry_run` report mode only.
+- Track task type, goal, route intent, model target, actual model, tools, selected files, tests run, outcome, failure reason, notes, and timestamp.
+- Keep `store_lessons=false` by default and make Memory API storage optional.
+- Do not modify source files, prompt templates, router config, model mappings, Docker, PC-2, or model runtime.
+- Keep PC-2 feedback activation behind explicit helper scripts and the Docker Compose `feedback` profile.
 
 ## Milestone 24.3 Prompt Placeholder
 

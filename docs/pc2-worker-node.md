@@ -219,6 +219,28 @@ make pc2-research-down
 
 The research worker mounts `/home/cuneyt/MoE/codebase` read-only at `/workspace`, writes reports under `/home/cuneyt/MoE/runtime/reports/research`, processes only approved local markdown/text sources, and skips remote URL placeholders.
 
+## Feedback Worker
+
+Milestone 24.2 adds an optional Feedback Worker for PC-2. It runs through the `feedback` profile and starts only `feedback-worker`.
+
+Activation commands from PC-1:
+
+```bash
+make pc2-sync-code
+make pc2-feedback-up
+make pc2-feedback-health
+make pc2-feedback-sample
+ssh cuneyt@192.168.50.2 'ls -lah /home/cuneyt/MoE/runtime/feedback /home/cuneyt/MoE/runtime/reports/feedback'
+```
+
+Stop command:
+
+```bash
+make pc2-feedback-down
+```
+
+The feedback worker writes runtime-only JSONL events under `/home/cuneyt/MoE/runtime/feedback`, writes reports under `/home/cuneyt/MoE/runtime/reports/feedback`, and does not modify router config, model mappings, prompts, source files, Docker, or model runtime.
+
 ## Future Nightly Learning Handoff
 
 Milestone 24 adds the first read-only Nightly Learning Worker skeleton. That worker writes reports under `/home/cuneyt/MoE/runtime/reports/nightly`, can store useful lessons through Memory API only when explicitly requested, and never modifies code or restarts services automatically.

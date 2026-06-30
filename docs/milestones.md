@@ -368,7 +368,7 @@ Goals:
 
 ## Milestone 24.1: Research Ingestion Worker
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add the first Research Ingestion Worker skeleton.
@@ -383,13 +383,17 @@ Goals:
 
 ## Milestone 24.2: Feedback / Success Memory
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Track which tasks succeeded or failed.
-- Store routing decisions, selected model target, actual model used, tests run, and final status.
-- Use this history to improve future routing and prompts.
+- Add the first Feedback Worker skeleton.
+- Store task outcome events as runtime-only JSONL under `/home/cuneyt/MoE/runtime/feedback`.
+- Generate feedback reports under `/home/cuneyt/MoE/runtime/reports/feedback`.
+- Track task type, goal, route intent, model target, actual model, tools, selected files, tests run, outcome, failure reason, notes, and timestamp.
+- Optionally store distilled lessons in Memory API when explicitly requested.
 - Keep feedback memory transparent and inspectable.
+- Do not automatically modify source, router config, prompt templates, model mappings, Docker, or model runtime.
+- Keep default tests independent from PC-2, internet, Docker, model runtime, and live service availability.
 
 ## Milestone 24.3: Prompt & Routing Improvement Reports
 

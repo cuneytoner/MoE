@@ -106,3 +106,23 @@ Stop only the research worker:
 ```bash
 make pc2-research-down
 ```
+
+## Feedback Worker
+
+The Feedback Worker is optional and runs through the `feedback` profile only. It stores task outcome events as runtime-only JSONL and writes reports under `/home/cuneyt/MoE/runtime/reports/feedback`.
+
+Activation flow from PC-1:
+
+```bash
+make pc2-sync-code
+make pc2-feedback-up
+make pc2-feedback-health
+make pc2-feedback-sample
+ssh cuneyt@192.168.50.2 'ls -lah /home/cuneyt/MoE/runtime/feedback /home/cuneyt/MoE/runtime/reports/feedback'
+```
+
+Stop only the feedback worker:
+
+```bash
+make pc2-feedback-down
+```

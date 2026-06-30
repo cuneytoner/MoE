@@ -74,8 +74,8 @@ Never place runtime data, generated media, logs, pids, model files, checkpoints,
 
 ## 6. Current And Planned Milestones
 
-- Milestone 24.1: Research Ingestion Worker in progress
-- Milestone 24.2: Feedback / Success Memory
+- Milestone 24.2: Feedback / Success Memory in progress
+- Milestone 24.3: Prompt & Routing Improvement Reports
 - Milestone 25: Media Lab Foundation
 - Milestone 26: Image Generation Service
 - Milestone 27: Video Generation Service

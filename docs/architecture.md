@@ -125,6 +125,10 @@ apps/research-ingestion-worker:
 
 Read-only approved-source ingestion skeleton for Milestone 24.1. It exposes FastAPI on port `8210`, reads approved source definitions from `configs/research-sources.example.yaml`, processes only local markdown/text metadata from the read-only source mount, skips URL sources because remote fetch is disabled, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/research`. Optional Memory API storage is explicit and off by default.
 
+apps/feedback-worker:
+
+Runtime-only feedback and success memory skeleton for Milestone 24.2. It exposes FastAPI on port `8220`, appends task outcome events to `/home/cuneyt/MoE/runtime/feedback/events.jsonl`, and writes feedback reports under `/home/cuneyt/MoE/runtime/reports/feedback`. It summarizes outcomes by task type, route intent, model target, and failure reason. It does not modify source, prompts, router config, model mappings, Docker, PC-2, or model runtime.
+
 Backup and environment planning:
 
 Backup planning covers source, runtime, PostgreSQL, Qdrant, model backups, llama.cpp, and docs without copying runtime data into the codebase. Environment profile templates describe how PC1, PC2, single-machine, and future machines can own roles without rewriting the project.
@@ -183,6 +187,10 @@ Nightly learning begins at Milestone 24. It is read-only and report-first: inspe
 Research ingestion roadmap:
 
 Research ingestion begins at Milestone 24.1 with approved local markdown/text sources only. It produces reports under `/home/cuneyt/MoE/runtime/reports/research` and may later feed reviewed findings into Memory API. Remote URL fetching, broad crawling, and automatic source discovery are out of scope until a future approval-gated milestone.
+
+Feedback / success memory roadmap:
+
+Feedback memory begins at Milestone 24.2 with runtime-only JSONL event storage and report generation. It tracks task outcomes, tests run, route intent, model target, actual model, selected files, and notes. Future integration may move this to PostgreSQL or Memory API, but automatic router, prompt, config, and model mapping changes remain out of scope.
 
 Media lab roadmap:
 

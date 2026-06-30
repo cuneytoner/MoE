@@ -1,0 +1,12 @@
+feedback:
+  storage:
+    runtime_root: /home/cuneyt/MoE/runtime
+    data_dir: /home/cuneyt/MoE/runtime/feedback
+    events_file: /home/cuneyt/MoE/runtime/feedback/events.jsonl
+    reports_dir: /home/cuneyt/MoE/runtime/reports/feedback
+  memory:
+    store_lessons_default: false
+  safety:
+    source_modification: disabled
+    router_modification: disabled
+    model_mapping_modification: disabled
