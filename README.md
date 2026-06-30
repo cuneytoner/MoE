@@ -46,6 +46,7 @@ apps:
 - memory-api
 - embed-worker
 - nightly-learning-worker
+- research-ingestion-worker
 - dashboard
 
 packages:
@@ -73,6 +74,7 @@ docs:
 - runtime-rules.md
 - deployment.md
 - codex-prompts.md
+- research-ingestion.md
 
 scripts:
 
@@ -94,8 +96,8 @@ make tree
 
 ## Current Milestone
 
-Milestone 24.0.1: PC-2 Nightly Worker Activation in progress
+Milestone 24.1: Research Ingestion Worker in progress
 
 Next planned milestone:
 
-Milestone 24.1: Research Ingestion Worker
+Milestone 24.2: Feedback / Success Memory

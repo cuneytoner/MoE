@@ -86,3 +86,23 @@ make pc2-nightly-down
 make pc2-nightly-health
 make pc2-nightly-dry-run
 ```
+
+## Research Ingestion Worker
+
+The Research Ingestion Worker is optional and runs through the `research` profile only. It processes approved local markdown/text sources, skips remote URL placeholders, and writes reports under `/home/cuneyt/MoE/runtime/reports/research`.
+
+Activation flow from PC-1:
+
+```bash
+make pc2-sync-code
+make pc2-research-up
+make pc2-research-health
+make pc2-research-dry-run
+ssh cuneyt@192.168.50.2 'ls -lah /home/cuneyt/MoE/runtime/reports/research'
+```
+
+Stop only the research worker:
+
+```bash
+make pc2-research-down
+```

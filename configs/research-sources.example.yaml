@@ -1,0 +1,17 @@
+source_sets:
+  default:
+    - id: project_architecture
+      type: local_markdown
+      path: docs/architecture.md
+      enabled: true
+
+    - id: milestones
+      type: local_markdown
+      path: docs/milestones.md
+      enabled: true
+
+    - id: remote_placeholder
+      type: url
+      url: https://example.com
+      enabled: false
+      notes: Remote fetching is intentionally disabled in Milestone 24.1.

@@ -197,6 +197,28 @@ ssh cuneyt@192.168.50.2 'ls -lah /home/cuneyt/MoE/runtime/reports/nightly'
 
 The activation flow starts only the `nightly-learning-worker` service. It does not start research ingestion, memory migration services, model runtime, Gateway, or Dashboard on PC-2.
 
+## Research Ingestion Worker
+
+Milestone 24.1 adds an optional Research Ingestion Worker for PC-2. It runs through the `research` profile and starts only `research-ingestion-worker`.
+
+Activation commands from PC-1:
+
+```bash
+make pc2-sync-code
+make pc2-research-up
+make pc2-research-health
+make pc2-research-dry-run
+ssh cuneyt@192.168.50.2 'ls -lah /home/cuneyt/MoE/runtime/reports/research'
+```
+
+Stop command:
+
+```bash
+make pc2-research-down
+```
+
+The research worker mounts `/home/cuneyt/MoE/codebase` read-only at `/workspace`, writes reports under `/home/cuneyt/MoE/runtime/reports/research`, processes only approved local markdown/text sources, and skips remote URL placeholders.
+
 ## Future Nightly Learning Handoff
 
 Milestone 24 adds the first read-only Nightly Learning Worker skeleton. That worker writes reports under `/home/cuneyt/MoE/runtime/reports/nightly`, can store useful lessons through Memory API only when explicitly requested, and never modifies code or restarts services automatically.

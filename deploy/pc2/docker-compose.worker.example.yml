@@ -32,16 +32,24 @@ services:
       - ${NIGHTLY_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/nightly}:/home/cuneyt/MoE/runtime/reports/nightly
       - ${PC2_SOURCE_ROOT:-/home/cuneyt/MoE/codebase}:/workspace:ro
 
-  research-ingestion-worker-placeholder:
-    image: alpine:3.20
+  research-ingestion-worker:
+    build:
+      context: ../../apps/research-ingestion-worker
     profiles:
       - research
-    command: ["sh", "-c", "echo Research Ingestion Worker placeholder && sleep infinity"]
+    restart: "no"
     environment:
-      PC2_REPORTS_DIR: ${PC2_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports}
-      PC1_MEMORY_API_URL: ${PC1_MEMORY_API_URL:-http://192.168.50.1:8101}
+      RESEARCH_RUNTIME_ROOT: ${RESEARCH_RUNTIME_ROOT:-/home/cuneyt/MoE/runtime}
+      RESEARCH_REPORTS_DIR: ${RESEARCH_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/research}
+      RESEARCH_SOURCE_ROOT: ${RESEARCH_SOURCE_ROOT:-/workspace}
+      RESEARCH_SOURCES_CONFIG: ${RESEARCH_SOURCES_CONFIG:-/workspace/configs/research-sources.example.yaml}
+      RESEARCH_GATEWAY_URL: ${RESEARCH_GATEWAY_URL:-http://192.168.50.1:8100}
+      RESEARCH_MEMORY_API_URL: ${RESEARCH_MEMORY_API_URL:-http://192.168.50.1:8101}
+    ports:
+      - "${RESEARCH_PORT:-8210}:8210"
     volumes:
-      - ${PC2_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports}:/reports
+      - ${RESEARCH_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/research}:/home/cuneyt/MoE/runtime/reports/research
+      - ${PC2_SOURCE_ROOT:-/home/cuneyt/MoE/codebase}:/workspace:ro
 
   memory-services-placeholder:
     image: alpine:3.20

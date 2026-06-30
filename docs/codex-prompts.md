@@ -633,17 +633,23 @@ Scope:
 - Do not include PC-2 checks, sync, Docker, or worker availability in default `make test`.
 - Do not start research ingestion, memory migration services, model runtime, Gateway, or Dashboard on PC-2.
 
-## Milestone 24.1 Prompt Placeholder
+## Milestone 24.1 Prompt Summary
 
-Add optional Research Ingestion Worker.
+Add the first Research Ingestion Worker skeleton.
 
-Expected boundaries:
+Scope:
 
-- Use user-approved sources only.
-- Summarize findings.
-- Store useful findings in Memory API.
-- Keep outputs under runtime data.
-- Make no automatic code changes.
+- Create `apps/research-ingestion-worker` as a FastAPI service on port `8210`.
+- Add `/health`, `/research/run`, and `/research/latest`.
+- Support `dry_run` only and reject other modes.
+- Load approved sources from `configs/research-sources.example.yaml`.
+- Process only `local_markdown` and `local_text` metadata inside `RESEARCH_SOURCE_ROOT`.
+- Skip `url` sources with `remote fetch not implemented`.
+- Reject paths outside the source root and ignore hidden/runtime/model/cache directories.
+- Write JSON reports only under `RESEARCH_REPORTS_DIR`.
+- Keep `store_findings=false` by default and make Memory API storage optional.
+- Do not fetch arbitrary URLs, crawl the web, modify source files, apply patches, execute shell commands, control Docker, control PC-2, or switch model runtime.
+- Keep PC-2 research activation behind explicit helper scripts and the Docker Compose `research` profile.
 
 ## Milestone 24.2 Prompt Placeholder
 

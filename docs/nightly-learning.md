@@ -115,6 +115,12 @@ ssh cuneyt@192.168.50.2 'ls -lah /home/cuneyt/MoE/runtime/reports/nightly'
 
 The first PC-2 run should be a dry run. The dry-run payload keeps `store_lessons=false`, so the worker writes only a report under the PC-2 runtime reports directory and does not attempt to store distilled lessons in Memory API by default.
 
+## Relationship To Research Ingestion
+
+Research ingestion is separate from Nightly Learning. The Research Ingestion Worker reads only approved local markdown/text sources in Milestone 24.1, writes research reports under `/home/cuneyt/MoE/runtime/reports/research`, and does not fetch remote URLs.
+
+Future Nightly Learning reports may refer to reviewed research ingestion outputs, but the two workers remain separately activated and separately testable.
+
 ## Milestone 24.1: Research Ingestion Worker
 
 Research ingestion is optional and source-approved.

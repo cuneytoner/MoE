@@ -121,6 +121,10 @@ apps/nightly-learning-worker:
 
 Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.
 
+apps/research-ingestion-worker:
+
+Read-only approved-source ingestion skeleton for Milestone 24.1. It exposes FastAPI on port `8210`, reads approved source definitions from `configs/research-sources.example.yaml`, processes only local markdown/text metadata from the read-only source mount, skips URL sources because remote fetch is disabled, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/research`. Optional Memory API storage is explicit and off by default.
+
 Backup and environment planning:
 
 Backup planning covers source, runtime, PostgreSQL, Qdrant, model backups, llama.cpp, and docs without copying runtime data into the codebase. Environment profile templates describe how PC1, PC2, single-machine, and future machines can own roles without rewriting the project.
@@ -175,6 +179,10 @@ PC-2 joins the architecture at Milestone 23.5 as a prepared but not-yet-activate
 Nightly learning roadmap:
 
 Nightly learning begins at Milestone 24. It is read-only and report-first: inspect bounded project metadata and configured service health, then write reports under `/home/cuneyt/MoE/runtime/reports/nightly` and optionally store useful lessons through Memory API. Milestone 24.0.1 prepares explicit PC-2 activation commands for the Nightly Learning Worker. Automatic self-modification is out of scope until a later approval-gated milestone.
+
+Research ingestion roadmap:
+
+Research ingestion begins at Milestone 24.1 with approved local markdown/text sources only. It produces reports under `/home/cuneyt/MoE/runtime/reports/research` and may later feed reviewed findings into Memory API. Remote URL fetching, broad crawling, and automatic source discovery are out of scope until a future approval-gated milestone.
 
 Media lab roadmap:
 

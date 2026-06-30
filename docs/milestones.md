@@ -355,7 +355,7 @@ Current scope:
 
 ## Milestone 24.0.1: PC-2 Nightly Worker Activation
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Prepare explicit PC-2 activation flow for the Nightly Learning Worker.
@@ -368,15 +368,18 @@ Goals:
 
 ## Milestone 24.1: Research Ingestion Worker
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Add optional research, news, and document ingestion.
-- Support user-approved sources only.
-- Summarize findings.
-- Store useful findings in Memory API.
+- Add the first Research Ingestion Worker skeleton.
+- Support approved source definitions from `configs/research-sources.example.yaml`.
+- Process local markdown/text metadata only.
+- Skip URL sources because remote fetch is not implemented.
+- Write research reports under `/home/cuneyt/MoE/runtime/reports/research`.
+- Optionally store distilled findings in Memory API when explicitly requested.
 - Keep all outputs under runtime data.
 - Make no automatic code changes.
+- Keep default tests independent from PC-2, internet, Docker, model runtime, and live service availability.
 
 ## Milestone 24.2: Feedback / Success Memory
 

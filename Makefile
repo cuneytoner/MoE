@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -34,6 +34,10 @@ help:
 > @echo "  make pc2-nightly-down Optional stop PC-2 Nightly Learning Worker"
 > @echo "  make pc2-nightly-health Optional check PC-2 Nightly Learning Worker health"
 > @echo "  make pc2-nightly-dry-run Optional run PC-2 Nightly Learning Worker dry run"
+> @echo "  make pc2-research-up Optional start PC-2 Research Ingestion Worker"
+> @echo "  make pc2-research-down Optional stop PC-2 Research Ingestion Worker"
+> @echo "  make pc2-research-health Optional check PC-2 Research Ingestion Worker health"
+> @echo "  make pc2-research-dry-run Optional run PC-2 Research Ingestion Worker dry run"
 > @echo "  make model-start    Start host llama.cpp OpenAI-compatible runtime"
 > @echo "  make model-stop     Stop host llama.cpp runtime"
 > @echo "  make model-status   Show host llama.cpp runtime status"
@@ -47,6 +51,7 @@ help:
 > @echo "  make test-code-agent-runtime Run optional repo-aware code agent runtime test"
 > @echo "  make test-code-patch-runtime Run optional safe patch/diff runtime test"
 > @echo "  make test-nightly-learning Run local Nightly Learning Worker tests"
+> @echo "  make test-research-ingestion Run local Research Ingestion Worker tests"
 > @echo "  make test-embed     Run Embed Worker contract tests"
 > @echo "  make test-memory    Run Memory API contract tests"
 > @echo "  make test-stack     Run Docker-backed stack smoke tests"
@@ -131,6 +136,18 @@ pc2-nightly-health:
 pc2-nightly-dry-run:
 > @./scripts/pc2-nightly-worker-dry-run.sh
 
+pc2-research-up:
+> @./scripts/pc2-research-worker-up.sh
+
+pc2-research-down:
+> @./scripts/pc2-research-worker-down.sh
+
+pc2-research-health:
+> @./scripts/pc2-research-worker-health.sh
+
+pc2-research-dry-run:
+> @./scripts/pc2-research-worker-dry-run.sh
+
 model-start:
 > @./scripts/model-runtime-start.sh $(MODEL)
 
@@ -169,6 +186,9 @@ test-code-patch-runtime:
 
 test-nightly-learning:
 > @./scripts/test-nightly-learning-worker.sh
+
+test-research-ingestion:
+> @./scripts/test-research-ingestion-worker.sh
 
 test-memory:
 > @./scripts/test-memory-api.sh
