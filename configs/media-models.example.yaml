@@ -1,10 +1,22 @@
 image:
-  default_engine: comfyui
+  enabled: false
+  default_engine: disabled
+  allowed_engines:
+    - disabled
+    - comfyui-placeholder
+    - diffusers-placeholder
   models:
     - id: flux-schnell-placeholder
       enabled: false
+      engine: comfyui-placeholder
       path: /home/cuneyt/MoE_Models_Backup/flux-placeholder
-      notes: Placeholder only. Do not download in M25.
+      notes: Placeholder only. Do not download in M26.0.
+
+    - id: sdxl-placeholder
+      enabled: false
+      engine: diffusers-placeholder
+      path: /home/cuneyt/MoE_Models_Backup/sdxl-placeholder
+      notes: Placeholder only. Do not download in M26.0.
 
 video:
   default_engine: cogvideo-placeholder

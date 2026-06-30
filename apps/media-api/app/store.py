@@ -5,6 +5,7 @@ from typing import Any
 from uuid import uuid4
 
 from app.config import Settings
+from app.image import image_dry_run_details
 
 
 def create_job(settings: Settings, request: Any) -> dict[str, Any]:
@@ -20,6 +21,7 @@ def create_job(settings: Settings, request: Any) -> dict[str, Any]:
         "job_type": request.job_type,
         "mode": request.mode,
         "prompt": request.prompt,
+        "negative_prompt": getattr(request, "negative_prompt", ""),
         "workflow": request.workflow,
         "metadata": request.metadata,
         "state": "queued",
@@ -70,6 +72,7 @@ def write_report(settings: Settings, job: dict[str, Any]) -> Path:
         "report_type": "media-dry-run",
         "created_at": datetime.now(UTC).isoformat(),
         "job": job,
+        "image": image_dry_run_details(job) if job.get("job_type") == "image" else None,
         "outputs_created": [],
         "safety": {
             "dry_run_only": True,

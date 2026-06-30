@@ -3,6 +3,10 @@ workflows:
     job_type: image
     enabled: false
     dry_run_only: true
+    default_width: 1024
+    default_height: 1024
+    default_steps: 4
+    engine: disabled
 
   video_default:
     job_type: video

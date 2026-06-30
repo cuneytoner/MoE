@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-media-layout check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-media-api test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-media-api test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -13,6 +13,7 @@ help:
 > @echo "  make check-layout   Validate repository layout"
 > @echo "  make check-python-syntax Validate Python syntax without bytecode"
 > @echo "  make check-media-layout Prepare/validate runtime media directories"
+> @echo "  make check-image-models Inspect optional local image model candidates"
 > @echo "  make check-models   Validate local model files and Docker mount config"
 > @echo "  make status         Show git status"
 > @echo "  make tree           Show repository tree"
@@ -62,6 +63,7 @@ help:
 > @echo "  make test-research-ingestion Run local Research Ingestion Worker tests"
 > @echo "  make test-feedback-worker Run local Feedback Worker tests"
 > @echo "  make test-media-api Run local Media API tests"
+> @echo "  make test-image-dry-run Run local image dry-run tests"
 > @echo "  make test-embed     Run Embed Worker contract tests"
 > @echo "  make test-memory    Run Memory API contract tests"
 > @echo "  make test-stack     Run Docker-backed stack smoke tests"
@@ -75,6 +77,9 @@ check-python-syntax:
 
 check-media-layout:
 > @./scripts/check-media-layout.sh
+
+check-image-models:
+> @./scripts/check-image-models.sh
 
 check-models:
 > @./scripts/check-models.sh
@@ -229,6 +234,9 @@ test-feedback-worker:
 
 test-media-api:
 > @./scripts/test-media-api.sh
+
+test-image-dry-run:
+> @./scripts/test-image-dry-run.sh
 
 test-memory:
 > @./scripts/test-memory-api.sh

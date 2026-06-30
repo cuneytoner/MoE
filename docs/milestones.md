@@ -409,7 +409,7 @@ Goals:
 
 ## Milestone 25: Media Lab Foundation
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add dry-run-only `media-api` and `media-worker` skeletons.
@@ -421,7 +421,19 @@ Goals:
 - Do not install ComfyUI or Blender.
 - Do not implement actual image, video, 3D, rigging, or animation generation yet.
 
-## Milestone 26: Image Generation Service
+## Milestone 26.0: Image Generation Service Preparation
+
+Status: IN PROGRESS
+
+Goals:
+- Add image generation configuration placeholders.
+- Add image model inventory checks that inspect `/home/cuneyt/MoE_Models_Backup` without modifying files.
+- Add image-specific dry-run job metadata validation.
+- Add image dry-run report fields.
+- Keep real image generation disabled by default.
+- Do not install ComfyUI, Diffusers, Blender, or execute GPU jobs.
+
+## Milestone 26.1: Real Image Generation Service
 
 Status: PLANNED
 

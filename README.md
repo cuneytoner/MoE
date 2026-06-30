@@ -101,8 +101,8 @@ make tree
 
 ## Current Milestone
 
-Milestone 25: Media Lab Foundation in progress
+Milestone 26.0: Image Generation Service Preparation in progress
 
 Next planned milestone:
 
-Milestone 26: Image Generation Service
+Milestone 26.1: Real Image Generation Service

@@ -702,7 +702,21 @@ Scope:
 - Do not call GPU generation, model runtime, ComfyUI, Blender, or arbitrary shell commands.
 - Do not generate media into the codebase.
 
-## Milestone 26 Prompt Placeholder
+## Milestone 26.0 Prompt Summary
+
+Prepare Image Generation Service.
+
+Scope:
+
+- Add image generation placeholders only.
+- Add image model inventory check under `/home/cuneyt/MoE_Models_Backup`.
+- Add image metadata validation for width, height, steps, seed, engine, and model id.
+- Add image dry-run report fields with `generation_performed=false`.
+- Keep real generation disabled.
+- Do not install ComfyUI, Diffusers, Blender, or execute GPU jobs.
+- Do not download or modify model files.
+
+## Milestone 26.1 Prompt Placeholder
 
 Add image generation service.
 

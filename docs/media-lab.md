@@ -154,3 +154,17 @@ Do not create `.venv`, `venv`, or any virtualenv inside the codebase.
 - Milestone 29: Rigging Pipeline
 - Milestone 30: Animation Pipeline
 - Milestone 31: Media Workflow Orchestrator
+
+## Image Generation Preparation
+
+Milestone 26.0 extends the dry-run Media Lab foundation with image-specific metadata validation and reports.
+
+It adds placeholders for Flux Schnell and SDXL, but does not download or require image models. Use:
+
+```bash
+make check-image-models
+```
+
+Image dry-run jobs can include width, height, steps, seed, engine, and model id metadata. Reports include prompt length, requested size, workflow, engine, model id, and explicit `generation_performed=false`.
+
+Real image generation remains disabled until a later explicit milestone.

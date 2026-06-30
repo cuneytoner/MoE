@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any
 
 from app.config import Settings
+from app.image_processor import image_dry_run_details
 
 
 def process_dry_run(settings: Settings, job_id: str) -> tuple[dict[str, Any], Path] | None:
@@ -27,6 +28,7 @@ def process_dry_run(settings: Settings, job_id: str) -> tuple[dict[str, Any], Pa
         "report_type": "media-worker-dry-run",
         "created_at": datetime.now(UTC).isoformat(),
         "job": job,
+        "image": image_dry_run_details(job) if job.get("job_type") == "image" else None,
         "outputs_created": [],
         "safety": {
             "dry_run_only": True,
