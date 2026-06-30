@@ -51,6 +51,7 @@ apps:
 - media-api
 - media-worker
 - control-api
+- prompt-interpreter-worker
 - dashboard
 
 packages:
@@ -81,6 +82,7 @@ docs:
 - research-ingestion.md
 - feedback-success-memory.md
 - control-plane.md
+- prompt-interpreter.md
 - media-lab.md
 
 scripts:
@@ -103,11 +105,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.1.5: Control Plane Dashboard and Runtime Mode Manager in progress
+Milestone 26.1.6: Prompt Interpreter Worker in progress
 
 Next planned milestone:
 
-Milestone 26.1.6: Prompt Interpreter Worker
+Milestone 26.1.7: Mini Model Prompt Interpreter on PC-2
 
 Optional image planning commands:
 

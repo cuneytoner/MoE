@@ -139,6 +139,10 @@ apps/control-api:
 
 Control Plane API for Milestone 26.1.5. It exposes read-only runtime status, configured runtime modes, and dry-run mode plans on port `8400`. The Control Plane is the planned system coordination surface; Gateway remains a chat/routing/workspace API and must not become the system start/stop controller. PC-1 is the generation host for heavy GPU work, `llama-server`, ComfyUI, and future video/3D engines. PC-2 is the helper host for prompt interpretation, queue metadata, feedback, reports, and future optional mini-model interpretation.
 
+apps/prompt-interpreter-worker:
+
+Rule/template-based PC-2 helper worker for Milestone 26.1.6. It exposes FastAPI on port `8230`, classifies natural language media prompts into image, video, 3D model, rigging, animation, 3D suite, or unknown intents, and returns structured dry-run media job specs. It does not call models, llama-server, ComfyUI, Media API, generation engines, shell commands, or PC-1 controls.
+
 Backup and environment planning:
 
 Backup planning covers source, runtime, PostgreSQL, Qdrant, model backups, llama.cpp, and docs without copying runtime data into the codebase. Environment profile templates describe how PC1, PC2, single-machine, and future machines can own roles without rewriting the project.

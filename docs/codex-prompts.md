@@ -779,12 +779,14 @@ Scope:
 
 Add Prompt Interpreter Worker on PC-2.
 
-Expected boundaries:
+Scope:
 
 - Rule/template-based first version.
 - No model required.
-- Produce structured job specs for media workflows.
+- Classify natural language prompts into image, video, 3D model, rigging, animation, 3D suite, or unknown.
+- Produce structured dry-run job specs for media workflows.
 - Do not execute generation jobs directly.
+- Do not call llama-server, ComfyUI, Media API, or model runtime.
 
 ## Milestone 26.1.7 Prompt Placeholder
 

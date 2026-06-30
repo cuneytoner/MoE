@@ -462,7 +462,7 @@ Goals:
 
 ## Milestone 26.1.5: Control Plane Dashboard and Runtime Mode Manager
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add `control-api` on port `8400`.
@@ -476,13 +476,15 @@ Goals:
 
 ## Milestone 26.1.6: Prompt Interpreter Worker
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Add a PC-2 prompt interpreter worker.
 - Start with rule/template-based interpretation.
 - Produce structured media job specs.
 - Require no local model.
+- Keep output dry-run only.
+- Do not call llama-server, ComfyUI, Media API, or generation engines.
 
 ## Milestone 26.1.7: Mini Model Prompt Interpreter on PC-2
 

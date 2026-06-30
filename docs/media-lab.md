@@ -209,3 +209,9 @@ Milestone 26.1.5 adds Control Plane runtime modes before real generation:
 - `media_off`: stops planned media workers.
 
 Mode plans are dry-run by default and do not start generation.
+
+## Prompt Interpretation
+
+Milestone 26.1.6 adds a PC-2 Prompt Interpreter Worker before real media jobs. It accepts natural language prompts, classifies the intended media workflow, and returns a structured dry-run job spec.
+
+The interpreter does not call Media API by default. It is a safe preparation layer between user intent and future queued media jobs.

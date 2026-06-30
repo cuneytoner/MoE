@@ -37,6 +37,8 @@ Modes:
 - `3d_suite`: future grouped 3D model, rigging, and animation mode.
 - `media_off`: media generation workers should be stopped.
 
+`prompt-interpreter-worker` is enabled in `image`, `video`, and `3d_suite` mode plans. It is disabled in `coding` and `media_off`.
+
 Inspect mode plans:
 
 ```bash
@@ -70,19 +72,18 @@ Responsibilities:
 - Feedback and reports.
 - Future optional mini model interpreter.
 
-## Prompt Interpreter Placeholder
+## Prompt Interpreter Worker
 
-The placeholder service name is:
+The service name is:
 
 ```text
 prompt-interpreter-worker
 ```
 
-It is not implemented in M26.1.5.
+Milestone 26.1.6 implements the first rule/template-based worker on PC-2. It produces dry-run media job specs and does not call a model or generation engine.
 
 Future milestones:
 
-- M26.1.6: Prompt Interpreter Worker on PC-2, first rule/template-based version, no model required.
 - M26.1.7: Optional Mini Model Prompt Interpreter on PC-2, small local model only if needed, structured job spec output.
 
 ## Control API

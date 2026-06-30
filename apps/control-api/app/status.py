@@ -12,6 +12,7 @@ KNOWN_HTTP_SERVICES = {
     "nightly-learning-worker": "http://127.0.0.1:8200/health",
     "research-ingestion-worker": "http://127.0.0.1:8210/health",
     "feedback-worker": "http://127.0.0.1:8220/health",
+    "prompt-interpreter-worker": "http://127.0.0.1:8230/health",
     "media-api": "http://127.0.0.1:8300/health",
     "media-worker": "http://127.0.0.1:8310/health",
 }
@@ -22,7 +23,6 @@ FUTURE_SERVICES = [
     "3d-worker",
     "rigging-worker",
     "animation-worker",
-    "prompt-interpreter-worker",
 ]
 
 PID_FILES = {

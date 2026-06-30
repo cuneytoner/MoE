@@ -38,6 +38,7 @@ check_http "comfyui" "http://127.0.0.1:8188/"
 check_http "nightly-learning-worker" "http://127.0.0.1:8200/health"
 check_http "research-ingestion-worker" "http://127.0.0.1:8210/health"
 check_http "feedback-worker" "http://127.0.0.1:8220/health"
+check_http "prompt-interpreter-worker" "http://127.0.0.1:8230/health"
 check_http "media-api" "http://127.0.0.1:8300/health"
 check_http "media-worker" "http://127.0.0.1:8310/health"
 

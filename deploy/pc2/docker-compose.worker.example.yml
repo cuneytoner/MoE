@@ -72,6 +72,23 @@ services:
       - ${IMPROVEMENT_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/improvements}:/home/cuneyt/MoE/runtime/reports/improvements
       - ${PC2_SOURCE_ROOT:-/home/cuneyt/MoE/codebase}:/workspace:ro
 
+  prompt-interpreter-worker:
+    build:
+      context: ../../apps/prompt-interpreter-worker
+    profiles:
+      - prompt
+    restart: "no"
+    environment:
+      PROMPT_INTERPRETER_RUNTIME_ROOT: ${PROMPT_INTERPRETER_RUNTIME_ROOT:-/home/cuneyt/MoE/runtime}
+      PROMPT_INTERPRETER_MODE: ${PROMPT_INTERPRETER_MODE:-rule_based}
+      PROMPT_INTERPRETER_MODEL_ENABLED: ${PROMPT_INTERPRETER_MODEL_ENABLED:-false}
+      PROMPT_INTERPRETER_GENERATION_ENABLED: ${PROMPT_INTERPRETER_GENERATION_ENABLED:-false}
+      PROMPT_INTERPRETER_DEFAULT_MODE: ${PROMPT_INTERPRETER_DEFAULT_MODE:-dry_run}
+    ports:
+      - "${PROMPT_INTERPRETER_PORT:-8230}:8230"
+    volumes:
+      - ${PC2_SOURCE_ROOT:-/home/cuneyt/MoE/codebase}:/workspace:ro
+
   memory-services-placeholder:
     image: alpine:3.20
     profiles:

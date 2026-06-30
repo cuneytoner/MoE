@@ -1,0 +1,26 @@
+service:
+  name: prompt-interpreter-worker
+  mode: rule_based
+  port: 8230
+
+safety:
+  default_mode: dry_run
+  model_enabled: false
+  generation_enabled: false
+  arbitrary_shell_enabled: false
+  max_prompt_chars: 4000
+  max_batch_items: 20
+
+hosts:
+  generation_host: pc1
+  helper_host: pc2
+
+classification:
+  intents:
+    - image
+    - video
+    - 3d_model
+    - rigging
+    - animation
+    - 3d_suite
+    - unknown
