@@ -41,6 +41,24 @@ class Settings(BaseSettings):
         default=".py,.md,.txt,.yaml,.yml,.json,.toml,.sh,.env.example,.gitignore,.dockerignore,Dockerfile,Makefile",
         alias="WORKSPACE_ALLOWED_EXTENSIONS",
     )
+    media_api_url: str = Field(default="http://media-api:8300", alias="MEDIA_API_URL")
+    media_api_public_url: str = Field(
+        default="http://localhost:8300",
+        alias="MEDIA_API_PUBLIC_URL",
+    )
+    prompt_interpreter_url: str = Field(
+        default="http://192.168.50.2:8230",
+        alias="PROMPT_INTERPRETER_URL",
+    )
+    gateway_media_enabled: bool = Field(default=True, alias="GATEWAY_MEDIA_ENABLED")
+    gateway_media_real_allowed: bool = Field(
+        default=False,
+        alias="GATEWAY_MEDIA_REAL_ALLOWED",
+    )
+    gateway_media_default_mode: str = Field(
+        default="dry_run",
+        alias="GATEWAY_MEDIA_DEFAULT_MODE",
+    )
 
 
 def _default_model_routing_config() -> str:

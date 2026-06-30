@@ -5,8 +5,10 @@ from uuid import uuid4
 from fastapi import FastAPI, HTTPException
 
 from app.clients.embed_worker import EmbedWorkerClient
+from app.clients.media_api import MediaApiClient
 from app.clients.memory_api import MemoryApiClient, MemoryApiUnavailable
 from app.clients.model_runtime import ModelRuntimeClient, ModelRuntimeUnavailable
+from app.clients.prompt_interpreter import PromptInterpreterClient
 from app.config import get_settings
 from app.models.gateway import (
     GatewayChatRequest,
@@ -20,6 +22,13 @@ from app.models.gateway import (
     GatewayCodePatchPlanRequest,
     GatewayCodePatchPlanResponse,
     GatewayHealthResponse,
+    GatewayMediaDryRunJobRequest,
+    GatewayMediaHealthResponse,
+    GatewayMediaJobResponse,
+    GatewayMediaPlanRequest,
+    GatewayMediaPlanResponse,
+    GatewayMediaRealJobRequest,
+    GatewayMediaSafety,
     GatewayModelRoutingResponse,
     GatewayModelsResponse,
     GatewayRouteRequest,
@@ -43,6 +52,7 @@ from app.models.gateway import (
     OpenAIChatCompletionUsage,
     OpenAIChatMessage,
 )
+from app.services.media_planner import local_media_plan
 from app.services.model_mapping import ModelMapping, get_model_mapping
 from app.services.patch_planner import (
     diff_suggest_system_prompt,
@@ -59,6 +69,12 @@ from app.services.workspace import WorkspaceService
 app = FastAPI(title="MoE Gateway API", version="0.1.0")
 
 
+MEDIA_NEXT_STEPS = [
+    "Use /gateway/media/jobs/dry-run to create a dry-run media job.",
+    "Real generation requires explicit guarded enablement.",
+]
+
+
 @app.get("/gateway/health", response_model=GatewayHealthResponse)
 async def health() -> GatewayHealthResponse:
     settings = get_settings()
@@ -72,6 +88,141 @@ async def health() -> GatewayHealthResponse:
         status="ok",
         dependencies=dependencies,
     )
+
+
+@app.get("/gateway/media/health", response_model=GatewayMediaHealthResponse)
+async def media_health() -> GatewayMediaHealthResponse:
+    settings = get_settings()
+    media_status = await MediaApiClient(settings.media_api_url).check()
+    interpreter_status = await PromptInterpreterClient(settings.prompt_interpreter_url).check()
+    warnings: list[str] = []
+    if media_status != "ok":
+        warnings.append(f"Media API unreachable: {media_status}")
+    if interpreter_status != "ok":
+        warnings.append(f"Prompt Interpreter unreachable: {interpreter_status}")
+
+    return GatewayMediaHealthResponse(
+        status="ok",
+        service="gateway-media",
+        media_enabled=settings.gateway_media_enabled,
+        real_allowed=settings.gateway_media_real_allowed,
+        default_mode=settings.gateway_media_default_mode,
+        media_api_url=settings.media_api_public_url,
+        prompt_interpreter_url=settings.prompt_interpreter_url,
+        media_api_reachable=media_status == "ok",
+        prompt_interpreter_reachable=interpreter_status == "ok",
+        warnings=warnings,
+        safety=_media_safety(),
+    )
+
+
+@app.post("/gateway/media/plan", response_model=GatewayMediaPlanResponse)
+async def media_plan(request: GatewayMediaPlanRequest) -> GatewayMediaPlanResponse:
+    settings = get_settings()
+    if not settings.gateway_media_enabled:
+        return GatewayMediaPlanResponse(
+            status="rejected",
+            mode="dry_run",
+            classification={},
+            job_spec={},
+            warnings=["GATEWAY_MEDIA_ENABLED must be true for media planning."],
+            next_steps=[],
+        )
+
+    plan = await _build_media_plan(
+        prompt=request.prompt,
+        target_mode=request.target_mode,
+        style=request.style,
+    )
+    return GatewayMediaPlanResponse(
+        status="ok",
+        mode="dry_run",
+        classification=dict(plan.get("classification") or {}),
+        job_spec=dict(plan.get("job_spec") or {}),
+        warnings=list(plan.get("warnings") or []),
+        next_steps=MEDIA_NEXT_STEPS,
+    )
+
+
+@app.post("/gateway/media/jobs/dry-run", response_model=GatewayMediaJobResponse)
+async def media_job_dry_run(
+    request: GatewayMediaDryRunJobRequest,
+) -> GatewayMediaJobResponse:
+    settings = get_settings()
+    if not settings.gateway_media_enabled:
+        return GatewayMediaJobResponse(
+            status="rejected",
+            mode="dry_run",
+            reason="GATEWAY_MEDIA_ENABLED must be true for media jobs",
+            safety=_media_safety(),
+        )
+
+    plan = await media_plan(
+        GatewayMediaPlanRequest(
+            prompt=request.prompt,
+            target_mode=request.target_mode,
+            style=request.style,
+        )
+    )
+    job_spec = dict(plan.job_spec)
+    job_spec["mode"] = "dry_run"
+    media_response = await MediaApiClient(settings.media_api_url).create_job(job_spec)
+    return GatewayMediaJobResponse(
+        status=str(media_response.get("status") or "rejected"),
+        mode="dry_run",
+        plan=plan,
+        media_api=media_response,
+        reason=media_response.get("reason") if isinstance(media_response.get("reason"), str) else None,
+        safety=_media_safety(),
+    )
+
+
+@app.post("/gateway/media/jobs/real", response_model=GatewayMediaJobResponse)
+async def media_job_real(request: GatewayMediaRealJobRequest) -> GatewayMediaJobResponse:
+    settings = get_settings()
+    if not settings.gateway_media_real_allowed:
+        return GatewayMediaJobResponse(
+            status="rejected",
+            mode="real",
+            reason="GATEWAY_MEDIA_REAL_ALLOWED must be true for real generation",
+            safety=_media_safety(),
+        )
+    if not request.confirm_real_generation:
+        return GatewayMediaJobResponse(
+            status="rejected",
+            mode="real",
+            reason="confirm_real_generation=true is required for real generation",
+            safety=_media_safety(),
+        )
+
+    plan = await media_plan(
+        GatewayMediaPlanRequest(
+            prompt=request.prompt,
+            target_mode=request.target_mode,
+            style=request.style,
+        )
+    )
+    job_spec = dict(plan.job_spec)
+    job_spec["mode"] = "real"
+    metadata = dict(job_spec.get("metadata") or {})
+    metadata["engine"] = "comfyui"
+    metadata["source"] = "gateway-guarded-real"
+    job_spec["metadata"] = metadata
+    media_response = await MediaApiClient(settings.media_api_url).create_job(job_spec)
+    return GatewayMediaJobResponse(
+        status=str(media_response.get("status") or "rejected"),
+        mode="real",
+        plan=plan,
+        media_api=media_response,
+        reason=media_response.get("reason") if isinstance(media_response.get("reason"), str) else None,
+        safety=_media_safety(),
+    )
+
+
+@app.get("/gateway/media/jobs/{job_id}")
+async def media_job_status(job_id: str) -> dict[str, Any]:
+    settings = get_settings()
+    return await MediaApiClient(settings.media_api_url).get_job(job_id)
 
 
 @app.get("/gateway/models", response_model=GatewayModelsResponse)
@@ -493,6 +644,37 @@ async def _gateway_chat(request: GatewayChatRequest) -> GatewayChatResponse:
         model_alignment=model_alignment,
         memory=memory["metadata"],
         raw={key: value for key, value in raw.items() if value is not None} or None,
+    )
+
+
+async def _build_media_plan(prompt: str, target_mode: str, style: str) -> dict[str, Any]:
+    settings = get_settings()
+    interpreter = PromptInterpreterClient(settings.prompt_interpreter_url)
+    interpreted, warning = await interpreter.interpret(
+        prompt=prompt,
+        target_mode=target_mode,
+        style=style,
+    )
+    if interpreted is not None:
+        warnings = list(interpreted.get("warnings") or [])
+        warnings.append("Prompt Interpreter Worker used when reachable.")
+        interpreted["warnings"] = warnings
+        return interpreted
+
+    fallback = local_media_plan(prompt=prompt, target_mode=target_mode, style=style)
+    if warning:
+        warnings = list(fallback.get("warnings") or [])
+        warnings.insert(0, warning)
+        fallback["warnings"] = warnings
+    return fallback
+
+
+def _media_safety() -> GatewayMediaSafety:
+    return GatewayMediaSafety(
+        starts_services=False,
+        stops_services=False,
+        arbitrary_shell=False,
+        real_generation_default=False,
     )
 
 

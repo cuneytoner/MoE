@@ -348,6 +348,32 @@ When running Media API and Media Worker in Docker, the bridge uses Docker-safe a
 
 On Linux, the Compose media services define `host.docker.internal:host-gateway` so containers can reach the host ComfyUI process.
 
+## Gateway Guarded Integration
+
+Milestone 26.4 lets Gateway plan media prompts and create Media API dry-run jobs:
+
+```bash
+make gateway-media-plan
+make gateway-media-dry-run
+make gateway-media-real-plan
+```
+
+`gateway-media-real-plan` demonstrates the default rejection path. Gateway does not generate by default and does not start ComfyUI or Docker containers.
+
+Manual real generation through Gateway requires this sequence:
+
+1. Use image runtime mode planning.
+2. Start ComfyUI in bridge mode with `COMFYUI_ALLOW_EXTERNAL=1 COMFYUI_HOST=0.0.0.0 make comfyui-up`.
+3. Start Media API and Media Worker with `MEDIA_REAL_GENERATION_ENABLED=true`.
+4. Start Gateway with `GATEWAY_MEDIA_REAL_ALLOWED=true`.
+5. Send `confirm_real_generation=true` to `/gateway/media/jobs/real`.
+
+Media API and Media Worker still own job storage and ComfyUI processing. Outputs remain under:
+
+```text
+/home/cuneyt/MoE/runtime/media/outputs/images
+```
+
 ## Runtime Paths
 
 Future image outputs belong under:

@@ -240,3 +240,39 @@ Docker networking for the media bridge:
 - Media API calls Media Worker at `http://media-worker:8310` inside the Docker network.
 - Media Worker calls host ComfyUI at `http://host.docker.internal:8188`.
 - Linux Docker uses `extra_hosts: host.docker.internal:host-gateway` for the media services.
+
+## Gateway Media Adapter
+
+Milestone 26.4 adds guarded Gateway media endpoints:
+
+```text
+GET  /gateway/media/health
+POST /gateway/media/plan
+POST /gateway/media/jobs/dry-run
+POST /gateway/media/jobs/real
+GET  /gateway/media/jobs/{job_id}
+```
+
+Gateway planning accepts a natural language prompt and returns a dry-run plan. It uses the PC-2 Prompt Interpreter at `http://192.168.50.2:8230` when reachable and falls back to local deterministic classification when it is not reachable.
+
+Dry-run job creation calls Media API and remains the default safe path:
+
+```bash
+make gateway-media-plan
+make gateway-media-dry-run
+```
+
+Real generation is rejected by default:
+
+```bash
+make gateway-media-real-plan
+```
+
+Real job creation requires all gates:
+
+- `GATEWAY_MEDIA_REAL_ALLOWED=true` on Gateway.
+- `MEDIA_REAL_GENERATION_ENABLED=true` on Media API and Media Worker.
+- `confirm_real_generation=true` in the request.
+- `target_mode=image`.
+
+Gateway does not start services, stop services, control PC-2, start ComfyUI, stop ComfyUI, control Docker containers, execute shell commands, or write generated media into the repository.

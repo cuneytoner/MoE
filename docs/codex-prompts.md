@@ -799,6 +799,30 @@ Expected boundaries:
 - No arbitrary shell execution.
 - Keep generated media under runtime media outputs.
 
+## Milestone 26.4 Prompt Summary
+
+Add guarded Gateway media integration.
+
+Scope:
+
+- Add `/gateway/media/health`, `/gateway/media/plan`, `/gateway/media/jobs/dry-run`, `/gateway/media/jobs/real`, and `/gateway/media/jobs/{job_id}`.
+- Use PC-2 Prompt Interpreter when reachable.
+- Fall back to local deterministic classification when Prompt Interpreter is unavailable.
+- Create Media API dry-run jobs by default.
+- Reject real generation unless `GATEWAY_MEDIA_REAL_ALLOWED=true` and `confirm_real_generation=true`.
+- Keep Media API and Media Worker responsible for actual media job storage and processing.
+- Do not let Gateway start or stop services, control PC-2, control Docker, start ComfyUI, or execute shell commands.
+
+## Milestone 26.5 Prompt Placeholder
+
+Add simple media dashboard/status UI.
+
+Expected boundaries:
+
+- Show media service health, Gateway media gates, latest jobs, and latest outputs.
+- Keep generation controls explicit and guarded.
+- Do not create runtime media inside the source repository.
+
 ## Milestone 26.1.5 Prompt Summary
 
 Add Control Plane Dashboard and Runtime Mode Manager.

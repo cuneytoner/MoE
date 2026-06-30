@@ -512,7 +512,7 @@ Goals:
 
 ## Milestone 26.3: Media API to Prompt Interpreter to ComfyUI Bridge
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Connect Media API image jobs to Media Worker processing.
@@ -525,12 +525,27 @@ Goals:
 
 ## Milestone 26.4: Gateway-to-Media Guarded Integration
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Add explicit Gateway-to-Media planning/dispatch integration.
 - Keep generation approval-gated and observable.
 - Preserve PC-1 generation host and PC-2 helper roles.
+
+Current scope:
+- Add Gateway media health, plan, dry-run job, guarded real job, and job status endpoints.
+- Use PC-2 Prompt Interpreter when reachable, with local fallback classification.
+- Keep Gateway from starting or stopping services, controlling PC-2, controlling Docker, or starting ComfyUI.
+- Keep real generation rejected by default.
+
+## Milestone 26.5: Simple Media Dashboard / Status UI
+
+Status: PLANNED
+
+Goals:
+- Add a lightweight media status/dashboard surface.
+- Show Gateway media safety gates, dry-run jobs, and latest media outputs.
+- Keep real generation controls explicit and guarded.
 
 ## Milestone 27: Video Generation Service
 

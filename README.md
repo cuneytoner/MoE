@@ -105,11 +105,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.3: Media API to Prompt Interpreter to ComfyUI Bridge in progress
+Milestone 26.4: Gateway-to-Media Guarded Integration in progress
 
 Next planned milestone:
 
-Milestone 26.4: Gateway-to-Media Guarded Integration
+Milestone 26.5: Simple Media Dashboard / Status UI
 
 Optional image planning commands:
 
@@ -124,6 +124,9 @@ make comfyui-flux-smoke-test
 make comfyui-first-image-plan
 make media-image-dry-run
 make media-latest-images
+make gateway-media-plan
+make gateway-media-dry-run
+make gateway-media-real-plan
 
 Optional control planning commands:
 

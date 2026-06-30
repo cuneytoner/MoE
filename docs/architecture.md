@@ -135,7 +135,9 @@ Dry-run-only Media Lab foundation for Milestone 25. Media API exposes job creati
 
 Milestone 26.0 adds image generation preparation only: image job metadata validation, placeholder model/workflow configs, image model inventory checks, and dry-run image report fields. Milestone 26.1-pre selects ComfyUI as the recommended future image engine, adds runtime layout and model download planning probes, and keeps real generation disabled. Milestone 26.1 adds optional user-run scripts to install, check, start, stop, and health-check a local ComfyUI runtime under `/home/cuneyt/MoE/runtime/media-engines/comfyui`, plus symlink-only Flux Schnell model planning. Model storage remains `/home/cuneyt/MoE_Models_Backup`; real generation is deferred to Milestone 26.2.
 
-Milestone 26.3 connects Media API to Media Worker to ComfyUI for gated real image generation. Media API remains the job entry point, Media Worker owns ComfyUI submission and output discovery, and generated images are surfaced under `/home/cuneyt/MoE/runtime/media/outputs/images/<job_id>`. Real generation is disabled by default and requires explicit environment gates. Gateway does not trigger media generation in this milestone.
+Milestone 26.3 connects Media API to Media Worker to ComfyUI for gated real image generation. Media API remains the job entry point, Media Worker owns ComfyUI submission and output discovery, and generated images are surfaced under `/home/cuneyt/MoE/runtime/media/outputs/images/<job_id>`. Real generation is disabled by default and requires explicit environment gates.
+
+Milestone 26.4 adds a Gateway Media Adapter. Gateway can plan media prompts, optionally use the PC-2 Prompt Interpreter when reachable, create Media API dry-run jobs, and read Media API job status. Real jobs remain rejected by default and require `GATEWAY_MEDIA_REAL_ALLOWED=true`, `MEDIA_REAL_GENERATION_ENABLED=true` on the media services, and `confirm_real_generation=true` in the request. Gateway still does not start or stop services, control PC-2, execute shell commands, control Docker, or start ComfyUI.
 
 apps/control-api:
 

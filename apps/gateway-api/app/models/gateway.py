@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -304,6 +304,70 @@ class GatewayCodeDiffSuggestResponse(BaseModel):
     selected_files: list[GatewayCodeSelectedFile] = Field(default_factory=list)
     route: GatewayRouteMetadata | None = None
     reason: str | None = None
+
+
+class GatewayMediaSafety(BaseModel):
+    starts_services: bool = False
+    stops_services: bool = False
+    arbitrary_shell: bool = False
+    real_generation_default: bool = False
+
+
+class GatewayMediaHealthResponse(BaseModel):
+    status: str
+    service: str
+    media_enabled: bool
+    real_allowed: bool
+    default_mode: str
+    media_api_url: str
+    prompt_interpreter_url: str
+    media_api_reachable: bool
+    prompt_interpreter_reachable: bool
+    warnings: list[str] = Field(default_factory=list)
+    safety: GatewayMediaSafety
+
+
+class GatewayMediaPlanRequest(BaseModel):
+    prompt: str = Field(min_length=1, max_length=4000)
+    target_mode: Literal[
+        "auto",
+        "image",
+        "video",
+        "3d_suite",
+        "3d_model",
+        "rigging",
+        "animation",
+    ] = "auto"
+    style: Literal["auto", "realistic", "technical", "cinematic", "product", "concept"] = "auto"
+
+
+class GatewayMediaDryRunJobRequest(GatewayMediaPlanRequest):
+    target_mode: Literal["auto", "image"] = "auto"
+
+
+class GatewayMediaRealJobRequest(BaseModel):
+    prompt: str = Field(min_length=1, max_length=4000)
+    target_mode: Literal["image"] = "image"
+    style: Literal["auto", "realistic", "technical", "cinematic", "product", "concept"] = "auto"
+    confirm_real_generation: bool = False
+
+
+class GatewayMediaPlanResponse(BaseModel):
+    status: str
+    mode: str
+    classification: dict[str, Any]
+    job_spec: dict[str, Any]
+    warnings: list[str] = Field(default_factory=list)
+    next_steps: list[str] = Field(default_factory=list)
+
+
+class GatewayMediaJobResponse(BaseModel):
+    status: str
+    mode: str | None = None
+    plan: GatewayMediaPlanResponse | None = None
+    media_api: dict[str, Any] | None = None
+    reason: str | None = None
+    safety: GatewayMediaSafety | None = None
 
 
 class OpenAIChatMessage(BaseModel):

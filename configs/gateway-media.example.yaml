@@ -1,0 +1,15 @@
+# Example-only Gateway media integration settings.
+# Do not copy secrets into this repository.
+
+media_api_url: http://media-api:8300
+media_api_public_url: http://localhost:8300
+prompt_interpreter_url: http://192.168.50.2:8230
+gateway_media_enabled: true
+gateway_media_real_allowed: false
+gateway_media_default_mode: dry_run
+
+safety:
+  starts_services: false
+  stops_services: false
+  arbitrary_shell: false
+  real_generation_default: false

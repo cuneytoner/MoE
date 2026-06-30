@@ -127,6 +127,8 @@ Not allowed:
 
 M26.3 image mode should include Media API, Media Worker, ComfyUI, and Prompt Interpreter in the planned service set. Coding mode should keep generation disabled. The Media API bridge still requires explicit `MEDIA_REAL_GENERATION_ENABLED=true`; image mode alone is not an approval to generate.
 
+M26.4 keeps Gateway out of the control-plane role. Gateway can plan media jobs and request Media API dry-run jobs, but it does not start or stop services, control PC-2, control Docker, or start ComfyUI. Real generation through Gateway also requires `GATEWAY_MEDIA_REAL_ALLOWED=true` and a request-level `confirm_real_generation=true`.
+
 ## Service Allowlist
 
 Known services:
