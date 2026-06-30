@@ -285,6 +285,26 @@ Outputs must stay under:
 /home/cuneyt/MoE/runtime/media/outputs/images
 ```
 
+ComfyUI may initially save generated files under its own output directory:
+
+```text
+/home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI/output
+```
+
+After workflow submission, `scripts/comfyui-first-image.sh` polls both the ComfyUI output directory and the project media output directory for new image files. It uses a unique `moe_flux_first_YYYYMMDD_HHMMSS` filename prefix and varies the default seed on each run so repeated runs are more likely to produce a fresh output. It then copies any new images into:
+
+```text
+/home/cuneyt/MoE/runtime/media/outputs/images/flux-first
+```
+
+The original ComfyUI output is not deleted.
+
+Repeated ComfyUI runs may hit cache or complete without writing a new file, especially when the workflow inputs are unchanged. If no new image is detected but `flux-first` already contains images, the script prints a warning and lists the latest existing images. Set `STRICT_NEW_OUTPUT=1` to require a truly new image and fail otherwise:
+
+```bash
+STRICT_NEW_OUTPUT=1 make comfyui-first-image-apply
+```
+
 The first-image script writes its generated workflow JSON under:
 
 ```text
