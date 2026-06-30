@@ -105,19 +105,23 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.1.6: Prompt Interpreter Worker in progress
+Milestone 26.2: First Real Image Generation with ComfyUI and Flux Schnell in progress
 
 Next planned milestone:
 
-Milestone 26.1.7: Mini Model Prompt Interpreter on PC-2
+Milestone 27: Video Generation Service
 
 Optional image planning commands:
 
 make check-image-models
 make plan-image-model-downloads
 make plan-flux-schnell-models
+make download-flux-schnell-models-plan
+make check-flux-schnell-models
 make check-comfyui-layout
 make check-comfyui-runtime
+make comfyui-flux-smoke-test
+make comfyui-first-image-plan
 
 Optional control planning commands:
 

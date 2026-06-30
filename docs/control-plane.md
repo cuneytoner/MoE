@@ -32,12 +32,14 @@ configs/runtime-modes.example.yaml
 Modes:
 
 - `coding`: Gateway, Memory API, Embed Worker, and llama-server are the active focus. Media workers should be stopped.
-- `image`: ComfyUI and Media Lab are the active focus. `llama-server` is recommended to stop for VRAM.
+- `image`: ComfyUI and Media Lab are the active focus. `llama-server` is recommended to stop for VRAM. PC-1 is the generation host.
 - `video`: future video generation mode. Image/3D workers should be stopped.
 - `3d_suite`: future grouped 3D model, rigging, and animation mode.
 - `media_off`: media generation workers should be stopped.
 
 `prompt-interpreter-worker` is enabled in `image`, `video`, and `3d_suite` mode plans. It is disabled in `coding` and `media_off`.
+
+M26.2 first image generation should use the `image` mode plan before running ComfyUI Flux smoke or first-image commands.
 
 Inspect mode plans:
 

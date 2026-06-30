@@ -215,3 +215,9 @@ Mode plans are dry-run by default and do not start generation.
 Milestone 26.1.6 adds a PC-2 Prompt Interpreter Worker before real media jobs. It accepts natural language prompts, classifies the intended media workflow, and returns a structured dry-run job spec.
 
 The interpreter does not call Media API by default. It is a safe preparation layer between user intent and future queued media jobs.
+
+## First Real Image Generation
+
+Milestone 26.2 adds a guarded first-image path through ComfyUI and Flux Schnell. Downloads, model linking, smoke checks, and workflow submission are all explicit user-run commands. Default tests do not download models, start ComfyUI, or run GPU jobs.
+
+Generated images must stay under `/home/cuneyt/MoE/runtime/media/outputs/images`. PC-2 remains a helper host and does not run generation.

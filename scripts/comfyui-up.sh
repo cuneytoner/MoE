@@ -9,6 +9,7 @@ COMFYUI_VENV="$COMFYUI_RUNTIME_DIR/venv"
 COMFYUI_LOG_DIR="$COMFYUI_RUNTIME_DIR/logs"
 COMFYUI_PID_FILE="$COMFYUI_RUNTIME_DIR/comfyui.pid"
 COMFYUI_LOG_FILE="$COMFYUI_LOG_DIR/comfyui.log"
+COMFYUI_OUTPUT_DIR="${COMFYUI_OUTPUT_DIR:-/home/cuneyt/MoE/runtime/media/outputs/images}"
 
 case "$COMFYUI_RUNTIME_DIR" in
   /home/cuneyt/MoE/runtime/media-engines/comfyui)
@@ -45,14 +46,15 @@ if [ ! -f "$COMFYUI_DIR/main.py" ]; then
   exit 1
 fi
 
-mkdir -p "$COMFYUI_LOG_DIR"
+mkdir -p "$COMFYUI_LOG_DIR" "$COMFYUI_OUTPUT_DIR"
 
 echo "Starting ComfyUI on http://$COMFYUI_HOST:$COMFYUI_PORT"
 echo "  log: $COMFYUI_LOG_FILE"
 echo "  pid: $COMFYUI_PID_FILE"
+echo "  output dir: $COMFYUI_OUTPUT_DIR"
 
 cd "$COMFYUI_DIR"
-nohup "$COMFYUI_VENV/bin/python" main.py --listen "$COMFYUI_HOST" --port "$COMFYUI_PORT" >"$COMFYUI_LOG_FILE" 2>&1 &
+nohup "$COMFYUI_VENV/bin/python" main.py --listen "$COMFYUI_HOST" --port "$COMFYUI_PORT" --output-directory "$COMFYUI_OUTPUT_DIR" >"$COMFYUI_LOG_FILE" 2>&1 &
 pid="$!"
 echo "$pid" >"$COMFYUI_PID_FILE"
 echo "PASS: ComfyUI started with PID $pid"

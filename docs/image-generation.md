@@ -172,7 +172,54 @@ The script prints recommended future target paths only:
 /home/cuneyt/MoE_Models_Backup/vae/ae.safetensors
 ```
 
-Download commands are printed as comments only. No model is downloaded in M26.1.
+M26.2 adds an explicit download script. It still defaults to dry-run:
+
+```bash
+make download-flux-schnell-models-plan
+```
+
+Actual download is opt-in and writes only under `/home/cuneyt/MoE_Models_Backup`:
+
+```bash
+make download-flux-schnell-models-apply
+```
+
+The download script uses the current Hugging Face CLI:
+
+```bash
+hf download black-forest-labs/FLUX.1-schnell flux1-schnell.safetensors --local-dir /home/cuneyt/MoE_Models_Backup/flux
+```
+
+Do not use deprecated `huggingface-cli` commands.
+
+`black-forest-labs/FLUX.1-schnell` may be gated. If access is denied, open:
+
+```text
+https://huggingface.co/black-forest-labs/FLUX.1-schnell
+```
+
+Accept or request access, then run:
+
+```bash
+hf auth login
+```
+
+Retry the download after approval.
+
+The expected model paths are:
+
+```text
+/home/cuneyt/MoE_Models_Backup/flux/flux1-schnell.safetensors
+/home/cuneyt/MoE_Models_Backup/vae/ae.safetensors
+/home/cuneyt/MoE_Models_Backup/clip/clip_l.safetensors
+/home/cuneyt/MoE_Models_Backup/clip/t5xxl_fp8_e4m3fn.safetensors
+```
+
+Validate the model set:
+
+```bash
+make check-flux-schnell-models
+```
 
 ## ComfyUI Model Links
 
@@ -198,8 +245,67 @@ The link script:
 - Skips existing targets safely.
 - Links `clip_l.safetensors` to `ComfyUI/models/clip`.
 - Links `t5xxl_fp8_e4m3fn.safetensors` to `ComfyUI/models/text_encoders`.
-- Links a future Flux Schnell model to `ComfyUI/models/unet`.
-- Links a future VAE/AE to `ComfyUI/models/vae`.
+- Links `flux1-schnell.safetensors` to `ComfyUI/models/unet`.
+- Links `ae.safetensors` to `ComfyUI/models/vae`.
+
+## First Image Procedure
+
+M26.2 adds the first guarded real image workflow. Generation is user-run only and requires `APPLY=1`.
+
+Recommended sequence:
+
+```bash
+make runtime-mode-image-plan
+make comfyui-vram-status
+make download-flux-schnell-models-plan
+make download-flux-schnell-models-apply
+make check-flux-schnell-models
+make link-comfyui-models-apply
+make comfyui-up
+make comfyui-flux-smoke-test
+make comfyui-first-image-plan
+make comfyui-first-image-apply
+```
+
+Default first prompt:
+
+```text
+realistic sun shaded wooden pergola in a small garden, natural pine wood, covered roof, soft daylight
+```
+
+Default first test size:
+
+```text
+512x512, 4 steps
+```
+
+Outputs must stay under:
+
+```text
+/home/cuneyt/MoE/runtime/media/outputs/images
+```
+
+The first-image script writes its generated workflow JSON under:
+
+```text
+/home/cuneyt/MoE/runtime/media/workflows
+```
+
+No generated image or workflow output belongs in the source repository.
+
+## VRAM Notes
+
+Flux may need most of the PC-1 GPU. The image mode plan recommends stopping `llama-server` for VRAM before generation.
+
+Check VRAM:
+
+```bash
+make comfyui-vram-status
+```
+
+This command prints `nvidia-smi` and warns if `llama-server` appears to be running. It does not kill or stop anything.
+
+PC-2 does not generate images. PC-2 Prompt Interpreter only prepares dry-run job specs.
 
 ## Runtime Paths
 
@@ -268,14 +374,15 @@ This does not install ComfyUI, create model symlinks, modify model files, or run
 ## Safety Gates
 
 - No real generation in M26.0, M26.1-pre, or M26.1.
+- M26.2 real generation is opt-in only through `APPLY=1`.
 - ComfyUI installation only through explicit optional user-run runtime script.
 - No Blender installation.
 - No Diffusers installation.
-- No model downloads.
+- Model downloads only through explicit optional user-run `APPLY=1` script.
 - No model file modifications.
-- No GPU job execution.
+- GPU job execution only through explicit optional user-run `APPLY=1` first-image script.
 - No arbitrary shell execution.
-- No image output creation.
+- No image output creation in the source repository.
 
 Future real image generation requires all safety variables to be explicitly enabled:
 
@@ -286,6 +393,4 @@ MEDIA_COMFYUI_URL=http://127.0.0.1:8188
 MEDIA_ALLOW_GPU_JOBS=false
 ```
 
-Real generation must remain rejected until Milestone 26.2 explicitly sets the engine, validates model inventory, confirms runtime layout, and adds tests.
-
-M26.2 must also wait for Control Plane mode gates from Milestone 26.1.5. Image generation should only proceed when the `image` mode plan is explicit, ComfyUI is healthy, model components are validated, and real generation safety variables are enabled.
+M26.2 real generation should only proceed when the `image` mode plan is explicit, ComfyUI is healthy, model components are validated, and the user has set `APPLY=1`.

@@ -758,6 +758,22 @@ Expected boundaries:
 - Use queued jobs and asset tracking.
 - Keep outputs under runtime media storage.
 
+## Milestone 26.2 Prompt Summary
+
+Add first guarded real image generation with ComfyUI and Flux Schnell.
+
+Scope:
+
+- Add Flux Schnell download plan/apply scripts that write only to `/home/cuneyt/MoE_Models_Backup`.
+- Use `hf download`, not deprecated `huggingface-cli`, and document gated model approval.
+- Add Flux model validation for main model, AE/VAE, `clip_l`, and `t5xxl`.
+- Link ComfyUI models by symlink only.
+- Add VRAM status and ComfyUI Flux smoke checks.
+- Add first-image script that requires `APPLY=1`.
+- Store generated images under `/home/cuneyt/MoE/runtime/media/outputs/images`.
+- Keep PC-2 as prompt/job helper only.
+- Do not write generated outputs into the repository.
+
 ## Milestone 26.1.5 Prompt Summary
 
 Add Control Plane Dashboard and Runtime Mode Manager.

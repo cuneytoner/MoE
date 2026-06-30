@@ -476,7 +476,7 @@ Goals:
 
 ## Milestone 26.1.6: Prompt Interpreter Worker
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add a PC-2 prompt interpreter worker.
@@ -497,10 +497,14 @@ Goals:
 
 ## Milestone 26.2: First Real Image Generation
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Enable real generation only after explicit safety gates are set.
+- Add explicit Flux Schnell model download plan/apply scripts.
+- Add checksum/size validation helpers.
+- Link models into ComfyUI by symlink only.
+- Add guarded ComfyUI Flux smoke and first-image scripts.
+- Enable first real generation only through explicit user-run `APPLY=1`.
 - Validate ComfyUI health, selected Flux model, text encoders, and VAE/AE.
 - Support queued image jobs and asset tracking.
 - Store generated images under `/home/cuneyt/MoE/runtime/media/outputs/images`.

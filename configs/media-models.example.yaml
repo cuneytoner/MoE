@@ -1,5 +1,5 @@
 image:
-  enabled: false
+  enabled: true
   real_generation_enabled: false
   default_engine: disabled
   selected_track: flux-schnell-comfyui-placeholder
@@ -23,6 +23,12 @@ image:
         - t5xxl
         - vae
       notes: "Runtime activation planning only. Do not download or generate in 26.1."
+      m26_2_first_image:
+        prompt: "realistic sun shaded wooden pergola in a small garden, natural pine wood, covered roof, soft daylight"
+        width: 512
+        height: 512
+        steps: 4
+        output_dir: /home/cuneyt/MoE/runtime/media/outputs/images
 
     sdxl_comfyui:
       enabled: false
@@ -41,7 +47,7 @@ image:
         clip_l: /home/cuneyt/MoE_Models_Backup/clip_l.safetensors
         t5xxl: /home/cuneyt/MoE_Models_Backup/t5xxl_fp8_e4m3fn.safetensors
         vae: /home/cuneyt/MoE_Models_Backup/vae/ae.safetensors
-      notes: Placeholder only. Main Flux model and VAE/AE are not required until a later explicit milestone.
+      notes: Real generation remains gated by explicit scripts, APPLY=1, ComfyUI health, model validation, and safety variables.
 
     - id: sdxl-placeholder
       enabled: false
