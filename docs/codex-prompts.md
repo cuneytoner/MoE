@@ -601,23 +601,24 @@ Scope:
 - Do not deploy, start, stop, or restart PC-2 services.
 - Keep default tests independent from PC-2 availability.
 
-## Milestone 24 Prompt Placeholder
+## Milestone 24 Prompt Summary
 
-Add nightly learning worker planning or implementation.
+Add the first Nightly Learning Worker skeleton.
 
-Expected boundaries:
+Scope:
 
-- Analyze recent git activity, tests, Gateway route decisions, Memory API records, and runtime/model health reports.
-- Produce reports under `/home/cuneyt/MoE/runtime/reports/nightly`.
-- Store useful lessons into Memory API.
-- Do not modify code automatically.
-- Do not execute shell commands automatically.
-- Do not restart Docker or model runtime.
-- Keep the workflow safe, observable, and manually reviewable.
+- Create `apps/nightly-learning-worker` as a FastAPI service on port `8200`.
+- Add `/health`, `/nightly/run`, and `/nightly/latest`.
+- Support `dry_run` only and reject other modes.
+- Read bounded metadata from the configured read-only source root.
+- Write JSON reports only under `NIGHTLY_REPORTS_DIR`.
+- Keep `store_lessons=false` by default and make Memory API lesson storage optional.
+- Do not modify source files, apply patches, execute shell commands, control Docker, control PC-2, or switch model runtime.
+- Keep PC-2 deployment as an explicit future activation step behind the `learning` profile.
 
 ## Milestone 24.1 Prompt Placeholder
 
-Add optional research ingestion worker.
+Add optional Research Ingestion Worker.
 
 Expected boundaries:
 

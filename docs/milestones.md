@@ -320,7 +320,7 @@ Goals:
 
 ## Milestone 23.5: PC-2 Worker Node Preparation
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Prepare PC-2 as a background worker node before Nightly Learning.
@@ -335,17 +335,23 @@ Goals:
 
 ## Milestone 24: Nightly Learning Worker
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Add a scheduled read-only learning worker.
-- Analyze recent git activity, tests, Gateway route decisions, Memory API records, and runtime/model health reports.
+- Add a separate read-only Nightly Learning Worker service skeleton.
+- Support `dry_run` report generation through FastAPI on port `8200`.
+- Inspect only bounded source metadata and configured service health.
 - Produce nightly reports under `/home/cuneyt/MoE/runtime/reports/nightly`.
-- Store useful lessons into Memory API.
+- Optionally store useful lessons into Memory API when explicitly requested.
 - Never modify code automatically.
 - Never execute shell commands automatically.
 - Never restart Docker or model runtime.
 - Keep reports safe, observable, and manually reviewable.
+
+Current scope:
+- Add `/health`, `/nightly/run`, and `/nightly/latest`.
+- Keep PC-2 deployment as a source-only example behind the `learning` profile.
+- Keep default tests independent from PC-2, Docker, model runtime, and live service availability.
 
 ## Milestone 24.1: Research Ingestion Worker
 

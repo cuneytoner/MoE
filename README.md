@@ -45,6 +45,7 @@ apps:
 - gateway-api
 - memory-api
 - embed-worker
+- nightly-learning-worker
 - dashboard
 
 packages:
@@ -93,8 +94,8 @@ make tree
 
 ## Current Milestone
 
-Milestone 23.5: PC-2 Worker Node Preparation in progress
+Milestone 24: Nightly Learning Worker in progress
 
 Next planned milestone:
 
-Milestone 24: Nightly Learning Worker
+Milestone 24.1: Research Ingestion Worker

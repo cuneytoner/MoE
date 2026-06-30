@@ -14,17 +14,22 @@ services:
     volumes:
       - ${PC2_RUNTIME_ROOT:-/home/cuneyt/MoE}/runtime:/runtime
 
-  nightly-learning-worker-placeholder:
-    image: alpine:3.20
+  nightly-learning-worker:
+    build:
+      context: ../../apps/nightly-learning-worker
     profiles:
       - learning
-    command: ["sh", "-c", "echo Nightly Learning Worker placeholder && sleep infinity"]
     environment:
-      PC2_REPORTS_DIR: ${PC2_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports}
-      PC1_GATEWAY_URL: ${PC1_GATEWAY_URL:-http://192.168.50.1:8100}
-      PC1_MEMORY_API_URL: ${PC1_MEMORY_API_URL:-http://192.168.50.1:8101}
+      NIGHTLY_RUNTIME_ROOT: ${NIGHTLY_RUNTIME_ROOT:-/home/cuneyt/MoE/runtime}
+      NIGHTLY_REPORTS_DIR: ${NIGHTLY_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/nightly}
+      NIGHTLY_SOURCE_ROOT: ${NIGHTLY_SOURCE_ROOT:-/workspace}
+      NIGHTLY_GATEWAY_URL: ${NIGHTLY_GATEWAY_URL:-http://192.168.50.1:8100}
+      NIGHTLY_MEMORY_API_URL: ${NIGHTLY_MEMORY_API_URL:-http://192.168.50.1:8101}
+    ports:
+      - "${NIGHTLY_PORT:-8200}:8200"
     volumes:
-      - ${PC2_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports}:/reports
+      - ${NIGHTLY_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/nightly}:/home/cuneyt/MoE/runtime/reports/nightly
+      - ${PC2_SOURCE_ROOT:-/home/cuneyt/MoE/codebase}:/workspace:ro
 
   research-ingestion-worker-placeholder:
     image: alpine:3.20

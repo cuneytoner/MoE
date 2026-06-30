@@ -1,6 +1,6 @@
-# Nightly Learning Roadmap
+# Nightly Learning Worker
 
-Nightly learning begins after Milestone 24. It is read-only and report-first.
+Nightly learning begins at Milestone 24 as a read-only, report-first worker skeleton.
 
 Milestone 23.5 prepares PC-2 as the preferred background worker node before Nightly Learning begins. PC-2 can host scheduled learning jobs, research ingestion, report generation, and supporting storage services while PC-1 remains the interactive coding and model runtime node.
 
@@ -28,22 +28,63 @@ Allowed outputs:
 
 Preferred host: PC-2 after Milestone 23.5 validation and explicit activation.
 
-Planned inputs:
+Current implementation:
 
-- Recent git activity.
-- Test results and test gaps.
-- Gateway route decisions.
-- Memory API records.
-- Runtime and model health reports.
+- App path: `apps/nightly-learning-worker`.
+- FastAPI port: `8200`.
+- Endpoints: `GET /health`, `POST /nightly/run`, and `GET /nightly/latest`.
+- Supported run mode: `dry_run` only.
+- Report path: `/home/cuneyt/MoE/runtime/reports/nightly`.
+- Default source root inside Docker: `/workspace`, mounted read-only.
+- Default lesson storage: disabled with `store_lessons=false`.
 
-Planned outputs:
+Current inputs:
 
-- Nightly summary report.
-- Task success/failure observations.
-- Suggested follow-up tasks.
-- Useful lessons stored in Memory API.
+- Bounded source metadata from the configured read-only source root.
+- Optional Gateway health probe.
+- Optional Memory API health probe.
 
-The worker should be scheduled and observable. It should produce artifacts that can be reviewed manually before any action is taken.
+Current outputs:
+
+- JSON nightly report under the configured runtime reports directory.
+- Optional distilled lesson sent to Memory API only when `store_lessons=true` and Memory API is reachable.
+
+The worker must not modify source files, apply patches, execute shell commands, restart Docker, control PC-2, or switch model runtime. It should produce artifacts that can be reviewed manually before any action is taken.
+
+Example local dry-run request when the worker is already running:
+
+```bash
+curl -fsS -H "Content-Type: application/json" \
+  -X POST \
+  -d '{"mode":"dry_run","include_git_status":true,"include_gateway_summary":true,"include_memory_summary":true,"store_lessons":false}' \
+  http://127.0.0.1:8200/nightly/run
+```
+
+Local source-only test:
+
+```bash
+make test-nightly-learning
+```
+
+Default `make test` does not require Nightly Learning Worker Python dependencies. The worker test is optional because it uses FastAPI TestClient and needs the worker app requirements in the active Python environment.
+
+Use a repo-external virtualenv for optional local worker tests:
+
+```bash
+mkdir -p ~/MoE/runtime/venvs
+python3 -m venv ~/MoE/runtime/venvs/nightly-learning
+source ~/MoE/runtime/venvs/nightly-learning/bin/activate
+pip install -r apps/nightly-learning-worker/requirements.txt
+make test-nightly-learning
+```
+
+Do not create `.venv`, `venv`, or any virtualenv inside the codebase. Runtime-local development environments belong under `~/MoE/runtime/venvs`.
+
+The same setup recipe is available from:
+
+```bash
+make nightly-learning-test-env-help
+```
 
 ## Milestone 24.1: Research Ingestion Worker
 

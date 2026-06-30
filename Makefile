@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health pc2-check-connectivity pc2-check-layout model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help pc2-check-connectivity pc2-check-layout model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -24,6 +24,9 @@ help:
 > @echo "  make gateway-health Check Gateway API /gateway/health"
 > @echo "  make memory-dev     Run Memory API locally on port 8101"
 > @echo "  make memory-health  Check Memory API /health"
+> @echo "  make nightly-worker-health Check Nightly Learning Worker /health"
+> @echo "  make nightly-worker-run-dry Run Nightly Learning Worker dry-run endpoint"
+> @echo "  make nightly-learning-test-env-help Show optional Nightly Learning test venv setup"
 > @echo "  make pc2-check-connectivity Optional read-only PC-2 network and SSH check"
 > @echo "  make pc2-check-layout Optional read-only PC-2 runtime and Docker layout check"
 > @echo "  make model-start    Start host llama.cpp OpenAI-compatible runtime"
@@ -38,10 +41,11 @@ help:
 > @echo "  make test-continue-gateway Run optional Continue.dev Gateway chat smoke test"
 > @echo "  make test-code-agent-runtime Run optional repo-aware code agent runtime test"
 > @echo "  make test-code-patch-runtime Run optional safe patch/diff runtime test"
+> @echo "  make test-nightly-learning Run local Nightly Learning Worker tests"
 > @echo "  make test-embed     Run Embed Worker contract tests"
 > @echo "  make test-memory    Run Memory API contract tests"
-> @echo "  make test-stack     Run stack smoke tests"
-> @echo "  make test           Run layout and stack tests"
+> @echo "  make test-stack     Run Docker-backed stack smoke tests"
+> @echo "  make test           Run source-only default tests"
 
 check-layout:
 > @./scripts/check-layout.sh
@@ -85,6 +89,22 @@ memory-dev:
 memory-health:
 > @curl -fsS http://127.0.0.1:8101/health
 
+nightly-worker-health:
+> @curl -fsS http://127.0.0.1:8200/health
+
+nightly-worker-run-dry:
+> @curl -fsS -H "Content-Type: application/json" -X POST -d '{"mode":"dry_run","include_git_status":true,"include_gateway_summary":true,"include_memory_summary":true,"store_lessons":false}' http://127.0.0.1:8200/nightly/run
+
+nightly-learning-test-env-help:
+> @echo "Recommended source-only setup using a repo-external venv:"
+> @echo "  mkdir -p ~/MoE/runtime/venvs"
+> @echo "  python3 -m venv ~/MoE/runtime/venvs/nightly-learning"
+> @echo "  source ~/MoE/runtime/venvs/nightly-learning/bin/activate"
+> @echo "  pip install -r apps/nightly-learning-worker/requirements.txt"
+> @echo "  make test-nightly-learning"
+> @echo ""
+> @echo "Do not create a virtualenv inside the codebase."
+
 pc2-check-connectivity:
 > @./scripts/check-pc2-connectivity.sh
 
@@ -127,6 +147,9 @@ test-code-agent-runtime:
 test-code-patch-runtime:
 > @./scripts/test-code-patch-runtime.sh
 
+test-nightly-learning:
+> @./scripts/test-nightly-learning-worker.sh
+
 test-memory:
 > @./scripts/test-memory-api.sh
 
@@ -139,4 +162,4 @@ test-bge-m3:
 test-stack:
 > @./scripts/test-stack.sh
 
-test: check-layout check-python-syntax test-stack
+test: check-layout check-python-syntax

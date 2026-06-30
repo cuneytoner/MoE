@@ -127,6 +127,14 @@ Profiles:
 
 The example compose file is not used by default tests and should not be run until PC-2 activation is explicitly requested.
 
+After explicit PC-2 activation, the Nightly Learning Worker is planned to run through the `learning` profile. Example command only:
+
+```bash
+docker compose --env-file deploy/pc2/.env.example -f deploy/pc2/docker-compose.worker.example.yml --profile learning up -d nightly-learning-worker
+```
+
+Do not run this command until PC-2 activation and deployment are explicitly requested. The worker source mount is read-only and report output is bound to `/home/cuneyt/MoE/runtime/reports/nightly`.
+
 ## Health Checks
 
 Optional read-only checks:
@@ -163,4 +171,4 @@ Before activating PC-2 worker services:
 
 ## Future Nightly Learning Handoff
 
-Milestone 24 can build on this PC-2 preparation by adding a read-only Nightly Learning Worker. That worker should write reports under `/home/cuneyt/MoE/runtime/reports/nightly`, store useful lessons through Memory API, and never modify code or restart services automatically.
+Milestone 24 adds the first read-only Nightly Learning Worker skeleton. That worker writes reports under `/home/cuneyt/MoE/runtime/reports/nightly`, can store useful lessons through Memory API only when explicitly requested, and never modifies code or restarts services automatically.

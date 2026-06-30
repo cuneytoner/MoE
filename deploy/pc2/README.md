@@ -39,6 +39,14 @@ The example files in this directory are source-only templates:
 - `.env.example`
 - `docker-compose.worker.example.yml`
 
+After explicit PC-2 activation, the Nightly Learning Worker can be started through the `learning` profile. Example command only:
+
+```bash
+docker compose --env-file deploy/pc2/.env.example -f deploy/pc2/docker-compose.worker.example.yml --profile learning up -d nightly-learning-worker
+```
+
+Do not run this until PC-2 activation and deployment are explicitly requested. The source checkout is mounted read-only at `/workspace`, and reports are written to `/home/cuneyt/MoE/runtime/reports/nightly`.
+
 Do not commit real secrets or real local `.env` files. Do not run PC-2 Docker profiles until a task explicitly asks to activate PC-2.
 
 Optional read-only checks from PC-1:

@@ -117,6 +117,10 @@ Host model runtime:
 
 Host-managed llama.cpp serving layer for local GGUF chat and coding models. It exposes an OpenAI-compatible endpoint at `http://localhost:8000/v1`, with model files loaded from `/home/cuneyt/MoE_Models_Backup` and runtime logs/pids stored under `/home/cuneyt/MoE/runtime`.
 
+apps/nightly-learning-worker:
+
+Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. It does not modify source files, apply patches, execute shell commands, control Docker, control PC-2, or switch model runtime.
+
 Backup and environment planning:
 
 Backup planning covers source, runtime, PostgreSQL, Qdrant, model backups, llama.cpp, and docs without copying runtime data into the codebase. Environment profile templates describe how PC1, PC2, single-machine, and future machines can own roles without rewriting the project.
@@ -170,7 +174,7 @@ PC-2 joins the architecture at Milestone 23.5 as a prepared but not-yet-activate
 
 Nightly learning roadmap:
 
-Nightly learning begins after Milestone 24. It is read-only and report-first: analyze recent project activity, tests, Gateway routing, Memory API records, and runtime health, then write reports under `/home/cuneyt/MoE/runtime/reports/nightly` and store useful lessons through Memory API. Automatic self-modification is out of scope until a later approval-gated milestone.
+Nightly learning begins at Milestone 24. It is read-only and report-first: inspect bounded project metadata and configured service health, then write reports under `/home/cuneyt/MoE/runtime/reports/nightly` and optionally store useful lessons through Memory API. Automatic self-modification is out of scope until a later approval-gated milestone.
 
 Media lab roadmap:
 
