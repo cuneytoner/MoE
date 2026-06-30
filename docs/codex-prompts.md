@@ -616,6 +616,23 @@ Scope:
 - Do not modify source files, apply patches, execute shell commands, control Docker, control PC-2, or switch model runtime.
 - Keep PC-2 deployment as an explicit future activation step behind the `learning` profile.
 
+## Milestone 24.0.1 Prompt Summary
+
+Prepare safe PC-2 activation for the Nightly Learning Worker.
+
+Scope:
+
+- Add explicit PC-1 helper scripts for source sync, PC-2 worker start, stop, health, and dry-run checks.
+- Use `rsync` from PC-1 to `/home/cuneyt/MoE/codebase` on PC-2 without remote deletion.
+- Exclude source-control metadata, caches, virtualenvs, build outputs, runtime data, models, data folders, checkpoints, and `custom_nodes`.
+- Start only `nightly-learning-worker` through the PC-2 Docker Compose `learning` profile.
+- Mount PC-2 source read-only at `/workspace`.
+- Mount reports at `/home/cuneyt/MoE/runtime/reports/nightly`.
+- Keep dry-run payload at `store_lessons=false` by default.
+- Reference PC-1 Gateway and Memory API through `192.168.50.1`.
+- Do not include PC-2 checks, sync, Docker, or worker availability in default `make test`.
+- Do not start research ingestion, memory migration services, model runtime, Gateway, or Dashboard on PC-2.
+
 ## Milestone 24.1 Prompt Placeholder
 
 Add optional Research Ingestion Worker.

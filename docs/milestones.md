@@ -335,7 +335,7 @@ Goals:
 
 ## Milestone 24: Nightly Learning Worker
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add a separate read-only Nightly Learning Worker service skeleton.
@@ -352,6 +352,19 @@ Current scope:
 - Add `/health`, `/nightly/run`, and `/nightly/latest`.
 - Keep PC-2 deployment as a source-only example behind the `learning` profile.
 - Keep default tests independent from PC-2, Docker, model runtime, and live service availability.
+
+## Milestone 24.0.1: PC-2 Nightly Worker Activation
+
+Status: IN PROGRESS
+
+Goals:
+- Prepare explicit PC-2 activation flow for the Nightly Learning Worker.
+- Add source sync helper from PC-1 to PC-2 that excludes runtime, model, cache, and build artifacts.
+- Add optional PC-2 start, stop, health, and dry-run helper scripts.
+- Start only `nightly-learning-worker` through the Docker Compose `learning` profile.
+- Keep `store_lessons=false` for the default dry-run command.
+- Keep default tests independent from PC-2, Docker, model runtime, and live service availability.
+- Do not start research ingestion, memory migration services, model runtime, Gateway, or Dashboard on PC-2.
 
 ## Milestone 24.1: Research Ingestion Worker
 

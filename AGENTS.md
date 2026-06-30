@@ -74,7 +74,7 @@ Never place runtime data, generated media, logs, pids, model files, checkpoints,
 
 ## 6. Current And Planned Milestones
 
-- Milestone 24: Nightly Learning Worker in progress
+- Milestone 24.0.1: PC-2 Nightly Worker Activation in progress
 - Milestone 24.1: Research Ingestion Worker
 - Milestone 25: Media Lab Foundation
 - Milestone 26: Image Generation Service

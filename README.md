@@ -94,7 +94,7 @@ make tree
 
 ## Current Milestone
 
-Milestone 24: Nightly Learning Worker in progress
+Milestone 24.0.1: PC-2 Nightly Worker Activation in progress
 
 Next planned milestone:
 

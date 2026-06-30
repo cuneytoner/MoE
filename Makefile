@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help pc2-check-connectivity pc2-check-layout model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -29,6 +29,11 @@ help:
 > @echo "  make nightly-learning-test-env-help Show optional Nightly Learning test venv setup"
 > @echo "  make pc2-check-connectivity Optional read-only PC-2 network and SSH check"
 > @echo "  make pc2-check-layout Optional read-only PC-2 runtime and Docker layout check"
+> @echo "  make pc2-sync-code Optional sync source-only codebase to PC-2"
+> @echo "  make pc2-nightly-up Optional start PC-2 Nightly Learning Worker"
+> @echo "  make pc2-nightly-down Optional stop PC-2 Nightly Learning Worker"
+> @echo "  make pc2-nightly-health Optional check PC-2 Nightly Learning Worker health"
+> @echo "  make pc2-nightly-dry-run Optional run PC-2 Nightly Learning Worker dry run"
 > @echo "  make model-start    Start host llama.cpp OpenAI-compatible runtime"
 > @echo "  make model-stop     Stop host llama.cpp runtime"
 > @echo "  make model-status   Show host llama.cpp runtime status"
@@ -110,6 +115,21 @@ pc2-check-connectivity:
 
 pc2-check-layout:
 > @./scripts/check-pc2-layout.sh
+
+pc2-sync-code:
+> @./scripts/pc2-sync-code.sh
+
+pc2-nightly-up:
+> @./scripts/pc2-nightly-worker-up.sh
+
+pc2-nightly-down:
+> @./scripts/pc2-nightly-worker-down.sh
+
+pc2-nightly-health:
+> @./scripts/pc2-nightly-worker-health.sh
+
+pc2-nightly-dry-run:
+> @./scripts/pc2-nightly-worker-dry-run.sh
 
 model-start:
 > @./scripts/model-runtime-start.sh $(MODEL)

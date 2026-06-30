@@ -135,6 +135,18 @@ docker compose --env-file deploy/pc2/.env.example -f deploy/pc2/docker-compose.w
 
 Do not run this command until PC-2 activation and deployment are explicitly requested. The worker source mount is read-only and report output is bound to `/home/cuneyt/MoE/runtime/reports/nightly`.
 
+Source sync and worker activation helpers are available, but they run only when invoked explicitly:
+
+```bash
+make pc2-sync-code
+make pc2-nightly-up
+make pc2-nightly-down
+make pc2-nightly-health
+make pc2-nightly-dry-run
+```
+
+`pc2-sync-code` uses `rsync` without remote deletion and excludes `.git`, caches, virtualenvs, `node_modules`, build outputs, models, runtime data, data folders, checkpoints, and `custom_nodes`.
+
 ## Health Checks
 
 Optional read-only checks:
@@ -168,6 +180,22 @@ Before activating PC-2 worker services:
 - Review `deploy/pc2/.env.example` and create a real runtime env file outside source control if needed.
 - Decide which compose profile to activate.
 - Run only explicitly approved deployment commands.
+
+## Nightly Learning Activation Checklist
+
+From PC-1:
+
+```bash
+make pc2-check-connectivity
+make pc2-check-layout
+make pc2-sync-code
+make pc2-nightly-up
+make pc2-nightly-health
+make pc2-nightly-dry-run
+ssh cuneyt@192.168.50.2 'ls -lah /home/cuneyt/MoE/runtime/reports/nightly'
+```
+
+The activation flow starts only the `nightly-learning-worker` service. It does not start research ingestion, memory migration services, model runtime, Gateway, or Dashboard on PC-2.
 
 ## Future Nightly Learning Handoff
 

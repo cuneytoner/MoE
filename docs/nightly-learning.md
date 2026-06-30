@@ -86,6 +86,35 @@ The same setup recipe is available from:
 make nightly-learning-test-env-help
 ```
 
+## PC-2 Activation
+
+Milestone 24.0.1 prepares explicit PC-2 activation for the Nightly Learning Worker. Activation is manual and command-driven from PC-1; default `make test` does not run PC-2 checks, sync code, start Docker, or require the worker to be reachable.
+
+PC-2 paths:
+
+- Source checkout: `/home/cuneyt/MoE/codebase`
+- Runtime root: `/home/cuneyt/MoE/runtime`
+- Nightly reports: `/home/cuneyt/MoE/runtime/reports/nightly`
+
+PC-1 service URLs used by PC-2:
+
+- Gateway: `http://192.168.50.1:8100`
+- Memory API: `http://192.168.50.1:8101`
+
+Activation flow from PC-1:
+
+```bash
+make pc2-check-connectivity
+make pc2-check-layout
+make pc2-sync-code
+make pc2-nightly-up
+make pc2-nightly-health
+make pc2-nightly-dry-run
+ssh cuneyt@192.168.50.2 'ls -lah /home/cuneyt/MoE/runtime/reports/nightly'
+```
+
+The first PC-2 run should be a dry run. The dry-run payload keeps `store_lessons=false`, so the worker writes only a report under the PC-2 runtime reports directory and does not attempt to store distilled lessons in Memory API by default.
+
 ## Milestone 24.1: Research Ingestion Worker
 
 Research ingestion is optional and source-approved.

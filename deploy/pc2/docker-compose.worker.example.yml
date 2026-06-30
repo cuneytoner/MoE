@@ -19,6 +19,7 @@ services:
       context: ../../apps/nightly-learning-worker
     profiles:
       - learning
+    restart: "no"
     environment:
       NIGHTLY_RUNTIME_ROOT: ${NIGHTLY_RUNTIME_ROOT:-/home/cuneyt/MoE/runtime}
       NIGHTLY_REPORTS_DIR: ${NIGHTLY_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/nightly}

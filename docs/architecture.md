@@ -119,7 +119,7 @@ Host-managed llama.cpp serving layer for local GGUF chat and coding models. It e
 
 apps/nightly-learning-worker:
 
-Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. It does not modify source files, apply patches, execute shell commands, control Docker, control PC-2, or switch model runtime.
+Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.
 
 Backup and environment planning:
 
@@ -174,7 +174,7 @@ PC-2 joins the architecture at Milestone 23.5 as a prepared but not-yet-activate
 
 Nightly learning roadmap:
 
-Nightly learning begins at Milestone 24. It is read-only and report-first: inspect bounded project metadata and configured service health, then write reports under `/home/cuneyt/MoE/runtime/reports/nightly` and optionally store useful lessons through Memory API. Automatic self-modification is out of scope until a later approval-gated milestone.
+Nightly learning begins at Milestone 24. It is read-only and report-first: inspect bounded project metadata and configured service health, then write reports under `/home/cuneyt/MoE/runtime/reports/nightly` and optionally store useful lessons through Memory API. Milestone 24.0.1 prepares explicit PC-2 activation commands for the Nightly Learning Worker. Automatic self-modification is out of scope until a later approval-gated milestone.
 
 Media lab roadmap:
 
