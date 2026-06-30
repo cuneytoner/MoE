@@ -1,95 +1,166 @@
-# PC-2 Worker Node Roadmap
+# PC-2 Worker Node Preparation
 
-Milestone 23.5 prepares PC-2 as a background worker node before Nightly Learning begins.
+## Purpose
 
-PC-1 remains the interactive workstation for coding, model runtime, Dashboard, and future media GPU workloads. PC-2 should focus on services and jobs that can run quietly in the background.
+Milestone 23.5 prepares PC-2 as a background worker node before Nightly Learning begins. This milestone is planning, source configuration, and read-only validation only. It does not deploy services, SSH into PC-2 automatically, start Docker, or modify runtime state.
+
+## PC-1 vs PC-2 Role Split
+
+PC-1 remains the interactive workstation:
+
+- Source owner.
+- Codex and Continue.dev workspace.
+- Gateway API.
+- Host model runtime.
+- Dashboard access point.
+- Media GPU workloads.
+
+PC-2 is prepared as a background worker node:
+
+- Telemetry source.
+- Nightly Learning Worker host.
+- Research Ingestion Worker host.
+- Report generation host.
+- Backup and maintenance host.
+- Optional future PostgreSQL, Qdrant, and Memory API host.
+
+PC-2 is not a heavy LLM inference node by default and is not a media generation node by default.
 
 ## Network Assumptions
 
 - PC-1 IP: `192.168.50.1`
 - PC-2 IP: `192.168.50.2`
-- PC-1 and PC-2 are connected over the local direct network.
-- Services should use explicit host/IP configuration when crossing machines.
-- Cross-machine service URLs should be documented before any migration.
+- PC-1 and PC-2 are connected over the local Cat5 network.
+- Gateway on PC-1 is expected at `http://192.168.50.1:8100`.
+- Memory API on PC-1 is expected at `http://192.168.50.1:8101`.
+- Embed Worker on PC-1 is expected at `http://192.168.50.1:8102`.
 
 ## SSH Assumptions
 
 - SSH user: `cuneyt`
-- Passwordless SSH from PC-1 to PC-2 is expected.
-- SSH is for deployment and maintenance workflows, not for Gateway runtime command execution.
-- Gateway must not use SSH to control PC-2.
+- Passwordless SSH is expected from PC-1 to PC-2.
+- Validation scripts use `ssh -o BatchMode=yes` and must not prompt for passwords.
+- PC-2 validation scripts are optional and are not part of default `make test`.
 
 ## Runtime Paths
 
-PC-2 must keep runtime data outside the source repository:
+PC-2 runtime root:
+
+```text
+/home/cuneyt/MoE
+```
+
+PC-2 runtime data:
 
 ```text
 /home/cuneyt/MoE/runtime
 ```
 
-If PC-2 needs local model references for lightweight embedding or future worker tasks, model files remain outside the codebase:
+Reports should live under:
 
 ```text
-/home/cuneyt/MoE_Models_Backup
+/home/cuneyt/MoE/runtime/reports
 ```
 
-Do not copy runtime data, database files, vector data, reports, caches, or model files into `/home/cuneyt/DiskD/Projects/MoE/codebase`.
+Runtime data, logs, reports, Docker volumes, caches, and generated files must stay outside the source checkout.
 
-## Docker Profile Plan
+PC-2 runtime directories are initialized manually during activation, not by default tests. When PC-2 activation is approved, run from PC-1:
 
-PC-2 deployment should become reproducible through Docker Compose profiles and docs.
+```bash
+ssh cuneyt@192.168.50.2 'mkdir -p ~/MoE/runtime/{logs,pids,reports,backups,tmp}'
+```
 
-Planned profile examples:
+Until that activation step is done, `pc2-check-layout` may report `/home/cuneyt/MoE/runtime` as missing. That is acceptable during preparation.
 
-- `pc2-db`: PostgreSQL and Qdrant.
-- `pc2-memory`: Memory API and dependencies when memory services move to PC-2.
-- `pc2-learning`: Nightly Learning Worker, Research Ingestion Worker, and report jobs.
-- `pc2-maintenance`: backup, maintenance, and telemetry jobs.
+## Source Checkout Path Recommendation
 
-This milestone is planning-only. Do not move services until URLs, data migration, backup, restore, and rollback steps are documented.
+Recommended PC-2 source checkout path:
 
-## Planned PC-1 Role
+```text
+/home/cuneyt/MoE/codebase
+```
 
-PC-1 owns interactive and GPU-heavy work:
+This keeps PC-2 simple: `/home/cuneyt/MoE` owns runtime and deployment-adjacent files, while `/home/cuneyt/MoE/codebase` is a source-only checkout. If another path is used later, update environment profiles and deployment docs together.
 
-- Gateway API.
-- Model runtime.
-- VS Code / Continue.dev interaction.
-- Workspace context.
-- Dashboard.
-- Media Lab GPU workloads.
+## Services Planned For PC-2
 
-## Planned PC-2 Role
+Phase A:
 
-PC-2 owns background and storage-oriented work:
+- Telemetry check scripts.
+- Worker health placeholder.
+- Report output directory structure.
 
-- PostgreSQL and Qdrant optional migration target.
-- Memory service optional deployment.
-- Nightly Learning Worker.
-- Research Ingestion Worker.
-- Report generation.
-- Backup and maintenance jobs.
-- Telemetry source.
+Phase B:
 
-## What PC-2 Should Not Do Initially
+- `nightly-learning-worker`.
+- `research-ingestion-worker`.
 
-- Do not run heavy LLM inference by default.
-- Do not host interactive coding workflows.
-- Do not control PC-1 model runtime.
-- Do not run Gateway shell commands or Docker control actions.
-- Do not store runtime data inside the codebase.
-- Do not become required for default single-machine development until migration is deliberate.
+Phase C optional:
+
+- PostgreSQL migration target.
+- Qdrant migration target.
+- Memory API migration target.
+
+## Services Not Planned For PC-2 Initially
+
+- Heavy LLM inference.
+- Media generation.
+- Gateway as the primary interactive endpoint.
+- Dashboard as the primary UI.
+- Automatic code editing.
+- Automatic patch application.
+
+## Docker Compose Worker Profile Plan
+
+The source-only example compose file is:
+
+```text
+deploy/pc2/docker-compose.worker.example.yml
+```
+
+Profiles:
+
+- `telemetry`
+- `learning`
+- `research`
+- `memory-services`
+
+The example compose file is not used by default tests and should not be run until PC-2 activation is explicitly requested.
+
+## Health Checks
+
+Optional read-only checks:
+
+```bash
+make pc2-check-connectivity
+make pc2-check-layout
+```
+
+These checks inspect network and expected paths only. They do not create directories, install packages, start services, stop services, or modify PC-2.
+
+`pc2-check-layout` is optional and is not part of default `make test`.
+
+## Backup / Restore Relationship
+
+PC-1 remains the source owner and deployment controller. PC-2 can later host backup and maintenance jobs, but source, runtime data, model backups, database dumps, and reports must remain clearly separated.
+
+Backups should exclude pid files and transient logs unless explicitly requested. Model files remain under `/home/cuneyt/MoE_Models_Backup` and should be validated with checksums rather than copied into the repository.
 
 ## Activation Checklist
 
-- Confirm PC-2 network reachability from PC-1.
-- Confirm passwordless SSH from PC-1 to PC-2.
-- Create `/home/cuneyt/MoE/runtime` on PC-2.
-- Verify Docker and Docker Compose on PC-2.
-- Document PC-2 environment profile values.
-- Add Docker Compose profiles for PC-2 roles.
-- Decide whether PostgreSQL/Qdrant move to PC-2 or remain on PC-1.
-- Plan database and vector backup before migration.
-- Plan rollback to PC-1 runtime services.
-- Add health checks for cross-machine service URLs.
-- Keep PC-1 interactive workflows working during activation.
+Before activating PC-2 worker services:
+
+- Confirm PC-2 is reachable from PC-1.
+- Confirm passwordless SSH works.
+- Confirm `/home/cuneyt/MoE` exists.
+- Confirm `/home/cuneyt/MoE/runtime` exists.
+- Confirm Docker is installed.
+- Confirm Docker Compose is available.
+- Confirm source checkout path.
+- Review `deploy/pc2/.env.example` and create a real runtime env file outside source control if needed.
+- Decide which compose profile to activate.
+- Run only explicitly approved deployment commands.
+
+## Future Nightly Learning Handoff
+
+Milestone 24 can build on this PC-2 preparation by adding a read-only Nightly Learning Worker. That worker should write reports under `/home/cuneyt/MoE/runtime/reports/nightly`, store useful lessons through Memory API, and never modify code or restart services automatically.

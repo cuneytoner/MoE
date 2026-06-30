@@ -4,6 +4,8 @@ Nightly learning begins after Milestone 24. It is read-only and report-first.
 
 Milestone 23.5 prepares PC-2 as the preferred background worker node before Nightly Learning begins. PC-2 can host scheduled learning jobs, research ingestion, report generation, and supporting storage services while PC-1 remains the interactive coding and model runtime node.
 
+PC-2 preparation is source-only until activation is explicitly requested. The recommended PC-2 source checkout path is `/home/cuneyt/MoE/codebase`, and runtime outputs remain under `/home/cuneyt/MoE/runtime`. The optional PC-2 checks inspect connectivity and layout only; they do not create directories, start Docker, or deploy services.
+
 The goal is to help the local AI stack learn from project activity without giving it authority to modify code, run shell commands, restart services, or change runtime state beyond approved report and memory writes.
 
 ## Safety Model
@@ -23,6 +25,8 @@ Allowed outputs:
 - Human-readable recommendations for future prompts, routing, tests, and docs.
 
 ## Milestone 24: Nightly Learning Worker
+
+Preferred host: PC-2 after Milestone 23.5 validation and explicit activation.
 
 Planned inputs:
 

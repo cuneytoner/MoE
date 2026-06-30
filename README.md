@@ -93,8 +93,8 @@ make tree
 
 ## Current Milestone
 
-Milestone 23: Safe Patch/Diff Workflow in progress
+Milestone 23.5: PC-2 Worker Node Preparation in progress
 
 Next planned milestone:
 
-Milestone 23.5: PC-2 Worker Node Preparation
+Milestone 24: Nightly Learning Worker

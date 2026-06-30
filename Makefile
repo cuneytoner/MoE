@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health pc2-check-connectivity pc2-check-layout model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -24,6 +24,8 @@ help:
 > @echo "  make gateway-health Check Gateway API /gateway/health"
 > @echo "  make memory-dev     Run Memory API locally on port 8101"
 > @echo "  make memory-health  Check Memory API /health"
+> @echo "  make pc2-check-connectivity Optional read-only PC-2 network and SSH check"
+> @echo "  make pc2-check-layout Optional read-only PC-2 runtime and Docker layout check"
 > @echo "  make model-start    Start host llama.cpp OpenAI-compatible runtime"
 > @echo "  make model-stop     Stop host llama.cpp runtime"
 > @echo "  make model-status   Show host llama.cpp runtime status"
@@ -82,6 +84,12 @@ memory-dev:
 
 memory-health:
 > @curl -fsS http://127.0.0.1:8101/health
+
+pc2-check-connectivity:
+> @./scripts/check-pc2-connectivity.sh
+
+pc2-check-layout:
+> @./scripts/check-pc2-layout.sh
 
 model-start:
 > @./scripts/model-runtime-start.sh $(MODEL)

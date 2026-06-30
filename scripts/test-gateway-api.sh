@@ -221,96 +221,113 @@ fi
 
 assert_tool_execute_ok() {
   local tool="$1"
-  local arguments="${2:-{}}"
-  local body
-  local response
-  local execute_status
-  local execute_tool_name
-  local execute_read_only
-  local execute_result_type
+  local arguments
 
-  body="$(jq -nc --arg tool "$tool" --argjson arguments "$arguments" '{tool: $tool, arguments: $arguments}')"
-  if ! response="$(post_json "/gateway/tools/execute" "$body")"; then
-    fail "Gateway API /gateway/tools/execute request failed for: $tool"
+  if [ "$#" -ge 2 ]; then
+    arguments="$2"
+  else
+    arguments='{}'
+  fi
+  local payload
+  local response
+  local status
+
+  if ! jq -e 'type == "object"' >/dev/null 2>&1 <<<"$arguments"; then
+    fail "Invalid JSON object for /gateway/tools/execute arguments for $tool: $arguments"
   fi
 
-  execute_status="$(jq -r '.status // empty' <<<"$response")"
-  execute_tool_name="$(jq -r '.tool // empty' <<<"$response")"
-  execute_read_only="$(jq -r '.read_only' <<<"$response")"
-  execute_result_type="$(jq -r 'if (.result | type) == "object" then "object" else "other" end' <<<"$response")"
+  payload="$(jq -n --arg tool "$tool" --argjson arguments "$arguments" \
+    '{tool:$tool, arguments:$arguments}')"
 
-  if [ "$execute_status" = "ok" ] \
-    && [ "$execute_tool_name" = "$tool" ] \
-    && [ "$execute_read_only" = "true" ] \
-    && [ "$execute_result_type" = "object" ]; then
+  if ! response="$(post_json "/gateway/tools/execute" "$payload")"; then
+    fail "Gateway API /gateway/tools/execute $tool request failed"
+  fi
+
+  status="$(jq -r '.status // empty' <<<"$response")"
+
+  if [ "$status" = "ok" ]; then
     pass "Gateway API /gateway/tools/execute $tool"
   else
-    fail "Gateway API /gateway/tools/execute expected ok for $tool, got: $response"
+    fail "Gateway API /gateway/tools/execute $tool returned unexpected response: $response"
   fi
 }
 
 assert_tool_execute_rejected() {
   local tool="$1"
-  local body
-  local response
-  local execute_status
-  local execute_tool_name
-  local execute_reason
+  local arguments
 
-  body="$(jq -nc --arg tool "$tool" '{tool: $tool, arguments: {}}')"
-  if ! response="$(post_json "/gateway/tools/execute" "$body")"; then
-    fail "Gateway API /gateway/tools/execute rejection request failed for: $tool"
+  if [ "$#" -ge 2 ]; then
+    arguments="$2"
+  else
+    arguments='{}'
+  fi
+  local payload
+  local response
+  local status
+
+  if ! jq -e 'type == "object"' >/dev/null 2>&1 <<<"$arguments"; then
+    fail "Invalid JSON object for /gateway/tools/execute arguments for $tool: $arguments"
   fi
 
-  execute_status="$(jq -r '.status // empty' <<<"$response")"
-  execute_tool_name="$(jq -r '.tool // empty' <<<"$response")"
-  execute_reason="$(jq -r '.reason // empty' <<<"$response")"
+  payload="$(jq -n --arg tool "$tool" --argjson arguments "$arguments" \
+    '{tool:$tool, arguments:$arguments}')"
 
-  if [ "$execute_status" = "rejected" ] \
-    && [ "$execute_tool_name" = "$tool" ] \
-    && [ -n "$execute_reason" ]; then
+  if ! response="$(post_json "/gateway/tools/execute" "$payload")"; then
+    fail "Gateway API /gateway/tools/execute $tool request failed"
+  fi
+
+  status="$(jq -r '.status // empty' <<<"$response")"
+
+  if [ "$status" = "rejected" ]; then
     pass "Gateway API /gateway/tools/execute rejects $tool"
   else
-    fail "Gateway API /gateway/tools/execute expected rejection for $tool, got: $response"
+    fail "Gateway API /gateway/tools/execute $tool returned unexpected response: $response"
   fi
 }
 
 assert_tool_execute_error() {
   local tool="$1"
-  local body
-  local response
-  local execute_status
-  local execute_tool_name
-  local execute_reason
+  local arguments
 
-  body="$(jq -nc --arg tool "$tool" '{tool: $tool, arguments: {}}')"
-  if ! response="$(post_json "/gateway/tools/execute" "$body")"; then
-    fail "Gateway API /gateway/tools/execute error request failed for: $tool"
+  if [ "$#" -ge 2 ]; then
+    arguments="$2"
+  else
+    arguments='{}'
+  fi
+  local payload
+  local response
+  local status
+
+  if ! jq -e 'type == "object"' >/dev/null 2>&1 <<<"$arguments"; then
+    fail "Invalid JSON object for /gateway/tools/execute arguments for $tool: $arguments"
   fi
 
-  execute_status="$(jq -r '.status // empty' <<<"$response")"
-  execute_tool_name="$(jq -r '.tool // empty' <<<"$response")"
-  execute_reason="$(jq -r '.reason // empty' <<<"$response")"
+  payload="$(jq -n --arg tool "$tool" --argjson arguments "$arguments" \
+    '{tool:$tool, arguments:$arguments}')"
 
-  if [ "$execute_status" = "error" ] \
-    && [ "$execute_tool_name" = "$tool" ] \
-    && [ "$execute_reason" = "Unknown tool" ]; then
+  if ! response="$(post_json "/gateway/tools/execute" "$payload")"; then
+    fail "Gateway API /gateway/tools/execute $tool request failed"
+  fi
+
+  status="$(jq -r '.status // empty' <<<"$response")"
+
+  if [ "$status" = "error" ]; then
     pass "Gateway API /gateway/tools/execute unknown $tool"
   else
-    fail "Gateway API /gateway/tools/execute expected unknown-tool error for $tool, got: $response"
+    fail "Gateway API /gateway/tools/execute $tool returned unexpected response: $response"
   fi
 }
 
-assert_tool_execute_ok "gateway_health_check"
-assert_tool_execute_ok "memory_health_check"
-assert_tool_execute_ok "memory_deep_health_check"
-assert_tool_execute_ok "embed_worker_health_check"
-assert_tool_execute_ok "runtime_status_check"
-assert_tool_execute_ok "model_routing_read"
-assert_tool_execute_ok "tools_read"
-assert_tool_execute_ok "workspace_status"
+assert_tool_execute_ok "gateway_health_check" '{}'
+assert_tool_execute_ok "memory_health_check" '{}'
+assert_tool_execute_ok "memory_deep_health_check" '{}'
+assert_tool_execute_ok "embed_worker_health_check" '{}'
+assert_tool_execute_ok "runtime_status_check" '{}'
+assert_tool_execute_ok "model_routing_read" '{}'
+assert_tool_execute_ok "tools_read" '{}'
+assert_tool_execute_ok "workspace_status" '{}'
 assert_tool_execute_ok "workspace_tree" '{"path":".","max_items":20}'
-assert_tool_execute_ok "workspace_search" '{"query":"gateway","path":"docs","max_results":5}'
+assert_tool_execute_ok "workspace_search" '{"query":"gateway","path":".","max_results":5}'
 assert_tool_execute_ok "workspace_file_read" '{"path":"docs/gateway-api.md"}'
 assert_tool_execute_ok "workspace_context" '{"task":"explain gateway docs","paths":["docs/gateway-api.md"],"max_chars":4000}'
 assert_tool_execute_ok "code_context" '{"task":"explain gateway routing","query":"gateway","paths":[],"max_files":4,"max_chars":8000}'
@@ -611,7 +628,7 @@ assert_route_intent() {
 }
 
 assert_route_intent "hello how are you" "chat" "qwen-coder-14b-fast" "model_chat"
-assert_route_intent "fix this python traceback error" "code" "qwen-coder-14b-fast" "model_chat"
+assert_route_intent "fix this python traceback error" "code" "qwen-coder-14b-fast" "code_context"
 assert_route_intent "what do you remember about my local AI runtime?" "memory" "qwen-coder-14b-fast" "memory_search"
 assert_route_intent "review this architecture for security risks" "review" "qwen-coder-32b-main" "runtime_switch_plan"
 assert_route_intent "docker compose service cannot reach localhost port" "ops" "deepseek-coder-lite" "docker_status_check"

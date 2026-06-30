@@ -74,8 +74,7 @@ Never place runtime data, generated media, logs, pids, model files, checkpoints,
 
 ## 6. Current And Planned Milestones
 
-- Milestone 23: Safe Patch/Diff Workflow in progress
-- Milestone 23.5: PC-2 Worker Node Preparation
+- Milestone 23.5: PC-2 Worker Node Preparation in progress
 - Milestone 24: Nightly Learning Worker
 - Milestone 25: Media Lab Foundation
 - Milestone 26: Image Generation Service

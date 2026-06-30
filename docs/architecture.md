@@ -164,6 +164,10 @@ PC-2 worker node roadmap:
 
 Milestone 23.5 prepares PC-2 as a background worker node before Nightly Learning begins. PC-1 remains the interactive coding, model runtime, Dashboard, workspace context, and media GPU node. PC-2 is planned for memory/vector services, Nightly Learning, research ingestion, reports, backups, maintenance, and telemetry. PC-2 should not run heavy LLM inference by default.
 
+PC-2 worker node preparation:
+
+PC-2 joins the architecture at Milestone 23.5 as a prepared but not-yet-activated worker node. The canonical recommended PC-2 source checkout path is `/home/cuneyt/MoE/codebase`; runtime data stays under `/home/cuneyt/MoE/runtime`. Optional validation scripts can inspect connectivity and expected paths over passwordless SSH, but they are not part of default tests and do not modify PC-2. PC-2 becomes active for scheduled background work in Milestone 24.
+
 Nightly learning roadmap:
 
 Nightly learning begins after Milestone 24. It is read-only and report-first: analyze recent project activity, tests, Gateway routing, Memory API records, and runtime health, then write reports under `/home/cuneyt/MoE/runtime/reports/nightly` and store useful lessons through Memory API. Automatic self-modification is out of scope until a later approval-gated milestone.

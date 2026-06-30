@@ -1,0 +1,48 @@
+name: moe-pc2-worker
+
+services:
+  worker-health-placeholder:
+    image: alpine:3.20
+    profiles:
+      - telemetry
+    command: ["sh", "-c", "echo PC-2 worker health placeholder && sleep infinity"]
+    environment:
+      PC2_RUNTIME_ROOT: ${PC2_RUNTIME_ROOT:-/home/cuneyt/MoE}
+      PC2_REPORTS_DIR: ${PC2_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports}
+      PC2_WORKER_PORT: ${PC2_WORKER_PORT:-8200}
+      PC1_GATEWAY_URL: ${PC1_GATEWAY_URL:-http://192.168.50.1:8100}
+    volumes:
+      - ${PC2_RUNTIME_ROOT:-/home/cuneyt/MoE}/runtime:/runtime
+
+  nightly-learning-worker-placeholder:
+    image: alpine:3.20
+    profiles:
+      - learning
+    command: ["sh", "-c", "echo Nightly Learning Worker placeholder && sleep infinity"]
+    environment:
+      PC2_REPORTS_DIR: ${PC2_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports}
+      PC1_GATEWAY_URL: ${PC1_GATEWAY_URL:-http://192.168.50.1:8100}
+      PC1_MEMORY_API_URL: ${PC1_MEMORY_API_URL:-http://192.168.50.1:8101}
+    volumes:
+      - ${PC2_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports}:/reports
+
+  research-ingestion-worker-placeholder:
+    image: alpine:3.20
+    profiles:
+      - research
+    command: ["sh", "-c", "echo Research Ingestion Worker placeholder && sleep infinity"]
+    environment:
+      PC2_REPORTS_DIR: ${PC2_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports}
+      PC1_MEMORY_API_URL: ${PC1_MEMORY_API_URL:-http://192.168.50.1:8101}
+    volumes:
+      - ${PC2_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports}:/reports
+
+  memory-services-placeholder:
+    image: alpine:3.20
+    profiles:
+      - memory-services
+    command: ["sh", "-c", "echo Optional memory services migration placeholder && sleep infinity"]
+    environment:
+      PC2_RUNTIME_ROOT: ${PC2_RUNTIME_ROOT:-/home/cuneyt/MoE}
+    volumes:
+      - ${PC2_RUNTIME_ROOT:-/home/cuneyt/MoE}/runtime:/runtime

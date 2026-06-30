@@ -307,7 +307,7 @@ Goals:
 
 ## Milestone 23: Safe Patch/Diff Workflow
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Generate patches only.
@@ -320,7 +320,7 @@ Goals:
 
 ## Milestone 23.5: PC-2 Worker Node Preparation
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Prepare PC-2 as a background worker node before Nightly Learning.
@@ -329,6 +329,9 @@ Goals:
 - Do not run heavy LLM inference on PC-2 by default.
 - Keep PC-2 runtime and data directories outside the codebase.
 - Make PC-2 deployment reproducible through Docker Compose profiles and docs.
+- Add source-only PC-2 worker profile examples and deploy templates.
+- Add optional read-only PC-2 connectivity and layout validation scripts.
+- Keep default tests independent from PC-2 availability.
 
 ## Milestone 24: Nightly Learning Worker
 

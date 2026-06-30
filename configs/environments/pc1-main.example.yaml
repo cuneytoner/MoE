@@ -1,0 +1,33 @@
+profile:
+  id: pc1-main
+  name: PC1 main workstation and controller
+  ip: 192.168.50.1
+  ssh_user: cuneyt
+
+paths:
+  source_checkout: /home/cuneyt/DiskD/Projects/MoE/codebase
+  runtime_root: /home/cuneyt/MoE
+  runtime: /home/cuneyt/MoE/runtime
+  model_backup: /home/cuneyt/MoE_Models_Backup
+  llama_server: /home/cuneyt/Apps/llama.cpp/build/bin/llama-server
+
+roles:
+  codebase_owner: true
+  deployment_controller: true
+  gateway: true
+  model_runtime: true
+  dashboard: true
+  media_gpu_workloads: true
+  pc2_worker_controller: true
+  heavy_llm_inference: true
+
+services:
+  gateway_url: http://192.168.50.1:8100
+  memory_api_url: http://192.168.50.1:8101
+  embed_worker_url: http://192.168.50.1:8102
+  model_runtime_url: http://192.168.50.1:8000/v1
+
+safety:
+  runtime_data_inside_source: false
+  real_secrets_in_source: false
+  pc2_commands_manual_only: true

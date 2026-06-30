@@ -1,0 +1,45 @@
+profile:
+  id: pc2-worker
+  name: PC2 background worker node
+  ip: 192.168.50.2
+  ssh_user: cuneyt
+
+paths:
+  source_checkout: /home/cuneyt/MoE/codebase
+  runtime_root: /home/cuneyt/MoE
+  runtime: /home/cuneyt/MoE/runtime
+  reports: /home/cuneyt/MoE/runtime/reports
+  model_backup: /home/cuneyt/MoE_Models_Backup
+
+roles:
+  codebase_owner: false
+  model_runtime: false
+  heavy_llm_inference: false
+  media_generation: false
+  telemetry_source: true
+  nightly_learning_worker: true
+  research_ingestion_worker: true
+  report_generation: true
+  backup_maintenance: true
+  postgres_optional_target: true
+  qdrant_optional_target: true
+  memory_api_optional_target: true
+
+services:
+  pc1_gateway_url: http://192.168.50.1:8100
+  pc1_memory_api_url: http://192.168.50.1:8101
+  pc1_embed_worker_url: http://192.168.50.1:8102
+  worker_port: 8200
+
+compose_profiles:
+  - telemetry
+  - learning
+  - research
+  - memory-services
+
+safety:
+  runtime_data_inside_source: false
+  real_secrets_in_source: false
+  auto_code_editing: false
+  auto_patch_apply: false
+  auto_service_restart: false

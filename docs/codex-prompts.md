@@ -583,18 +583,23 @@ Scope:
 - Do not write, edit, delete, move, rename, chmod, or apply patches from Gateway.
 - Keep manual review explicit.
 
-## Milestone 23.5 Prompt Placeholder
+## Milestone 23.5 Prompt Summary
 
 Add PC-2 worker node preparation.
 
-Expected boundaries:
+Scope:
 
 - Prepare PC-2 as a background worker node before Nightly Learning.
 - Keep PC-1 as the interactive coding, model runtime, Dashboard, workspace, and media GPU node.
 - Plan PC-2 roles for memory/vector services, learning jobs, research ingestion, reports, backups, maintenance, and telemetry.
+- Add source-only PC-2 environment profile examples.
+- Add source-only PC-2 deploy examples with Docker Compose profiles.
+- Add optional read-only PC-2 connectivity and layout checks.
 - Do not run heavy LLM inference on PC-2 by default.
 - Keep PC-2 runtime data outside the codebase.
-- Prefer Docker Compose profiles and docs before moving services.
+- Do not SSH into PC-2 unless explicitly asked to run the optional checks.
+- Do not deploy, start, stop, or restart PC-2 services.
+- Keep default tests independent from PC-2 availability.
 
 ## Milestone 24 Prompt Placeholder
 
