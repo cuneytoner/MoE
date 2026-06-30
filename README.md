@@ -48,6 +48,8 @@ apps:
 - nightly-learning-worker
 - research-ingestion-worker
 - feedback-worker
+- media-api
+- media-worker
 - dashboard
 
 packages:
@@ -77,6 +79,7 @@ docs:
 - codex-prompts.md
 - research-ingestion.md
 - feedback-success-memory.md
+- media-lab.md
 
 scripts:
 
@@ -98,8 +101,8 @@ make tree
 
 ## Current Milestone
 
-Milestone 24.3: Prompt & Routing Improvement Reports in progress
+Milestone 25: Media Lab Foundation in progress
 
 Next planned milestone:
 
-Milestone 25: Media Lab Foundation
+Milestone 26: Image Generation Service

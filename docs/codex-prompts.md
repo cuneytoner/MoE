@@ -683,15 +683,23 @@ Scope:
 - Do not call model runtime, fetch internet data, modify source files, modify router config, modify prompt templates, modify model mappings, control Docker, control PC-2, or switch model runtime.
 - Require human approval before any recommendation becomes a code or config change.
 
-## Milestone 25 Prompt Placeholder
+## Milestone 25 Prompt Summary
 
-Add media lab foundation.
+Add Media Lab Foundation.
 
-Expected boundaries:
+Scope:
 
-- Define `media-api` and `media-worker` architecture.
-- Keep outputs under `/home/cuneyt/MoE/runtime/media`.
+- Create dry-run-only `apps/media-api` on port `8300`.
+- Create dry-run-only `apps/media-worker` on port `8310`.
+- Store media jobs as JSON under `MEDIA_JOBS_DIR`.
+- Store media dry-run reports under `MEDIA_REPORTS_DIR`.
+- Keep media outputs under `/home/cuneyt/MoE/runtime/media`.
 - Keep media models under `/home/cuneyt/MoE_Models_Backup`.
+- Add placeholder media model and workflow config examples.
+- Add optional Docker Compose `media` profile.
+- Do not install ComfyUI or Blender.
+- Do not download models.
+- Do not call GPU generation, model runtime, ComfyUI, Blender, or arbitrary shell commands.
 - Do not generate media into the codebase.
 
 ## Milestone 26 Prompt Placeholder

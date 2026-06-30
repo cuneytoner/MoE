@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-media-layout check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-media-api test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -12,6 +12,7 @@ help:
 > @echo "Available commands:"
 > @echo "  make check-layout   Validate repository layout"
 > @echo "  make check-python-syntax Validate Python syntax without bytecode"
+> @echo "  make check-media-layout Prepare/validate runtime media directories"
 > @echo "  make check-models   Validate local model files and Docker mount config"
 > @echo "  make status         Show git status"
 > @echo "  make tree           Show repository tree"
@@ -27,6 +28,8 @@ help:
 > @echo "  make nightly-worker-health Check Nightly Learning Worker /health"
 > @echo "  make nightly-worker-run-dry Run Nightly Learning Worker dry-run endpoint"
 > @echo "  make nightly-learning-test-env-help Show optional Nightly Learning test venv setup"
+> @echo "  make media-api-up   Optional start Media Lab services with Docker media profile"
+> @echo "  make media-api-down Optional stop Media Lab services with Docker media profile"
 > @echo "  make pc2-check-connectivity Optional read-only PC-2 network and SSH check"
 > @echo "  make pc2-check-layout Optional read-only PC-2 runtime and Docker layout check"
 > @echo "  make pc2-sync-code Optional sync source-only codebase to PC-2"
@@ -58,6 +61,7 @@ help:
 > @echo "  make test-nightly-learning Run local Nightly Learning Worker tests"
 > @echo "  make test-research-ingestion Run local Research Ingestion Worker tests"
 > @echo "  make test-feedback-worker Run local Feedback Worker tests"
+> @echo "  make test-media-api Run local Media API tests"
 > @echo "  make test-embed     Run Embed Worker contract tests"
 > @echo "  make test-memory    Run Memory API contract tests"
 > @echo "  make test-stack     Run Docker-backed stack smoke tests"
@@ -68,6 +72,9 @@ check-layout:
 
 check-python-syntax:
 > @./scripts/check-python-syntax.sh
+
+check-media-layout:
+> @./scripts/check-media-layout.sh
 
 check-models:
 > @./scripts/check-models.sh
@@ -120,6 +127,12 @@ nightly-learning-test-env-help:
 > @echo "  make test-nightly-learning"
 > @echo ""
 > @echo "Do not create a virtualenv inside the codebase."
+
+media-api-up:
+> @$(DOCKER_COMPOSE) --profile media up -d --build media-api media-worker
+
+media-api-down:
+> @$(DOCKER_COMPOSE) --profile media stop media-api media-worker
 
 pc2-check-connectivity:
 > @./scripts/check-pc2-connectivity.sh
@@ -213,6 +226,9 @@ test-research-ingestion:
 
 test-feedback-worker:
 > @./scripts/test-feedback-worker.sh
+
+test-media-api:
+> @./scripts/test-media-api.sh
 
 test-memory:
 > @./scripts/test-memory-api.sh

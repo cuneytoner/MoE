@@ -1,0 +1,23 @@
+image:
+  default_engine: comfyui
+  models:
+    - id: flux-schnell-placeholder
+      enabled: false
+      path: /home/cuneyt/MoE_Models_Backup/flux-placeholder
+      notes: Placeholder only. Do not download in M25.
+
+video:
+  default_engine: cogvideo-placeholder
+  models:
+    - id: cogvideo-placeholder
+      enabled: false
+
+3d:
+  default_engine: blender-placeholder
+  models: []
+
+rigging:
+  default_engine: blender-placeholder
+
+animation:
+  default_engine: blender-placeholder

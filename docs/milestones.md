@@ -397,7 +397,7 @@ Goals:
 
 ## Milestone 24.3: Prompt & Routing Improvement Reports
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Generate deterministic recommendations from feedback events.
@@ -409,13 +409,17 @@ Goals:
 
 ## Milestone 25: Media Lab Foundation
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Define `media-api` / `media-worker` architecture.
-- Define runtime output directories under `/home/cuneyt/MoE/runtime/media`.
-- Define model paths under `/home/cuneyt/MoE_Models_Backup`.
+- Add dry-run-only `media-api` and `media-worker` skeletons.
+- Define runtime job, output, and report directories under `/home/cuneyt/MoE/runtime/media` and `/home/cuneyt/MoE/runtime/reports/media`.
+- Define placeholder media model paths under `/home/cuneyt/MoE_Models_Backup`.
+- Add dry-run workflow config examples.
+- Add optional Docker `media` profile.
 - Keep generated media out of the codebase.
+- Do not install ComfyUI or Blender.
+- Do not implement actual image, video, 3D, rigging, or animation generation yet.
 
 ## Milestone 26: Image Generation Service
 

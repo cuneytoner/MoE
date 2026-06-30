@@ -129,6 +129,10 @@ apps/feedback-worker:
 
 Runtime-only feedback and success memory skeleton for Milestone 24.2. It exposes FastAPI on port `8220`, appends task outcome events to `/home/cuneyt/MoE/runtime/feedback/events.jsonl`, and writes feedback reports under `/home/cuneyt/MoE/runtime/reports/feedback`. Milestone 24.3 extends it with advisory prompt and routing improvement reports under `/home/cuneyt/MoE/runtime/reports/improvements`. It summarizes outcomes by task type, route intent, model target, and failure reason. It does not modify source, prompts, router config, model mappings, Docker, PC-2, or model runtime.
 
+apps/media-api and apps/media-worker:
+
+Dry-run-only Media Lab foundation for Milestone 25. Media API exposes job creation and dry-run processing on port `8300`; Media Worker exposes dry-run worker processing on port `8310`. Jobs and media reports are JSON files under `/home/cuneyt/MoE/runtime/media` and `/home/cuneyt/MoE/runtime/reports/media`. The foundation does not install or call ComfyUI, Blender, GPU jobs, model runtime, or media generation backends.
+
 Backup and environment planning:
 
 Backup planning covers source, runtime, PostgreSQL, Qdrant, model backups, llama.cpp, and docs without copying runtime data into the codebase. Environment profile templates describe how PC1, PC2, single-machine, and future machines can own roles without rewriting the project.
@@ -198,7 +202,7 @@ Milestone 24.3 uses feedback events to generate deterministic recommendations fo
 
 Media lab roadmap:
 
-Future media services should keep generated assets under `/home/cuneyt/MoE/runtime/media`, keep media models under `/home/cuneyt/MoE_Models_Backup`, and keep source-only service code in this repository. The planned sequence is foundation, image generation, video generation, 3D generation, rigging, animation, then workflow orchestration.
+Future media services should keep generated assets under `/home/cuneyt/MoE/runtime/media`, keep media models under `/home/cuneyt/MoE_Models_Backup`, and keep source-only service code in this repository. PC-1 is the future GPU media generation host by default; PC-2 remains a worker/report node and is not the default media GPU node. The planned sequence is foundation, image generation, video generation, 3D generation, rigging, animation, then workflow orchestration.
 
 apps/dashboard:
 

@@ -134,6 +134,51 @@ services:
     networks:
       - moe-net
 
+  media-api:
+    build:
+      context: ../../apps/media-api
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME:-moe}-media-api
+    profiles:
+      - media
+    restart: "no"
+    environment:
+      MEDIA_SERVICE_NAME: media-api
+      MEDIA_API_PORT: 8300
+      MEDIA_RUNTIME_ROOT: ${MEDIA_RUNTIME_ROOT:-/home/cuneyt/MoE/runtime}
+      MEDIA_ROOT: ${MEDIA_ROOT:-/home/cuneyt/MoE/runtime/media}
+      MEDIA_JOBS_DIR: ${MEDIA_JOBS_DIR:-/home/cuneyt/MoE/runtime/media/jobs}
+      MEDIA_OUTPUTS_DIR: ${MEDIA_OUTPUTS_DIR:-/home/cuneyt/MoE/runtime/media/outputs}
+      MEDIA_REPORTS_DIR: ${MEDIA_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/media}
+    ports:
+      - "${MEDIA_API_PORT:-8300}:8300"
+    volumes:
+      - ${MEDIA_ROOT:-/home/cuneyt/MoE/runtime/media}:/home/cuneyt/MoE/runtime/media
+      - ${MEDIA_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/media}:/home/cuneyt/MoE/runtime/reports/media
+    networks:
+      - moe-net
+
+  media-worker:
+    build:
+      context: ../../apps/media-worker
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME:-moe}-media-worker
+    profiles:
+      - media
+    restart: "no"
+    environment:
+      MEDIA_WORKER_SERVICE_NAME: media-worker
+      MEDIA_WORKER_PORT: 8310
+      MEDIA_JOBS_DIR: ${MEDIA_JOBS_DIR:-/home/cuneyt/MoE/runtime/media/jobs}
+      MEDIA_REPORTS_DIR: ${MEDIA_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/media}
+    ports:
+      - "${MEDIA_WORKER_PORT:-8310}:8310"
+    volumes:
+      - ${MEDIA_ROOT:-/home/cuneyt/MoE/runtime/media}:/home/cuneyt/MoE/runtime/media
+      - ${MEDIA_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/media}:/home/cuneyt/MoE/runtime/reports/media
+    networks:
+      - moe-net
+
 networks:
   moe-net:
     name: ${PROJECT_NAME:-moe}-net

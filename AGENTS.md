@@ -74,9 +74,7 @@ Never place runtime data, generated media, logs, pids, model files, checkpoints,
 
 ## 6. Current And Planned Milestones
 
-- Milestone 24.3: Prompt & Routing Improvement Reports in progress
-- Milestone 25: Media Lab Foundation
-- Milestone 25: Media Lab Foundation
+- Milestone 25: Media Lab Foundation in progress
 - Milestone 26: Image Generation Service
 - Milestone 27: Video Generation Service
 - Milestone 28: 3D Model Generation Pipeline

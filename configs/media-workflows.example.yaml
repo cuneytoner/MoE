@@ -1,0 +1,25 @@
+workflows:
+  image_default:
+    job_type: image
+    enabled: false
+    dry_run_only: true
+
+  video_default:
+    job_type: video
+    enabled: false
+    dry_run_only: true
+
+  3d_default:
+    job_type: 3d
+    enabled: false
+    dry_run_only: true
+
+  rigging_default:
+    job_type: rigging
+    enabled: false
+    dry_run_only: true
+
+  animation_default:
+    job_type: animation
+    enabled: false
+    dry_run_only: true

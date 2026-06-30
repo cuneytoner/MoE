@@ -1,86 +1,156 @@
-# Media Lab Roadmap
+# Media Lab Foundation
 
-The media lab is a future expansion of the local AI stack for image, video, 3D, rigging, animation, and workflow orchestration.
+Milestone 25 creates the source-only foundation for future image, video, 3D, rigging, animation, and media orchestration workflows.
 
-It is planning-only for now. Do not implement services, download models, or place generated assets in the codebase during these milestones.
+This milestone is dry-run only. It does not install ComfyUI, install Blender, download models, run GPU jobs, call model runtime, or generate media assets.
 
-## Boundaries
+## Purpose
 
-- Generated media belongs under `/home/cuneyt/MoE/runtime/media`.
-- Media model files belong under `/home/cuneyt/MoE_Models_Backup`.
-- Source code remains under `/home/cuneyt/DiskD/Projects/MoE/codebase`.
-- Runtime logs, job state, temporary files, previews, and exports must stay outside the codebase.
+Media Lab will eventually provide queued local media generation workflows while preserving source/runtime/model separation.
 
-## Milestone 25: Media Lab Foundation
+Source code lives in this repository. Runtime media jobs, reports, and generated assets belong under:
 
-Goal: define the architecture before adding workers.
+```text
+/home/cuneyt/MoE/runtime/media
+```
 
-Planned capabilities:
+Media models belong under:
 
-- Define `media-api` and `media-worker` responsibilities.
-- Define runtime output directories under `/home/cuneyt/MoE/runtime/media`.
-- Define model path conventions under `/home/cuneyt/MoE_Models_Backup`.
-- Define job, status, asset, and provenance concepts.
+```text
+/home/cuneyt/MoE_Models_Backup
+```
 
-## Milestone 26: Image Generation Service
+## Runtime Paths
 
-Goal: add image generation through ComfyUI or a dedicated image worker.
+```text
+/home/cuneyt/MoE/runtime/media
+/home/cuneyt/MoE/runtime/media/jobs
+/home/cuneyt/MoE/runtime/media/outputs/images
+/home/cuneyt/MoE/runtime/media/outputs/videos
+/home/cuneyt/MoE/runtime/media/outputs/3d
+/home/cuneyt/MoE/runtime/media/outputs/rigs
+/home/cuneyt/MoE/runtime/media/outputs/animations
+/home/cuneyt/MoE/runtime/reports/media
+```
 
-Planned capabilities:
+Prepare the runtime layout:
 
-- Flux-style image generation.
-- Queued jobs.
-- Job status and asset tracking.
-- Runtime-only output storage.
+```bash
+make check-media-layout
+```
 
-## Milestone 27: Video Generation Service
+## Services
 
-Goal: add video and image-to-video workflows.
+`apps/media-api` exposes a dry-run job API on port `8300`.
 
-Planned capabilities:
+`apps/media-worker` exposes a dry-run worker API on port `8310`.
 
-- CogVideoX-style generation.
-- Queued jobs.
-- Preview and final asset tracking.
-- Runtime-only output storage.
+Optional Docker profile:
 
-## Milestone 28: 3D Model Generation Pipeline
+```bash
+docker compose -f infra/docker/docker-compose.yml --profile media up -d --build media-api media-worker
+```
 
-Goal: start with deterministic, inspectable 3D generation.
+The media services are not part of default `make test`.
 
-Planned capabilities:
+## Job Schema
 
-- Parametric Blender Python generation.
-- Export `.blend`, `.glb`, and `.obj`.
-- Support technical structures such as pergola before broad creative modeling.
+Job request:
 
-## Milestone 29: Rigging Pipeline
+```json
+{
+  "job_type": "image",
+  "mode": "dry_run",
+  "prompt": "text",
+  "workflow": "default",
+  "metadata": {}
+}
+```
 
-Goal: add basic rig and armature generation.
+Supported future job types:
 
-Planned capabilities:
+- `image`
+- `video`
+- `3d`
+- `rigging`
+- `animation`
 
-- Mechanical and object rigs first.
-- Character rigs later after the simpler pipeline is stable.
-- Store generated rigs and previews under runtime media storage.
+Only `mode=dry_run` is supported in Milestone 25.
 
-## Milestone 30: Animation Pipeline
+## API
 
-Goal: turn text requests into Blender animation plans.
+Health:
 
-Planned capabilities:
+```bash
+curl -fsS http://127.0.0.1:8300/health
+```
 
-- Text-to-keyframe planning.
-- Camera and object animation.
-- Preview renders.
+Create a dry-run job:
 
-## Milestone 31: Media Workflow Orchestrator
+```bash
+curl -fsS -H "Content-Type: application/json" \
+  -X POST \
+  -d '{"job_type":"image","mode":"dry_run","prompt":"test","workflow":"default","metadata":{}}' \
+  http://127.0.0.1:8300/media/jobs
+```
 
-Goal: chain media jobs across modalities.
+Process a job in dry-run mode:
 
-Planned capabilities:
+```bash
+curl -fsS -X POST http://127.0.0.1:8300/media/jobs/JOB_ID/dry-run-process
+```
 
-- Chain image, video, 3D, rig, and animation jobs.
-- Track workflow status.
-- Track generated assets and dependencies.
-- Keep orchestration state outside the codebase.
+## Safety Model
+
+- Dry-run only.
+- No real image generation.
+- No real video generation.
+- No real 3D generation.
+- No rigging or animation execution.
+- No ComfyUI calls.
+- No Blender calls.
+- No model runtime calls.
+- No arbitrary shell execution.
+- No model downloads.
+- No generated media in the codebase.
+
+## Config Examples
+
+Placeholder model config:
+
+```text
+configs/media-models.example.yaml
+```
+
+Dry-run workflow config:
+
+```text
+configs/media-workflows.example.yaml
+```
+
+These are examples only. They do not enable generation.
+
+## Optional Local Test
+
+Default `make test` does not require Media API dependencies.
+
+Use a repo-external virtualenv for optional local Media API tests:
+
+```bash
+mkdir -p ~/MoE/runtime/venvs
+python3 -m venv ~/MoE/runtime/venvs/media-api
+source ~/MoE/runtime/venvs/media-api/bin/activate
+pip install -r apps/media-api/requirements.txt
+make test-media-api
+```
+
+Do not create `.venv`, `venv`, or any virtualenv inside the codebase.
+
+## Future Milestones
+
+- Milestone 26: Image Generation Service
+- Milestone 27: Video Generation Service
+- Milestone 28: 3D Model Generation Pipeline
+- Milestone 29: Rigging Pipeline
+- Milestone 30: Animation Pipeline
+- Milestone 31: Media Workflow Orchestrator
