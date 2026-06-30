@@ -13,6 +13,8 @@ workflows:
     enabled: false
     real_generation_enabled: false
     engine: comfyui
+    model_track: flux_schnell_comfyui
+    comfyui_url: http://127.0.0.1:8188
     dry_run_only: true
 
   video_default:

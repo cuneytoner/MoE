@@ -11,13 +11,18 @@ image:
   tracks:
     flux_schnell_comfyui:
       enabled: false
+      real_generation_enabled: false
       engine: comfyui
+      main_model_path: /home/cuneyt/MoE_Models_Backup/flux/flux1-schnell.safetensors
+      clip_l_path: /home/cuneyt/MoE_Models_Backup/clip_l.safetensors
+      t5xxl_path: /home/cuneyt/MoE_Models_Backup/t5xxl_fp8_e4m3fn.safetensors
+      vae_path: /home/cuneyt/MoE_Models_Backup/vae/ae.safetensors
       requires:
         - main_flux_model
         - clip_l
         - t5xxl
         - vae
-      notes: "Planning only. Do not download in 26.1-pre."
+      notes: "Runtime activation planning only. Do not download or generate in 26.1."
 
     sdxl_comfyui:
       enabled: false
@@ -29,9 +34,14 @@ image:
   models:
     - id: flux-schnell-placeholder
       enabled: false
-      engine: comfyui-placeholder
-      path: /home/cuneyt/MoE_Models_Backup/flux-placeholder
-      notes: Placeholder only. Do not download in M26.0.
+      real_generation_enabled: false
+      engine: comfyui
+      path: /home/cuneyt/MoE_Models_Backup/flux/flux1-schnell.safetensors
+      components:
+        clip_l: /home/cuneyt/MoE_Models_Backup/clip_l.safetensors
+        t5xxl: /home/cuneyt/MoE_Models_Backup/t5xxl_fp8_e4m3fn.safetensors
+        vae: /home/cuneyt/MoE_Models_Backup/vae/ae.safetensors
+      notes: Placeholder only. Main Flux model and VAE/AE are not required until a later explicit milestone.
 
     - id: sdxl-placeholder
       enabled: false

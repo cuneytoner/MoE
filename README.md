@@ -101,14 +101,16 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.1-pre: Image Engine Decision and Runtime Probe in progress
+Milestone 26.1: ComfyUI Runtime and Flux Schnell Activation Plan in progress
 
 Next planned milestone:
 
-Milestone 26.1: Real Image Generation Service
+Milestone 26.2: First Real Image Generation
 
 Optional image planning commands:
 
 make check-image-models
 make plan-image-model-downloads
+make plan-flux-schnell-models
 make check-comfyui-layout
+make check-comfyui-runtime

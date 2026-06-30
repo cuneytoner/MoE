@@ -181,3 +181,19 @@ make plan-image-model-downloads
 ```
 
 These commands do not install ComfyUI, download models, create symlinks, run GPU jobs, or generate media. Runtime engine files belong under `/home/cuneyt/MoE/runtime/media-engines/comfyui`; model files remain under `/home/cuneyt/MoE_Models_Backup`.
+
+## ComfyUI Runtime Activation Plan
+
+Milestone 26.1 adds optional, user-run ComfyUI runtime commands. They are not part of default `make test` and do not run image generation.
+
+```bash
+make install-comfyui-runtime
+make check-comfyui-runtime
+make plan-flux-schnell-models
+make link-comfyui-models-dry-run
+make comfyui-up
+make comfyui-health
+make comfyui-down
+```
+
+The runtime install target writes only under `/home/cuneyt/MoE/runtime/media-engines/comfyui`. Model files stay under `/home/cuneyt/MoE_Models_Backup` and are exposed to ComfyUI by symlink only. Real generation remains disabled until Milestone 26.2.

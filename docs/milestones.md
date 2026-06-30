@@ -435,7 +435,7 @@ Goals:
 
 ## Milestone 26.1-pre: Image Engine Decision and Runtime Probe
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Recommend ComfyUI as the primary future image engine and defer Diffusers.
@@ -449,12 +449,27 @@ Goals:
 
 ## Milestone 26.1: Real Image Generation Service
 
+Status: IN PROGRESS
+
+Goals:
+- Add optional user-run ComfyUI runtime installation under `/home/cuneyt/MoE/runtime/media-engines/comfyui`.
+- Add ComfyUI runtime check, up, down, and health scripts.
+- Add Flux Schnell model acquisition planning without downloads.
+- Add symlink-only ComfyUI model linking with dry-run default.
+- Keep source-only repo separation.
+- Keep real image generation disabled.
+- Do not run actual image generation or GPU jobs.
+
+## Milestone 26.2: First Real Image Generation
+
 Status: PLANNED
 
 Goals:
-- Integrate ComfyUI as the selected image workflow engine.
-- Support Flux-style image generation.
-- Add job, status, and assets model.
+- Enable real generation only after explicit safety gates are set.
+- Validate ComfyUI health, selected Flux model, text encoders, and VAE/AE.
+- Support queued image jobs and asset tracking.
+- Store generated images under `/home/cuneyt/MoE/runtime/media/outputs/images`.
+- Keep Gateway from controlling PC-2 or executing arbitrary shell commands.
 
 ## Milestone 27: Video Generation Service
 

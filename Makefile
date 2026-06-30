@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create plan-image-model-downloads check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-media-api test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report model-start model-stop model-status model-health model-switch test-gateway test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-media-api test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -16,7 +16,15 @@ help:
 > @echo "  make check-image-models Inspect optional local image model candidates"
 > @echo "  make check-comfyui-layout Inspect optional ComfyUI runtime layout"
 > @echo "  make check-comfyui-layout-create Create optional ComfyUI runtime layout"
+> @echo "  make check-comfyui-runtime Inspect optional ComfyUI runtime install"
 > @echo "  make plan-image-model-downloads Print image model component plan without downloads"
+> @echo "  make plan-flux-schnell-models Print Flux Schnell component plan without downloads"
+> @echo "  make link-comfyui-models-dry-run Preview ComfyUI model symlinks"
+> @echo "  make link-comfyui-models-apply Create ComfyUI model symlinks"
+> @echo "  make install-comfyui-runtime Optional install ComfyUI runtime under ~/MoE/runtime"
+> @echo "  make comfyui-up     Optional start local ComfyUI on 127.0.0.1:8188"
+> @echo "  make comfyui-down   Optional stop local ComfyUI from runtime PID"
+> @echo "  make comfyui-health Optional check local ComfyUI HTTP health"
 > @echo "  make check-models   Validate local model files and Docker mount config"
 > @echo "  make status         Show git status"
 > @echo "  make tree           Show repository tree"
@@ -90,8 +98,32 @@ check-comfyui-layout:
 check-comfyui-layout-create:
 > @CREATE=1 ./scripts/check-comfyui-layout.sh
 
+check-comfyui-runtime:
+> @./scripts/check-comfyui-runtime.sh
+
 plan-image-model-downloads:
 > @./scripts/plan-image-model-downloads.sh
+
+plan-flux-schnell-models:
+> @./scripts/plan-flux-schnell-models.sh
+
+link-comfyui-models-dry-run:
+> @./scripts/link-comfyui-models.sh
+
+link-comfyui-models-apply:
+> @APPLY=1 ./scripts/link-comfyui-models.sh
+
+install-comfyui-runtime:
+> @./scripts/install-comfyui-runtime.sh
+
+comfyui-up:
+> @./scripts/comfyui-up.sh
+
+comfyui-down:
+> @./scripts/comfyui-down.sh
+
+comfyui-health:
+> @./scripts/comfyui-health.sh
 
 check-models:
 > @./scripts/check-models.sh

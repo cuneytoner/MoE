@@ -716,16 +716,20 @@ Scope:
 - Do not install ComfyUI, Diffusers, Blender, or execute GPU jobs.
 - Do not download or modify model files.
 
-## Milestone 26.1 Prompt Placeholder
+## Milestone 26.1 Prompt Summary
 
-Add image generation service.
+Prepare ComfyUI runtime and Flux Schnell activation plan.
 
-Expected boundaries:
+Scope:
 
-- Integrate ComfyUI as the selected image workflow engine.
-- Support Flux-style image generation.
-- Use queued jobs and asset tracking.
-- Keep outputs under runtime media storage.
+- Add optional user-run ComfyUI install/check/start/stop/health scripts.
+- Install ComfyUI only under `/home/cuneyt/MoE/runtime/media-engines/comfyui`.
+- Use the official ComfyUI repo: `https://github.com/comfy-org/comfyui`.
+- Do not download models.
+- Plan Flux Schnell components under `/home/cuneyt/MoE_Models_Backup`.
+- Link ComfyUI models by symlink only, with dry-run default.
+- Bind ComfyUI to `127.0.0.1:8188` by default.
+- Keep real generation disabled until Milestone 26.2.
 
 ## Milestone 26.1-pre Prompt Summary
 
@@ -741,6 +745,18 @@ Scope:
 - Add optional ComfyUI layout probe with `CREATE=1` directory creation limited to runtime.
 - Document future safety gates: `MEDIA_REAL_GENERATION_ENABLED=false`, `MEDIA_IMAGE_ENGINE=disabled`, `MEDIA_COMFYUI_URL=http://127.0.0.1:8188`, and `MEDIA_ALLOW_GPU_JOBS=false`.
 - Do not install ComfyUI, install Blender, download models, modify model files, create symlinks, run image generation, or execute GPU jobs.
+
+## Milestone 26.2 Prompt Placeholder
+
+Add first real image generation.
+
+Expected boundaries:
+
+- Require explicit real generation safety gates.
+- Use ComfyUI as the selected image workflow engine.
+- Validate Flux Schnell model components before accepting real jobs.
+- Use queued jobs and asset tracking.
+- Keep outputs under runtime media storage.
 
 ## Milestone 27 Prompt Placeholder
 
