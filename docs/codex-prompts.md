@@ -850,6 +850,21 @@ Expected boundaries:
 - Do not turn the dashboard or Gateway into a service control surface.
 - Do not download, modify, or delete model files automatically.
 
+## Milestone 26.5.1 Prompt Summary
+
+Add PC-1 / PC-2 sleep, wake, startup, and status command pack scripts.
+
+Scope:
+
+- Add fixed allowlisted scripts under `scripts/runtime`.
+- Support PC-1 local flows, PC-2 local flows, and PC-1 orchestrating PC-2 over SSH.
+- Require `APPLY=1` for suspend scripts.
+- Support `DRY_RUN=1` for startup/prepare previews where useful.
+- Keep real generation disabled by default.
+- Do not start ComfyUI external bridge by default.
+- Do not delete runtime data, generated media, Docker volumes, images, or model files.
+- Do not accept arbitrary user-provided commands.
+
 ## Milestone 26.1.5 Prompt Summary
 
 Add Control Plane Dashboard and Runtime Mode Manager.

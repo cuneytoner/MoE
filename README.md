@@ -105,7 +105,7 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.5: Simple Media Dashboard / Status UI in progress
+Milestone 26.5.1: PC1 / PC2 Sleep Wake Startup Command Pack in progress
 
 Next planned milestone:
 
@@ -129,6 +129,15 @@ make gateway-media-dry-run
 make gateway-media-real-plan
 make media-dashboard-status
 make media-dashboard-open
+
+Optional runtime command pack:
+
+make pc1-status
+make pc1-startup-coding
+make pc1-startup-media-dry
+make cluster-status
+make cluster-startup-coding
+make cluster-startup-media-dry
 
 Optional control planning commands:
 

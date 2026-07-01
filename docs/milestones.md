@@ -540,7 +540,7 @@ Current scope:
 
 ## Milestone 26.5: Simple Media Dashboard / Status UI
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add a lightweight media status/dashboard surface.
@@ -552,6 +552,16 @@ Current scope:
 - Add a source-only `apps/media-dashboard` UI.
 - Show service reachability, media gates, mode hints, safe command text, and latest image output paths.
 - Do not start/stop services, call Docker, trigger real generation, or modify runtime media.
+
+## Milestone 26.5.1: PC1 / PC2 Sleep Wake Startup Command Pack
+
+Status: IN PROGRESS
+
+Goals:
+- Add fixed, user-run PC-1, PC-2, and cluster command scripts for sleep preparation, guarded suspend, startup, and status.
+- Keep suspend behind `APPLY=1`.
+- Keep real generation disabled by default.
+- Avoid destructive Docker, runtime, model, and media operations.
 
 ## Milestone 26.6: Guided Image Generation Command Pack
 

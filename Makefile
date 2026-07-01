@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models download-flux-schnell-models-plan download-flux-schnell-models-apply check-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health comfyui-vram-status comfyui-flux-smoke-test comfyui-first-image-plan comfyui-first-image-apply control-api-test control-api-up control-api-down runtime-status runtime-mode-coding-plan runtime-mode-image-plan runtime-mode-video-plan runtime-mode-3d-suite-plan runtime-mode-media-off-plan check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down media-image-dry-run media-image-real-run media-latest-images gateway-media-plan gateway-media-dry-run gateway-media-real-plan media-dashboard-status media-dashboard-open pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report pc2-prompt-interpreter-up pc2-prompt-interpreter-down pc2-prompt-interpreter-health pc2-prompt-interpreter-sample model-start model-stop model-status model-health model-switch test-gateway test-gateway-media test-media-dashboard test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-prompt-interpreter-worker test-media-api test-media-image-bridge test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models download-flux-schnell-models-plan download-flux-schnell-models-apply check-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health comfyui-vram-status comfyui-flux-smoke-test comfyui-first-image-plan comfyui-first-image-apply control-api-test control-api-up control-api-down runtime-status runtime-mode-coding-plan runtime-mode-image-plan runtime-mode-video-plan runtime-mode-3d-suite-plan runtime-mode-media-off-plan check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down media-image-dry-run media-image-real-run media-latest-images gateway-media-plan gateway-media-dry-run gateway-media-real-plan media-dashboard-status media-dashboard-open pc1-sleep-prepare pc1-suspend pc1-startup-coding pc1-startup-media-dry pc1-status pc2-local-sleep-prepare pc2-local-suspend pc2-local-startup-workers pc2-local-status cluster-sleep-prepare cluster-suspend cluster-startup-coding cluster-startup-media-dry cluster-status pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report pc2-prompt-interpreter-up pc2-prompt-interpreter-down pc2-prompt-interpreter-health pc2-prompt-interpreter-sample model-start model-stop model-status model-health model-switch test-gateway test-gateway-media test-media-dashboard test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-prompt-interpreter-worker test-media-api test-media-image-bridge test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -66,6 +66,14 @@ help:
 > @echo "  make gateway-media-real-plan Demonstrate guarded real generation rejection"
 > @echo "  make media-dashboard-status Show read-only Media Dashboard status"
 > @echo "  make media-dashboard-open Print Media Dashboard endpoint/UI locations"
+> @echo "  make pc1-sleep-prepare Prepare PC-1 for sleep without suspending"
+> @echo "  make pc1-suspend Guarded PC-1 suspend, requires APPLY=1"
+> @echo "  make pc1-startup-coding Start PC-1 coding stack"
+> @echo "  make pc1-startup-media-dry Start PC-1 dry-run media stack"
+> @echo "  make pc1-status Show PC-1 runtime status"
+> @echo "  make pc2-local-startup-workers Start PC-2 workers locally on PC-2"
+> @echo "  make cluster-startup-coding Start PC-1 coding stack and PC-2 workers"
+> @echo "  make cluster-status Show PC-1 and PC-2 runtime status"
 > @echo "  make pc2-check-connectivity Optional read-only PC-2 network and SSH check"
 > @echo "  make pc2-check-layout Optional read-only PC-2 runtime and Docker layout check"
 > @echo "  make pc2-sync-code Optional sync source-only codebase to PC-2"
@@ -284,6 +292,48 @@ media-dashboard-status:
 
 media-dashboard-open:
 > @./scripts/media-dashboard-open.sh
+
+pc1-sleep-prepare:
+> @./scripts/runtime/pc1-sleep-prepare.sh
+
+pc1-suspend:
+> @./scripts/runtime/pc1-suspend.sh
+
+pc1-startup-coding:
+> @./scripts/runtime/pc1-startup-coding.sh
+
+pc1-startup-media-dry:
+> @./scripts/runtime/pc1-startup-media-dry.sh
+
+pc1-status:
+> @./scripts/runtime/pc1-status.sh
+
+pc2-local-sleep-prepare:
+> @./scripts/runtime/pc2-sleep-prepare.sh
+
+pc2-local-suspend:
+> @./scripts/runtime/pc2-suspend.sh
+
+pc2-local-startup-workers:
+> @./scripts/runtime/pc2-startup-workers.sh
+
+pc2-local-status:
+> @./scripts/runtime/pc2-status.sh
+
+cluster-sleep-prepare:
+> @./scripts/runtime/cluster-sleep-prepare.sh
+
+cluster-suspend:
+> @./scripts/runtime/cluster-suspend.sh
+
+cluster-startup-coding:
+> @./scripts/runtime/cluster-startup-coding.sh
+
+cluster-startup-media-dry:
+> @./scripts/runtime/cluster-startup-media-dry.sh
+
+cluster-status:
+> @./scripts/runtime/cluster-status.sh
 
 pc2-check-connectivity:
 > @./scripts/check-pc2-connectivity.sh

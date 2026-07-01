@@ -24,6 +24,8 @@ build/
 #Runtime artifacts
 
 runtime/
+!scripts/runtime/
+!scripts/runtime/*.sh
 data/
 logs/
 tmp/
