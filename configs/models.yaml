@@ -2,6 +2,8 @@ models:
   - id: qwen-coder-14b-fast
     name: Qwen2.5 Coder 14B Instruct IQ4 XS
     role: fast coding assistant
+    status: active
+    required: true
     path: /home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-14B-Instruct-IQ4_XS.gguf
     context: 32768
     gpu_layers: 999
@@ -16,6 +18,8 @@ models:
   - id: qwen-coder-32b-main
     name: Qwen2.5 Coder 32B Instruct IQ4 XS
     role: main coding brain
+    status: active
+    required: true
     path: /home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-32B-Instruct-IQ4_XS.gguf
     context: 32768
     gpu_layers: 999
@@ -30,6 +34,8 @@ models:
   - id: deepseek-coder-lite
     name: DeepSeek Coder V2 Lite Instruct IQ4 XS
     role: coding alternative
+    status: active
+    required: true
     path: /home/cuneyt/MoE_Models_Backup/DeepSeek-Coder-V2-Lite-Instruct-IQ4_XS.gguf
     context: 32768
     gpu_layers: 999
@@ -41,30 +47,92 @@ models:
     cache_type_v: q8_0
     notes: Alternative coding model for comparison.
 
+media_assets:
+  - id: flux-schnell-main
+    name: Flux Schnell main model
+    role: image generation
+    status: active
+    required: true
+    path: /home/cuneyt/MoE_Models_Backup/flux/flux1-schnell.safetensors
+    notes: Active ComfyUI Flux Schnell model asset.
+
+  - id: flux-schnell-clip-l
+    name: Flux CLIP-L text encoder
+    role: image generation text encoder
+    status: active
+    required: true
+    path: /home/cuneyt/MoE_Models_Backup/clip/clip_l.safetensors
+    notes: Active ComfyUI Flux text encoder asset.
+
+  - id: flux-schnell-t5xxl
+    name: Flux T5XXL text encoder
+    role: image generation text encoder
+    status: active
+    required: true
+    path: /home/cuneyt/MoE_Models_Backup/clip/t5xxl_fp8_e4m3fn.safetensors
+    notes: Active ComfyUI Flux text encoder asset.
+
+  - id: flux-schnell-ae
+    name: Flux AE/VAE
+    role: image generation vae
+    status: active
+    required: true
+    path: /home/cuneyt/MoE_Models_Backup/vae/ae.safetensors
+    notes: Active ComfyUI Flux AE/VAE asset.
+
+archived_models:
   - id: gemma-3-27b-general
     name: Gemma 3 27B IT Q4 K M
     role: general reasoning
-    path: /home/cuneyt/MoE_Models_Backup/gemma-3-27b-it-Q4_K_M.gguf
-    context: 32768
-    gpu_layers: 999
-    threads: 8
-    batch_size: 512
-    ubatch_size: 128
-    flash_attention: true
-    cache_type_k: q8_0
-    cache_type_v: q8_0
-    notes: General instruction and reasoning candidate.
+    status: archived
+    required: false
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/gemma-3-27b-it-Q4_K_M.gguf
+    notes: Archived from active model path during M27.0 cleanup.
 
   - id: qwen-35b-a3b-reasoning
     name: Qwen 3.6 35B A3B Q4 K M
     role: reasoning / MoE candidate
-    path: /home/cuneyt/MoE_Models_Backup/Qwen_Qwen3.6-35B-A3B-Q4_K_M.gguf
-    context: 32768
-    gpu_layers: 999
-    threads: 8
-    batch_size: 512
-    ubatch_size: 128
-    flash_attention: true
-    cache_type_k: q8_0
-    cache_type_v: q8_0
-    notes: Reasoning and mixture-of-experts candidate.
+    status: archived
+    required: false
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/Qwen_Qwen3.6-35B-A3B-Q4_K_M.gguf
+    notes: Archived from active model path during M27.0 cleanup.
+
+  - id: qwen-coder-32b-q4-k-m-duplicate
+    name: Qwen2.5 Coder 32B Instruct Q4 K M
+    role: archived duplicate coding model
+    status: archived
+    required: false
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/qwen2.5-coder-32b-instruct-q4_k_m.gguf
+    notes: Inactive duplicate; not required by default checks.
+
+  - id: deepseek-coder-lite-q8-archive
+    name: DeepSeek Coder V2 Lite Instruct Q8 0
+    role: archived alternate quantization
+    status: archived
+    required: false
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf
+    notes: Inactive alternate quantization; not required by default checks.
+
+  - id: cogvideox-5b-i2v-gguf
+    name: CogVideoX 5B I2V GGUF Q4 0
+    role: archived video generation candidate
+    status: archived
+    required: false
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/CogVideoX_5b_I2V_GGUF_Q4_0.gguf
+    notes: Archived video model candidate; video generation remains future work.
+
+  - id: cogvideox-5b-i2v-safetensors
+    name: CogVideoX 5B I2V Safetensors Q4 0
+    role: archived video generation candidate
+    status: archived
+    required: false
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/CogVideoX_5b_I2V_GGUF_Q4_0.safetensors
+    notes: Archived video model candidate; video generation remains future work.
+
+  - id: checkpoint-duplicates
+    name: Archived checkpoint duplicates
+    role: archived duplicate checkpoints
+    status: archived
+    required: false
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive
+    notes: Duplicate checkpoints are documented for inventory only and are not required by default checks.

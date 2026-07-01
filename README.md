@@ -76,6 +76,7 @@ docs:
 
 - architecture.md
 - milestones.md
+- models.md
 - runtime-rules.md
 - deployment.md
 - codex-prompts.md
@@ -105,11 +106,19 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.8.5: Read-only Docker Summary Snapshot in progress
+Milestone 27.0: Model Registry Cleanup in progress
 
 Next planned milestone:
 
-Milestone 26.9: Dashboard Guarded Actions
+Milestone 27.1: Model Registry Runtime Follow-up
+
+## Model Inventory
+
+Active model files live under `/home/cuneyt/MoE_Models_Backup`.
+
+Archived inactive models live under `/media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive`.
+
+`make check-models` validates only active required models and active required media assets from `configs/models.yaml`. Archived models are documented under `archived_models` and do not need to exist in the active model path.
 
 Optional image planning commands:
 

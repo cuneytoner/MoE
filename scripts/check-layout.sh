@@ -215,6 +215,7 @@ required_paths=(
   "docs/memory-api.md"
   "docs/embed-worker.md"
   "docs/model-runtime.md"
+  "docs/models.md"
   "docs/runtime-command-pack.md"
   "docs/guided-image-generation.md"
   "docs/dashboard-ui.md"

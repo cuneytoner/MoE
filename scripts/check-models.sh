@@ -9,6 +9,7 @@ ENV_FILE="$ROOT/.env.example"
 MODELS_CONFIG="$ROOT/configs/models.yaml"
 RUNTIME_CONFIG="$ROOT/configs/runtime.yaml"
 MIN_MODEL_BYTES=$((10 * 1024 * 1024))
+MIN_MEDIA_ASSET_BYTES=$((1024 * 1024))
 
 pass() {
   echo "PASS: $1"
@@ -89,6 +90,32 @@ fi
 
 pass "pytorch_model.bin size looks plausible: ${model_bytes} bytes"
 
+is_lfs_pointer() {
+  local path="$1"
+  head -c 128 "$path" 2>/dev/null | grep -q "version https://git-lfs.github.com/spec/v1"
+}
+
+check_required_asset() {
+  local asset_id="$1"
+  local asset_path="$2"
+  local min_bytes="$3"
+
+  if [ ! -f "$asset_path" ]; then
+    fail "Required model asset missing: id=$asset_id path=$asset_path"
+  fi
+
+  if is_lfs_pointer "$asset_path"; then
+    fail "Required model asset appears to be a Git LFS pointer: id=$asset_id path=$asset_path"
+  fi
+
+  asset_size="$(stat -c %s "$asset_path")"
+  if [ "$asset_size" -le "$min_bytes" ]; then
+    fail "Required model asset is suspiciously small: id=$asset_id path=$asset_path size=${asset_size}"
+  fi
+
+  pass "Required model asset exists: id=$asset_id path=$asset_path size=${asset_size}"
+}
+
 LLAMA_SERVER="${LLAMA_SERVER:-$(runtime_value llama_server)}"
 if [ -x "$LLAMA_SERVER" ]; then
   pass "llama-server binary exists: $LLAMA_SERVER"
@@ -96,33 +123,12 @@ else
   fail "llama-server binary missing or not executable: $LLAMA_SERVER"
 fi
 
-optional_gguf_ids=()
-
-is_optional_gguf() {
-  local model_id="$1"
-
-  for optional_id in "${optional_gguf_ids[@]}"; do
-    if [ "$model_id" = "$optional_id" ]; then
-      return 0
-    fi
-  done
-  return 1
-}
-
-warn_gguf() {
-  echo "WARN: $1"
-}
-
 while IFS=$'\t' read -r model_id gguf_path; do
   if [ -z "$model_id" ] || [ -z "$gguf_path" ]; then
     continue
   fi
 
   if [ ! -f "$gguf_path" ]; then
-    if is_optional_gguf "$model_id"; then
-      warn_gguf "GGUF model missing: id=$model_id path=$gguf_path"
-      continue
-    fi
     fail "GGUF model missing: id=$model_id path=$gguf_path"
   fi
 
@@ -133,21 +139,74 @@ while IFS=$'\t' read -r model_id gguf_path; do
     continue
   fi
 
-  message="invalid GGUF magic: id=$model_id path=$gguf_path size=${gguf_size} magic=${gguf_magic:-empty}"
-  if is_optional_gguf "$model_id"; then
-    warn_gguf "$message"
-  else
-    fail "$message"
-  fi
+  fail "invalid GGUF magic: id=$model_id path=$gguf_path size=${gguf_size} magic=${gguf_magic:-empty}"
 done < <(awk '
+  function flush() {
+    if (model_id != "" && path ~ /\.gguf$/ && status != "archived" && status != "inactive" && required != "false") {
+      print model_id "\t" path
+    }
+  }
   $1 == "-" && $2 == "id:" {
+    flush()
     model_id = $3
+    path = ""
+    status = "active"
+    required = "true"
+    next
+  }
+  $1 == "status:" {
+    status = $2
+    next
+  }
+  $1 == "required:" {
+    required = $2
     next
   }
   $1 == "path:" && $2 ~ /\.gguf$/ {
     path = $0
     sub(/^[^:]+:[[:space:]]*/, "", path)
-    print model_id "\t" path
+    next
+  }
+  END {
+    flush()
+  }
+' "$MODELS_CONFIG")
+
+while IFS=$'\t' read -r asset_id asset_path; do
+  if [ -z "$asset_id" ] || [ -z "$asset_path" ]; then
+    continue
+  fi
+
+  check_required_asset "$asset_id" "$asset_path" "$MIN_MEDIA_ASSET_BYTES"
+done < <(awk '
+  function flush() {
+    if (asset_id != "" && path != "" && path !~ /\.gguf$/ && status != "archived" && status != "inactive" && required == "true") {
+      print asset_id "\t" path
+    }
+  }
+  $1 == "-" && $2 == "id:" {
+    flush()
+    asset_id = $3
+    path = ""
+    status = "active"
+    required = "false"
+    next
+  }
+  $1 == "status:" {
+    status = $2
+    next
+  }
+  $1 == "required:" {
+    required = $2
+    next
+  }
+  $1 == "path:" {
+    path = $0
+    sub(/^[^:]+:[[:space:]]*/, "", path)
+    next
+  }
+  END {
+    flush()
   }
 ' "$MODELS_CONFIG")
 

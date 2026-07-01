@@ -8,6 +8,7 @@ The runtime is managed by source-controlled scripts, but the server process, log
 
 - Server: `/home/cuneyt/Apps/llama.cpp/build/bin/llama-server`
 - Model backup path: `/home/cuneyt/MoE_Models_Backup`
+- Model archive path: `/media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive`
 - Default host: `0.0.0.0`
 - Default port: `8000`
 - OpenAI-compatible base URL: `http://localhost:8000/v1`
@@ -15,6 +16,8 @@ The runtime is managed by source-controlled scripts, but the server process, log
 - Pid file: `/home/cuneyt/MoE/runtime/pids/llama-server.pid`
 
 Model files are referenced from `configs/models.yaml`. They are never copied into this repository.
+
+`make check-models` only fails for active required models and active required media assets. Archived models are documented in `configs/models.yaml` under `archived_models` with `archive_path`, but they are not required to exist under `/home/cuneyt/MoE_Models_Backup`.
 
 Runtime defaults live in `configs/runtime.yaml`. Environment variables in `.env.example` document the common overrides.
 
@@ -100,11 +103,31 @@ curl http://localhost:8000/v1/models
 
 ## Model IDs
 
+Active required GGUF runtime models:
+
 - `qwen-coder-14b-fast`: fast coding assistant
 - `qwen-coder-32b-main`: main coding brain
 - `deepseek-coder-lite`: coding alternative
-- `gemma-3-27b-general`: general reasoning
-- `qwen-35b-a3b-reasoning`: reasoning / MoE candidate
+
+Active required embedding and media assets:
+
+- `bge-m3`: embedding model directory under `/home/cuneyt/MoE_Models_Backup/bge-m3`
+- `flux-schnell-main`: `/home/cuneyt/MoE_Models_Backup/flux/flux1-schnell.safetensors`
+- `flux-schnell-clip-l`: `/home/cuneyt/MoE_Models_Backup/clip/clip_l.safetensors`
+- `flux-schnell-t5xxl`: `/home/cuneyt/MoE_Models_Backup/clip/t5xxl_fp8_e4m3fn.safetensors`
+- `flux-schnell-ae`: `/home/cuneyt/MoE_Models_Backup/vae/ae.safetensors`
+
+Archived optional models:
+
+- `gemma-3-27b-general`
+- `qwen-35b-a3b-reasoning`
+- `qwen-coder-32b-q4-k-m-duplicate`
+- `deepseek-coder-lite-q8-archive`
+- `cogvideox-5b-i2v-gguf`
+- `cogvideox-5b-i2v-safetensors`
+- archived checkpoint duplicates
+
+Archived entries live under `/media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive` and are not required by default checks.
 
 Current Gateway advisory targets:
 
