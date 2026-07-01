@@ -79,6 +79,8 @@ Milestone 28.7 adds explicit user-run sync tooling for copying only Gateway feed
 
 Milestone 28.8 adds a reviewed learning loop report that reads the aggregate feedback summary and writes human-reviewable recommendations only. It does not train, mutate memory, change router config, or update prompts automatically.
 
+Milestone 28.9 adds a human-approved improvement plan that reads the reviewed learning-loop report and writes patch-plan style recommendations only. It does not apply changes automatically.
+
 ## Status
 
 `GET /gateway/feedback/status` returns aggregate file status only:
@@ -162,6 +164,20 @@ The report is written to:
 
 It contains aggregate observations and recommendations with `apply_supported=false` and `human_review_required=true`.
 
+## Human-Approved Improvement Plan
+
+```bash
+make improvement-plan-local
+```
+
+The plan is written to:
+
+```text
+/home/cuneyt/MoE/runtime/reports/improvement-plans/human-approved-improvement-plan.json
+```
+
+It contains proposed changes, validation commands, safety boundaries, and next steps with `plan_status=review_required`, `apply_supported=false`, and `human_review_required=true`.
+
 ## Smoke Test
 
 ```bash
@@ -173,4 +189,6 @@ make feedback-sync-to-pc2
 make test-feedback-sync
 make learning-loop-report-local
 make test-learning-loop-report
+make improvement-plan-local
+make test-improvement-plan
 ```

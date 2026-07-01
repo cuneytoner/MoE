@@ -1,10 +1,10 @@
 # MoE / AI-Brain-OS Milestones
 
 Current active phase:
-- M28 Gateway AI Core is active.
-- Completed through M28.8 Reviewed Learning Loop Report.
-- Next planned: reviewed feedback learning loop application design.
-- Dashboard, model registry, Gateway chat, advisory router, memory injection, feedback capture, feedback summary bridge, manual feedback sync, and reviewed learning loop reports are done.
+- M28 Gateway AI Core is complete through M28.9.
+- Next planned: M29.0 Reviewed Improvement Patch Planner.
+- Next major phase: M29 Reviewed Learning / Improvement Workflow.
+- Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
 
@@ -676,15 +676,6 @@ Goals:
 - Add source-only model registry and read-only inventory tooling.
 - Write generated inventory reports only under `/home/cuneyt/MoE/runtime/reports/models`.
 
-## Milestone 32: Video Generation Service
-
-Status: PLANNED
-
-Goals:
-- Support CogVideoX-style video and image-to-video workflows.
-- Use queued jobs.
-- Store outputs under the runtime media directory.
-
 ## Milestone 28.1: Gateway Chat Proxy
 
 Status: DONE
@@ -782,7 +773,97 @@ Goals:
 - Do not include raw prompts, raw model responses, or individual feedback records.
 - Do not train, fine-tune, mutate memory, modify router config, modify prompts, call Memory API, call Gateway, call llama-server, control Docker, or control services.
 
-## Milestone 33: 3D Model Generation Pipeline
+## Milestone 28.9: Human-Approved Improvement Plan
+
+Status: DONE
+
+Goals:
+- Convert reviewed learning-loop reports into human-reviewable improvement plans.
+- Propose router keyword updates, prompt template improvements, docs updates, and test coverage improvements.
+- Generate patch-plan style recommendations only.
+- Keep `apply_supported=false` by default.
+- Require explicit human approval before any code, config, prompt, router, or documentation change.
+- Do not automatically modify memory, prompts, router config, model mappings, Docker, services, or model runtime.
+- Do not train, fine-tune, download models, switch models, execute shell commands, or control Docker.
+
+## Milestone 29.0: Reviewed Improvement Patch Planner
+
+Status: PLANNED
+
+Goals:
+- Convert human-approved improvement plans into patch-plan style recommendations.
+- Generate proposed changes for docs, tests, router keywords, and prompt templates.
+- Keep `apply_supported=false` by default.
+- Require explicit human approval before any file changes.
+- Do not automatically mutate memory, prompts, router config, model mappings, Docker, services, or runtime state.
+- Do not train, fine-tune, download models, switch models, execute shell commands, or control Docker.
+
+## Milestone 29.1: Human-Approved Router and Prompt Update Workflow
+
+Status: PLANNED
+
+Goals:
+- Apply only explicitly approved router keyword, routing example, prompt template, and documentation updates.
+- Keep changes reviewable through Git diffs.
+- Preserve tests and validation gates.
+- Avoid automatic self-modification.
+- Keep all model/runtime operations manual and explicit.
+
+## Milestone 29.2: Feedback-to-Memory Candidate Review
+
+Status: PLANNED
+
+Goals:
+- Convert useful feedback summaries into candidate memory entries.
+- Require human approval before storing anything in Memory API.
+- Avoid raw prompt, raw response, and sensitive data storage.
+- Keep candidate records under runtime reports until approved.
+- Do not automatically write memories.
+
+## Milestone 30.0: Backup / Restore / Disaster Recovery
+
+Status: PLANNED
+
+Goals:
+- Define backup strategy for source, runtime, Docker state, PostgreSQL, Qdrant, models, llama.cpp, environment templates, and docs.
+- Keep source, runtime data, and model files in their assigned locations.
+- Exclude pid files from backups and make logs optional.
+- Add checksum manifest strategy for model files.
+- Add restore process for a new PC.
+- Add disaster recovery checklist.
+
+## Milestone 30.1: Hardware Role Profiles / Environment Reassignment
+
+Status: PLANNED
+
+Goals:
+- Add environment role profile plan for PC1, PC2, single-machine, and new-machine setups.
+- Allow future hardware changes without rewriting the project.
+- Document role reassignment for model runtime, Memory API, PostgreSQL, Qdrant, Dashboard, Gateway, workers, and media services.
+- Document how to update IPs, paths, and model defaults.
+- Document current PC1 and PC2 ownership assumptions.
+
+## Milestone 31.0: Homelab Ops and Remote Access Hardening
+
+Status: PLANNED
+
+Goals:
+- Add safe remote access and monitoring documentation.
+- Plan Tailscale or equivalent private network access.
+- Document dashboard and service exposure boundaries.
+- Keep operational access explicit and reviewed.
+- Avoid unsafe public exposure of Gateway, Dashboard, Docker, databases, or model runtime.
+
+## Milestone 32.0: Video Generation Service
+
+Status: PLANNED
+
+Goals:
+- Support CogVideoX-style video and image-to-video workflows.
+- Use queued jobs.
+- Store outputs under the runtime media directory.
+
+## Milestone 33.0: 3D Model Generation Pipeline
 
 Status: PLANNED
 
@@ -791,7 +872,7 @@ Goals:
 - Export `.blend`, `.glb`, and `.obj`.
 - Support technical structures such as pergola.
 
-## Milestone 34: Rigging Pipeline
+## Milestone 34.0: Rigging Pipeline
 
 Status: PLANNED
 
@@ -799,7 +880,7 @@ Goals:
 - Add basic Blender rig and armature pipeline.
 - Start with mechanical and object rigs before character rigs.
 
-## Milestone 35: Animation Pipeline
+## Milestone 35.0: Animation Pipeline
 
 Status: PLANNED
 
@@ -808,7 +889,7 @@ Goals:
 - Support Blender camera and object animation.
 - Render preview outputs.
 
-## Milestone 36: Media Workflow Orchestrator
+## Milestone 36.0: Media Workflow Orchestrator
 
 Status: PLANNED
 

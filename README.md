@@ -83,6 +83,7 @@ docs:
 - feedback-worker.md
 - feedback-sync.md
 - learning-loop.md
+- improvement-plan.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -113,11 +114,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 28.8: Reviewed Learning Loop Report
+Milestone 28.9: Human-Approved Improvement Plan
 
 Next planned milestone:
 
-Reviewed feedback learning loop application design
+Milestone 29.0: Reviewed Improvement Patch Planner
 
 ## Model Inventory
 
@@ -172,6 +173,8 @@ make feedback-sync-to-pc2
 make test-feedback-sync
 make learning-loop-report-local
 make test-learning-loop-report
+make improvement-plan-local
+make test-improvement-plan
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

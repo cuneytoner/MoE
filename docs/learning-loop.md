@@ -59,3 +59,11 @@ This milestone does not:
 - include individual feedback records
 
 The report is advisory. Any follow-up learning loop must be reviewed and implemented explicitly in a later milestone.
+
+Milestone 28.9 consumes this report to create a human-approved improvement plan:
+
+```bash
+make improvement-plan-local
+```
+
+That plan is written to `/home/cuneyt/MoE/runtime/reports/improvement-plans/human-approved-improvement-plan.json` and remains patch-plan style guidance only.

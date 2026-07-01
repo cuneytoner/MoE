@@ -67,6 +67,14 @@ make learning-loop-report-local
 
 The report is written under `/home/cuneyt/MoE/runtime/reports/learning-loop/learning-loop-report.json` and is advisory only. It does not train models, mutate memory, call Memory API, call Gateway, call llama-server, modify router config, or update prompt templates.
 
+Milestone 28.9 adds a human-approved improvement plan generated from that learning-loop report:
+
+```bash
+make improvement-plan-local
+```
+
+The plan is written under `/home/cuneyt/MoE/runtime/reports/improvement-plans/human-approved-improvement-plan.json` and remains advisory. It proposes patch-plan style recommendations only and does not apply source, config, prompt, router, memory, Docker, service, or runtime changes.
+
 ## Commands
 
 ```bash
@@ -74,7 +82,9 @@ make feedback-summary-local
 make feedback-sync-status
 make feedback-sync-to-pc2
 make learning-loop-report-local
+make improvement-plan-local
 make test-feedback-worker-bridge
 make test-feedback-sync
 make test-learning-loop-report
+make test-improvement-plan
 ```

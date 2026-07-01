@@ -69,3 +69,11 @@ make learning-loop-report-local
 ```
 
 It does not apply changes automatically.
+
+Milestone 28.9 turns the reviewed learning-loop report into a human-approved improvement plan:
+
+```bash
+make improvement-plan-local
+```
+
+The improvement plan remains advisory and does not edit files, write memory, train models, switch models, or control services.
