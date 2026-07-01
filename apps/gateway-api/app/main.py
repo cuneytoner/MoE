@@ -65,6 +65,7 @@ from app.services.chat_proxy import (
     proxy_chat_to_llama,
 )
 from app.services.chat_router import classify_chat_intent
+from app.services.memory_injection import build_memory_injected_request
 from app.services.patch_planner import (
     diff_suggest_system_prompt,
     parse_diff_suggestion,
@@ -687,6 +688,7 @@ async def openai_chat_completions(
         ],
         usage=OpenAIChatCompletionUsage(**usage),
         x_gateway_router=response.router.model_dump() if response.router else None,
+        x_gateway_memory=response.memory,
     )
 
 
@@ -698,13 +700,18 @@ async def _gateway_chat_proxy(
         request=proxy_request,
         mapping=get_model_mapping(settings.model_routing_config),
     )
+    memory_result = await build_memory_injected_request(
+        request=proxy_request,
+        settings=settings,
+    )
     try:
-        proxied = await proxy_chat_to_llama(proxy_request, settings)
+        proxied = await proxy_chat_to_llama(memory_result.request, settings)
     except GatewayChatProxyUnavailable as exc:
         return GatewayChatProxyResponse(
             status="unavailable",
             service="gateway-chat-proxy",
             router=route.to_response(active_model=None),
+            memory=memory_result.metadata,
             detail=str(exc),
         )
 
@@ -718,6 +725,7 @@ async def _gateway_chat_proxy(
         model=str(proxied["model"]),
         response=str(proxied["content"]),
         router=route.to_response(active_model=active_model),
+        memory=memory_result.metadata,
         raw=proxied["raw"],
     )
 
@@ -880,6 +888,8 @@ def _openai_to_gateway_chat_proxy_request(
         max_tokens=request.max_tokens,
         stream=False,
         routing=request.routing,
+        memory=request.memory,
+        memory_limit=request.memory_limit,
     )
 
 

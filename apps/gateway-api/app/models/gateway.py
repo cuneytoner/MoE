@@ -138,6 +138,8 @@ class GatewayChatProxyRequest(BaseModel):
     max_tokens: int = Field(default=512, ge=1, le=4096)
     stream: bool = False
     routing: Literal["auto", "off"] = "auto"
+    memory: Literal["auto", "off"] = "auto"
+    memory_limit: int = Field(default=3, ge=1, le=8)
 
 
 class GatewayChatRouterMetadata(BaseModel):
@@ -158,6 +160,7 @@ class GatewayChatProxyResponse(BaseModel):
     model: str | None = None
     response: str | None = None
     router: GatewayChatRouterMetadata | None = None
+    memory: dict[str, Any] | None = None
     raw: dict[str, Any] | None = None
     detail: str | None = None
 
@@ -418,6 +421,8 @@ class OpenAIChatCompletionRequest(BaseModel):
     max_tokens: int = Field(default=512, ge=1, le=8192)
     stream: bool = False
     routing: Literal["auto", "off"] = "auto"
+    memory: Literal["auto", "off"] = "auto"
+    memory_limit: int = Field(default=3, ge=1, le=8)
 
 
 class OpenAIChatCompletionChoice(BaseModel):
@@ -440,3 +445,4 @@ class OpenAIChatCompletionResponse(BaseModel):
     choices: list[OpenAIChatCompletionChoice]
     usage: OpenAIChatCompletionUsage
     x_gateway_router: dict[str, Any] | None = None
+    x_gateway_memory: dict[str, Any] | None = None

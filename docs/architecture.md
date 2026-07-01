@@ -123,6 +123,8 @@ Milestone 28.2 adds deterministic advisory model routing metadata to the same en
 
 Milestone 28.3 adds OpenAI-compatible Gateway routes at `/v1/models` and `/v1/chat/completions` so Continue.dev can point to `http://localhost:8100/v1`. These routes proxy the local llama-server runtime, reuse Gateway chat validation and advisory router metadata, and keep streaming unsupported until a later milestone.
 
+Milestone 28.4 adds optional search-only memory injection to `/gateway/chat` and `/v1/chat/completions`. Gateway extracts the latest user message, calls the fixed configured `MEMORY_SEARCH_URL`, injects a bounded system context only when usable results exist, and returns memory metadata without storing new memory or exposing raw memory records in response metadata. Chat remains available when memory search is unavailable.
+
 apps/nightly-learning-worker:
 
 Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.

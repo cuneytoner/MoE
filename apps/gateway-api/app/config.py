@@ -107,6 +107,14 @@ class Settings(BaseSettings):
         default=120.0,
         alias="GATEWAY_CHAT_TIMEOUT_SECONDS",
     )
+    memory_search_url: str = Field(
+        default="http://host.docker.internal:8101/search_memory",
+        alias="MEMORY_SEARCH_URL",
+    )
+    gateway_memory_context_max_chars: int = Field(
+        default=3000,
+        alias="GATEWAY_MEMORY_CONTEXT_MAX_CHARS",
+    )
     pc2_prompt_interpreter_url: str = Field(
         default="http://192.168.50.2:8230",
         alias="PC2_PROMPT_INTERPRETER_URL",
