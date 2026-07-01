@@ -107,11 +107,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 28.1: Gateway Chat Proxy in progress
+Milestone 28.2: Gateway Chat Advisory Router in progress
 
 Next planned milestone:
 
-Milestone 28.2: Gateway Chat Routing
+Milestone 28.3: Gateway Chat Memory Context
 
 ## Model Inventory
 
@@ -155,6 +155,7 @@ make dashboard-ui-health
 make dashboard-ui-open
 make runtime-dashboard-status
 make test-gateway-chat-proxy
+make test-gateway-chat-router
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

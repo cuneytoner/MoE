@@ -137,6 +137,19 @@ class GatewayChatProxyRequest(BaseModel):
     temperature: float = Field(default=0.2, ge=0.0, le=2.0)
     max_tokens: int = Field(default=512, ge=1, le=4096)
     stream: bool = False
+    routing: Literal["auto", "off"] = "auto"
+
+
+class GatewayChatRouterMetadata(BaseModel):
+    intent: str
+    confidence: float
+    selected_model_id: str
+    selected_model_path: str | None = None
+    active_model: str | None = None
+    active_model_matches: bool
+    mode: Literal["advisory", "disabled"]
+    reasons: list[str] = Field(default_factory=list)
+    user_model_preference: str | None = None
 
 
 class GatewayChatProxyResponse(BaseModel):
@@ -144,6 +157,7 @@ class GatewayChatProxyResponse(BaseModel):
     service: str
     model: str | None = None
     response: str | None = None
+    router: GatewayChatRouterMetadata | None = None
     raw: dict[str, Any] | None = None
     detail: str | None = None
 

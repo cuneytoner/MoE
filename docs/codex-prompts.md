@@ -1144,3 +1144,11 @@ Before accepting Codex changes, check:
 - Keep streaming, complex MoE routing, model switching, shell execution, Docker control, and runtime writes out of M28.1.
 - Return `status: unavailable` when llama-server is unreachable.
 - Validate with `make test-gateway-chat-proxy`.
+
+## Milestone 28.2 Gateway Chat Advisory Router
+
+- Add deterministic advisory router metadata to `POST /gateway/chat`.
+- Support intents `fast_code`, `deep_code`, `review_debug`, `architecture`, and `general`.
+- Return selected model id/path, active llama-server model, `active_model_matches`, confidence, mode, and reasons.
+- Never start, stop, restart, switch, download, move, or delete models.
+- Validate with `make test-gateway-chat-router`.

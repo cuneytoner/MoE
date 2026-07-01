@@ -690,6 +690,18 @@ Goals:
 - Keep streaming and richer routing deferred to Milestone 28.2.
 - Preserve no shell execution, no Docker control, no model movement, and no runtime switching.
 
+## Milestone 28.2: Gateway Chat Advisory Router
+
+Status: IN PROGRESS
+
+Goals:
+- Add deterministic advisory router metadata to `POST /gateway/chat`.
+- Classify chat requests into `fast_code`, `deep_code`, `review_debug`, `architecture`, or `general`.
+- Recommend model ids and paths without switching the active llama-server model.
+- Report active model and `active_model_matches` when `/v1/models` is reachable.
+- Support `routing="off"` for disabled router metadata.
+- Preserve no shell execution, no Docker control, no service control, and no model movement.
+
 ## Milestone 28: 3D Model Generation Pipeline
 
 Status: PLANNED

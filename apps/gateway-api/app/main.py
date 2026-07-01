@@ -63,6 +63,7 @@ from app.services.chat_proxy import (
     GatewayChatProxyUnavailable,
     proxy_chat_to_llama,
 )
+from app.services.chat_router import classify_chat_intent
 from app.services.patch_planner import (
     diff_suggest_system_prompt,
     parse_diff_suggestion,
@@ -639,20 +640,30 @@ async def chat(request: dict[str, Any]) -> GatewayChatProxyResponse | GatewayCha
         )
 
     settings = get_settings()
+    route = classify_chat_intent(
+        request=proxy_request,
+        mapping=get_model_mapping(settings.model_routing_config),
+    )
     try:
         proxied = await proxy_chat_to_llama(proxy_request, settings)
     except GatewayChatProxyUnavailable as exc:
         return GatewayChatProxyResponse(
             status="unavailable",
             service="gateway-chat-proxy",
+            router=route.to_response(active_model=None),
             detail=str(exc),
         )
+
+    active_model = proxied.get("active_model")
+    if not isinstance(active_model, str):
+        active_model = str(proxied["model"])
 
     return GatewayChatProxyResponse(
         status="ok",
         service="gateway-chat-proxy",
         model=str(proxied["model"]),
         response=str(proxied["content"]),
+        router=route.to_response(active_model=active_model),
         raw=proxied["raw"],
     )
 
