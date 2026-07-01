@@ -10,6 +10,25 @@ class GatewayChatProxyUnavailable(RuntimeError):
     pass
 
 
+async def fetch_llama_models(settings: Settings) -> dict[str, Any]:
+    base_url = settings.llama_server_base_url.rstrip("/")
+    try:
+        async with httpx.AsyncClient(timeout=5) as client:
+            response = await client.get(f"{base_url}/v1/models")
+            response.raise_for_status()
+            data = response.json()
+    except Exception as exc:
+        raise GatewayChatProxyUnavailable(
+            f"llama-server unavailable: {exc.__class__.__name__}: {exc}"
+        ) from exc
+
+    if isinstance(data, dict):
+        return data
+    if isinstance(data, list):
+        return {"object": "list", "data": data}
+    return {"object": "list", "data": []}
+
+
 def choose_chat_model(settings: Settings, active_model: str | None = None) -> str:
     """Forward to the current runtime/default; never treat user input as a model path."""
     if active_model:
@@ -57,13 +76,9 @@ async def proxy_chat_to_llama(
 
 
 async def fetch_active_model(settings: Settings) -> str | None:
-    base_url = settings.llama_server_base_url.rstrip("/")
     try:
-        async with httpx.AsyncClient(timeout=5) as client:
-            response = await client.get(f"{base_url}/v1/models")
-            response.raise_for_status()
-            data = response.json()
-    except Exception:
+        data = await fetch_llama_models(settings)
+    except GatewayChatProxyUnavailable:
         return None
 
     models = data.get("data") if isinstance(data, dict) else data

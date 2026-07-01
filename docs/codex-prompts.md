@@ -1152,3 +1152,12 @@ Before accepting Codex changes, check:
 - Return selected model id/path, active llama-server model, `active_model_matches`, confidence, mode, and reasons.
 - Never start, stop, restart, switch, download, move, or delete models.
 - Validate with `make test-gateway-chat-router`.
+
+## Milestone 28.3 Continue Gateway Config
+
+- Add Gateway OpenAI-compatible `GET /v1/models` and `POST /v1/chat/completions`.
+- Reuse `/gateway/chat` validation, forwarding, and advisory router metadata.
+- Add `docs/continue-gateway-config.md` with Continue.dev `apiBase: http://localhost:8100/v1`.
+- Keep streaming unsupported and do not require a real API key.
+- Do not start, stop, restart, switch, download, move, or delete models.
+- Validate with `make test-openai-compatible-gateway`.

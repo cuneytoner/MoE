@@ -13,6 +13,13 @@ LLAMA_SERVER_BASE_URL=http://host.docker.internal:8000
 POST /v1/chat/completions
 ```
 
+M28.3 also exposes OpenAI-compatible Gateway routes for clients such as Continue.dev:
+
+```text
+GET /v1/models
+POST /v1/chat/completions
+```
+
 ## Request
 
 ```json
@@ -84,6 +91,7 @@ When `routing="off"`, the router block uses `mode: "disabled"` and skips heurist
 ## Test
 
 ```bash
+make test-openai-compatible-gateway
 make test-gateway-chat-proxy
 make test-gateway-chat-router
 ```

@@ -702,6 +702,17 @@ Goals:
 - Support `routing="off"` for disabled router metadata.
 - Preserve no shell execution, no Docker control, no service control, and no model movement.
 
+## Milestone 28.3: Continue.dev Gateway Config and OpenAI-Compatible Gateway Routes
+
+Status: IN PROGRESS
+
+Goals:
+- Add Gateway `GET /v1/models` and `POST /v1/chat/completions`.
+- Reuse Gateway chat proxy validation, forwarding, and advisory router metadata.
+- Add Continue.dev config guidance for `apiBase: http://localhost:8100/v1`.
+- Keep direct llama-server `http://localhost:8000/v1` config as troubleshooting fallback only.
+- Keep streaming unsupported, no API key required, no model switching, no shell execution, and no Docker control.
+
 ## Milestone 28: 3D Model Generation Pipeline
 
 Status: PLANNED
