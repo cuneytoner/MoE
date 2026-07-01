@@ -86,6 +86,8 @@ Milestone 26.8.3 extends runtime cards with read-only system resource cards:
 
 The Gateway does not require `psutil`. GPU status remains non-fatal; when `nvidia-smi` is not available inside the Gateway container, the dashboard reports that detail as a warning.
 
+Milestone 26.8.4 adds `GET /system/status` to the PC-2 Prompt Interpreter Worker. When reachable, the Gateway runtime dashboard uses that fixed HTTP endpoint to populate the PC2 System card with real RAM, CPU load, disk, and uptime metrics. If the endpoint is unavailable, the card remains a warning instead of failing the dashboard.
+
 ## Run
 
 Start the UI:

@@ -132,7 +132,10 @@ make pc2-sync-code
 make pc2-prompt-interpreter-up
 make pc2-prompt-interpreter-health
 make pc2-prompt-interpreter-sample
+make pc2-system-status
 ```
+
+Milestone 26.8.4 adds read-only `GET /system/status` to the worker. It reports PC-2 RAM, CPU load, root disk usage, and uptime using Linux read-only files and Python stdlib only. It does not run shell commands, inspect Docker, call `nvidia-smi`, mutate files, or trigger generation.
 
 These commands are optional and not part of default tests.
 

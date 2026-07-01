@@ -44,6 +44,21 @@ if health.json().get("model_enabled") is not False or health.json().get("generat
     fail(f"/health safety flags unexpected: {health.text}")
 print("PASS: Prompt Interpreter /health")
 
+system_status = client.get("/system/status")
+system_body = system_status.json()
+if (
+    system_status.status_code != 200
+    or system_body.get("status") != "ok"
+    or system_body.get("service") != "pc2-system-status"
+    or system_body.get("read_only") is not True
+    or not isinstance(system_body.get("memory"), dict)
+    or not isinstance(system_body.get("cpu"), dict)
+    or not isinstance(system_body.get("disk"), dict)
+    or not isinstance(system_body.get("uptime"), dict)
+):
+    fail(f"/system/status returned unexpected response: {system_status.text}")
+print("PASS: Prompt Interpreter /system/status")
+
 image = client.post("/interpret", json={"prompt": "gerçekçi ahşap pergola görseli üret"})
 if image.status_code != 200 or image.json().get("classification", {}).get("intent") != "image":
     fail(f"image prompt classification failed: {image.text}")

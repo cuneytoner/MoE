@@ -618,7 +618,7 @@ Goals:
 
 ## Milestone 26.8.3: Dashboard System Resource Cards
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add PC-1 RAM, CPU load, disk, and uptime cards to the Dashboard UI.
@@ -626,6 +626,17 @@ Goals:
 - Keep PC-2 system and Docker summary as graceful unavailable observers unless safe endpoints are added.
 - Keep GPU, Docker, ComfyUI, Control API, and PC-2 unavailability non-fatal.
 - Preserve read-only dashboard boundaries.
+
+## Milestone 26.8.4: PC2 System Status Endpoint
+
+Status: IN PROGRESS
+
+Goals:
+- Add read-only `GET /system/status` to the PC-2 Prompt Interpreter Worker.
+- Use Linux procfs and Python stdlib only for PC-2 RAM, CPU load, disk, and uptime.
+- Make Gateway consume the fixed PC-2 HTTP endpoint for `.system.pc2`.
+- Keep unavailable PC-2 system status non-fatal.
+- Avoid SSH, remote shell commands, Docker socket access, `nvidia-smi`, and file mutation.
 
 ## Milestone 26.9: Dashboard Guarded Actions
 

@@ -105,7 +105,7 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.8.3: Dashboard System Resource Cards in progress
+Milestone 26.8.4: PC2 System Status Endpoint in progress
 
 Next planned milestone:
 
@@ -137,6 +137,7 @@ make dashboard-ui-up
 make dashboard-ui-health
 make dashboard-ui-open
 make runtime-dashboard-status
+make pc2-system-status
 
 Optional runtime command pack:
 

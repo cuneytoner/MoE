@@ -936,6 +936,19 @@ Scope:
 - Add Dashboard UI cards for PC1 System, PC2 System, and Docker Summary.
 - Do not add dashboard controls, shell execution, Docker control, suspend, service start/stop, or generation triggers.
 
+## Milestone 26.8.4 Prompt Summary
+
+Add PC2 System Status Endpoint.
+
+Scope:
+
+- Add read-only `GET /system/status` to `apps/prompt-interpreter-worker`.
+- Use stdlib and Linux read-only files only: `/proc/meminfo`, `/proc/loadavg`, `/proc/uptime`, `os.cpu_count()`, and `shutil.disk_usage("/")`.
+- Make Gateway consume the fixed PC-2 Prompt Interpreter URL plus `/system/status`.
+- Surface real PC-2 system metrics under `/gateway/runtime/dashboard` as `.system.pc2` when reachable.
+- Keep PC-2 system unavailability as a warning.
+- Do not use SSH, remote shell commands, Docker socket access, `nvidia-smi`, file mutation, service control, suspend, or generation triggers.
+
 ## Milestone 26.9 Prompt Placeholder
 
 Add dashboard guarded actions.

@@ -141,6 +141,8 @@ M26.8.2 lets the dashboard observe runtime state through `/gateway/runtime/dashb
 
 M26.8.3 adds system resource observations to the same read-only boundary. PC-1 resource cards read local procfs and disk usage; PC-2 system and Docker observer cards stay unavailable placeholders unless a safe observer is added later. Control Plane still owns planning, not dashboard UI.
 
+M26.8.4 adds a fixed PC-2 HTTP system observer through the Prompt Interpreter Worker. Gateway consumes it as status data only. It does not use SSH, remote shell commands, Docker control, service control, or runtime mode changes.
+
 ## Service Allowlist
 
 Known services:

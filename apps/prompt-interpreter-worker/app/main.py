@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.config import get_settings
 from app.interpreter import interpret_prompt
 from app.schemas import BatchInterpretRequest, HealthResponse, InterpretRequest
+from app.system_status import build_system_status
 
 app = FastAPI(title="MoE Prompt Interpreter Worker", version="0.1.0")
 
@@ -18,6 +19,11 @@ def health() -> HealthResponse:
         generation_enabled=settings.generation_enabled,
         dry_run_default=settings.default_mode == "dry_run",
     )
+
+
+@app.get("/system/status")
+def system_status() -> dict:
+    return build_system_status()
 
 
 @app.post("/interpret")

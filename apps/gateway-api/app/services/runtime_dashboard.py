@@ -61,7 +61,8 @@ async def build_runtime_dashboard(settings: Any) -> dict[str, Any]:
         max_jobs=max(0, int(settings.runtime_dashboard_max_jobs)),
     )
     gpu = _gpu_status()
-    system = _system_status()
+    pc2_system = await _pc2_system_status(settings.pc2_prompt_interpreter_url)
+    system = _system_status(pc2_system)
     warnings = list(job_warnings)
     warnings.extend(_service_warnings("pc2", pc2))
     if comfyui.get("reachable") is not True:
@@ -210,7 +211,23 @@ def _gpu_status() -> dict[str, Any]:
     }
 
 
-def _system_status() -> dict[str, Any]:
+async def _pc2_system_status(base_url: str) -> dict[str, Any]:
+    service = await _check_http_service("pc2-system-status", base_url, "/system/status")
+    if service.get("reachable") is not True:
+        return {
+            "status": "unavailable",
+            "detail": service.get("detail") or f"HTTP {service.get('http_status')}",
+        }
+    data = service.get("data")
+    if not isinstance(data, dict) or data.get("status") != "ok":
+        return {
+            "status": "unavailable",
+            "detail": f"pc2 system endpoint returned unexpected response: HTTP {service.get('http_status')}",
+        }
+    return data
+
+
+def _system_status(pc2_system: dict[str, Any]) -> dict[str, Any]:
     return {
         "pc1": {
             "memory": _memory_status(),
@@ -218,10 +235,7 @@ def _system_status() -> dict[str, Any]:
             "disk": _disk_status("/"),
             "uptime": _uptime_status(),
         },
-        "pc2": {
-            "status": "unavailable",
-            "detail": "pc2 system endpoint not implemented yet",
-        },
+        "pc2": pc2_system,
         "docker": {
             "status": "unavailable",
             "detail": "docker observer not enabled; Docker socket is not mounted into gateway",

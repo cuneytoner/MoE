@@ -49,16 +49,35 @@ function Pc1SystemCard({ system }: { system: SystemStatus["pc1"] }) {
 }
 
 function Pc2SystemCard({ pc2 }: { pc2: SystemStatus["pc2"] }) {
+  const hasMetrics = pc2.status === "ok" && pc2.memory && pc2.cpu && pc2.disk && pc2.uptime;
+
   return (
     <Card>
       <CardHeader avatar={<StorageOutlinedIcon color="primary" />} title="PC2 System" />
       <CardContent>
-        <Stack spacing={1.5}>
-          <StatusChip label={pc2.status} tone={pc2.status === "ok" ? "ok" : "warning"} />
-          <Typography color="text.secondary" variant="body2">
-            {pc2.detail}
-          </Typography>
-        </Stack>
+        {hasMetrics ? (
+          <Stack spacing={2}>
+            <StatusChip label="ok" tone="ok" />
+            <MetricBar label={`RAM ${pc2.memory?.used_mb} / ${pc2.memory?.total_mb} MB`} value={pc2.memory?.used_percent ?? 0} />
+            <MetricBar label={`Disk ${pc2.disk?.used_gb} / ${pc2.disk?.total_gb} GB on ${pc2.disk?.path}`} value={pc2.disk?.used_percent ?? 0} />
+            <Box sx={{ display: "grid", gap: 1, gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }}>
+              <SmallMetric label="Load 1m" value={String(pc2.cpu?.load_1m)} />
+              <SmallMetric label="Load 5m" value={String(pc2.cpu?.load_5m)} />
+              <SmallMetric label="Load 15m" value={String(pc2.cpu?.load_15m)} />
+              <SmallMetric label="CPU count" value={String(pc2.cpu?.cpu_count)} />
+            </Box>
+            <Typography color="text.secondary" variant="body2">
+              Uptime: {pc2.uptime?.human} ({pc2.uptime?.seconds}s)
+            </Typography>
+          </Stack>
+        ) : (
+          <Stack spacing={1.5}>
+            <StatusChip label={pc2.status} tone="warning" />
+            <Typography color="text.secondary" variant="body2">
+              {pc2.detail || "PC2 system status is unavailable."}
+            </Typography>
+          </Stack>
+        )}
       </CardContent>
     </Card>
   );

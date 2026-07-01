@@ -78,36 +78,51 @@ export type ImageLifecycle = {
   next_safe_step: string;
 };
 
+export type SystemMemory = {
+  total_mb: number;
+  used_mb: number;
+  free_mb: number;
+  available_mb: number;
+  used_percent: number;
+};
+
+export type SystemCpu = {
+  load_1m: number;
+  load_5m: number;
+  load_15m: number;
+  cpu_count: number;
+};
+
+export type SystemDisk = {
+  path: string;
+  total_gb: number;
+  used_gb: number;
+  free_gb: number;
+  used_percent: number;
+};
+
+export type SystemUptime = {
+  seconds: number;
+  human: string;
+};
+
 export type SystemStatus = {
   pc1: {
-    memory: {
-      total_mb: number;
-      used_mb: number;
-      free_mb: number;
-      available_mb: number;
-      used_percent: number;
-    };
-    cpu: {
-      load_1m: number;
-      load_5m: number;
-      load_15m: number;
-      cpu_count: number;
-    };
-    disk: {
-      path: string;
-      total_gb: number;
-      used_gb: number;
-      free_gb: number;
-      used_percent: number;
-    };
-    uptime: {
-      seconds: number;
-      human: string;
-    };
+    memory: SystemMemory;
+    cpu: SystemCpu;
+    disk: SystemDisk;
+    uptime: SystemUptime;
   };
   pc2: {
     status: string;
-    detail: string;
+    service?: string;
+    read_only?: boolean;
+    host_role?: string;
+    detail?: string;
+    memory?: SystemMemory;
+    cpu?: SystemCpu;
+    disk?: SystemDisk;
+    uptime?: SystemUptime;
   };
   docker: {
     status: string;
