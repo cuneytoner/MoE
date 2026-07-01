@@ -66,6 +66,7 @@ make model-health
 Run the Gateway chat proxy smoke test:
 
 ```bash
+make test-openai-compatible-gateway
 make test-gateway-chat-proxy
 ```
 
@@ -148,6 +149,8 @@ Gateway-driven hot switching between these models is a future milestone. Start o
 The M28.1 Gateway chat proxy uses `LLAMA_SERVER_BASE_URL` with default `http://host.docker.internal:8000` and forwards to `/v1/chat/completions`. It supports non-streaming requests only and returns a graceful unavailable response when llama-server cannot be reached.
 
 M28.2 adds advisory model routing metadata to `/gateway/chat`. The router may recommend `qwen-coder-14b-fast`, `qwen-coder-32b-main`, or `deepseek-coder-lite`, but it never starts, stops, restarts, or switches the active `llama-server` model. `active_model_matches=false` is expected when the advisory model differs from the currently loaded runtime model.
+
+M28.3 exposes Gateway OpenAI-compatible routes at `http://localhost:8100/v1`. Continue.dev should use `apiBase: http://localhost:8100/v1` for normal use. Direct `http://localhost:8000/v1` llama-server access is a troubleshooting fallback only.
 
 ## Registry And Inventory
 

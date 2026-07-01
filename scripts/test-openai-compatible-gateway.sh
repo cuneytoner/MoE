@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+GATEWAY_API_URL="${GATEWAY_API_URL:-http://127.0.0.1:8100}"
+
+pass() {
+  echo "PASS: $1"
+}
+
+skip() {
+  echo "SKIP: $1"
+  exit 0
+}
+
+fail() {
+  echo "FAIL: $1" >&2
+  exit 1
+}
+
+require_command() {
+  if ! command -v "$1" >/dev/null 2>&1; then
+    fail "$1 is required"
+  fi
+}
+
+wait_for_gateway() {
+  local attempts=20
+  local http_status
+
+  for attempt in $(seq 1 "$attempts"); do
+    http_status="$(
+      curl -sS -o /tmp/moe-openai-gateway-ready.json -w "%{http_code}" \
+        "$GATEWAY_API_URL/v1/models" 2>/dev/null || true
+    )"
+    if [ "$http_status" != "000" ]; then
+      return 0
+    fi
+    if [ "$attempt" -lt "$attempts" ]; then
+      sleep 1
+    fi
+  done
+
+  return 1
+}
+
+require_command curl
+require_command jq
+
+if ! wait_for_gateway; then
+  skip "Gateway API is unavailable at $GATEWAY_API_URL"
+fi
+
+models_http_status="$(
+  curl -sS -o /tmp/moe-openai-gateway-models.json -w "%{http_code}" \
+    "$GATEWAY_API_URL/v1/models" || true
+)"
+models_response="$(cat /tmp/moe-openai-gateway-models.json 2>/dev/null || true)"
+
+case "$models_http_status" in
+  200)
+    models_type="$(jq -r 'if (.data | type) == "array" then "array" else "other" end' <<<"$models_response")"
+    if [ "$models_type" = "array" ]; then
+      pass "Gateway OpenAI /v1/models"
+    else
+      fail "Gateway OpenAI /v1/models returned bad contract: $models_response"
+    fi
+    ;;
+  503)
+    detail="$(jq -r '.detail // empty' <<<"$models_response")"
+    if [ -n "$detail" ]; then
+      skip "llama-server unavailable through Gateway /v1/models: $detail"
+    fi
+    fail "Gateway OpenAI /v1/models 503 missing detail: $models_response"
+    ;;
+  *)
+    fail "Gateway OpenAI /v1/models returned HTTP $models_http_status: $models_response"
+    ;;
+esac
+
+chat_http_status="$(
+  curl -sS -o /tmp/moe-openai-gateway-chat.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"model":"gateway-auto","messages":[{"role":"user","content":"Say hello in one short sentence."}],"max_tokens":64,"temperature":0.2,"routing":"auto"}' \
+    "$GATEWAY_API_URL/v1/chat/completions" || true
+)"
+chat_response="$(cat /tmp/moe-openai-gateway-chat.json 2>/dev/null || true)"
+
+case "$chat_http_status" in
+  200)
+    object="$(jq -r '.object // empty' <<<"$chat_response")"
+    content="$(jq -r '.choices[0].message.content // empty' <<<"$chat_response")"
+    router_mode="$(jq -r '.x_gateway_router.mode // .router.mode // empty' <<<"$chat_response")"
+    router_intent="$(jq -r '.x_gateway_router.intent // .router.intent // empty' <<<"$chat_response")"
+    if [ "$object" = "chat.completion" ] \
+      && [ -n "$content" ] \
+      && [ "$router_mode" = "advisory" ] \
+      && [ -n "$router_intent" ]; then
+      pass "Gateway OpenAI /v1/chat/completions"
+    else
+      fail "Gateway OpenAI /v1/chat/completions returned bad contract: $chat_response"
+    fi
+    ;;
+  503)
+    detail="$(jq -r '.detail // empty' <<<"$chat_response")"
+    if [ -n "$detail" ]; then
+      skip "llama-server unavailable through Gateway chat: $detail"
+    fi
+    fail "Gateway OpenAI /v1/chat/completions 503 missing detail: $chat_response"
+    ;;
+  *)
+    fail "Gateway OpenAI /v1/chat/completions returned HTTP $chat_http_status: $chat_response"
+    ;;
+esac
+
+stream_http_status="$(
+  curl -sS -o /tmp/moe-openai-gateway-stream.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"model":"gateway-auto","messages":[{"role":"user","content":"hello"}],"stream":true}' \
+    "$GATEWAY_API_URL/v1/chat/completions" || true
+)"
+
+if [ "$stream_http_status" = "400" ]; then
+  pass "Gateway OpenAI /v1/chat/completions rejects streaming"
+else
+  stream_response="$(cat /tmp/moe-openai-gateway-stream.json 2>/dev/null || true)"
+  fail "Gateway OpenAI expected HTTP 400 for stream=true, got $stream_http_status: $stream_response"
+fi
+
+echo "Gateway OpenAI-compatible test passed"

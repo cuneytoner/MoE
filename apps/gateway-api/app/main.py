@@ -61,6 +61,7 @@ from app.services.media_planner import local_media_plan
 from app.services.model_mapping import ModelMapping, get_model_mapping
 from app.services.chat_proxy import (
     GatewayChatProxyUnavailable,
+    fetch_llama_models,
     proxy_chat_to_llama,
 )
 from app.services.chat_router import classify_chat_intent
@@ -627,11 +628,7 @@ async def chat(request: dict[str, Any]) -> GatewayChatProxyResponse | GatewayCha
     except ValidationError as exc:
         raise HTTPException(status_code=400, detail=exc.errors()) from exc
 
-    if any(not message.content.strip() for message in proxy_request.messages):
-        raise HTTPException(
-            status_code=400,
-            detail="message content must be non-empty",
-        )
+    _validate_chat_proxy_request(proxy_request)
 
     if proxy_request.stream:
         raise HTTPException(
@@ -639,6 +636,63 @@ async def chat(request: dict[str, Any]) -> GatewayChatProxyResponse | GatewayCha
             detail="streaming is not implemented for /gateway/chat yet",
         )
 
+    return await _gateway_chat_proxy(proxy_request)
+
+
+@app.get("/v1/models")
+async def openai_models() -> dict[str, Any]:
+    settings = get_settings()
+    try:
+        return await fetch_llama_models(settings)
+    except GatewayChatProxyUnavailable as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+
+@app.post("/v1/chat/completions", response_model=OpenAIChatCompletionResponse)
+async def openai_chat_completions(
+    request: OpenAIChatCompletionRequest,
+) -> OpenAIChatCompletionResponse:
+    if request.stream:
+        raise HTTPException(
+            status_code=400,
+            detail="streaming is not supported by the Gateway OpenAI compatibility adapter yet",
+        )
+
+    try:
+        proxy_request = _openai_to_gateway_chat_proxy_request(request)
+    except ValidationError as exc:
+        raise HTTPException(status_code=400, detail=exc.errors()) from exc
+    _validate_chat_proxy_request(proxy_request)
+    response = await _gateway_chat_proxy(proxy_request)
+    if response.status == "unavailable":
+        raise HTTPException(status_code=503, detail=response.detail)
+
+    raw = response.raw or {}
+    usage = raw.get("usage") if isinstance(raw.get("usage"), dict) else {}
+
+    return OpenAIChatCompletionResponse(
+        id=str(raw.get("id") or f"chatcmpl-local-{uuid4().hex}"),
+        object=str(raw.get("object") or "chat.completion"),
+        created=int(raw.get("created") or time.time()),
+        model=str(response.model or request.model),
+        choices=[
+            OpenAIChatCompletionChoice(
+                index=0,
+                message=OpenAIChatMessage(
+                    role="assistant",
+                    content=response.response or "",
+                ),
+                finish_reason="stop",
+            )
+        ],
+        usage=OpenAIChatCompletionUsage(**usage),
+        x_gateway_router=response.router.model_dump() if response.router else None,
+    )
+
+
+async def _gateway_chat_proxy(
+    proxy_request: GatewayChatProxyRequest,
+) -> GatewayChatProxyResponse:
     settings = get_settings()
     route = classify_chat_intent(
         request=proxy_request,
@@ -668,36 +722,12 @@ async def chat(request: dict[str, Any]) -> GatewayChatProxyResponse | GatewayCha
     )
 
 
-@app.post("/v1/chat/completions", response_model=OpenAIChatCompletionResponse)
-async def openai_chat_completions(
-    request: OpenAIChatCompletionRequest,
-) -> OpenAIChatCompletionResponse:
-    if request.stream:
+def _validate_chat_proxy_request(proxy_request: GatewayChatProxyRequest) -> None:
+    if any(not message.content.strip() for message in proxy_request.messages):
         raise HTTPException(
             status_code=400,
-            detail="streaming is not supported by the Gateway OpenAI compatibility adapter yet",
+            detail="message content must be non-empty",
         )
-
-    gateway_request = _openai_to_gateway_chat_request(request)
-    response = await _gateway_chat(gateway_request)
-
-    return OpenAIChatCompletionResponse(
-        id=f"chatcmpl-local-{uuid4().hex}",
-        object="chat.completion",
-        created=int(time.time()),
-        model=request.model,
-        choices=[
-            OpenAIChatCompletionChoice(
-                index=0,
-                message=OpenAIChatMessage(
-                    role="assistant",
-                    content=response.content,
-                ),
-                finish_reason="stop",
-            )
-        ],
-        usage=OpenAIChatCompletionUsage(),
-    )
 
 
 async def _gateway_chat(request: GatewayChatRequest) -> GatewayChatResponse:
@@ -835,6 +865,22 @@ def _extract_content(response: dict[str, Any]) -> str:
             if isinstance(text, str):
                 return text
     return ""
+
+
+def _openai_to_gateway_chat_proxy_request(
+    request: OpenAIChatCompletionRequest,
+) -> GatewayChatProxyRequest:
+    return GatewayChatProxyRequest(
+        messages=[
+            {"role": message.role, "content": message.content}
+            for message in request.messages
+        ],
+        model=request.model,
+        temperature=request.temperature,
+        max_tokens=request.max_tokens,
+        stream=False,
+        routing=request.routing,
+    )
 
 
 def _openai_to_gateway_chat_request(

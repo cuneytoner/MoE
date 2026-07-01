@@ -76,6 +76,7 @@ docs:
 
 - architecture.md
 - milestones.md
+- continue-gateway-config.md
 - gateway-chat.md
 - models.md
 - runtime-rules.md
@@ -107,11 +108,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 28.2: Gateway Chat Advisory Router in progress
+Milestone 28.3: Continue.dev Gateway Config and OpenAI-Compatible Gateway Routes in progress
 
 Next planned milestone:
 
-Milestone 28.3: Gateway Chat Memory Context
+Milestone 28.4: Gateway Chat Memory Context
 
 ## Model Inventory
 
@@ -154,6 +155,7 @@ make dashboard-ui-up
 make dashboard-ui-health
 make dashboard-ui-open
 make runtime-dashboard-status
+make test-openai-compatible-gateway
 make test-gateway-chat-proxy
 make test-gateway-chat-router
 make pc2-system-status
