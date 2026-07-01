@@ -143,6 +143,6 @@ export type RuntimeDashboardModel = {
     total_visible_jobs: number;
   };
   image_lifecycle: ImageLifecycle;
-  system?: SystemStatus;
+  system: SystemStatus;
   warnings: string[];
 };

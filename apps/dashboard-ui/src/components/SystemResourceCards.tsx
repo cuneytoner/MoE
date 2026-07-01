@@ -6,14 +6,10 @@ import type { SystemStatus } from "../types";
 import { StatusChip } from "./StatusChip";
 
 type Props = {
-  system?: SystemStatus;
+  system: SystemStatus;
 };
 
 export function SystemResourceCards({ system }: Props) {
-  if (!system) {
-    return null;
-  }
-
   return (
     <>
       <Pc1SystemCard system={system.pc1} />
