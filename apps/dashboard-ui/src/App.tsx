@@ -10,6 +10,7 @@ import { RuntimeCards } from "./components/RuntimeCards";
 import { SafeCommandsPanel } from "./components/SafeCommandsPanel";
 import { ServicesPanel } from "./components/ServicesPanel";
 import { SummaryCards } from "./components/SummaryCards";
+import { SystemResourceCards } from "./components/SystemResourceCards";
 import { WarningsPanel } from "./components/WarningsPanel";
 import { DashboardLayout } from "./layout/DashboardLayout";
 import type { DashboardModel, RuntimeDashboardModel } from "./types";
@@ -83,6 +84,14 @@ export function App() {
 
       <SummaryCards dashboard={dashboard} />
       <RuntimeCards error={runtimeError} runtime={runtimeDashboard} />
+      {runtimeDashboard?.system ? (
+        <Stack id="system-resources" spacing={2}>
+          <Typography variant="h6">System Resources</Typography>
+          <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", lg: "repeat(3, minmax(0, 1fr))" } }}>
+            <SystemResourceCards system={runtimeDashboard.system} />
+          </Box>
+        </Stack>
+      ) : null}
 
       {dashboard ? (
         <>
@@ -115,7 +124,7 @@ export function App() {
       ) : null}
 
       <Typography align="center" color="text.secondary" variant="body2">
-        M26.8.1 Dashboard Material Kit inspired theme. Read-only. No service control.
+        M26.8.3 Dashboard System Resource Cards. Read-only. No service control.
       </Typography>
     </DashboardLayout>
   );

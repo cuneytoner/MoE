@@ -608,13 +608,47 @@ Goals:
 
 ## Milestone 26.8.2: Dashboard Runtime Cards
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add read-only runtime status cards to the Dashboard UI.
 - Add `/gateway/runtime/dashboard` for PC-1 runtime, GPU, llama-server, ComfyUI, PC-2 worker, media job, and image lifecycle observations.
 - Keep missing runtime services as warnings.
 - Keep the UI read-only and keep actions out of scope.
+
+## Milestone 26.8.3: Dashboard System Resource Cards
+
+Status: DONE
+
+Goals:
+- Add PC-1 RAM, CPU load, disk, and uptime cards to the Dashboard UI.
+- Extend `/gateway/runtime/dashboard` with read-only system data from procfs and Python stdlib.
+- Keep PC-2 system and Docker summary as graceful unavailable observers unless safe endpoints are added.
+- Keep GPU, Docker, ComfyUI, Control API, and PC-2 unavailability non-fatal.
+- Preserve read-only dashboard boundaries.
+
+## Milestone 26.8.4: PC2 System Status Endpoint
+
+Status: DONE
+
+Goals:
+- Add read-only `GET /system/status` to the PC-2 Prompt Interpreter Worker.
+- Use Linux procfs and Python stdlib only for PC-2 RAM, CPU load, disk, and uptime.
+- Make Gateway consume the fixed PC-2 HTTP endpoint for `.system.pc2`.
+- Keep unavailable PC-2 system status non-fatal.
+- Avoid SSH, remote shell commands, Docker socket access, `nvidia-smi`, and file mutation.
+
+## Milestone 26.8.5: Read-only Docker Summary Snapshot
+
+Status: IN PROGRESS
+
+Goals:
+- Add a host-side `docker-summary-snapshot` script for fixed allowlisted container status.
+- Write snapshot JSON under `/home/cuneyt/MoE/runtime/status/docker-summary.json`.
+- Make Gateway read the fixed snapshot file instead of Docker or `docker.sock`.
+- Show Docker Summary counts in the Dashboard UI when a snapshot is available.
+- Keep missing or invalid snapshots as warnings.
+- Preserve read-only Dashboard and Gateway boundaries.
 
 ## Milestone 26.9: Dashboard Guarded Actions
 

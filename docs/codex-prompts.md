@@ -922,6 +922,48 @@ Scope:
 - Missing ComfyUI, Control API, GPU, llama-server, and PC-2 workers should be warnings, not fatal errors.
 - Do not start or stop services, call Docker from UI, SSH into PC-2, execute arbitrary shell, switch models, mutate runtime data, or trigger generation.
 
+## Milestone 26.8.3 Prompt Summary
+
+Add Dashboard System Resource Cards.
+
+Scope:
+
+- Extend `/gateway/runtime/dashboard` with `system.pc1`, `system.pc2`, and `system.docker`.
+- Read PC-1 RAM, CPU load, uptime, and root disk usage from Linux read-only files and Python stdlib.
+- Do not require `psutil`.
+- Keep GPU unavailable non-fatal and report missing `nvidia-smi` as a clear container limitation.
+- Keep PC-2 system and Docker summary as graceful unavailable observers unless safe read-only endpoints are added.
+- Add Dashboard UI cards for PC1 System, PC2 System, and Docker Summary.
+- Do not add dashboard controls, shell execution, Docker control, suspend, service start/stop, or generation triggers.
+
+## Milestone 26.8.4 Prompt Summary
+
+Add PC2 System Status Endpoint.
+
+Scope:
+
+- Add read-only `GET /system/status` to `apps/prompt-interpreter-worker`.
+- Use stdlib and Linux read-only files only: `/proc/meminfo`, `/proc/loadavg`, `/proc/uptime`, `os.cpu_count()`, and `shutil.disk_usage("/")`.
+- Make Gateway consume the fixed PC-2 Prompt Interpreter URL plus `/system/status`.
+- Surface real PC-2 system metrics under `/gateway/runtime/dashboard` as `.system.pc2` when reachable.
+- Keep PC-2 system unavailability as a warning.
+- Do not use SSH, remote shell commands, Docker socket access, `nvidia-smi`, file mutation, service control, suspend, or generation triggers.
+
+## Milestone 26.8.5 Prompt Summary
+
+Add read-only Docker Summary Snapshot.
+
+Scope:
+
+- Add host-side `scripts/docker-summary-snapshot.sh`.
+- Use Docker CLI only in that user-run host script.
+- Inspect only fixed allowlisted container names.
+- Write JSON to `/home/cuneyt/MoE/runtime/status/docker-summary.json`.
+- Make Gateway read that fixed JSON file via `DOCKER_SUMMARY_SNAPSHOT_PATH`.
+- Do not mount Docker socket into Gateway.
+- Do not let Gateway call Docker, run shell commands, mutate containers, or inspect user-supplied container names.
+- Add Dashboard UI Docker Summary counts from the snapshot.
+
 ## Milestone 26.9 Prompt Placeholder
 
 Add dashboard guarded actions.

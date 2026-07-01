@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import socket
 import subprocess
 from datetime import datetime, timezone
@@ -59,6 +61,11 @@ async def build_runtime_dashboard(settings: Any) -> dict[str, Any]:
         max_jobs=max(0, int(settings.runtime_dashboard_max_jobs)),
     )
     gpu = _gpu_status()
+    pc2_system = await _pc2_system_status(settings.pc2_prompt_interpreter_url)
+    system = _system_status(
+        pc2_system=pc2_system,
+        docker_summary_snapshot_path=Path(settings.docker_summary_snapshot_path),
+    )
     warnings = list(job_warnings)
     warnings.extend(_service_warnings("pc2", pc2))
     if comfyui.get("reachable") is not True:
@@ -67,6 +74,10 @@ async def build_runtime_dashboard(settings: Any) -> dict[str, Any]:
         warnings.append(f"llama-server unavailable: {llama_server.get('detail')}")
     if gpu.get("available") is not True:
         warnings.append(f"gpu unavailable: {gpu.get('detail')}")
+    if system["docker"].get("status") != "ok":
+        warnings.append(f"docker observer unavailable: {system['docker'].get('detail')}")
+    if system["pc2"].get("status") != "ok":
+        warnings.append(f"pc2 system unavailable: {system['pc2'].get('detail')}")
 
     image_lifecycle = _image_lifecycle(
         settings=settings,
@@ -94,6 +105,7 @@ async def build_runtime_dashboard(settings: Any) -> dict[str, Any]:
         "pc2": pc2,
         "media_jobs": media_jobs,
         "image_lifecycle": image_lifecycle,
+        "system": system,
         "warnings": warnings,
     }
 
@@ -158,7 +170,17 @@ def _gpu_status() -> dict[str, Any]:
             text=True,
             timeout=3,
         )
-    except (FileNotFoundError, subprocess.SubprocessError, OSError) as exc:
+    except FileNotFoundError:
+        return {
+            "available": False,
+            "name": "",
+            "memory_total_mb": 0,
+            "memory_used_mb": 0,
+            "memory_free_mb": 0,
+            "utilization_gpu_percent": 0,
+            "detail": "nvidia-smi not available inside gateway container",
+        }
+    except (subprocess.SubprocessError, OSError) as exc:
         return {
             "available": False,
             "name": "",
@@ -189,6 +211,151 @@ def _gpu_status() -> dict[str, Any]:
         "memory_free_mb": _int_or_zero(parts[3]),
         "utilization_gpu_percent": _int_or_zero(parts[4]),
         "detail": "ok",
+    }
+
+
+async def _pc2_system_status(base_url: str) -> dict[str, Any]:
+    service = await _check_http_service("pc2-system-status", base_url, "/system/status")
+    if service.get("reachable") is not True:
+        return {
+            "status": "unavailable",
+            "detail": service.get("detail") or f"HTTP {service.get('http_status')}",
+        }
+    data = service.get("data")
+    if not isinstance(data, dict) or data.get("status") != "ok":
+        return {
+            "status": "unavailable",
+            "detail": f"pc2 system endpoint returned unexpected response: HTTP {service.get('http_status')}",
+        }
+    return data
+
+
+def _system_status(
+    *,
+    pc2_system: dict[str, Any],
+    docker_summary_snapshot_path: Path,
+) -> dict[str, Any]:
+    return {
+        "pc1": {
+            "memory": _memory_status(),
+            "cpu": _cpu_status(),
+            "disk": _disk_status("/"),
+            "uptime": _uptime_status(),
+        },
+        "pc2": pc2_system,
+        "docker": _docker_summary_snapshot(docker_summary_snapshot_path),
+    }
+
+
+def _docker_summary_snapshot(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {
+            "status": "unavailable",
+            "detail": "docker summary snapshot not found",
+            "services": [],
+        }
+    if not path.is_file():
+        return {
+            "status": "unavailable",
+            "detail": "docker summary snapshot path is not a file",
+            "services": [],
+        }
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        return {
+            "status": "unavailable",
+            "detail": f"docker summary snapshot invalid: {exc.__class__.__name__}",
+            "services": [],
+        }
+    if not isinstance(data, dict):
+        return {
+            "status": "unavailable",
+            "detail": "docker summary snapshot invalid: expected JSON object",
+            "services": [],
+        }
+    services = data.get("services")
+    if not isinstance(services, list):
+        data["services"] = []
+    return data
+
+
+def _memory_status() -> dict[str, Any]:
+    values = _read_meminfo()
+    total_mb = _kb_to_mb(values.get("MemTotal", 0))
+    free_mb = _kb_to_mb(values.get("MemFree", 0))
+    available_mb = _kb_to_mb(values.get("MemAvailable", values.get("MemFree", 0)))
+    used_mb = max(0, total_mb - available_mb)
+    used_percent = round((used_mb / total_mb) * 100, 1) if total_mb else 0.0
+    return {
+        "total_mb": total_mb,
+        "used_mb": used_mb,
+        "free_mb": free_mb,
+        "available_mb": available_mb,
+        "used_percent": used_percent,
+    }
+
+
+def _read_meminfo() -> dict[str, int]:
+    values: dict[str, int] = {}
+    try:
+        for line in Path("/proc/meminfo").read_text(encoding="utf-8").splitlines():
+            key, raw_value = line.split(":", 1)
+            parts = raw_value.strip().split()
+            if parts:
+                values[key] = int(parts[0])
+    except (OSError, ValueError):
+        return {}
+    return values
+
+
+def _cpu_status() -> dict[str, Any]:
+    try:
+        parts = Path("/proc/loadavg").read_text(encoding="utf-8").split()
+        load_1m = float(parts[0])
+        load_5m = float(parts[1])
+        load_15m = float(parts[2])
+    except (OSError, ValueError, IndexError):
+        load_1m = 0.0
+        load_5m = 0.0
+        load_15m = 0.0
+    return {
+        "load_1m": load_1m,
+        "load_5m": load_5m,
+        "load_15m": load_15m,
+        "cpu_count": os.cpu_count() or 0,
+    }
+
+
+def _disk_status(path: str) -> dict[str, Any]:
+    try:
+        usage = shutil.disk_usage(path)
+    except OSError:
+        return {
+            "path": path,
+            "total_gb": 0.0,
+            "used_gb": 0.0,
+            "free_gb": 0.0,
+            "used_percent": 0.0,
+        }
+    used_percent = round((usage.used / usage.total) * 100, 1) if usage.total else 0.0
+    return {
+        "path": path,
+        "total_gb": _bytes_to_gb(usage.total),
+        "used_gb": _bytes_to_gb(usage.used),
+        "free_gb": _bytes_to_gb(usage.free),
+        "used_percent": used_percent,
+    }
+
+
+def _uptime_status() -> dict[str, Any]:
+    try:
+        seconds = int(float(Path("/proc/uptime").read_text(encoding="utf-8").split()[0]))
+    except (OSError, ValueError, IndexError):
+        seconds = 0
+    return {
+        "seconds": seconds,
+        "human": _human_duration(seconds),
     }
 
 
@@ -307,3 +474,24 @@ def _int_or_zero(value: str) -> int:
         return int(value)
     except ValueError:
         return 0
+
+
+def _kb_to_mb(value: int) -> int:
+    return int(round(value / 1024))
+
+
+def _bytes_to_gb(value: int) -> float:
+    return round(value / (1024**3), 1)
+
+
+def _human_duration(seconds: int) -> str:
+    days, remainder = divmod(max(0, seconds), 86400)
+    hours, remainder = divmod(remainder, 3600)
+    minutes, _ = divmod(remainder, 60)
+    parts = []
+    if days:
+        parts.append(f"{days}d")
+    if hours or parts:
+        parts.append(f"{hours}h")
+    parts.append(f"{minutes}m")
+    return " ".join(parts)

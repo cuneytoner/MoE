@@ -139,6 +139,12 @@ M26.8.1 updates the Dashboard UI visual layer with Material UI cards, chips, ale
 
 M26.8.2 lets the dashboard observe runtime state through `/gateway/runtime/dashboard`. The endpoint and UI cards are read-only observers. Control Plane remains separate and no dashboard card applies runtime modes, starts/stops services, controls Docker, switches models, or triggers image generation.
 
+M26.8.3 adds system resource observations to the same read-only boundary. PC-1 resource cards read local procfs and disk usage; PC-2 system and Docker observer cards stay unavailable placeholders unless a safe observer is added later. Control Plane still owns planning, not dashboard UI.
+
+M26.8.4 adds a fixed PC-2 HTTP system observer through the Prompt Interpreter Worker. Gateway consumes it as status data only. It does not use SSH, remote shell commands, Docker control, service control, or runtime mode changes.
+
+M26.8.5 adds a host-written Docker summary snapshot as another observer. The snapshot script is user-run and read-only; Gateway only reads the fixed JSON file. Control Plane and Dashboard still do not mount Docker socket or control containers.
+
 ## Service Allowlist
 
 Known services:

@@ -27,5 +27,6 @@ printf '%s\n' "$response" | jq '{
   },
   media_jobs,
   image_lifecycle,
+  system,
   warnings
 }'

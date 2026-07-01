@@ -78,6 +78,76 @@ export type ImageLifecycle = {
   next_safe_step: string;
 };
 
+export type SystemMemory = {
+  total_mb: number;
+  used_mb: number;
+  free_mb: number;
+  available_mb: number;
+  used_percent: number;
+};
+
+export type SystemCpu = {
+  load_1m: number;
+  load_5m: number;
+  load_15m: number;
+  cpu_count: number;
+};
+
+export type SystemDisk = {
+  path: string;
+  total_gb: number;
+  used_gb: number;
+  free_gb: number;
+  used_percent: number;
+};
+
+export type SystemUptime = {
+  seconds: number;
+  human: string;
+};
+
+export type SystemStatus = {
+  pc1: {
+    memory: SystemMemory;
+    cpu: SystemCpu;
+    disk: SystemDisk;
+    uptime: SystemUptime;
+  };
+  pc2: {
+    status: string;
+    service?: string;
+    read_only?: boolean;
+    host_role?: string;
+    detail?: string;
+    memory?: SystemMemory;
+    cpu?: SystemCpu;
+    disk?: SystemDisk;
+    uptime?: SystemUptime;
+  };
+  docker: {
+    status: string;
+    service?: string;
+    read_only?: boolean;
+    generated_at?: string;
+    source?: string;
+    detail?: string;
+    services: Array<{
+      name?: string;
+      status?: string;
+      health?: string;
+      ports?: string;
+      image?: string;
+    }>;
+    summary?: {
+      total: number;
+      running: number;
+      healthy: number;
+      unhealthy: number;
+      missing: number;
+    };
+  };
+};
+
 export type RuntimeDashboardModel = {
   status: string;
   service: string;
@@ -105,5 +175,6 @@ export type RuntimeDashboardModel = {
     total_visible_jobs: number;
   };
   image_lifecycle: ImageLifecycle;
+  system: SystemStatus;
   warnings: string[];
 };

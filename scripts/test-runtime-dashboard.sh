@@ -38,6 +38,13 @@ pc1_type="$(jq -r 'if (.pc1 | type) == "object" then "object" else "other" end' 
 pc2_type="$(jq -r 'if (.pc2 | type) == "object" then "object" else "other" end' <<<"$response")"
 media_jobs_type="$(jq -r 'if (.media_jobs | type) == "object" then "object" else "other" end' <<<"$response")"
 image_lifecycle_type="$(jq -r 'if (.image_lifecycle | type) == "object" then "object" else "other" end' <<<"$response")"
+system_type="$(jq -r 'if (.system | type) == "object" then "object" else "other" end' <<<"$response")"
+system_pc1_memory_type="$(jq -r 'if (.system.pc1.memory | type) == "object" then "object" else "other" end' <<<"$response")"
+system_pc1_cpu_type="$(jq -r 'if (.system.pc1.cpu | type) == "object" then "object" else "other" end' <<<"$response")"
+system_pc1_disk_type="$(jq -r 'if (.system.pc1.disk | type) == "object" then "object" else "other" end' <<<"$response")"
+system_pc1_uptime_type="$(jq -r 'if (.system.pc1.uptime | type) == "object" then "object" else "other" end' <<<"$response")"
+system_pc2_status="$(jq -r '.system.pc2.status // empty' <<<"$response")"
+system_docker_status="$(jq -r '.system.docker.status // empty' <<<"$response")"
 warnings_type="$(jq -r 'if (.warnings | type) == "array" then "array" else "other" end' <<<"$response")"
 
 if [ "$status" = "ok" ] \
@@ -51,6 +58,13 @@ if [ "$status" = "ok" ] \
   && [ "$pc2_type" = "object" ] \
   && [ "$media_jobs_type" = "object" ] \
   && [ "$image_lifecycle_type" = "object" ] \
+  && [ "$system_type" = "object" ] \
+  && [ "$system_pc1_memory_type" = "object" ] \
+  && [ "$system_pc1_cpu_type" = "object" ] \
+  && [ "$system_pc1_disk_type" = "object" ] \
+  && [ "$system_pc1_uptime_type" = "object" ] \
+  && [ -n "$system_pc2_status" ] \
+  && [ -n "$system_docker_status" ] \
   && [ "$warnings_type" = "array" ]; then
   pass "Gateway runtime dashboard contract"
 else
