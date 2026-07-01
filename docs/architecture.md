@@ -139,6 +139,8 @@ Milestone 26.3 connects Media API to Media Worker to ComfyUI for gated real imag
 
 Milestone 26.4 adds a Gateway Media Adapter. Gateway can plan media prompts, optionally use the PC-2 Prompt Interpreter when reachable, create Media API dry-run jobs, and read Media API job status. Real jobs remain rejected by default and require `GATEWAY_MEDIA_REAL_ALLOWED=true`, `MEDIA_REAL_GENERATION_ENABLED=true` on the media services, and `confirm_real_generation=true` in the request. Gateway still does not start or stop services, control PC-2, execute shell commands, control Docker, or start ComfyUI.
 
+Milestone 26.5 adds a simple read-only Media Dashboard / Status UI. Gateway exposes `/gateway/media/dashboard`, which aggregates service reachability, media safety gates, runtime mode hints, safe command text, and latest runtime image output paths. The optional `apps/media-dashboard` frontend displays that model only. It does not start services, stop services, call Docker, trigger real generation, or modify runtime media.
+
 apps/control-api:
 
 Control Plane API for Milestone 26.1.5. It exposes read-only runtime status, configured runtime modes, and dry-run mode plans on port `8400`. The Control Plane is the planned system coordination surface; Gateway remains a chat/routing/workspace API and must not become the system start/stop controller. PC-1 is the generation host for heavy GPU work, `llama-server`, ComfyUI, and future video/3D engines. PC-2 is the helper host for prompt interpretation, queue metadata, feedback, reports, and future optional mini-model interpretation.
@@ -221,6 +223,10 @@ Future media services should keep generated assets under `/home/cuneyt/MoE/runti
 apps/dashboard:
 
 Management and monitoring UI. It will show service health, machine status, GPU status, model endpoints, and memory system status.
+
+apps/media-dashboard:
+
+Source-only static Media Lab status UI for Milestone 26.5. It reads Gateway's dashboard model and displays service health, gates, mode hints, safe command text, and latest runtime image paths. It is a viewer only.
 
 packages/shared:
 

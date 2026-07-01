@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models download-flux-schnell-models-plan download-flux-schnell-models-apply check-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health comfyui-vram-status comfyui-flux-smoke-test comfyui-first-image-plan comfyui-first-image-apply control-api-test control-api-up control-api-down runtime-status runtime-mode-coding-plan runtime-mode-image-plan runtime-mode-video-plan runtime-mode-3d-suite-plan runtime-mode-media-off-plan check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down media-image-dry-run media-image-real-run media-latest-images gateway-media-plan gateway-media-dry-run gateway-media-real-plan pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report pc2-prompt-interpreter-up pc2-prompt-interpreter-down pc2-prompt-interpreter-health pc2-prompt-interpreter-sample model-start model-stop model-status model-health model-switch test-gateway test-gateway-media test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-prompt-interpreter-worker test-media-api test-media-image-bridge test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models download-flux-schnell-models-plan download-flux-schnell-models-apply check-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health comfyui-vram-status comfyui-flux-smoke-test comfyui-first-image-plan comfyui-first-image-apply control-api-test control-api-up control-api-down runtime-status runtime-mode-coding-plan runtime-mode-image-plan runtime-mode-video-plan runtime-mode-3d-suite-plan runtime-mode-media-off-plan check-models status tree runtime-prepare docker-up docker-down docker-ps docker-logs health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down media-image-dry-run media-image-real-run media-latest-images gateway-media-plan gateway-media-dry-run gateway-media-real-plan media-dashboard-status media-dashboard-open pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report pc2-prompt-interpreter-up pc2-prompt-interpreter-down pc2-prompt-interpreter-health pc2-prompt-interpreter-sample model-start model-stop model-status model-health model-switch test-gateway test-gateway-media test-media-dashboard test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-prompt-interpreter-worker test-media-api test-media-image-bridge test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -64,6 +64,8 @@ help:
 > @echo "  make gateway-media-plan Plan a guarded Gateway media request"
 > @echo "  make gateway-media-dry-run Create a Gateway media dry-run job"
 > @echo "  make gateway-media-real-plan Demonstrate guarded real generation rejection"
+> @echo "  make media-dashboard-status Show read-only Media Dashboard status"
+> @echo "  make media-dashboard-open Print Media Dashboard endpoint/UI locations"
 > @echo "  make pc2-check-connectivity Optional read-only PC-2 network and SSH check"
 > @echo "  make pc2-check-layout Optional read-only PC-2 runtime and Docker layout check"
 > @echo "  make pc2-sync-code Optional sync source-only codebase to PC-2"
@@ -277,6 +279,12 @@ gateway-media-dry-run:
 gateway-media-real-plan:
 > @./scripts/gateway-media-real-plan.sh
 
+media-dashboard-status:
+> @./scripts/media-dashboard-status.sh
+
+media-dashboard-open:
+> @./scripts/media-dashboard-open.sh
+
 pc2-check-connectivity:
 > @./scripts/check-pc2-connectivity.sh
 
@@ -357,6 +365,9 @@ test-gateway:
 
 test-gateway-media:
 > @./scripts/test-gateway-media.sh
+
+test-media-dashboard:
+> @./scripts/test-media-dashboard.sh
 
 test-gateway-chat:
 > @RUN_GATEWAY_CHAT_TEST=1 ./scripts/test-gateway-api.sh

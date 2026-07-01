@@ -105,11 +105,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.4: Gateway-to-Media Guarded Integration in progress
+Milestone 26.5: Simple Media Dashboard / Status UI in progress
 
 Next planned milestone:
 
-Milestone 26.5: Simple Media Dashboard / Status UI
+Milestone 26.6: Guided Image Generation Command Pack
 
 Optional image planning commands:
 
@@ -127,6 +127,8 @@ make media-latest-images
 make gateway-media-plan
 make gateway-media-dry-run
 make gateway-media-real-plan
+make media-dashboard-status
+make media-dashboard-open
 
 Optional control planning commands:
 

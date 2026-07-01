@@ -3,6 +3,7 @@ from typing import Any
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.clients.embed_worker import EmbedWorkerClient
 from app.clients.media_api import MediaApiClient
@@ -10,6 +11,7 @@ from app.clients.memory_api import MemoryApiClient, MemoryApiUnavailable
 from app.clients.model_runtime import ModelRuntimeClient, ModelRuntimeUnavailable
 from app.clients.prompt_interpreter import PromptInterpreterClient
 from app.config import get_settings
+from app.media_dashboard import build_media_dashboard
 from app.models.gateway import (
     GatewayChatRequest,
     GatewayChatResponse,
@@ -67,6 +69,12 @@ from app.services.tool_planner import tool_catalog
 from app.services.workspace import WorkspaceService
 
 app = FastAPI(title="MoE Gateway API", version="0.1.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:8500", "http://localhost:8500"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
 
 
 MEDIA_NEXT_STEPS = [
@@ -223,6 +231,25 @@ async def media_job_real(request: GatewayMediaRealJobRequest) -> GatewayMediaJob
 async def media_job_status(job_id: str) -> dict[str, Any]:
     settings = get_settings()
     return await MediaApiClient(settings.media_api_url).get_job(job_id)
+
+
+@app.get("/gateway/media/dashboard")
+async def media_dashboard() -> dict[str, Any]:
+    settings = get_settings()
+    if not settings.media_dashboard_enabled:
+        return {
+            "status": "rejected",
+            "service": "gateway-media-dashboard",
+            "reason": "MEDIA_DASHBOARD_ENABLED must be true",
+            "safety": {
+                "read_only": True,
+                "starts_services": False,
+                "stops_services": False,
+                "real_generation_trigger": False,
+                "arbitrary_shell": False,
+            },
+        }
+    return await build_media_dashboard(settings)
 
 
 @app.get("/gateway/models", response_model=GatewayModelsResponse)

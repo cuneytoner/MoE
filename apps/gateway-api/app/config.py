@@ -46,6 +46,10 @@ class Settings(BaseSettings):
         default="http://localhost:8300",
         alias="MEDIA_API_PUBLIC_URL",
     )
+    media_worker_url: str = Field(
+        default="http://media-worker:8310",
+        alias="MEDIA_WORKER_URL",
+    )
     prompt_interpreter_url: str = Field(
         default="http://192.168.50.2:8230",
         alias="PROMPT_INTERPRETER_URL",
@@ -58,6 +62,26 @@ class Settings(BaseSettings):
     gateway_media_default_mode: str = Field(
         default="dry_run",
         alias="GATEWAY_MEDIA_DEFAULT_MODE",
+    )
+    media_dashboard_enabled: bool = Field(
+        default=True,
+        alias="MEDIA_DASHBOARD_ENABLED",
+    )
+    media_outputs_dir: str = Field(
+        default="/home/cuneyt/MoE/runtime/media/outputs",
+        alias="MEDIA_OUTPUTS_DIR",
+    )
+    media_dashboard_max_images: int = Field(
+        default=20,
+        alias="MEDIA_DASHBOARD_MAX_IMAGES",
+    )
+    control_api_url: str = Field(
+        default="http://host.docker.internal:8400",
+        alias="CONTROL_API_URL",
+    )
+    comfyui_url: str = Field(
+        default="http://host.docker.internal:8188",
+        alias="COMFYUI_URL",
     )
 
 

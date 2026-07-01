@@ -374,6 +374,23 @@ Media API and Media Worker still own job storage and ComfyUI processing. Outputs
 /home/cuneyt/MoE/runtime/media/outputs/images
 ```
 
+## Media Dashboard
+
+Milestone 26.5 adds a read-only image status view through Gateway:
+
+```bash
+make media-dashboard-status
+make media-dashboard-open
+```
+
+The dashboard lists the latest image output paths from:
+
+```text
+/home/cuneyt/MoE/runtime/media/outputs/images
+```
+
+It also shows service reachability and generation gates. It does not start ComfyUI, enable real generation, run Docker, or create image files.
+
 ## Runtime Paths
 
 Future image outputs belong under:

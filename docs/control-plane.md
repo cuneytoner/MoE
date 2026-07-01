@@ -129,6 +129,8 @@ M26.3 image mode should include Media API, Media Worker, ComfyUI, and Prompt Int
 
 M26.4 keeps Gateway out of the control-plane role. Gateway can plan media jobs and request Media API dry-run jobs, but it does not start or stop services, control PC-2, control Docker, or start ComfyUI. Real generation through Gateway also requires `GATEWAY_MEDIA_REAL_ALLOWED=true` and a request-level `confirm_real_generation=true`.
 
+M26.5 keeps the dashboard display-only. Control Plane remains responsible for mode definitions and dry-run mode plans; the Media Dashboard only displays current reachability, gate values, mode hints, safe command text, and latest image paths. It does not apply mode changes.
+
 ## Service Allowlist
 
 Known services:

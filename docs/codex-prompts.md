@@ -823,6 +823,33 @@ Expected boundaries:
 - Keep generation controls explicit and guarded.
 - Do not create runtime media inside the source repository.
 
+## Milestone 26.5 Prompt Summary
+
+Add a read-only Media Dashboard and runtime status UI.
+
+Scope:
+
+- Add `/gateway/media/dashboard`.
+- Add source-only `apps/media-dashboard`.
+- Show Gateway, Media API, Media Worker, Prompt Interpreter, Control API, and ComfyUI reachability.
+- Show media gates, runtime mode hints, safe command text, and latest image output paths.
+- Read latest image metadata from `/home/cuneyt/MoE/runtime/media/outputs` only.
+- Do not start or stop services.
+- Do not call Docker.
+- Do not trigger real generation.
+- Do not modify, delete, move, or copy generated media.
+
+## Milestone 26.6 Prompt Placeholder
+
+Add a guided image generation command pack.
+
+Expected boundaries:
+
+- Provide curated terminal command sequences for common image workflows.
+- Keep every command explicit and user-run.
+- Do not turn the dashboard or Gateway into a service control surface.
+- Do not download, modify, or delete model files automatically.
+
 ## Milestone 26.1.5 Prompt Summary
 
 Add Control Plane Dashboard and Runtime Mode Manager.

@@ -22,15 +22,22 @@ services:
       WORKSPACE_ALLOWED_EXTENSIONS: ${WORKSPACE_ALLOWED_EXTENSIONS:-.py,.md,.txt,.yaml,.yml,.json,.toml,.sh,.env.example,.gitignore,.dockerignore,Dockerfile,Makefile}
       MEDIA_API_URL: ${MEDIA_API_URL:-http://media-api:8300}
       MEDIA_API_PUBLIC_URL: ${MEDIA_API_PUBLIC_URL:-http://localhost:8300}
+      MEDIA_WORKER_URL: ${MEDIA_WORKER_URL:-http://media-worker:8310}
       PROMPT_INTERPRETER_URL: ${PROMPT_INTERPRETER_URL:-http://192.168.50.2:8230}
       GATEWAY_MEDIA_ENABLED: ${GATEWAY_MEDIA_ENABLED:-true}
       GATEWAY_MEDIA_REAL_ALLOWED: ${GATEWAY_MEDIA_REAL_ALLOWED:-false}
       GATEWAY_MEDIA_DEFAULT_MODE: ${GATEWAY_MEDIA_DEFAULT_MODE:-dry_run}
+      MEDIA_DASHBOARD_ENABLED: ${MEDIA_DASHBOARD_ENABLED:-true}
+      MEDIA_OUTPUTS_DIR: ${MEDIA_OUTPUTS_DIR:-/home/cuneyt/MoE/runtime/media/outputs}
+      MEDIA_DASHBOARD_MAX_IMAGES: ${MEDIA_DASHBOARD_MAX_IMAGES:-20}
+      CONTROL_API_URL: ${CONTROL_API_URL:-http://host.docker.internal:8400}
+      COMFYUI_URL: ${COMFYUI_URL:-http://host.docker.internal:8188}
     ports:
       - "${GATEWAY_API_PORT:-8100}:8100"
     volumes:
       - ../../configs/model-routing.yaml:/app/configs/model-routing.yaml:ro
       - ../../:/workspace:ro
+      - ${MEDIA_OUTPUTS_DIR:-/home/cuneyt/MoE/runtime/media/outputs}:/home/cuneyt/MoE/runtime/media/outputs:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:

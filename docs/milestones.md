@@ -525,7 +525,7 @@ Goals:
 
 ## Milestone 26.4: Gateway-to-Media Guarded Integration
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add explicit Gateway-to-Media planning/dispatch integration.
@@ -540,12 +540,27 @@ Current scope:
 
 ## Milestone 26.5: Simple Media Dashboard / Status UI
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Add a lightweight media status/dashboard surface.
 - Show Gateway media safety gates, dry-run jobs, and latest media outputs.
 - Keep real generation controls explicit and guarded.
+
+Current scope:
+- Add read-only `/gateway/media/dashboard`.
+- Add a source-only `apps/media-dashboard` UI.
+- Show service reachability, media gates, mode hints, safe command text, and latest image output paths.
+- Do not start/stop services, call Docker, trigger real generation, or modify runtime media.
+
+## Milestone 26.6: Guided Image Generation Command Pack
+
+Status: PLANNED
+
+Goals:
+- Add reviewed command packs for common image-generation flows.
+- Keep commands explicit and user-run.
+- Preserve source/runtime/model separation.
 
 ## Milestone 27: Video Generation Service
 

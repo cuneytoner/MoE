@@ -12,6 +12,8 @@ In Milestone 26.3, Prompt Interpreter output can be used manually as input to Me
 
 In Milestone 26.4, Gateway uses the Prompt Interpreter at `http://192.168.50.2:8230` when it is reachable. If it is unavailable, Gateway falls back to local deterministic classification and returns a warning. Gateway planning still returns a dry-run job spec and does not generate media by itself.
 
+In Milestone 26.5, the Media Dashboard reports Prompt Interpreter reachability as status only. It does not start, stop, or call generation services.
+
 ## PC-2 Role
 
 PC-2 is the helper host for:

@@ -276,3 +276,28 @@ Real job creation requires all gates:
 - `target_mode=image`.
 
 Gateway does not start services, stop services, control PC-2, start ComfyUI, stop ComfyUI, control Docker containers, execute shell commands, or write generated media into the repository.
+
+## Media Dashboard
+
+Milestone 26.5 adds a read-only dashboard model:
+
+```text
+GET /gateway/media/dashboard
+```
+
+It reports:
+
+- Gateway, Media API, Media Worker, Prompt Interpreter, Control API, and ComfyUI reachability.
+- Media safety gates such as `gateway_real_allowed` and `media_real_generation_enabled`.
+- Runtime mode hints for coding, image, and media-off workflows.
+- Latest image output paths under `/home/cuneyt/MoE/runtime/media/outputs/images`.
+- Safe next commands as text only.
+
+Helper commands:
+
+```bash
+make media-dashboard-status
+make media-dashboard-open
+```
+
+The dashboard is read-only. It does not start services, stop services, call Docker, start ComfyUI, trigger real generation, move outputs, delete outputs, or copy generated media into the repository.
