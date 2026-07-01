@@ -1,0 +1,79 @@
+active_root: /home/cuneyt/MoE_Models_Backup
+archive_root: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive
+
+required_active:
+  - id: qwen-coder-14b-fast
+    type: gguf
+    path: /home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-14B-Instruct-IQ4_XS.gguf
+    role: fast coding assistant
+
+  - id: qwen-coder-32b-main
+    type: gguf
+    path: /home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-32B-Instruct-IQ4_XS.gguf
+    role: main coding brain
+
+  - id: deepseek-coder-lite
+    type: gguf
+    path: /home/cuneyt/MoE_Models_Backup/DeepSeek-Coder-V2-Lite-Instruct-IQ4_XS.gguf
+    role: coding alternative
+
+  - id: bge-m3
+    type: directory
+    path: /home/cuneyt/MoE_Models_Backup/bge-m3
+    role: embedding model
+
+  - id: flux-schnell-main
+    type: safetensors
+    path: /home/cuneyt/MoE_Models_Backup/flux/flux1-schnell.safetensors
+    role: image generation
+
+  - id: flux-schnell-clip-l
+    type: safetensors
+    path: /home/cuneyt/MoE_Models_Backup/clip/clip_l.safetensors
+    role: image generation text encoder
+
+  - id: flux-schnell-t5xxl
+    type: safetensors
+    path: /home/cuneyt/MoE_Models_Backup/clip/t5xxl_fp8_e4m3fn.safetensors
+    role: image generation text encoder
+
+  - id: flux-schnell-ae
+    type: safetensors
+    path: /home/cuneyt/MoE_Models_Backup/vae/ae.safetensors
+    role: image generation vae
+
+archived_optional:
+  - id: qwen-35b-a3b-reasoning
+    type: gguf
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/Qwen_Qwen3.6-35B-A3B-Q4_K_M.gguf
+    role: archived reasoning / MoE candidate
+
+  - id: qwen-coder-32b-q4-k-m-duplicate
+    type: gguf
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/qwen2.5-coder-32b-instruct-q4_k_m.gguf
+    role: archived duplicate coding model
+
+  - id: deepseek-coder-lite-q8-archive
+    type: gguf
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/DeepSeek-Coder-V2-Lite-Instruct-Q8_0.gguf
+    role: archived alternate quantization
+
+  - id: gemma-3-27b-general
+    type: gguf
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/gemma-3-27b-it-Q4_K_M.gguf
+    role: archived general reasoning model
+
+  - id: cogvideox-5b-i2v-gguf
+    type: gguf
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/CogVideoX_5b_I2V_GGUF_Q4_0.gguf
+    role: archived video generation candidate
+
+  - id: cogvideox-5b-i2v-safetensors
+    type: safetensors
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/CogVideoX_5b_I2V_GGUF_Q4_0.safetensors
+    role: archived video generation candidate
+
+  - id: checkpoint-duplicates
+    type: directory
+    archive_path: /media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive/checkpoints
+    role: archived duplicate checkpoints

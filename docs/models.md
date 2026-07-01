@@ -21,7 +21,9 @@ This repository tracks model paths and model intent only. Model binaries, checkp
 - `/home/cuneyt/MoE_Models_Backup/clip/clip_l.safetensors`
 - `/home/cuneyt/MoE_Models_Backup/vae/ae.safetensors`
 
-The authoritative source-controlled registry is `configs/models.yaml`.
+The active runtime model config is `configs/models.yaml`.
+
+The source-only registry example for inventory checks is `configs/model-registry.example.yaml`.
 
 ## Archived Optional Models
 
@@ -40,3 +42,33 @@ Current archived inventory includes:
 - checkpoint duplicates
 
 Do not move, delete, or restore archived files from scripts. Restore or re-activate archived models manually, then update `configs/models.yaml` intentionally.
+
+## Commands
+
+Validate active required registry paths and warn about optional archived paths:
+
+```bash
+make model-registry-check
+```
+
+Scan the active and archive roots and write a JSON inventory report:
+
+```bash
+make model-inventory
+```
+
+The inventory report is written to:
+
+```text
+/home/cuneyt/MoE/runtime/reports/models/model-inventory.json
+```
+
+This generated report is runtime data and must not be committed.
+
+## Registry Behavior
+
+- Active required paths must exist.
+- Active GGUF models must start with `GGUF`.
+- Missing archived optional paths produce warnings only.
+- Duplicate filename candidates are reported as warnings for human review.
+- Scripts never move, delete, download, or mutate model files.

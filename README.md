@@ -120,6 +120,13 @@ Archived inactive models live under `/media/cuneyt/Disk2TB/model_backup/MoE_Mode
 
 `make check-models` validates only active required models and active required media assets from `configs/models.yaml`. Archived models are documented under `archived_models` and do not need to exist in the active model path.
 
+`configs/model-registry.example.yaml` documents the active/archive inventory used by:
+
+make model-inventory
+make model-registry-check
+
+`make model-inventory` writes its generated report only under `/home/cuneyt/MoE/runtime/reports/models/model-inventory.json`.
+
 Optional image planning commands:
 
 make check-image-models

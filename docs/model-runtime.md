@@ -15,9 +15,11 @@ The runtime is managed by source-controlled scripts, but the server process, log
 - Logs: `/home/cuneyt/MoE/runtime/logs/llama-server.log`
 - Pid file: `/home/cuneyt/MoE/runtime/pids/llama-server.pid`
 
-Model files are referenced from `configs/models.yaml`. They are never copied into this repository.
+Model files are referenced from `configs/models.yaml`. The source-only registry example lives at `configs/model-registry.example.yaml`. They are never copied into this repository.
 
 `make check-models` only fails for active required models and active required media assets. Archived models are documented in `configs/models.yaml` under `archived_models` with `archive_path`, but they are not required to exist under `/home/cuneyt/MoE_Models_Backup`.
+
+See `docs/models.md` for the model registry and inventory workflow.
 
 Runtime defaults live in `configs/runtime.yaml`. Environment variables in `.env.example` document the common overrides.
 
@@ -136,6 +138,22 @@ Current Gateway advisory targets:
 - `ops`: `deepseek-coder-lite`
 
 Gateway-driven hot switching between these models is a future milestone. Start or switch the desired model manually with the host runtime scripts.
+
+## Registry And Inventory
+
+Validate the source-controlled registry against local active model paths:
+
+```bash
+make model-registry-check
+```
+
+Generate a read-only inventory report from the active and archive roots:
+
+```bash
+make model-inventory
+```
+
+The inventory report is generated at `/home/cuneyt/MoE/runtime/reports/models/model-inventory.json`. It is runtime output and must not be copied into this repository.
 
 For safer manual switches, prefer:
 

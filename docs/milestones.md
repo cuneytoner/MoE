@@ -659,7 +659,7 @@ Goals:
 - Keep service control and real generation guarded.
 - Avoid arbitrary shell execution.
 
-## Milestone 27.0: Model Registry Cleanup
+## Milestone 27.0: Model Registry and Inventory
 
 Status: IN PROGRESS
 
@@ -667,7 +667,8 @@ Goals:
 - Keep active required coder, embedding, and Flux assets under `/home/cuneyt/MoE_Models_Backup`.
 - Document archived inactive models under `/media/cuneyt/Disk2TB/model_backup/MoE_Models_Archive`.
 - Ensure `make check-models` fails only for active required models and active required media assets.
-- Keep archived models source-documented but optional.
+- Add source-only model registry and read-only inventory tooling.
+- Write generated inventory reports only under `/home/cuneyt/MoE/runtime/reports/models`.
 
 ## Milestone 27: Video Generation Service
 
