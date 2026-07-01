@@ -67,3 +67,9 @@ make improvement-plan-local
 ```
 
 That plan is written to `/home/cuneyt/MoE/runtime/reports/improvement-plans/human-approved-improvement-plan.json` and remains patch-plan style guidance only.
+
+Milestone 29.0 turns the human-approved improvement plan into a reviewed patch plan:
+
+```bash
+make improvement-patch-plan-local
+```

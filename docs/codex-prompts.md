@@ -1225,3 +1225,14 @@ Before accepting Codex changes, check:
 - Do not include raw feedback reason text, raw prompt text, raw model response text, or individual feedback records.
 - Do not apply changes, mutate memory, modify router config, modify prompt templates, call Memory API, call Gateway, call llama-server, train, fine-tune, download models, switch models, execute shell commands from apps, control Docker, or control services.
 - Validate with `make improvement-plan-local`, `make test-improvement-plan`, and default source-only tests.
+
+## Milestone 29.0 Reviewed Improvement Patch Planner
+
+- Add `scripts/improvement-patch-plan-local.sh` and `scripts/test-improvement-patch-plan.sh`.
+- Read `/home/cuneyt/MoE/runtime/reports/improvement-plans/human-approved-improvement-plan.json`.
+- Write `/home/cuneyt/MoE/runtime/reports/patch-plans/reviewed-improvement-patch-plan.json`.
+- Include `patch_plan_status=review_required`, `apply_supported=false`, `human_review_required=true`, patch groups, validation plan, safety boundaries, review checklist, and next steps.
+- Generate patch-plan style recommendations from `proposed_changes[]` only.
+- Do not include raw feedback reason text, raw prompt text, raw model response text, or individual feedback records.
+- Do not apply patches, edit target files, mutate memory, modify router config, modify prompt templates, call Memory API, call Gateway, call llama-server, train, fine-tune, download models, switch models, execute shell commands from apps, control Docker, or control services.
+- Validate with `make improvement-patch-plan-local`, `make test-improvement-patch-plan`, and default source-only tests.

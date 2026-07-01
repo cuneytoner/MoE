@@ -59,3 +59,11 @@ This milestone does not:
 - include individual feedback records
 
 Every proposed change requires explicit human approval before any source, config, prompt, router, documentation, memory, Docker, service, or runtime change.
+
+Milestone 29.0 consumes this plan to create a reviewed improvement patch plan:
+
+```bash
+make improvement-patch-plan-local
+```
+
+That patch plan is written to `/home/cuneyt/MoE/runtime/reports/patch-plans/reviewed-improvement-patch-plan.json` and remains advisory. It does not apply patches or edit target files.

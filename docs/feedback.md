@@ -81,6 +81,8 @@ Milestone 28.8 adds a reviewed learning loop report that reads the aggregate fee
 
 Milestone 28.9 adds a human-approved improvement plan that reads the reviewed learning-loop report and writes patch-plan style recommendations only. It does not apply changes automatically.
 
+Milestone 29.0 adds a reviewed improvement patch planner that reads the human-approved improvement plan and writes patch groups for human review only. It does not apply patches or edit target files.
+
 ## Status
 
 `GET /gateway/feedback/status` returns aggregate file status only:
@@ -178,6 +180,20 @@ The plan is written to:
 
 It contains proposed changes, validation commands, safety boundaries, and next steps with `plan_status=review_required`, `apply_supported=false`, and `human_review_required=true`.
 
+## Reviewed Improvement Patch Planner
+
+```bash
+make improvement-patch-plan-local
+```
+
+The patch plan is written to:
+
+```text
+/home/cuneyt/MoE/runtime/reports/patch-plans/reviewed-improvement-patch-plan.json
+```
+
+It contains patch groups, validation commands, safety boundaries, a review checklist, and next steps with `patch_plan_status=review_required`, `apply_supported=false`, and `human_review_required=true`.
+
 ## Smoke Test
 
 ```bash
@@ -191,4 +207,6 @@ make learning-loop-report-local
 make test-learning-loop-report
 make improvement-plan-local
 make test-improvement-plan
+make improvement-patch-plan-local
+make test-improvement-patch-plan
 ```

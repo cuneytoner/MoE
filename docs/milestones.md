@@ -1,9 +1,9 @@
 # MoE / AI-Brain-OS Milestones
 
 Current active phase:
-- M28 Gateway AI Core is complete through M28.9.
-- Next planned: M29.0 Reviewed Improvement Patch Planner.
-- Next major phase: M29 Reviewed Learning / Improvement Workflow.
+- M29 Reviewed Learning / Improvement Workflow is active.
+- Completed through M29.0 Reviewed Improvement Patch Planner.
+- Next planned: M29.1 Human-Approved Router and Prompt Update Workflow.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -788,7 +788,7 @@ Goals:
 
 ## Milestone 29.0: Reviewed Improvement Patch Planner
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Convert human-approved improvement plans into patch-plan style recommendations.
