@@ -65,10 +65,22 @@ The inventory report is written to:
 
 This generated report is runtime data and must not be committed.
 
+The inventory report includes:
+
+- `generated_at`
+- `active_root`
+- `archive_root`
+- `total_active_size_bytes`
+- `total_archive_size_bytes`
+- `active_models`
+- `archived_models`
+- `duplicate_candidates`
+- `missing_required`
+
 ## Registry Behavior
 
 - Active required paths must exist.
 - Active GGUF models must start with `GGUF`.
 - Missing archived optional paths produce warnings only.
-- Duplicate filename candidates are reported as warnings for human review.
+- Duplicate filename candidates and configured optional duplicate candidates are reported as warnings for human review.
 - Scripts never move, delete, download, or mutate model files.
