@@ -117,6 +117,28 @@ Manual real generation still requires:
 
 The command pack does not perform those steps by default.
 
+## Guided Image Generation Pack
+
+Milestone 26.6 adds image-specific lifecycle helpers:
+
+```bash
+make image-readiness
+make image-dry-run
+APPLY=1 STOP_LLM=1 make image-mode-prepare
+APPLY=1 MEDIA_REAL_GENERATION_ENABLED=true make image-real-run
+make image-latest
+APPLY=1 START_LLM=1 make image-safe-shutdown
+make image-full-cycle
+```
+
+`make image-full-cycle` is dry-run by default. A real full cycle requires:
+
+```bash
+APPLY=1 CONFIRM_IMAGE_FULL_CYCLE=1 make image-full-cycle
+```
+
+Safe shutdown is not automatic unless `AUTO_SAFE_SHUTDOWN=1` is set.
+
 ## Troubleshooting
 
 PC-2 unreachable:

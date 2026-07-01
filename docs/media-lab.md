@@ -301,3 +301,23 @@ make media-dashboard-open
 ```
 
 The dashboard is read-only. It does not start services, stop services, call Docker, start ComfyUI, trigger real generation, move outputs, delete outputs, or copy generated media into the repository.
+
+## Guided Image Generation
+
+Milestone 26.6 adds a guided command pack for image lifecycle work:
+
+```bash
+make image-readiness
+make image-dry-run
+make image-latest
+```
+
+Real generation remains explicit:
+
+```bash
+APPLY=1 STOP_LLM=1 make image-mode-prepare
+APPLY=1 MEDIA_REAL_GENERATION_ENABLED=true make image-real-run
+APPLY=1 START_LLM=1 make image-safe-shutdown
+```
+
+The command pack uses fixed project commands only and never deletes runtime media outputs.

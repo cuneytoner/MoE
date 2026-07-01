@@ -105,11 +105,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.5.1: PC1 / PC2 Sleep Wake Startup Command Pack in progress
+Milestone 26.6: Guided Image Generation Command Pack in progress
 
 Next planned milestone:
 
-Milestone 26.6: Guided Image Generation Command Pack
+Milestone 26.7: Image Prompt Presets and History
 
 Optional image planning commands:
 
@@ -129,6 +129,10 @@ make gateway-media-dry-run
 make gateway-media-real-plan
 make media-dashboard-status
 make media-dashboard-open
+make image-readiness
+make image-dry-run
+make image-latest
+make image-full-cycle
 
 Optional runtime command pack:
 

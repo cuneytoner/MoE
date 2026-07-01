@@ -391,6 +391,27 @@ The dashboard lists the latest image output paths from:
 
 It also shows service reachability and generation gates. It does not start ComfyUI, enable real generation, run Docker, or create image files.
 
+## Guided Image Generation Pack
+
+Milestone 26.6 adds explicit lifecycle commands:
+
+```bash
+make image-readiness
+make image-dry-run
+APPLY=1 STOP_LLM=1 make image-mode-prepare
+APPLY=1 MEDIA_REAL_GENERATION_ENABLED=true make image-real-run
+make image-latest
+APPLY=1 START_LLM=1 make image-safe-shutdown
+```
+
+`make image-full-cycle` is dry-run by default. A real full cycle requires:
+
+```bash
+APPLY=1 CONFIRM_IMAGE_FULL_CYCLE=1 make image-full-cycle
+```
+
+The guided pack does not start real generation without `APPLY=1`, does not delete outputs, and does not modify model files. Details live in `docs/guided-image-generation.md`.
+
 ## Runtime Paths
 
 Future image outputs belong under:
@@ -465,6 +486,7 @@ This does not install ComfyUI, create model symlinks, modify model files, or run
 - Model downloads only through explicit optional user-run `APPLY=1` script.
 - No model file modifications.
 - GPU job execution only through explicit optional user-run `APPLY=1` first-image script.
+- Guided real image generation only through explicit optional user-run `APPLY=1` scripts.
 - No arbitrary shell execution.
 - No image output creation in the source repository.
 

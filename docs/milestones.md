@@ -555,7 +555,7 @@ Current scope:
 
 ## Milestone 26.5.1: PC1 / PC2 Sleep Wake Startup Command Pack
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add fixed, user-run PC-1, PC-2, and cluster command scripts for sleep preparation, guarded suspend, startup, and status.
@@ -565,12 +565,27 @@ Goals:
 
 ## Milestone 26.6: Guided Image Generation Command Pack
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
 - Add reviewed command packs for common image-generation flows.
 - Keep commands explicit and user-run.
 - Preserve source/runtime/model separation.
+
+Current scope:
+- Add guided image readiness, dry-run, image-mode prepare, real-run, latest output, safe shutdown, and full-cycle scripts.
+- Keep real generation behind `APPLY=1`.
+- Keep ComfyUI bridge mode explicit.
+- Keep generated media under runtime output paths.
+
+## Milestone 26.7: Image Prompt Presets and History
+
+Status: PLANNED
+
+Goals:
+- Add source-only image prompt preset templates.
+- Track reviewed prompt history without copying generated media into the repository.
+- Keep real generation explicit and guarded.
 
 ## Milestone 27: Video Generation Service
 

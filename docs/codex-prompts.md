@@ -850,6 +850,35 @@ Expected boundaries:
 - Do not turn the dashboard or Gateway into a service control surface.
 - Do not download, modify, or delete model files automatically.
 
+## Milestone 26.6 Prompt Summary
+
+Add a guided image generation lifecycle command pack.
+
+Scope:
+
+- Add `scripts/image/image-readiness.sh`.
+- Add `scripts/image/image-dry-run.sh`.
+- Add `scripts/image/image-mode-prepare.sh`.
+- Add `scripts/image/image-real-run.sh`.
+- Add `scripts/image/image-latest.sh`.
+- Add `scripts/image/image-safe-shutdown.sh`.
+- Add `scripts/image/image-full-cycle.sh`.
+- Keep dry-run as the default flow.
+- Require `APPLY=1` for real preparation, real generation, and safe shutdown.
+- Require `CONFIRM_IMAGE_FULL_CYCLE=1` for full real cycle.
+- Do not delete outputs, modify model files, create repo runtime artifacts, or accept arbitrary commands.
+
+## Milestone 26.7 Prompt Placeholder
+
+Add image prompt presets and history.
+
+Expected boundaries:
+
+- Store source-only preset templates.
+- Store reviewed prompt history without generated media.
+- Keep generated files under runtime media outputs.
+- Keep real generation explicit and guarded.
+
 ## Milestone 26.5.1 Prompt Summary
 
 Add PC-1 / PC-2 sleep, wake, startup, and status command pack scripts.

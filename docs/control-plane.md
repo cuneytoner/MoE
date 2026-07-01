@@ -131,6 +131,8 @@ M26.4 keeps Gateway out of the control-plane role. Gateway can plan media jobs a
 
 M26.5 keeps the dashboard display-only. Control Plane remains responsible for mode definitions and dry-run mode plans; the Media Dashboard only displays current reachability, gate values, mode hints, safe command text, and latest image paths. It does not apply mode changes.
 
+M26.6 adds guided image command scripts. They are still user-run shell helpers rather than Control Plane actions. Image mode preparation starts ComfyUI bridge and real-enabled media services only with `APPLY=1`; the Control Plane does not apply that mode automatically.
+
 ## Service Allowlist
 
 Known services:
