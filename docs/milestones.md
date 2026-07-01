@@ -728,7 +728,7 @@ Goals:
 
 ## Milestone 28.5: Gateway Feedback Capture
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add `POST /gateway/feedback` for metadata-only feedback capture.
@@ -737,6 +737,19 @@ Goals:
 - Validate source, rating, reason length, tag count/length, and id lengths.
 - Do not store full prompts or full responses by default.
 - Keep feedback capture free of shell execution, Docker control, model switching, and repo runtime writes.
+
+## Milestone 28.6: Feedback Worker Bridge
+
+Status: DONE
+
+Goals:
+- Add `GET /feedback/status` and `POST /feedback/summarize` to `apps/feedback-worker`.
+- Read Gateway feedback from `FEEDBACK_JSONL_PATH`, defaulting to `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`.
+- Write aggregate summaries to `FEEDBACK_SUMMARY_PATH`, defaulting to `/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json`.
+- Count ratings, sources, router intents, models, tags, malformed lines, and latest timestamp.
+- Do not include full reason text, raw prompts, raw model responses, or full feedback record bodies.
+- Keep learning, training, fine-tuning, model switching, memory mutation, shell execution, Docker control, and service control out of scope.
+- Validate with `make feedback-summary-local` and `make test-feedback-worker-bridge`.
 
 ## Milestone 28: 3D Model Generation Pipeline
 

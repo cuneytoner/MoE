@@ -22,6 +22,14 @@ class Settings(BaseSettings):
         default="/home/cuneyt/MoE/runtime/feedback/events.jsonl",
         alias="FEEDBACK_EVENTS_FILE",
     )
+    feedback_jsonl_path: str = Field(
+        default="/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl",
+        alias="FEEDBACK_JSONL_PATH",
+    )
+    feedback_summary_path: str = Field(
+        default="/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json",
+        alias="FEEDBACK_SUMMARY_PATH",
+    )
     reports_dir: str = Field(
         default="/home/cuneyt/MoE/runtime/reports/feedback",
         alias="FEEDBACK_REPORTS_DIR",

@@ -73,6 +73,8 @@ Each JSONL record includes only feedback metadata:
 
 M28.5 does not store full prompt text or full response text.
 
+Milestone 28.6 adds a Feedback Worker Bridge that can read this JSONL file and write an aggregate-only summary report. It does not learn, train, fine-tune, switch models, mutate memory, or control services.
+
 ## Status
 
 `GET /gateway/feedback/status` returns aggregate file status only:
@@ -90,6 +92,38 @@ M28.5 does not store full prompt text or full response text.
 
 It does not return feedback contents.
 
+## Worker Bridge
+
+Feedback Worker endpoints:
+
+```text
+GET /feedback/status
+POST /feedback/summarize
+```
+
+Default input:
+
+```text
+/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl
+```
+
+Default summary output:
+
+```text
+/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json
+```
+
+Environment overrides:
+
+```text
+FEEDBACK_JSONL_PATH=/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl
+FEEDBACK_SUMMARY_PATH=/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json
+```
+
+The summary includes counts for ratings, sources, router intents, models, tags, malformed lines, record totals, and latest timestamp. It does not include full reason text, raw prompt text, raw response text, or full feedback record bodies.
+
+If the Feedback Worker runs on PC2 and the PC1 runtime path is not directly available, copy or sync `gateway-feedback.jsonl` into the PC2 runtime feedback directory before summarizing. M28.6 does not require SSH mounts or remote filesystems.
+
 ## Safety
 
 - No shell execution.
@@ -103,4 +137,6 @@ It does not return feedback contents.
 
 ```bash
 make test-gateway-feedback
+make feedback-summary-local
+make test-feedback-worker-bridge
 ```

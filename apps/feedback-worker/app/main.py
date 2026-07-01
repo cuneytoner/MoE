@@ -5,6 +5,11 @@ from pydantic import BaseModel, Field, field_validator
 
 from app.clients import check_memory_api, store_lesson
 from app.config import get_settings
+from app.gateway_summary import (
+    feedback_status as gateway_feedback_status,
+    summarize_feedback_file,
+    write_summary,
+)
 from app.improvement import (
     build_improvement_report,
     latest_improvement_report_metadata,
@@ -100,6 +105,25 @@ def feedback_events(
     if not events:
         return {"status": "empty", "events": []}
     return {"status": "ok", "order": "oldest_to_newest", "events": events}
+
+
+@app.get("/feedback/status")
+def feedback_bridge_status() -> dict:
+    settings = get_settings()
+    return gateway_feedback_status(settings.feedback_jsonl_path)
+
+
+@app.post("/feedback/summarize")
+def feedback_bridge_summarize() -> dict:
+    settings = get_settings()
+    summary = summarize_feedback_file(settings.feedback_jsonl_path)
+    summary_path = write_summary(settings.feedback_summary_path, summary)
+    return {
+        "status": "ok",
+        "service": settings.service_name,
+        "summary_path": str(summary_path),
+        "summary": summary,
+    }
 
 
 @app.post("/feedback/report")

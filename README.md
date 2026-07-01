@@ -80,6 +80,7 @@ docs:
 - gateway-chat.md
 - memory-injection.md
 - feedback.md
+- feedback-worker.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -110,11 +111,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 28.3: Continue.dev Gateway Config and OpenAI-Compatible Gateway Routes in progress
+Milestone 28.6: Feedback Worker Bridge
 
 Next planned milestone:
 
-Milestone 28.4: Gateway Chat Memory Context
+Milestone 28: 3D Model Generation Pipeline
 
 ## Model Inventory
 
@@ -162,6 +163,8 @@ make test-gateway-chat-proxy
 make test-gateway-chat-router
 make test-gateway-memory-injection
 make test-gateway-feedback
+make feedback-summary-local
+make test-feedback-worker-bridge
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

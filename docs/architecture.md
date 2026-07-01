@@ -127,6 +127,8 @@ Milestone 28.4 adds optional search-only memory injection to `/gateway/chat` and
 
 Milestone 28.5 adds `POST /gateway/feedback` and `GET /gateway/feedback/status` for metadata-only feedback capture. Gateway appends allowlisted rating metadata to `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`, keeps full prompts and responses out of the record schema, and exposes only aggregate status for reads.
 
+Milestone 28.6 adds a Feedback Worker Bridge that reads the Gateway feedback JSONL path from `FEEDBACK_JSONL_PATH` and writes aggregate-only summaries to `FEEDBACK_SUMMARY_PATH`, defaulting to `/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json`. It counts ratings, sources, router intents, models, tags, malformed lines, and latest timestamps without including full reason text, raw prompts, raw responses, or full feedback records. If PC2 cannot see PC1's runtime path directly, the expected strategy is a manual copy or sync of the JSONL file into PC2 runtime before summarization.
+
 apps/nightly-learning-worker:
 
 Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.
@@ -138,6 +140,7 @@ Read-only approved-source ingestion skeleton for Milestone 24.1. It exposes Fast
 apps/feedback-worker:
 
 Runtime-only feedback and success memory skeleton for Milestone 24.2. It exposes FastAPI on port `8220`, appends task outcome events to `/home/cuneyt/MoE/runtime/feedback/events.jsonl`, and writes feedback reports under `/home/cuneyt/MoE/runtime/reports/feedback`. Milestone 24.3 extends it with advisory prompt and routing improvement reports under `/home/cuneyt/MoE/runtime/reports/improvements`. It summarizes outcomes by task type, route intent, model target, and failure reason. It does not modify source, prompts, router config, model mappings, Docker, PC-2, or model runtime.
+Milestone 28.6 also exposes `/feedback/status` and `/feedback/summarize` for aggregate Gateway feedback summaries. These bridge endpoints remain read-only toward the feedback source and write only the configured runtime summary JSON.
 
 apps/media-api and apps/media-worker:
 

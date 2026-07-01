@@ -1181,3 +1181,14 @@ Before accepting Codex changes, check:
 - Do not store full prompt text, full response text, secrets, runtime logs, or generated data in the repo.
 - Do not execute shell commands, control Docker, switch models, or change OpenAI chat compatibility.
 - Validate with `make test-gateway-feedback`.
+
+## Milestone 28.6 Feedback Worker Bridge
+
+- Extend `apps/feedback-worker` with `GET /feedback/status` and `POST /feedback/summarize`.
+- Read Gateway feedback JSONL from `FEEDBACK_JSONL_PATH`, defaulting to `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`.
+- Write the aggregate summary to `FEEDBACK_SUMMARY_PATH`, defaulting to `/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json`.
+- Ignore malformed JSONL lines but count them in the summary.
+- Include only aggregate metadata: generated timestamp, source path, record count, malformed count, rating/source/router intent/model counts, top tags, and latest timestamp.
+- Do not include full reason text, raw prompt text, raw model response text, full feedback records, learning, training, fine-tuning, model switching, shell execution, Docker control, service control, or automatic memory/model mutation.
+- If PC2 cannot directly see PC1 runtime feedback, document manual copy/sync of the JSONL file into PC2 runtime before summarizing.
+- Validate with `make feedback-summary-local`, `make test-feedback-worker-bridge`, and existing feedback tests.

@@ -14,7 +14,7 @@ echo "  compose: ${PC2_COMPOSE_FILE}"
 echo "  service: feedback-worker"
 
 ssh -o BatchMode=yes "${PC2_USER}@${PC2_HOST}" \
-  "mkdir -p '${PC2_RUNTIME_ROOT}/feedback' '${PC2_RUNTIME_ROOT}/reports/feedback' '${PC2_RUNTIME_ROOT}/reports/improvements' && \
+  "mkdir -p '${PC2_RUNTIME_ROOT}/feedback/reports' '${PC2_RUNTIME_ROOT}/reports/feedback' '${PC2_RUNTIME_ROOT}/reports/improvements' && \
    cd '${PC2_SOURCE_ROOT}' && \
    docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile feedback up -d --build feedback-worker && \
    docker compose --env-file '${PC2_ENV_FILE}' -f '${PC2_COMPOSE_FILE}' --profile feedback ps feedback-worker"

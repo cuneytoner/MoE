@@ -61,6 +61,8 @@ services:
       FEEDBACK_RUNTIME_ROOT: ${FEEDBACK_RUNTIME_ROOT:-/home/cuneyt/MoE/runtime}
       FEEDBACK_DATA_DIR: ${FEEDBACK_DATA_DIR:-/home/cuneyt/MoE/runtime/feedback}
       FEEDBACK_EVENTS_FILE: ${FEEDBACK_EVENTS_FILE:-/home/cuneyt/MoE/runtime/feedback/events.jsonl}
+      FEEDBACK_JSONL_PATH: ${FEEDBACK_JSONL_PATH:-/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl}
+      FEEDBACK_SUMMARY_PATH: ${FEEDBACK_SUMMARY_PATH:-/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json}
       FEEDBACK_REPORTS_DIR: ${FEEDBACK_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/feedback}
       IMPROVEMENT_REPORTS_DIR: ${IMPROVEMENT_REPORTS_DIR:-/home/cuneyt/MoE/runtime/reports/improvements}
       FEEDBACK_MEMORY_API_URL: ${FEEDBACK_MEMORY_API_URL:-http://192.168.50.1:8101}
