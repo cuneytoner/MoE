@@ -1,5 +1,11 @@
 # MoE / AI-Brain-OS Milestones
 
+Current active phase:
+- M28 Gateway AI Core is active.
+- Completed through M28.6 Feedback Worker Bridge.
+- Next planned: M28.7 Feedback Sync PC1 to PC2.
+- Dashboard, model registry, Gateway chat, advisory router, memory injection, feedback capture, and feedback summary bridge are done.
+
 ## Milestone 0: Clean Codebase
 
 Status: DONE
@@ -640,7 +646,7 @@ Goals:
 
 ## Milestone 26.8.5: Read-only Docker Summary Snapshot
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add a host-side `docker-summary-snapshot` script for fixed allowlisted container status.
@@ -661,7 +667,7 @@ Goals:
 
 ## Milestone 27.0: Model Registry and Inventory
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Keep active required coder, embedding, and Flux assets under `/home/cuneyt/MoE_Models_Backup`.
@@ -670,7 +676,7 @@ Goals:
 - Add source-only model registry and read-only inventory tooling.
 - Write generated inventory reports only under `/home/cuneyt/MoE/runtime/reports/models`.
 
-## Milestone 27: Video Generation Service
+## Milestone 32: Video Generation Service
 
 Status: PLANNED
 
@@ -681,7 +687,7 @@ Goals:
 
 ## Milestone 28.1: Gateway Chat Proxy
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add safe non-streaming `POST /gateway/chat` proxying to llama-server.
@@ -692,7 +698,7 @@ Goals:
 
 ## Milestone 28.2: Gateway Chat Advisory Router
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add deterministic advisory router metadata to `POST /gateway/chat`.
@@ -704,7 +710,7 @@ Goals:
 
 ## Milestone 28.3: Continue.dev Gateway Config and OpenAI-Compatible Gateway Routes
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add Gateway `GET /v1/models` and `POST /v1/chat/completions`.
@@ -715,7 +721,7 @@ Goals:
 
 ## Milestone 28.4: Gateway Memory Injection
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add optional search-only memory injection to `/gateway/chat` and `/v1/chat/completions`.
@@ -743,15 +749,27 @@ Goals:
 Status: DONE
 
 Goals:
-- Add `GET /feedback/status` and `POST /feedback/summarize` to `apps/feedback-worker`.
-- Read Gateway feedback from `FEEDBACK_JSONL_PATH`, defaulting to `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`.
-- Write aggregate summaries to `FEEDBACK_SUMMARY_PATH`, defaulting to `/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json`.
-- Count ratings, sources, router intents, models, tags, malformed lines, and latest timestamp.
-- Do not include full reason text, raw prompts, raw model responses, or full feedback record bodies.
-- Keep learning, training, fine-tuning, model switching, memory mutation, shell execution, Docker control, and service control out of scope.
-- Validate with `make feedback-summary-local` and `make test-feedback-worker-bridge`.
+- Add a safe Feedback Worker Bridge for reading Gateway feedback JSONL.
+- Add read-only feedback status and summary behavior.
+- Generate aggregate feedback summaries under `/home/cuneyt/MoE/runtime/feedback/reports`.
+- Add local feedback summary fallback tooling.
+- Keep Gateway feedback append-only.
+- Do not store raw prompts or raw model responses in summaries.
+- Do not implement training, model switching, Docker control, service control, or shell execution.
 
-## Milestone 28: 3D Model Generation Pipeline
+## Milestone 28.7: Feedback Sync PC1 to PC2
+
+Status: PLANNED
+
+Goals:
+- Add explicit user-run sync strategy for Gateway feedback from PC1 runtime to PC2 worker runtime.
+- Prefer manual `make` target and rsync-style flow first.
+- Keep sync observable and non-destructive.
+- Do not require always-on shared mounts.
+- Do not automatically train, mutate memory, modify prompts, or change router config.
+- Keep default tests independent from PC2 availability.
+
+## Milestone 33: 3D Model Generation Pipeline
 
 Status: PLANNED
 
@@ -760,7 +778,7 @@ Goals:
 - Export `.blend`, `.glb`, and `.obj`.
 - Support technical structures such as pergola.
 
-## Milestone 29: Rigging Pipeline
+## Milestone 34: Rigging Pipeline
 
 Status: PLANNED
 
@@ -768,7 +786,7 @@ Goals:
 - Add basic Blender rig and armature pipeline.
 - Start with mechanical and object rigs before character rigs.
 
-## Milestone 30: Animation Pipeline
+## Milestone 35: Animation Pipeline
 
 Status: PLANNED
 
@@ -777,7 +795,7 @@ Goals:
 - Support Blender camera and object animation.
 - Render preview outputs.
 
-## Milestone 31: Media Workflow Orchestrator
+## Milestone 36: Media Workflow Orchestrator
 
 Status: PLANNED
 
