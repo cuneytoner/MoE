@@ -42,6 +42,19 @@ required_active:
     path: /home/cuneyt/MoE_Models_Backup/vae/ae.safetensors
     role: image generation vae
 
+optional_duplicate_candidates:
+  - id: t5xxl-root-duplicate
+    type: safetensors
+    path: /home/cuneyt/MoE_Models_Backup/t5xxl_fp8_e4m3fn.safetensors
+    canonical_path: /home/cuneyt/MoE_Models_Backup/clip/t5xxl_fp8_e4m3fn.safetensors
+    role: optional duplicate text encoder candidate
+
+  - id: clip-l-root-duplicate
+    type: safetensors
+    path: /home/cuneyt/MoE_Models_Backup/clip_l.safetensors
+    canonical_path: /home/cuneyt/MoE_Models_Backup/clip/clip_l.safetensors
+    role: optional duplicate text encoder candidate
+
 archived_optional:
   - id: qwen-35b-a3b-reasoning
     type: gguf

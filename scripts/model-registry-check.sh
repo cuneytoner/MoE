@@ -178,7 +178,63 @@ done < <(awk '
   }
 ' "$REGISTRY_CONFIG")
 
-duplicates="$(find "$active_root" "$archive_root" -type f \( -iname "*.gguf" -o -iname "*.safetensors" \) -printf '%f\n' 2>/dev/null | sort | uniq -d || true)"
+while IFS=$'\t' read -r candidate_id candidate_path canonical_path; do
+  if [ -z "$candidate_id" ] || [ -z "$candidate_path" ]; then
+    continue
+  fi
+
+  if [ -e "$candidate_path" ]; then
+    warn "Optional duplicate candidate exists: id=$candidate_id path=$candidate_path canonical=$canonical_path"
+  else
+    warn "Optional duplicate candidate not present: id=$candidate_id path=$candidate_path canonical=$canonical_path"
+  fi
+done < <(awk '
+  function emit() {
+    if (section == "optional_duplicate_candidates" && id != "" && path != "") {
+      print id "\t" path "\t" canonical_path
+    }
+  }
+  /^[^[:space:]-][^:]*:/ {
+    emit()
+    section = $1
+    sub(/:$/, "", section)
+    id = ""
+    path = ""
+    canonical_path = ""
+    next
+  }
+  $1 == "-" && $2 == "id:" {
+    emit()
+    id = $3
+    path = ""
+    canonical_path = ""
+    next
+  }
+  $1 == "path:" {
+    path = $0
+    sub(/^[^:]+:[[:space:]]*/, "", path)
+    next
+  }
+  $1 == "canonical_path:" {
+    canonical_path = $0
+    sub(/^[^:]+:[[:space:]]*/, "", canonical_path)
+    next
+  }
+  END {
+    emit()
+  }
+' "$REGISTRY_CONFIG")
+
+duplicates="$(find "$active_root" "$archive_root" \
+  \( -path "*/.git/*" -o -path "*/.cache/*" \) -prune -o \
+  -type f \( \
+    -iname "*.gguf" -o \
+    -iname "*.safetensors" -o \
+    -iname "*.bin" -o \
+    -iname "*.pt" -o \
+    -iname "*.pth" -o \
+    -iname "*.onnx" \
+  \) -printf '%f\n' 2>/dev/null | sort | uniq -d || true)"
 if [ -n "$duplicates" ]; then
   warn "Duplicate model filename candidates detected:"
   while IFS= read -r duplicate; do
