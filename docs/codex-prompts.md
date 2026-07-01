@@ -1161,3 +1161,13 @@ Before accepting Codex changes, check:
 - Keep streaming unsupported and do not require a real API key.
 - Do not start, stop, restart, switch, download, move, or delete models.
 - Validate with `make test-openai-compatible-gateway`.
+
+## Milestone 28.4 Gateway Memory Injection
+
+- Add optional search-only memory injection for `/gateway/chat` and `/v1/chat/completions`.
+- Support `memory="auto"` and `memory="off"` with `memory_limit` default `3`, max `8`.
+- Search only the fixed configured `MEMORY_SEARCH_URL`; never accept memory URLs from user input.
+- Inject bounded system context only when usable memory results exist.
+- Return `/gateway/chat` memory metadata and OpenAI-compatible `x_gateway_memory`.
+- Do not store new memory, log full prompts, expose raw memory metadata, control services, or switch models.
+- Validate with `make test-gateway-memory-injection`.

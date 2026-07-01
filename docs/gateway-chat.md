@@ -30,6 +30,8 @@ POST /v1/chat/completions
   "temperature": 0.2,
   "max_tokens": 64,
   "routing": "auto",
+  "memory": "auto",
+  "memory_limit": 3,
   "stream": false
 }
 ```
@@ -37,6 +39,8 @@ POST /v1/chat/completions
 Allowed message roles are `system`, `user`, and `assistant`. Messages must be non-empty. `stream=true` returns HTTP 400 because streaming is not implemented in M28.1.
 
 `routing` may be `auto` or `off`. The default is `auto`.
+
+`memory` may be `auto` or `off`. The default is `auto`. When enabled, M28.4 searches the fixed configured `MEMORY_SEARCH_URL` with the latest user message, injects one bounded system message only when usable results exist, and returns memory metadata. `memory_limit` defaults to `3` and is capped at `8`.
 
 ## Response
 
@@ -57,6 +61,13 @@ When llama-server is reachable:
     "active_model_matches": true,
     "mode": "advisory",
     "reasons": []
+  },
+  "memory": {
+    "mode": "auto",
+    "status": "empty",
+    "injected": false,
+    "result_count": 0,
+    "limit": 3
   },
   "raw": {}
 }
@@ -88,12 +99,21 @@ The router selects an advisory model id and path, reports the currently active l
 
 When `routing="off"`, the router block uses `mode: "disabled"` and skips heuristic selection.
 
+## Memory Injection
+
+Milestone 28.4 adds optional search-only memory injection to `/gateway/chat` and `/v1/chat/completions`. Gateway does not store new memories, does not expose raw memory in response metadata, and does not fail chat when Memory API is unavailable.
+
+OpenAI-compatible responses keep `choices[]` intact and include memory metadata in `x_gateway_memory`.
+
+See [memory-injection.md](memory-injection.md) for request examples and safety details.
+
 ## Test
 
 ```bash
 make test-openai-compatible-gateway
 make test-gateway-chat-proxy
 make test-gateway-chat-router
+make test-gateway-memory-injection
 ```
 
 The test skips gracefully when Gateway or llama-server is unavailable and fails only when reachable services violate the contract.

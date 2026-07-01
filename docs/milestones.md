@@ -713,6 +713,19 @@ Goals:
 - Keep direct llama-server `http://localhost:8000/v1` config as troubleshooting fallback only.
 - Keep streaming unsupported, no API key required, no model switching, no shell execution, and no Docker control.
 
+## Milestone 28.4: Gateway Memory Injection
+
+Status: IN PROGRESS
+
+Goals:
+- Add optional search-only memory injection to `/gateway/chat` and `/v1/chat/completions`.
+- Support `memory="auto"` and `memory="off"` with bounded `memory_limit`.
+- Search the fixed configured `MEMORY_SEARCH_URL` using the latest user message.
+- Inject concise bounded system context only when usable memory results exist.
+- Return memory metadata in `/gateway/chat` and `x_gateway_memory` for OpenAI-compatible responses.
+- Keep memory service failures non-fatal and do not store new memories.
+- Preserve no shell execution, no Docker control, no model switching, and no full prompt logging.
+
 ## Milestone 28: 3D Model Generation Pipeline
 
 Status: PLANNED

@@ -78,6 +78,7 @@ docs:
 - milestones.md
 - continue-gateway-config.md
 - gateway-chat.md
+- memory-injection.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -158,6 +159,7 @@ make runtime-dashboard-status
 make test-openai-compatible-gateway
 make test-gateway-chat-proxy
 make test-gateway-chat-router
+make test-gateway-memory-injection
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status
