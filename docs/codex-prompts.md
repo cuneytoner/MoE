@@ -895,6 +895,19 @@ Scope:
 - Do not trigger real generation.
 - Do not serve generated image bytes in the MVP.
 
+## Milestone 26.8.1 Prompt Summary
+
+Upgrade the Dashboard UI with a Material UI / Minimal Dashboard inspired visual theme.
+
+Scope:
+
+- Add only necessary MUI dependencies: `@mui/material`, `@mui/icons-material`, `@emotion/react`, and `@emotion/styled`.
+- Keep Vite, React, and TypeScript.
+- Add a dashboard shell with top app bar, sidebar anchors, responsive cards, chips, alerts, lists, and copy-only command blocks.
+- Preserve the existing `/gateway/media/dashboard` read-only data source.
+- Do not vendor the external template or copy unrelated demo pages/assets.
+- Do not add service control, Docker control, suspend controls, shell execution, or real generation triggers.
+
 ## Milestone 26.9 Prompt Placeholder
 
 Add dashboard guarded actions.

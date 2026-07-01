@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
+import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
+import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
+import { Alert, Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import { fetchDashboard, gatewayBaseUrl } from "./api";
 import { GatesPanel } from "./components/GatesPanel";
 import { LatestImagesPanel } from "./components/LatestImagesPanel";
 import { ModeHintsPanel } from "./components/ModeHintsPanel";
 import { SafeCommandsPanel } from "./components/SafeCommandsPanel";
 import { ServicesPanel } from "./components/ServicesPanel";
-import { StatusCard } from "./components/StatusCard";
+import { SummaryCards } from "./components/SummaryCards";
+import { WarningsPanel } from "./components/WarningsPanel";
+import { DashboardLayout } from "./layout/DashboardLayout";
 import type { DashboardModel } from "./types";
 
 export function App() {
@@ -46,93 +51,76 @@ export function App() {
   }, [dashboard]);
 
   return (
-    <main className="app">
-      <header className="header">
-        <div>
-          <p className="eyebrow">AI Brain OS</p>
-          <h1>MoE Dashboard</h1>
-        </div>
-        <div className="header-actions">
-          <span className="badge">Read-only MVP</span>
-          <span className="refresh-time">Last refresh: {lastRefresh}</span>
-          <button type="button" onClick={refresh} disabled={loading}>
-            {loading ? "Refreshing" : "Refresh"}
-          </button>
-        </div>
-      </header>
-
+    <DashboardLayout loading={loading} lastRefresh={lastRefresh} onRefresh={() => void refresh()}>
       {error ? (
-        <section className="banner danger">
+        <Alert icon={<ErrorOutlineRoundedIcon />} severity="error" variant="outlined">
           Gateway unavailable from {gatewayBaseUrl()}: {error}
-        </section>
+        </Alert>
       ) : null}
 
-      <section className={safetyUnsafe ? "banner danger" : "banner safe"}>
+      <Alert
+        icon={safetyUnsafe ? <ErrorOutlineRoundedIcon /> : <CheckCircleOutlineRoundedIcon />}
+        severity={safetyUnsafe ? "error" : "success"}
+        variant="filled"
+      >
         <strong>Safety:</strong>{" "}
         {dashboard
           ? safetyUnsafe
             ? "Unsafe dashboard flags detected. Do not use this UI for operations."
             : "Read-only. No service control, shell execution, suspend, or real generation trigger."
           : "Waiting for Gateway dashboard data."}
-      </section>
+      </Alert>
 
-      <section className="status-grid">
-        <StatusCard label="Gateway model" value={dashboard?.status ?? "unknown"} />
-        <StatusCard
-          label="Real generation"
-          value={dashboard?.gates.gateway_real_allowed ? "unlocked" : "locked"}
-          tone={dashboard?.gates.gateway_real_allowed ? "warn" : "good"}
-        />
-        <StatusCard
-          label="Latest images"
-          value={String(dashboard?.latest_images.length ?? 0)}
-        />
-        <StatusCard
-          label="PC roles"
-          value="PC-1 GPU / PC-2 helper"
-        />
-      </section>
+      <SummaryCards dashboard={dashboard} />
 
       {dashboard ? (
         <>
-          <section className="layout-two">
-            <ServicesPanel services={dashboard.services} />
-            <GatesPanel gates={dashboard.gates} />
-          </section>
+          <ServicesPanel services={dashboard.services} />
+          <GatesPanel gates={dashboard.gates} />
           <LatestImagesPanel images={dashboard.latest_images} />
-          <section className="layout-two">
+          <Box sx={{ display: "grid", gap: 3, gridTemplateColumns: { xs: "1fr", xl: "1.1fr 0.9fr" } }}>
             <SafeCommandsPanel commands={dashboard.safe_commands} />
             <ModeHintsPanel hints={dashboard.mode_hints} />
-          </section>
-          <section className="panel">
-            <h2>PC1 / PC2 Roles</h2>
-            <div className="role-grid">
-              <div>
-                <strong>PC-1</strong>
-                <p>Main workstation, Gateway, coding model runtime, ComfyUI, Media API, Media Worker, GPU generation host.</p>
-              </div>
-              <div>
-                <strong>PC-2</strong>
-                <p>Helper node for Prompt Interpreter, learning, research, feedback, reports, and future background jobs.</p>
-              </div>
-            </div>
-          </section>
-          {dashboard.warnings.length ? (
-            <section className="panel">
-              <h2>Warnings</h2>
-              <div className="stack">
-                {dashboard.warnings.map((warning) => (
-                  <p className="warning" key={warning}>
-                    {warning}
-                  </p>
-                ))}
-              </div>
-            </section>
-          ) : null}
+          </Box>
+          <Card>
+            <CardContent>
+              <Typography gutterBottom variant="h6">
+                PC1 / PC2 Roles
+              </Typography>
+              <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)" } }}>
+                <RoleCard
+                  label="PC-1"
+                  text="Main workstation, Gateway, coding model runtime, ComfyUI, Media API, Media Worker, and GPU generation host."
+                />
+                <RoleCard
+                  label="PC-2"
+                  text="Helper node for Prompt Interpreter, learning, research, feedback, reports, and future background jobs."
+                />
+              </Box>
+            </CardContent>
+          </Card>
+          <WarningsPanel warnings={dashboard.warnings} />
         </>
       ) : null}
 
-      <footer className="footer">M26.8 Dashboard UI MVP. Read-only. No service control.</footer>
-    </main>
+      <Typography align="center" color="text.secondary" variant="body2">
+        M26.8.1 Dashboard Material Kit inspired theme. Read-only. No service control.
+      </Typography>
+    </DashboardLayout>
+  );
+}
+
+function RoleCard({ label, text }: { label: string; text: string }) {
+  return (
+    <Card variant="outlined">
+      <CardContent>
+        <Stack spacing={1}>
+          <Typography fontWeight={800}>{label}</Typography>
+          <Typography color="text.secondary" variant="body2">
+            {text}
+          </Typography>
+        </Stack>
+      </CardContent>
+    </Card>
   );
 }

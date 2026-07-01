@@ -166,3 +166,5 @@ make dashboard-ui-open
 ```
 
 It is read-only and does not run guided image commands.
+
+Milestone 26.8.1 keeps the Dashboard UI read-only while upgrading its visual theme with Material UI components.

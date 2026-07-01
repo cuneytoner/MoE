@@ -226,7 +226,7 @@ Management and monitoring UI. It will show service health, machine status, GPU s
 
 apps/dashboard-ui:
 
-Read-only Dashboard UI MVP for Milestone 26.8. It displays Gateway media dashboard data, service reachability, generation gates, latest runtime image paths, safe command hints, mode hints, and PC-1/PC-2 roles. It does not start or stop services, call Docker, suspend machines, execute shell commands, or trigger real generation.
+Read-only Dashboard UI MVP for Milestone 26.8. It displays Gateway media dashboard data, service reachability, generation gates, latest runtime image paths, safe command hints, mode hints, and PC-1/PC-2 roles. Milestone 26.8.1 upgrades the visual layer with Material UI components and a Minimal Dashboard inspired shell. It does not start or stop services, call Docker, suspend machines, execute shell commands, or trigger real generation.
 
 apps/media-dashboard:
 

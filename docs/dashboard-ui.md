@@ -1,6 +1,6 @@
 # Dashboard UI
 
-Milestone 26.8 adds a read-only Dashboard UI MVP.
+Milestone 26.8 adds a read-only Dashboard UI MVP. Milestone 26.8.1 upgrades the visual layer with a Material UI / Minimal Dashboard inspired theme.
 
 ## Purpose
 
@@ -45,6 +45,18 @@ arbitrary_shell=false
 
 Safe command hints are rendered as text only.
 
+## Material UI Theme
+
+The M26.8.1 dashboard uses Material UI components for the app bar, sidebar, cards, chips, alerts, lists, and responsive layout.
+
+The visual direction is inspired by the public Minimal UI / Material Kit React dashboard reference:
+
+```text
+https://github.com/minimal-ui-kit/material-kit-react
+```
+
+The full external template is not vendored into this repository. No unrelated demo pages or large assets are copied. The local implementation remains focused on AI Brain OS / MoE status, safety gates, runtime hints, and media output paths.
+
 ## Run
 
 Start the UI:
@@ -76,6 +88,14 @@ The UI listens on:
 ```text
 http://127.0.0.1:8500
 ```
+
+The theme keeps the same read-only behavior as the MVP:
+
+- no service start/stop buttons
+- no Docker controls
+- no PC-1 or PC-2 suspend controls
+- no real generation trigger
+- no generated image serving
 
 ## Local Development
 

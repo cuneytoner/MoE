@@ -1,3 +1,5 @@
+import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
+import { Box, Card, CardContent, CardHeader, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import type { ImageInfo } from "../types";
 
 type Props = {
@@ -6,24 +8,44 @@ type Props = {
 
 export function LatestImagesPanel({ images }: Props) {
   return (
-    <section className="panel">
-      <h2>Latest Images</h2>
-      <div className="rows">
+    <Card id="images">
+      <CardHeader subheader="Paths only. No generated image bytes are served by this dashboard." title="Latest Images" />
+      <CardContent>
+        <List disablePadding>
         {images.map((image) => (
-          <div className="row image-row" key={image.path}>
-            <div>
-              <strong>{image.name}</strong>
-              <span>{image.path}</span>
-            </div>
-            <div className="image-meta">
-              <code>{formatBytes(image.size_bytes)}</code>
-              <span>{new Date(image.modified).toLocaleString()}</span>
-            </div>
-          </div>
+          <ListItem
+            disableGutters
+            key={image.path}
+            secondaryAction={
+              <Box sx={{ display: { xs: "none", md: "block" }, textAlign: "right" }}>
+                <Typography fontWeight={800} variant="body2">
+                  {formatBytes(image.size_bytes)}
+                </Typography>
+                <Typography color="text.secondary" variant="caption">
+                  {new Date(image.modified).toLocaleString()}
+                </Typography>
+              </Box>
+            }
+          >
+            <ListItemIcon>
+              <ImageOutlinedIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText
+              primary={image.name}
+              primaryTypographyProps={{ fontWeight: 800 }}
+              secondary={image.path}
+              secondaryTypographyProps={{ sx: { overflowWrap: "anywhere" } }}
+            />
+          </ListItem>
         ))}
-        {images.length === 0 ? <p className="empty">No generated image paths reported yet.</p> : null}
-      </div>
-    </section>
+        </List>
+        {images.length === 0 ? (
+          <Typography color="text.secondary" variant="body2">
+            No generated image paths reported yet.
+          </Typography>
+        ) : null}
+      </CardContent>
+    </Card>
   );
 }
 

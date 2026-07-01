@@ -105,9 +105,13 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.8: Dashboard UI MVP in progress
+Milestone 26.8.1: Dashboard Material Kit Theme Integration in progress
 
 Next planned milestone:
+
+Milestone 26.8.2: Dashboard UX Polish / Charts
+
+Later planned milestone:
 
 Milestone 26.9: Dashboard Guarded Actions
 

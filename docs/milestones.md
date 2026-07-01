@@ -589,12 +589,30 @@ Goals:
 
 ## Milestone 26.8: Dashboard UI MVP
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add a read-only browser Dashboard UI.
 - Show system and media health, real generation gates, latest generated image paths, safe command hints, and PC-1/PC-2 roles.
 - Keep dashboard actions out of scope.
+
+## Milestone 26.8.1: Dashboard Material Kit Theme Integration
+
+Status: IN PROGRESS
+
+Goals:
+- Upgrade `apps/dashboard-ui` to a Material UI / Minimal Dashboard inspired visual theme.
+- Add top app bar, left navigation rail, responsive dashboard cards, chips, alerts, lists, command code blocks, and warnings.
+- Preserve read-only behavior and the single Gateway dashboard data source.
+- Do not vendor the external template, copy unrelated demo pages, or add large assets.
+
+## Milestone 26.8.2: Dashboard UX Polish / Charts
+
+Status: PLANNED
+
+Goals:
+- Add optional dashboard polish such as charts, filtering, and richer empty states.
+- Keep the UI read-only unless later guarded-action milestones explicitly approve actions.
 
 ## Milestone 26.9: Dashboard Guarded Actions
 

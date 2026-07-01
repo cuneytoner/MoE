@@ -135,6 +135,8 @@ M26.6 adds guided image command scripts. They are still user-run shell helpers r
 
 M26.8 adds the Dashboard UI MVP as a read-only viewer. It displays status and hints from Gateway, but Control Plane remains the planning layer and no dashboard action applies mode changes.
 
+M26.8.1 updates the Dashboard UI visual layer with Material UI cards, chips, alerts, and navigation. This does not change the control-plane boundary: the dashboard still does not start or stop services, call Docker, suspend machines, execute shell commands, trigger generation, or apply runtime modes.
+
 ## Service Allowlist
 
 Known services:

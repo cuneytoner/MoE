@@ -429,6 +429,8 @@ make dashboard-ui-open
 
 It lists latest generated image paths and generation gates only. It does not trigger generation or serve image bytes.
 
+Milestone 26.8.1 keeps those boundaries and replaces the plain dashboard styling with Material UI cards, chips, alerts, and navigation.
+
 ## Runtime Paths
 
 Future image outputs belong under:

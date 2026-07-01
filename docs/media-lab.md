@@ -333,3 +333,5 @@ make dashboard-ui-open
 ```
 
 The UI shows Media Lab health, gates, warnings, safe command hints, mode hints, and latest image paths. It does not start/stop services, call Docker, trigger real generation, or serve generated image bytes.
+
+Milestone 26.8.1 keeps the same read-only behavior and upgrades the browser UI to a Material UI / Minimal Dashboard inspired theme.
