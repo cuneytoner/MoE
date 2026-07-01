@@ -105,7 +105,7 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.8.2: Dashboard Runtime Cards in progress
+Milestone 26.8.3: Dashboard System Resource Cards in progress
 
 Next planned milestone:
 

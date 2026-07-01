@@ -608,13 +608,24 @@ Goals:
 
 ## Milestone 26.8.2: Dashboard Runtime Cards
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add read-only runtime status cards to the Dashboard UI.
 - Add `/gateway/runtime/dashboard` for PC-1 runtime, GPU, llama-server, ComfyUI, PC-2 worker, media job, and image lifecycle observations.
 - Keep missing runtime services as warnings.
 - Keep the UI read-only and keep actions out of scope.
+
+## Milestone 26.8.3: Dashboard System Resource Cards
+
+Status: IN PROGRESS
+
+Goals:
+- Add PC-1 RAM, CPU load, disk, and uptime cards to the Dashboard UI.
+- Extend `/gateway/runtime/dashboard` with read-only system data from procfs and Python stdlib.
+- Keep PC-2 system and Docker summary as graceful unavailable observers unless safe endpoints are added.
+- Keep GPU, Docker, ComfyUI, Control API, and PC-2 unavailability non-fatal.
+- Preserve read-only dashboard boundaries.
 
 ## Milestone 26.9: Dashboard Guarded Actions
 

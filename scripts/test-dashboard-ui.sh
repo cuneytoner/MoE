@@ -30,6 +30,7 @@ required_paths=(
   "apps/dashboard-ui/src/components/Pc2WorkersCard.tsx"
   "apps/dashboard-ui/src/components/LatestJobCard.tsx"
   "apps/dashboard-ui/src/components/ImageLifecycleCard.tsx"
+  "apps/dashboard-ui/src/components/SystemResourceCards.tsx"
   "apps/dashboard-ui/src/components/SummaryCards.tsx"
   "apps/dashboard-ui/src/components/StatusChip.tsx"
   "apps/dashboard-ui/src/components/StatusCard.tsx"

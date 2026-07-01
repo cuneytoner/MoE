@@ -143,6 +143,8 @@ Milestone 26.5 adds a simple read-only Media Dashboard / Status UI. Gateway expo
 
 Milestone 26.8.2 adds a read-only Gateway Runtime Dashboard adapter at `/gateway/runtime/dashboard`. It observes PC-1 runtime status, fixed HTTP health checks, optional fixed `nvidia-smi` GPU status, PC-2 worker HTTP health, latest media job JSON summaries from the runtime jobs directory, and image lifecycle hints. It does not start or stop services, call Docker, SSH into PC-2, mutate runtime files, switch models, or trigger generation.
 
+Milestone 26.8.3 extends the runtime dashboard with source-safe system resource observations. Gateway reads PC-1 RAM, CPU load, uptime, and root disk usage through Linux read-only files and Python stdlib calls. PC-2 system and Docker summary are explicit unavailable observers until a safe HTTP endpoint or read-only socket observer is introduced. No UI action can execute shell commands or control Docker.
+
 apps/control-api:
 
 Control Plane API for Milestone 26.1.5. It exposes read-only runtime status, configured runtime modes, and dry-run mode plans on port `8400`. The Control Plane is the planned system coordination surface; Gateway remains a chat/routing/workspace API and must not become the system start/stop controller. PC-1 is the generation host for heavy GPU work, `llama-server`, ComfyUI, and future video/3D engines. PC-2 is the helper host for prompt interpretation, queue metadata, feedback, reports, and future optional mini-model interpretation.
@@ -228,7 +230,7 @@ Management and monitoring UI. It will show service health, machine status, GPU s
 
 apps/dashboard-ui:
 
-Read-only Dashboard UI MVP for Milestone 26.8. It displays Gateway media dashboard data, service reachability, generation gates, latest runtime image paths, safe command hints, mode hints, and PC-1/PC-2 roles. Milestone 26.8.1 upgrades the visual layer with Material UI components and a Minimal Dashboard inspired shell. Milestone 26.8.2 adds runtime cards for GPU, llama-server, ComfyUI, PC-2 workers, latest media job, and image lifecycle state. It does not start or stop services, call Docker, suspend machines, execute shell commands, or trigger real generation.
+Read-only Dashboard UI MVP for Milestone 26.8. It displays Gateway media dashboard data, service reachability, generation gates, latest runtime image paths, safe command hints, mode hints, and PC-1/PC-2 roles. Milestone 26.8.1 upgrades the visual layer with Material UI components and a Minimal Dashboard inspired shell. Milestone 26.8.2 adds runtime cards for GPU, llama-server, ComfyUI, PC-2 workers, latest media job, and image lifecycle state. Milestone 26.8.3 adds PC-1 system, PC-2 system placeholder, and Docker summary placeholder cards. It does not start or stop services, call Docker, suspend machines, execute shell commands, or trigger real generation.
 
 apps/media-dashboard:
 

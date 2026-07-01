@@ -73,6 +73,19 @@ Cards include:
 
 Missing Control API, ComfyUI, llama-server, GPU, media jobs, or PC-2 workers are warnings. They do not make the dashboard an action surface and they do not trigger recovery actions.
 
+## System Resource Cards
+
+Milestone 26.8.3 extends runtime cards with read-only system resource cards:
+
+- PC-1 RAM from `/proc/meminfo`
+- PC-1 CPU load from `/proc/loadavg`
+- PC-1 uptime from `/proc/uptime`
+- PC-1 root disk usage from `shutil.disk_usage("/")`
+- PC-2 system placeholder when no safe HTTP system endpoint exists
+- Docker observer placeholder when the Docker socket is not mounted
+
+The Gateway does not require `psutil`. GPU status remains non-fatal; when `nvidia-smi` is not available inside the Gateway container, the dashboard reports that detail as a warning.
+
 ## Run
 
 Start the UI:

@@ -922,6 +922,20 @@ Scope:
 - Missing ComfyUI, Control API, GPU, llama-server, and PC-2 workers should be warnings, not fatal errors.
 - Do not start or stop services, call Docker from UI, SSH into PC-2, execute arbitrary shell, switch models, mutate runtime data, or trigger generation.
 
+## Milestone 26.8.3 Prompt Summary
+
+Add Dashboard System Resource Cards.
+
+Scope:
+
+- Extend `/gateway/runtime/dashboard` with `system.pc1`, `system.pc2`, and `system.docker`.
+- Read PC-1 RAM, CPU load, uptime, and root disk usage from Linux read-only files and Python stdlib.
+- Do not require `psutil`.
+- Keep GPU unavailable non-fatal and report missing `nvidia-smi` as a clear container limitation.
+- Keep PC-2 system and Docker summary as graceful unavailable observers unless safe read-only endpoints are added.
+- Add Dashboard UI cards for PC1 System, PC2 System, and Docker Summary.
+- Do not add dashboard controls, shell execution, Docker control, suspend, service start/stop, or generation triggers.
+
 ## Milestone 26.9 Prompt Placeholder
 
 Add dashboard guarded actions.
