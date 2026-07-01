@@ -1192,3 +1192,14 @@ Before accepting Codex changes, check:
 - Do not include full reason text, raw prompt text, raw model response text, full feedback records, learning, training, fine-tuning, model switching, shell execution, Docker control, service control, or automatic memory/model mutation.
 - If PC2 cannot directly see PC1 runtime feedback, document manual copy/sync of the JSONL file into PC2 runtime before summarizing.
 - Validate with `make feedback-summary-local`, `make test-feedback-worker-bridge`, and existing feedback tests.
+
+## Milestone 28.7 Feedback Sync PC1 to PC2
+
+- Add explicit user-run sync tooling for Gateway feedback from PC1 runtime to PC2 worker runtime.
+- Add `scripts/feedback-sync-status.sh`, `scripts/feedback-sync-to-pc2.sh`, and `scripts/test-feedback-sync.sh`.
+- Make sync dry-run by default and require `APPLY=1` for SSH directory creation or `rsync` copy.
+- Sync only `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl` and optional `/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json`.
+- Do not use deletion flags, copy model files, copy media outputs, copy repository files, or require always-on shared mounts.
+- Do not train, fine-tune, mutate memory, modify prompts, change router config, control Docker, switch models, or control services.
+- Keep status and tests independent from PC2 availability.
+- Validate with `make feedback-sync-status`, `make feedback-sync-to-pc2`, `make test-feedback-sync`, and default source-only tests.

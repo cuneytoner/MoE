@@ -2,9 +2,9 @@
 
 Current active phase:
 - M28 Gateway AI Core is active.
-- Completed through M28.6 Feedback Worker Bridge.
-- Next planned: M28.7 Feedback Sync PC1 to PC2.
-- Dashboard, model registry, Gateway chat, advisory router, memory injection, feedback capture, and feedback summary bridge are done.
+- Completed through M28.7 Feedback Sync PC1 to PC2.
+- Next planned: reviewed feedback learning loop design.
+- Dashboard, model registry, Gateway chat, advisory router, memory injection, feedback capture, feedback summary bridge, and manual feedback sync are done.
 
 ## Milestone 0: Clean Codebase
 
@@ -759,7 +759,7 @@ Goals:
 
 ## Milestone 28.7: Feedback Sync PC1 to PC2
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add explicit user-run sync strategy for Gateway feedback from PC1 runtime to PC2 worker runtime.

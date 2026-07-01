@@ -81,6 +81,7 @@ docs:
 - memory-injection.md
 - feedback.md
 - feedback-worker.md
+- feedback-sync.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -111,11 +112,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 28.6: Feedback Worker Bridge
+Milestone 28.7: Feedback Sync PC1 to PC2
 
 Next planned milestone:
 
-Milestone 28: 3D Model Generation Pipeline
+Reviewed feedback learning loop design
 
 ## Model Inventory
 
@@ -165,6 +166,9 @@ make test-gateway-memory-injection
 make test-gateway-feedback
 make feedback-summary-local
 make test-feedback-worker-bridge
+make feedback-sync-status
+make feedback-sync-to-pc2
+make test-feedback-sync
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

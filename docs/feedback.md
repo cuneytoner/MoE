@@ -75,6 +75,8 @@ M28.5 does not store full prompt text or full response text.
 
 Milestone 28.6 adds a Feedback Worker Bridge that can read this JSONL file and write an aggregate-only summary report. It does not learn, train, fine-tune, switch models, mutate memory, or control services.
 
+Milestone 28.7 adds explicit user-run sync tooling for copying only Gateway feedback JSONL and the optional aggregate summary from PC1 to PC2. Dry-run is the default, and `APPLY=1` is required for an actual sync.
+
 ## Status
 
 `GET /gateway/feedback/status` returns aggregate file status only:
@@ -122,7 +124,17 @@ FEEDBACK_SUMMARY_PATH=/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary
 
 The summary includes counts for ratings, sources, router intents, models, tags, malformed lines, record totals, and latest timestamp. It does not include full reason text, raw prompt text, raw response text, or full feedback record bodies.
 
-If the Feedback Worker runs on PC2 and the PC1 runtime path is not directly available, copy or sync `gateway-feedback.jsonl` into the PC2 runtime feedback directory before summarizing. M28.6 does not require SSH mounts or remote filesystems.
+If the Feedback Worker runs on PC2 and the PC1 runtime path is not directly available, use the manual sync flow to copy `gateway-feedback.jsonl` into the PC2 runtime feedback directory before summarizing. The sync does not require always-on shared mounts.
+
+## PC1 To PC2 Sync
+
+```bash
+make feedback-sync-status
+make feedback-sync-to-pc2
+APPLY=1 make feedback-sync-to-pc2
+```
+
+The sync copies only `gateway-feedback.jsonl` and `reports/feedback-summary.json` when present. It does not copy model files, media outputs, repository files, all runtime data, raw prompts, raw model responses, or logs. It does not delete remote files.
 
 ## Safety
 
@@ -139,4 +151,7 @@ If the Feedback Worker runs on PC2 and the PC1 runtime path is not directly avai
 make test-gateway-feedback
 make feedback-summary-local
 make test-feedback-worker-bridge
+make feedback-sync-status
+make feedback-sync-to-pc2
+make test-feedback-sync
 ```

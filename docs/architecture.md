@@ -129,6 +129,8 @@ Milestone 28.5 adds `POST /gateway/feedback` and `GET /gateway/feedback/status` 
 
 Milestone 28.6 adds a Feedback Worker Bridge that reads the Gateway feedback JSONL path from `FEEDBACK_JSONL_PATH` and writes aggregate-only summaries to `FEEDBACK_SUMMARY_PATH`, defaulting to `/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json`. It counts ratings, sources, router intents, models, tags, malformed lines, and latest timestamps without including full reason text, raw prompts, raw responses, or full feedback records. If PC2 cannot see PC1's runtime path directly, the expected strategy is a manual copy or sync of the JSONL file into PC2 runtime before summarization.
 
+Milestone 28.7 adds explicit user-run feedback sync tooling from PC1 to PC2. `make feedback-sync-to-pc2` is dry-run by default and `APPLY=1 make feedback-sync-to-pc2` copies only `gateway-feedback.jsonl` plus `reports/feedback-summary.json` when present. It does not use deletion flags, copy repo/model/media files, require shared mounts, train, mutate memory, modify prompts, or change router config.
+
 apps/nightly-learning-worker:
 
 Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.

@@ -47,9 +47,22 @@ Gateway feedback is created on PC1 under `/home/cuneyt/MoE/runtime/feedback/gate
 
 M28.6 intentionally does not require SSH, remote mounts, Docker socket access, or automatic copy behavior.
 
+M28.7 adds manual PC1-to-PC2 sync tooling for this file. Dry-run is the default:
+
+```bash
+make feedback-sync-status
+make feedback-sync-to-pc2
+APPLY=1 make feedback-sync-to-pc2
+```
+
+The sync copies only Gateway feedback JSONL and the optional aggregate summary. It does not copy models, media outputs, repository files, full runtime data, raw prompts, or raw model responses.
+
 ## Commands
 
 ```bash
 make feedback-summary-local
+make feedback-sync-status
+make feedback-sync-to-pc2
 make test-feedback-worker-bridge
+make test-feedback-sync
 ```

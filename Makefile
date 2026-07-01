@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models download-flux-schnell-models-plan download-flux-schnell-models-apply check-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health comfyui-vram-status comfyui-flux-smoke-test comfyui-first-image-plan comfyui-first-image-apply image-readiness image-dry-run image-mode-prepare image-real-run image-latest image-safe-shutdown image-full-cycle dashboard-ui-up dashboard-ui-down dashboard-ui-health dashboard-ui-open control-api-test control-api-up control-api-down runtime-status runtime-dashboard-status runtime-mode-coding-plan runtime-mode-image-plan runtime-mode-video-plan runtime-mode-3d-suite-plan runtime-mode-media-off-plan check-models model-inventory model-registry-check status tree runtime-prepare docker-up docker-down docker-ps docker-logs docker-summary-snapshot docker-summary-status health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down media-image-dry-run media-image-real-run media-latest-images gateway-media-plan gateway-media-dry-run gateway-media-real-plan media-dashboard-status media-dashboard-open feedback-summary-local pc1-sleep-prepare pc1-suspend pc1-startup-coding pc1-startup-media-dry pc1-status pc2-local-sleep-prepare pc2-local-suspend pc2-local-startup-workers pc2-local-status cluster-sleep-prepare cluster-suspend cluster-startup-coding cluster-startup-media-dry cluster-status pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-system-status pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report pc2-prompt-interpreter-up pc2-prompt-interpreter-down pc2-prompt-interpreter-health pc2-prompt-interpreter-sample model-start model-stop model-status model-health model-switch test-gateway test-gateway-media test-media-dashboard test-runtime-dashboard test-dashboard-ui test-openai-compatible-gateway test-gateway-chat-proxy test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-gateway-memory-injection test-gateway-feedback test-feedback-worker-bridge test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-prompt-interpreter-worker test-media-api test-media-image-bridge test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models download-flux-schnell-models-plan download-flux-schnell-models-apply check-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health comfyui-vram-status comfyui-flux-smoke-test comfyui-first-image-plan comfyui-first-image-apply image-readiness image-dry-run image-mode-prepare image-real-run image-latest image-safe-shutdown image-full-cycle dashboard-ui-up dashboard-ui-down dashboard-ui-health dashboard-ui-open control-api-test control-api-up control-api-down runtime-status runtime-dashboard-status runtime-mode-coding-plan runtime-mode-image-plan runtime-mode-video-plan runtime-mode-3d-suite-plan runtime-mode-media-off-plan check-models model-inventory model-registry-check status tree runtime-prepare docker-up docker-down docker-ps docker-logs docker-summary-snapshot docker-summary-status health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down media-image-dry-run media-image-real-run media-latest-images gateway-media-plan gateway-media-dry-run gateway-media-real-plan media-dashboard-status media-dashboard-open feedback-summary-local feedback-sync-status feedback-sync-to-pc2 pc1-sleep-prepare pc1-suspend pc1-startup-coding pc1-startup-media-dry pc1-status pc2-local-sleep-prepare pc2-local-suspend pc2-local-startup-workers pc2-local-status cluster-sleep-prepare cluster-suspend cluster-startup-coding cluster-startup-media-dry cluster-status pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-system-status pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report pc2-prompt-interpreter-up pc2-prompt-interpreter-down pc2-prompt-interpreter-health pc2-prompt-interpreter-sample model-start model-stop model-status model-health model-switch test-gateway test-gateway-media test-media-dashboard test-runtime-dashboard test-dashboard-ui test-openai-compatible-gateway test-gateway-chat-proxy test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-gateway-memory-injection test-gateway-feedback test-feedback-worker-bridge test-feedback-sync test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-prompt-interpreter-worker test-media-api test-media-image-bridge test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -83,6 +83,8 @@ help:
 > @echo "  make media-dashboard-status Show read-only Media Dashboard status"
 > @echo "  make media-dashboard-open Print Media Dashboard endpoint/UI locations"
 > @echo "  make feedback-summary-local Generate local Gateway feedback summary under runtime"
+> @echo "  make feedback-sync-status Read-only PC1/PC2 Gateway feedback sync status"
+> @echo "  make feedback-sync-to-pc2 Dry-run Gateway feedback sync to PC2; use APPLY=1 to sync"
 > @echo "  make pc1-sleep-prepare Prepare PC-1 for sleep without suspending"
 > @echo "  make pc1-suspend Guarded PC-1 suspend, requires APPLY=1"
 > @echo "  make pc1-startup-coding Start PC-1 coding stack"
@@ -126,6 +128,7 @@ help:
 > @echo "  make test-gateway-memory-injection Run optional Gateway chat memory injection test"
 > @echo "  make test-gateway-feedback Run optional Gateway feedback capture test"
 > @echo "  make test-feedback-worker-bridge Run optional Feedback Worker bridge test"
+> @echo "  make test-feedback-sync Run local feedback sync tooling tests"
 > @echo "  make test-continue-gateway Run optional Continue.dev Gateway chat smoke test"
 > @echo "  make test-code-agent-runtime Run optional repo-aware code agent runtime test"
 > @echo "  make test-code-patch-runtime Run optional safe patch/diff runtime test"
@@ -364,6 +367,12 @@ media-dashboard-open:
 feedback-summary-local:
 > @./scripts/feedback-summary-local.sh
 
+feedback-sync-status:
+> @./scripts/feedback-sync-status.sh
+
+feedback-sync-to-pc2:
+> @./scripts/feedback-sync-to-pc2.sh
+
 runtime-dashboard-status:
 > @./scripts/runtime-dashboard-status.sh
 
@@ -525,6 +534,9 @@ test-gateway-feedback:
 
 test-feedback-worker-bridge:
 > @./scripts/test-feedback-worker-bridge.sh
+
+test-feedback-sync:
+> @./scripts/test-feedback-sync.sh
 
 test-continue-gateway:
 > @./scripts/test-continue-gateway.sh
