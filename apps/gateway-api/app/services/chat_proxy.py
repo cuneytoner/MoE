@@ -1,0 +1,91 @@
+from typing import Any
+
+import httpx
+
+from app.config import Settings
+from app.models.gateway import GatewayChatProxyRequest
+
+
+class GatewayChatProxyUnavailable(RuntimeError):
+    pass
+
+
+def choose_chat_model(request: GatewayChatProxyRequest, settings: Settings) -> str:
+    """M28.1 placeholder: use the requested model or the configured default."""
+    if request.model and request.model.strip():
+        return request.model.strip()
+    return settings.default_model
+
+
+async def proxy_chat_to_llama(
+    request: GatewayChatProxyRequest,
+    settings: Settings,
+) -> dict[str, Any]:
+    base_url = settings.llama_server_base_url.rstrip("/")
+    model = choose_chat_model(request, settings)
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": message.role, "content": message.content}
+            for message in request.messages
+        ],
+        "temperature": request.temperature,
+        "max_tokens": request.max_tokens,
+        "stream": False,
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=settings.gateway_chat_timeout_seconds) as client:
+            response = await client.post(
+                f"{base_url}/v1/chat/completions",
+                json=payload,
+            )
+            response.raise_for_status()
+            data = response.json()
+    except Exception as exc:
+        raise GatewayChatProxyUnavailable(
+            f"llama-server unavailable: {exc.__class__.__name__}: {exc}"
+        ) from exc
+
+    return {
+        "model": data.get("model") if isinstance(data.get("model"), str) else model,
+        "content": _extract_content(data),
+        "raw": _minimal_raw(data),
+    }
+
+
+def _extract_content(response: dict[str, Any]) -> str:
+    choices = response.get("choices")
+    if isinstance(choices, list) and choices:
+        first = choices[0]
+        if isinstance(first, dict):
+            message = first.get("message")
+            if isinstance(message, dict):
+                content = message.get("content")
+                if isinstance(content, str):
+                    return content
+            text = first.get("text")
+            if isinstance(text, str):
+                return text
+    return ""
+
+
+def _minimal_raw(response: dict[str, Any]) -> dict[str, Any]:
+    raw: dict[str, Any] = {}
+    for key in ("id", "object", "created", "model", "usage"):
+        value = response.get(key)
+        if value is not None:
+            raw[key] = value
+
+    choices = response.get("choices")
+    if isinstance(choices, list):
+        raw["choices"] = [
+            {
+                key: choice.get(key)
+                for key in ("index", "finish_reason")
+                if isinstance(choice, dict) and choice.get(key) is not None
+            }
+            for choice in choices[:1]
+            if isinstance(choice, dict)
+        ]
+    return raw

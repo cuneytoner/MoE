@@ -679,6 +679,17 @@ Goals:
 - Use queued jobs.
 - Store outputs under the runtime media directory.
 
+## Milestone 28.1: Gateway Chat Proxy
+
+Status: IN PROGRESS
+
+Goals:
+- Add safe non-streaming `POST /gateway/chat` proxying to llama-server.
+- Use `LLAMA_SERVER_BASE_URL` with default `http://host.docker.internal:8000`.
+- Return graceful unavailable responses when llama-server is down.
+- Keep streaming and richer routing deferred to Milestone 28.2.
+- Preserve no shell execution, no Docker control, no model movement, and no runtime switching.
+
 ## Milestone 28: 3D Model Generation Pipeline
 
 Status: PLANNED

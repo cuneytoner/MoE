@@ -126,6 +126,28 @@ class GatewayChatResponse(BaseModel):
     raw: dict[str, Any] | None = None
 
 
+class GatewayChatProxyMessage(BaseModel):
+    role: Literal["system", "user", "assistant"]
+    content: str = Field(min_length=1)
+
+
+class GatewayChatProxyRequest(BaseModel):
+    messages: list[GatewayChatProxyMessage] = Field(min_length=1)
+    model: str | None = None
+    temperature: float = Field(default=0.2, ge=0.0, le=2.0)
+    max_tokens: int = Field(default=512, ge=1, le=4096)
+    stream: bool = False
+
+
+class GatewayChatProxyResponse(BaseModel):
+    status: str
+    service: str
+    model: str | None = None
+    response: str | None = None
+    raw: dict[str, Any] | None = None
+    detail: str | None = None
+
+
 class GatewayRouteRequest(BaseModel):
     message: str = Field(min_length=1)
     use_memory: bool = False
