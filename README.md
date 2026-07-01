@@ -105,11 +105,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.6: Guided Image Generation Command Pack in progress
+Milestone 26.8: Dashboard UI MVP in progress
 
 Next planned milestone:
 
-Milestone 26.7: Image Prompt Presets and History
+Milestone 26.9: Dashboard Guarded Actions
 
 Optional image planning commands:
 
@@ -133,6 +133,9 @@ make image-readiness
 make image-dry-run
 make image-latest
 make image-full-cycle
+make dashboard-ui-up
+make dashboard-ui-health
+make dashboard-ui-open
 
 Optional runtime command pack:
 

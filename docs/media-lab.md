@@ -321,3 +321,15 @@ APPLY=1 START_LLM=1 make image-safe-shutdown
 ```
 
 The command pack uses fixed project commands only and never deletes runtime media outputs.
+
+## Dashboard UI MVP
+
+Milestone 26.8 adds a read-only browser dashboard:
+
+```bash
+make dashboard-ui-up
+make dashboard-ui-health
+make dashboard-ui-open
+```
+
+The UI shows Media Lab health, gates, warnings, safe command hints, mode hints, and latest image paths. It does not start/stop services, call Docker, trigger real generation, or serve generated image bytes.

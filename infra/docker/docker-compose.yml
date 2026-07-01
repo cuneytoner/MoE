@@ -202,6 +202,23 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  dashboard-ui:
+    build:
+      context: ../../apps/dashboard-ui
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME:-moe}-dashboard-ui
+    profiles:
+      - dashboard
+    restart: "no"
+    environment:
+      VITE_GATEWAY_API_URL: ${VITE_GATEWAY_API_URL:-http://127.0.0.1:8100}
+    ports:
+      - "${DASHBOARD_UI_PORT:-8500}:8500"
+    networks:
+      - moe-net
+    depends_on:
+      - gateway-api
+
 networks:
   moe-net:
     name: ${PROJECT_NAME:-moe}-net

@@ -565,7 +565,7 @@ Goals:
 
 ## Milestone 26.6: Guided Image Generation Command Pack
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add reviewed command packs for common image-generation flows.
@@ -580,12 +580,30 @@ Current scope:
 
 ## Milestone 26.7: Image Prompt Presets and History
 
-Status: PLANNED
+Status: SKIPPED / LATER
 
 Goals:
 - Add source-only image prompt preset templates.
 - Track reviewed prompt history without copying generated media into the repository.
 - Keep real generation explicit and guarded.
+
+## Milestone 26.8: Dashboard UI MVP
+
+Status: IN PROGRESS
+
+Goals:
+- Add a read-only browser Dashboard UI.
+- Show system and media health, real generation gates, latest generated image paths, safe command hints, and PC-1/PC-2 roles.
+- Keep dashboard actions out of scope.
+
+## Milestone 26.9: Dashboard Guarded Actions
+
+Status: PLANNED
+
+Goals:
+- Explore explicit, allowlisted, observable dashboard actions.
+- Keep service control and real generation guarded.
+- Avoid arbitrary shell execution.
 
 ## Milestone 27: Video Generation Service
 

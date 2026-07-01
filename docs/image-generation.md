@@ -412,6 +412,23 @@ APPLY=1 CONFIRM_IMAGE_FULL_CYCLE=1 make image-full-cycle
 
 The guided pack does not start real generation without `APPLY=1`, does not delete outputs, and does not modify model files. Details live in `docs/guided-image-generation.md`.
 
+## Dashboard UI MVP
+
+Milestone 26.8 adds a read-only dashboard at:
+
+```text
+http://127.0.0.1:8500
+```
+
+Run it with:
+
+```bash
+make dashboard-ui-up
+make dashboard-ui-open
+```
+
+It lists latest generated image paths and generation gates only. It does not trigger generation or serve image bytes.
+
 ## Runtime Paths
 
 Future image outputs belong under:

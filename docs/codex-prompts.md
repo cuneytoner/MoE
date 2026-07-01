@@ -879,6 +879,33 @@ Expected boundaries:
 - Keep generated files under runtime media outputs.
 - Keep real generation explicit and guarded.
 
+## Milestone 26.8 Prompt Summary
+
+Add a read-only Dashboard UI MVP.
+
+Scope:
+
+- Add `apps/dashboard-ui` with Vite, React, and TypeScript.
+- Fetch `/gateway/media/dashboard`.
+- Show service health, media health, real generation gates, latest image paths, safe command hints, mode hints, warnings, and PC-1/PC-2 role summary.
+- Add Docker Compose dashboard profile and helper scripts.
+- Do not start/stop backend services from the UI.
+- Do not call Docker from the UI.
+- Do not suspend machines from the UI.
+- Do not trigger real generation.
+- Do not serve generated image bytes in the MVP.
+
+## Milestone 26.9 Prompt Placeholder
+
+Add dashboard guarded actions.
+
+Expected boundaries:
+
+- Actions must be explicit, allowlisted, observable, and gated.
+- No arbitrary shell execution.
+- No unguarded real generation.
+- Keep destructive operations out of scope.
+
 ## Milestone 26.5.1 Prompt Summary
 
 Add PC-1 / PC-2 sleep, wake, startup, and status command pack scripts.

@@ -224,6 +224,10 @@ apps/dashboard:
 
 Management and monitoring UI. It will show service health, machine status, GPU status, model endpoints, and memory system status.
 
+apps/dashboard-ui:
+
+Read-only Dashboard UI MVP for Milestone 26.8. It displays Gateway media dashboard data, service reachability, generation gates, latest runtime image paths, safe command hints, mode hints, and PC-1/PC-2 roles. It does not start or stop services, call Docker, suspend machines, execute shell commands, or trigger real generation.
+
 apps/media-dashboard:
 
 Source-only static Media Lab status UI for Milestone 26.5. It reads Gateway's dashboard model and displays service health, gates, mode hints, safe command text, and latest runtime image paths. It is a viewer only.

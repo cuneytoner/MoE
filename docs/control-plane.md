@@ -133,6 +133,8 @@ M26.5 keeps the dashboard display-only. Control Plane remains responsible for mo
 
 M26.6 adds guided image command scripts. They are still user-run shell helpers rather than Control Plane actions. Image mode preparation starts ComfyUI bridge and real-enabled media services only with `APPLY=1`; the Control Plane does not apply that mode automatically.
 
+M26.8 adds the Dashboard UI MVP as a read-only viewer. It displays status and hints from Gateway, but Control Plane remains the planning layer and no dashboard action applies mode changes.
+
 ## Service Allowlist
 
 Known services:

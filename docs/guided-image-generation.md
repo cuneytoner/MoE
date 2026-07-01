@@ -155,3 +155,14 @@ make gateway-media-real-plan
 ```
 
 Real Gateway generation needs `GATEWAY_MEDIA_REAL_ALLOWED=true` plus request-level confirmation; the guided image pack does not change that gate.
+
+## Dashboard UI
+
+The Dashboard UI MVP can display readiness, gates, warnings, safe command hints, and latest image paths:
+
+```bash
+make dashboard-ui-up
+make dashboard-ui-open
+```
+
+It is read-only and does not run guided image commands.
