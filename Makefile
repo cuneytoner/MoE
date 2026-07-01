@@ -120,7 +120,7 @@ help:
 > @echo "  make test-gateway-chat-proxy Run optional Gateway chat proxy smoke test"
 > @echo "  make test-gateway-chat Run optional Gateway chat test"
 > @echo "  make test-gateway-chat-memory Run optional memory-augmented Gateway chat test"
-> @echo "  make test-gateway-chat-router Run optional router-aware Gateway chat test"
+> @echo "  make test-gateway-chat-router Run optional Gateway chat advisory router test"
 > @echo "  make test-continue-gateway Run optional Continue.dev Gateway chat smoke test"
 > @echo "  make test-code-agent-runtime Run optional repo-aware code agent runtime test"
 > @echo "  make test-code-patch-runtime Run optional safe patch/diff runtime test"
@@ -504,7 +504,7 @@ test-gateway-chat-memory:
 > @RUN_GATEWAY_CHAT_MEMORY_TEST=1 ./scripts/test-gateway-api.sh
 
 test-gateway-chat-router:
-> @RUN_GATEWAY_CHAT_ROUTER_TEST=1 ./scripts/test-gateway-api.sh
+> @./scripts/test-gateway-chat-router.sh
 
 test-continue-gateway:
 > @./scripts/test-continue-gateway.sh

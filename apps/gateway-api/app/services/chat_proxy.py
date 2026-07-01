@@ -10,10 +10,10 @@ class GatewayChatProxyUnavailable(RuntimeError):
     pass
 
 
-def choose_chat_model(request: GatewayChatProxyRequest, settings: Settings) -> str:
-    """M28.1 placeholder: use the requested model or the configured default."""
-    if request.model and request.model.strip():
-        return request.model.strip()
+def choose_chat_model(settings: Settings, active_model: str | None = None) -> str:
+    """Forward to the current runtime/default; never treat user input as a model path."""
+    if active_model:
+        return active_model
     return settings.default_model
 
 
@@ -22,7 +22,8 @@ async def proxy_chat_to_llama(
     settings: Settings,
 ) -> dict[str, Any]:
     base_url = settings.llama_server_base_url.rstrip("/")
-    model = choose_chat_model(request, settings)
+    active_model = await fetch_active_model(settings)
+    model = choose_chat_model(settings=settings, active_model=active_model)
     payload = {
         "model": model,
         "messages": [
@@ -51,7 +52,28 @@ async def proxy_chat_to_llama(
         "model": data.get("model") if isinstance(data.get("model"), str) else model,
         "content": _extract_content(data),
         "raw": _minimal_raw(data),
+        "active_model": active_model,
     }
+
+
+async def fetch_active_model(settings: Settings) -> str | None:
+    base_url = settings.llama_server_base_url.rstrip("/")
+    try:
+        async with httpx.AsyncClient(timeout=5) as client:
+            response = await client.get(f"{base_url}/v1/models")
+            response.raise_for_status()
+            data = response.json()
+    except Exception:
+        return None
+
+    models = data.get("data") if isinstance(data, dict) else data
+    if not isinstance(models, list) or not models:
+        return None
+    first = models[0]
+    if not isinstance(first, dict):
+        return str(first)
+    model_id = first.get("id")
+    return model_id if isinstance(model_id, str) and model_id else None
 
 
 def _extract_content(response: dict[str, Any]) -> str:
