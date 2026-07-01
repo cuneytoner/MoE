@@ -38,6 +38,10 @@ class Settings(BaseSettings):
         default="/home/cuneyt/MoE/runtime/reports/improvements",
         alias="IMPROVEMENT_REPORTS_DIR",
     )
+    learning_loop_report_path: str = Field(
+        default="/home/cuneyt/MoE/runtime/reports/learning-loop/learning-loop-report.json",
+        alias="LEARNING_LOOP_REPORT_PATH",
+    )
     memory_api_url: str = Field(
         default="http://memory-api:8101",
         alias="FEEDBACK_MEMORY_API_URL",

@@ -2,9 +2,9 @@
 
 Current active phase:
 - M28 Gateway AI Core is active.
-- Completed through M28.7 Feedback Sync PC1 to PC2.
-- Next planned: reviewed feedback learning loop design.
-- Dashboard, model registry, Gateway chat, advisory router, memory injection, feedback capture, feedback summary bridge, and manual feedback sync are done.
+- Completed through M28.8 Reviewed Learning Loop Report.
+- Next planned: reviewed feedback learning loop application design.
+- Dashboard, model registry, Gateway chat, advisory router, memory injection, feedback capture, feedback summary bridge, manual feedback sync, and reviewed learning loop reports are done.
 
 ## Milestone 0: Clean Codebase
 
@@ -768,6 +768,19 @@ Goals:
 - Do not require always-on shared mounts.
 - Do not automatically train, mutate memory, modify prompts, or change router config.
 - Keep default tests independent from PC2 availability.
+
+## Milestone 28.8: Reviewed Learning Loop Report
+
+Status: DONE
+
+Goals:
+- Add a local reviewed learning loop report generator.
+- Read aggregate feedback summaries from `/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json`.
+- Write human-reviewable reports under `/home/cuneyt/MoE/runtime/reports/learning-loop`.
+- Generate deterministic observations and recommendations from aggregate counts only.
+- Set `apply_supported=false` and `human_review_required=true`.
+- Do not include raw prompts, raw model responses, or individual feedback records.
+- Do not train, fine-tune, mutate memory, modify router config, modify prompts, call Memory API, call Gateway, call llama-server, control Docker, or control services.
 
 ## Milestone 33: 3D Model Generation Pipeline
 

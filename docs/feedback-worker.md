@@ -57,12 +57,24 @@ APPLY=1 make feedback-sync-to-pc2
 
 The sync copies only Gateway feedback JSONL and the optional aggregate summary. It does not copy models, media outputs, repository files, full runtime data, raw prompts, or raw model responses.
 
+## Reviewed Learning Loop
+
+Milestone 28.8 adds a reviewed learning loop report generated from the aggregate feedback summary:
+
+```bash
+make learning-loop-report-local
+```
+
+The report is written under `/home/cuneyt/MoE/runtime/reports/learning-loop/learning-loop-report.json` and is advisory only. It does not train models, mutate memory, call Memory API, call Gateway, call llama-server, modify router config, or update prompt templates.
+
 ## Commands
 
 ```bash
 make feedback-summary-local
 make feedback-sync-status
 make feedback-sync-to-pc2
+make learning-loop-report-local
 make test-feedback-worker-bridge
 make test-feedback-sync
+make test-learning-loop-report
 ```

@@ -1203,3 +1203,14 @@ Before accepting Codex changes, check:
 - Do not train, fine-tune, mutate memory, modify prompts, change router config, control Docker, switch models, or control services.
 - Keep status and tests independent from PC2 availability.
 - Validate with `make feedback-sync-status`, `make feedback-sync-to-pc2`, `make test-feedback-sync`, and default source-only tests.
+
+## Milestone 28.8 Reviewed Learning Loop Report
+
+- Add `scripts/learning-loop-report-local.sh` and `scripts/test-learning-loop-report.sh`.
+- Read `/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json`.
+- Write `/home/cuneyt/MoE/runtime/reports/learning-loop/learning-loop-report.json`.
+- Include aggregate observations and deterministic recommendations based only on rating, source, router intent, model, and tag counts.
+- Set `apply_supported=false` and `human_review_required=true`.
+- Do not include raw reason text, raw prompt text, raw model response text, or individual feedback records.
+- Do not train, fine-tune, mutate memory, modify router config, modify prompt templates, call Memory API, call Gateway, call llama-server, control Docker, switch models, or control services.
+- Validate with `make learning-loop-report-local`, `make test-learning-loop-report`, and default source-only tests.

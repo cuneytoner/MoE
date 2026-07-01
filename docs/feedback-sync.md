@@ -62,4 +62,10 @@ No SSH keys or real environment files are stored in the repository.
 
 This milestone does not train, fine-tune, mutate memory, modify prompts, change router config, switch models, control Docker, start or stop services, or add dashboard controls.
 
-The next future step may consume reviewed summaries in a human-approved learning loop.
+The next step is a reviewed learning loop report. It consumes aggregate summaries only and writes human-reviewable recommendations under `/home/cuneyt/MoE/runtime/reports/learning-loop/learning-loop-report.json`.
+
+```bash
+make learning-loop-report-local
+```
+
+It does not apply changes automatically.

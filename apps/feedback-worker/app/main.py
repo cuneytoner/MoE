@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Literal
 
 from fastapi import FastAPI, Query
@@ -14,6 +15,11 @@ from app.improvement import (
     build_improvement_report,
     latest_improvement_report_metadata,
     write_improvement_report,
+)
+from app.learning_loop import (
+    build_learning_loop_report,
+    read_summary,
+    write_learning_loop_report,
 )
 from app.report import build_report, latest_report_metadata, write_report
 from app.store import VALID_OUTCOMES, VALID_TASK_TYPES, append_event, read_events, summarize_events
@@ -206,3 +212,31 @@ def improvement_latest_report() -> dict:
     if latest is None:
         return {"status": "empty"}
     return latest
+
+
+@app.post("/learning-loop/report")
+def learning_loop_report() -> dict:
+    settings = get_settings()
+    if not Path(settings.feedback_summary_path).expanduser().is_file():
+        return {
+            "status": "skipped",
+            "service": "learning-loop-report",
+            "reason": "feedback summary file is missing",
+            "source_summary_path": settings.feedback_summary_path,
+            "apply_supported": False,
+            "human_review_required": True,
+        }
+    summary = read_summary(settings.feedback_summary_path)
+    report = build_learning_loop_report(
+        summary,
+        source_summary_path=settings.feedback_summary_path,
+    )
+    report_path = write_learning_loop_report(settings.learning_loop_report_path, report)
+    return {
+        "status": "ok",
+        "service": "learning-loop-report",
+        "report_path": str(report_path),
+        "apply_supported": False,
+        "human_review_required": True,
+        "report": report,
+    }

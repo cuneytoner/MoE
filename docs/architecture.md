@@ -131,6 +131,8 @@ Milestone 28.6 adds a Feedback Worker Bridge that reads the Gateway feedback JSO
 
 Milestone 28.7 adds explicit user-run feedback sync tooling from PC1 to PC2. `make feedback-sync-to-pc2` is dry-run by default and `APPLY=1 make feedback-sync-to-pc2` copies only `gateway-feedback.jsonl` plus `reports/feedback-summary.json` when present. It does not use deletion flags, copy repo/model/media files, require shared mounts, train, mutate memory, modify prompts, or change router config.
 
+Milestone 28.8 adds a reviewed learning loop report generated from `/home/cuneyt/MoE/runtime/feedback/reports/feedback-summary.json`. The report is written to `/home/cuneyt/MoE/runtime/reports/learning-loop/learning-loop-report.json` and contains aggregate observations and deterministic recommendations only, with `apply_supported=false` and `human_review_required=true`. It does not train, fine-tune, mutate memory, call Memory API, call Gateway, call llama-server, modify router config, or update prompts.
+
 apps/nightly-learning-worker:
 
 Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.

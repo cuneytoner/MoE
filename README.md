@@ -82,6 +82,7 @@ docs:
 - feedback.md
 - feedback-worker.md
 - feedback-sync.md
+- learning-loop.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -112,11 +113,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 28.7: Feedback Sync PC1 to PC2
+Milestone 28.8: Reviewed Learning Loop Report
 
 Next planned milestone:
 
-Reviewed feedback learning loop design
+Reviewed feedback learning loop application design
 
 ## Model Inventory
 
@@ -169,6 +170,8 @@ make test-feedback-worker-bridge
 make feedback-sync-status
 make feedback-sync-to-pc2
 make test-feedback-sync
+make learning-loop-report-local
+make test-learning-loop-report
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

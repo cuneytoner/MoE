@@ -77,6 +77,8 @@ Milestone 28.6 adds a Feedback Worker Bridge that can read this JSONL file and w
 
 Milestone 28.7 adds explicit user-run sync tooling for copying only Gateway feedback JSONL and the optional aggregate summary from PC1 to PC2. Dry-run is the default, and `APPLY=1` is required for an actual sync.
 
+Milestone 28.8 adds a reviewed learning loop report that reads the aggregate feedback summary and writes human-reviewable recommendations only. It does not train, mutate memory, change router config, or update prompts automatically.
+
 ## Status
 
 `GET /gateway/feedback/status` returns aggregate file status only:
@@ -142,8 +144,23 @@ The sync copies only `gateway-feedback.jsonl` and `reports/feedback-summary.json
 - No Docker control.
 - No model switching.
 - No prompt or response body storage by default.
+- No training, fine-tuning, memory mutation, router config changes, or prompt template changes from feedback reports.
 - Runtime feedback files stay under `/home/cuneyt/MoE/runtime`.
 - The repo remains source-only.
+
+## Reviewed Learning Loop
+
+```bash
+make learning-loop-report-local
+```
+
+The report is written to:
+
+```text
+/home/cuneyt/MoE/runtime/reports/learning-loop/learning-loop-report.json
+```
+
+It contains aggregate observations and recommendations with `apply_supported=false` and `human_review_required=true`.
 
 ## Smoke Test
 
@@ -154,4 +171,6 @@ make test-feedback-worker-bridge
 make feedback-sync-status
 make feedback-sync-to-pc2
 make test-feedback-sync
+make learning-loop-report-local
+make test-learning-loop-report
 ```
