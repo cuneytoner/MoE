@@ -4,6 +4,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import ValidationError
 
 from app.clients.embed_worker import EmbedWorkerClient
 from app.clients.media_api import MediaApiClient
@@ -14,6 +15,8 @@ from app.config import get_settings
 from app.media_dashboard import build_media_dashboard
 from app.models.gateway import (
     GatewayChatRequest,
+    GatewayChatProxyRequest,
+    GatewayChatProxyResponse,
     GatewayChatResponse,
     GatewayCodeAskRequest,
     GatewayCodeAskResponse,
@@ -56,6 +59,10 @@ from app.models.gateway import (
 )
 from app.services.media_planner import local_media_plan
 from app.services.model_mapping import ModelMapping, get_model_mapping
+from app.services.chat_proxy import (
+    GatewayChatProxyUnavailable,
+    proxy_chat_to_llama,
+)
 from app.services.patch_planner import (
     diff_suggest_system_prompt,
     parse_diff_suggestion,
@@ -601,9 +608,53 @@ async def runtime_switch_plan(
     )
 
 
-@app.post("/gateway/chat", response_model=GatewayChatResponse)
-async def chat(request: GatewayChatRequest) -> GatewayChatResponse:
-    return await _gateway_chat(request)
+@app.post(
+    "/gateway/chat",
+    response_model=GatewayChatProxyResponse | GatewayChatResponse,
+    response_model_exclude_none=True,
+)
+async def chat(request: dict[str, Any]) -> GatewayChatProxyResponse | GatewayChatResponse:
+    if "messages" not in request:
+        try:
+            legacy_request = GatewayChatRequest(**request)
+        except ValidationError as exc:
+            raise HTTPException(status_code=400, detail=exc.errors()) from exc
+        return await _gateway_chat(legacy_request)
+
+    try:
+        proxy_request = GatewayChatProxyRequest(**request)
+    except ValidationError as exc:
+        raise HTTPException(status_code=400, detail=exc.errors()) from exc
+
+    if any(not message.content.strip() for message in proxy_request.messages):
+        raise HTTPException(
+            status_code=400,
+            detail="message content must be non-empty",
+        )
+
+    if proxy_request.stream:
+        raise HTTPException(
+            status_code=400,
+            detail="streaming is not implemented for /gateway/chat yet",
+        )
+
+    settings = get_settings()
+    try:
+        proxied = await proxy_chat_to_llama(proxy_request, settings)
+    except GatewayChatProxyUnavailable as exc:
+        return GatewayChatProxyResponse(
+            status="unavailable",
+            service="gateway-chat-proxy",
+            detail=str(exc),
+        )
+
+    return GatewayChatProxyResponse(
+        status="ok",
+        service="gateway-chat-proxy",
+        model=str(proxied["model"]),
+        response=str(proxied["content"]),
+        raw=proxied["raw"],
+    )
 
 
 @app.post("/v1/chat/completions", response_model=OpenAIChatCompletionResponse)

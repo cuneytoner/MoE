@@ -99,6 +99,14 @@ class Settings(BaseSettings):
         default="http://host.docker.internal:8000",
         alias="LLAMA_SERVER_URL",
     )
+    llama_server_base_url: str = Field(
+        default="http://host.docker.internal:8000",
+        alias="LLAMA_SERVER_BASE_URL",
+    )
+    gateway_chat_timeout_seconds: float = Field(
+        default=120.0,
+        alias="GATEWAY_CHAT_TIMEOUT_SECONDS",
+    )
     pc2_prompt_interpreter_url: str = Field(
         default="http://192.168.50.2:8230",
         alias="PC2_PROMPT_INTERPRETER_URL",

@@ -76,6 +76,7 @@ docs:
 
 - architecture.md
 - milestones.md
+- gateway-chat.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -106,11 +107,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 27.0: Model Registry Cleanup in progress
+Milestone 28.1: Gateway Chat Proxy in progress
 
 Next planned milestone:
 
-Milestone 27.1: Model Registry Runtime Follow-up
+Milestone 28.2: Gateway Chat Routing
 
 ## Model Inventory
 
@@ -153,6 +154,7 @@ make dashboard-ui-up
 make dashboard-ui-health
 make dashboard-ui-open
 make runtime-dashboard-status
+make test-gateway-chat-proxy
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

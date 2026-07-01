@@ -1136,3 +1136,11 @@ Before accepting Codex changes, check:
 - no data folder committed
 - no models or checkpoints committed
 - no runtime state inside codebase
+
+## Milestone 28.1 Gateway Chat Proxy
+
+- Add a safe non-streaming `POST /gateway/chat` proxy for OpenAI-like chat messages.
+- Forward to `LLAMA_SERVER_BASE_URL/v1/chat/completions`.
+- Keep streaming, complex MoE routing, model switching, shell execution, Docker control, and runtime writes out of M28.1.
+- Return `status: unavailable` when llama-server is unreachable.
+- Validate with `make test-gateway-chat-proxy`.

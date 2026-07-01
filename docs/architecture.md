@@ -117,6 +117,8 @@ Host model runtime:
 
 Host-managed llama.cpp serving layer for local GGUF chat and coding models. It exposes an OpenAI-compatible endpoint at `http://localhost:8000/v1`, with model files loaded from `/home/cuneyt/MoE_Models_Backup` and runtime logs/pids stored under `/home/cuneyt/MoE/runtime`.
 
+Milestone 28.1 adds a minimal Gateway chat proxy at `/gateway/chat`. It accepts OpenAI-like non-streaming chat messages, forwards them to `LLAMA_SERVER_BASE_URL/v1/chat/completions`, returns a compact Gateway response, and reports graceful `status: unavailable` responses when llama-server is down. It does not require an API key, stream responses, execute shell commands, control Docker, read workspace files, switch models, or start services. Richer routing is reserved for Milestone 28.2.
+
 apps/nightly-learning-worker:
 
 Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.
