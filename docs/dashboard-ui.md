@@ -88,6 +88,15 @@ The Gateway does not require `psutil`. GPU status remains non-fatal; when `nvidi
 
 Milestone 26.8.4 adds `GET /system/status` to the PC-2 Prompt Interpreter Worker. When reachable, the Gateway runtime dashboard uses that fixed HTTP endpoint to populate the PC2 System card with real RAM, CPU load, disk, and uptime metrics. If the endpoint is unavailable, the card remains a warning instead of failing the dashboard.
 
+Milestone 26.8.5 adds an optional host-generated Docker summary snapshot:
+
+```bash
+make docker-summary-snapshot
+make docker-summary-status
+```
+
+The snapshot is written outside the repository at `/home/cuneyt/MoE/runtime/status/docker-summary.json`. Gateway reads only that fixed JSON file and never mounts `docker.sock`, calls Docker, runs shell commands, or controls containers. The Docker Summary card displays snapshot counts when available and remains warning-only when the file is missing or invalid.
+
 ## Run
 
 Start the UI:

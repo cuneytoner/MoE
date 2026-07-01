@@ -629,7 +629,7 @@ Goals:
 
 ## Milestone 26.8.4: PC2 System Status Endpoint
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Add read-only `GET /system/status` to the PC-2 Prompt Interpreter Worker.
@@ -637,6 +637,18 @@ Goals:
 - Make Gateway consume the fixed PC-2 HTTP endpoint for `.system.pc2`.
 - Keep unavailable PC-2 system status non-fatal.
 - Avoid SSH, remote shell commands, Docker socket access, `nvidia-smi`, and file mutation.
+
+## Milestone 26.8.5: Read-only Docker Summary Snapshot
+
+Status: IN PROGRESS
+
+Goals:
+- Add a host-side `docker-summary-snapshot` script for fixed allowlisted container status.
+- Write snapshot JSON under `/home/cuneyt/MoE/runtime/status/docker-summary.json`.
+- Make Gateway read the fixed snapshot file instead of Docker or `docker.sock`.
+- Show Docker Summary counts in the Dashboard UI when a snapshot is available.
+- Keep missing or invalid snapshots as warnings.
+- Preserve read-only Dashboard and Gateway boundaries.
 
 ## Milestone 26.9: Dashboard Guarded Actions
 

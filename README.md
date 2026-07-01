@@ -105,7 +105,7 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.8.4: PC2 System Status Endpoint in progress
+Milestone 26.8.5: Read-only Docker Summary Snapshot in progress
 
 Next planned milestone:
 
@@ -138,6 +138,8 @@ make dashboard-ui-health
 make dashboard-ui-open
 make runtime-dashboard-status
 make pc2-system-status
+make docker-summary-snapshot
+make docker-summary-status
 
 Optional runtime command pack:
 

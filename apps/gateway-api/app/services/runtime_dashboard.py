@@ -62,7 +62,10 @@ async def build_runtime_dashboard(settings: Any) -> dict[str, Any]:
     )
     gpu = _gpu_status()
     pc2_system = await _pc2_system_status(settings.pc2_prompt_interpreter_url)
-    system = _system_status(pc2_system)
+    system = _system_status(
+        pc2_system=pc2_system,
+        docker_summary_snapshot_path=Path(settings.docker_summary_snapshot_path),
+    )
     warnings = list(job_warnings)
     warnings.extend(_service_warnings("pc2", pc2))
     if comfyui.get("reachable") is not True:
@@ -227,7 +230,11 @@ async def _pc2_system_status(base_url: str) -> dict[str, Any]:
     return data
 
 
-def _system_status(pc2_system: dict[str, Any]) -> dict[str, Any]:
+def _system_status(
+    *,
+    pc2_system: dict[str, Any],
+    docker_summary_snapshot_path: Path,
+) -> dict[str, Any]:
     return {
         "pc1": {
             "memory": _memory_status(),
@@ -236,12 +243,41 @@ def _system_status(pc2_system: dict[str, Any]) -> dict[str, Any]:
             "uptime": _uptime_status(),
         },
         "pc2": pc2_system,
-        "docker": {
-            "status": "unavailable",
-            "detail": "docker observer not enabled; Docker socket is not mounted into gateway",
-            "services": [],
-        },
+        "docker": _docker_summary_snapshot(docker_summary_snapshot_path),
     }
+
+
+def _docker_summary_snapshot(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {
+            "status": "unavailable",
+            "detail": "docker summary snapshot not found",
+            "services": [],
+        }
+    if not path.is_file():
+        return {
+            "status": "unavailable",
+            "detail": "docker summary snapshot path is not a file",
+            "services": [],
+        }
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        return {
+            "status": "unavailable",
+            "detail": f"docker summary snapshot invalid: {exc.__class__.__name__}",
+            "services": [],
+        }
+    if not isinstance(data, dict):
+        return {
+            "status": "unavailable",
+            "detail": "docker summary snapshot invalid: expected JSON object",
+            "services": [],
+        }
+    services = data.get("services")
+    if not isinstance(services, list):
+        data["services"] = []
+    return data
 
 
 def _memory_status() -> dict[str, Any]:

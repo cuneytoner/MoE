@@ -949,6 +949,21 @@ Scope:
 - Keep PC-2 system unavailability as a warning.
 - Do not use SSH, remote shell commands, Docker socket access, `nvidia-smi`, file mutation, service control, suspend, or generation triggers.
 
+## Milestone 26.8.5 Prompt Summary
+
+Add read-only Docker Summary Snapshot.
+
+Scope:
+
+- Add host-side `scripts/docker-summary-snapshot.sh`.
+- Use Docker CLI only in that user-run host script.
+- Inspect only fixed allowlisted container names.
+- Write JSON to `/home/cuneyt/MoE/runtime/status/docker-summary.json`.
+- Make Gateway read that fixed JSON file via `DOCKER_SUMMARY_SNAPSHOT_PATH`.
+- Do not mount Docker socket into Gateway.
+- Do not let Gateway call Docker, run shell commands, mutate containers, or inspect user-supplied container names.
+- Add Dashboard UI Docker Summary counts from the snapshot.
+
 ## Milestone 26.9 Prompt Placeholder
 
 Add dashboard guarded actions.

@@ -143,6 +143,8 @@ M26.8.3 adds system resource observations to the same read-only boundary. PC-1 r
 
 M26.8.4 adds a fixed PC-2 HTTP system observer through the Prompt Interpreter Worker. Gateway consumes it as status data only. It does not use SSH, remote shell commands, Docker control, service control, or runtime mode changes.
 
+M26.8.5 adds a host-written Docker summary snapshot as another observer. The snapshot script is user-run and read-only; Gateway only reads the fixed JSON file. Control Plane and Dashboard still do not mount Docker socket or control containers.
+
 ## Service Allowlist
 
 Known services:

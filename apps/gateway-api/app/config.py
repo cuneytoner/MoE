@@ -115,6 +115,10 @@ class Settings(BaseSettings):
         default="http://192.168.50.2:8220",
         alias="PC2_FEEDBACK_URL",
     )
+    docker_summary_snapshot_path: str = Field(
+        default="/home/cuneyt/MoE/runtime/status/docker-summary.json",
+        alias="DOCKER_SUMMARY_SNAPSHOT_PATH",
+    )
 
 
 def _default_model_routing_config() -> str:

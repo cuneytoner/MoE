@@ -84,17 +84,31 @@ function Pc2SystemCard({ pc2 }: { pc2: SystemStatus["pc2"] }) {
 }
 
 function DockerSummaryCard({ docker }: { docker: SystemStatus["docker"] }) {
+  const summary = docker.summary;
+
   return (
     <Card>
       <CardHeader avatar={<DnsOutlinedIcon color="primary" />} title="Docker Summary" />
       <CardContent>
         <Stack spacing={1.5}>
           <StatusChip label={docker.status} tone={docker.status === "ok" ? "ok" : "warning"} />
-          <Typography color="text.secondary" variant="body2">
-            {docker.detail}
-          </Typography>
+          {summary ? (
+            <Box sx={{ display: "grid", gap: 1, gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }}>
+              <SmallMetric label="Total" value={String(summary.total)} />
+              <SmallMetric label="Running" value={String(summary.running)} />
+              <SmallMetric label="Healthy" value={String(summary.healthy)} />
+              <SmallMetric label="Unhealthy" value={String(summary.unhealthy)} />
+              <SmallMetric label="Missing" value={String(summary.missing)} />
+              <SmallMetric label="Observed" value={String(docker.services.length)} />
+            </Box>
+          ) : null}
+          {docker.detail ? (
+            <Typography color="text.secondary" variant="body2">
+              {docker.detail}
+            </Typography>
+          ) : null}
           <Typography color="text.secondary" variant="caption">
-            Observed services: {docker.services.length}
+            {docker.generated_at ? `Generated: ${new Date(docker.generated_at).toLocaleString()}` : `Observed services: ${docker.services.length}`}
           </Typography>
         </Stack>
       </CardContent>

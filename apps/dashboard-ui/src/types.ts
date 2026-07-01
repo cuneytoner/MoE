@@ -126,8 +126,25 @@ export type SystemStatus = {
   };
   docker: {
     status: string;
-    detail: string;
-    services: Array<Record<string, unknown>>;
+    service?: string;
+    read_only?: boolean;
+    generated_at?: string;
+    source?: string;
+    detail?: string;
+    services: Array<{
+      name?: string;
+      status?: string;
+      health?: string;
+      ports?: string;
+      image?: string;
+    }>;
+    summary?: {
+      total: number;
+      running: number;
+      healthy: number;
+      unhealthy: number;
+      missing: number;
+    };
   };
 };
 

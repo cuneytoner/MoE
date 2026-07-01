@@ -302,6 +302,8 @@ required_paths=(
   "scripts/model-runtime-status.sh"
   "scripts/model-runtime-health.sh"
   "scripts/model-runtime-switch.sh"
+  "scripts/docker-summary-snapshot.sh"
+  "scripts/docker-summary-status.sh"
   "scripts/test-gateway-api.sh"
   "scripts/test-gateway-media.sh"
   "scripts/gateway-media-plan.sh"
