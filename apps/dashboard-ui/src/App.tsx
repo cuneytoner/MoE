@@ -2,32 +2,42 @@ import { useEffect, useMemo, useState } from "react";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import { Alert, Box, Card, CardContent, Stack, Typography } from "@mui/material";
-import { fetchDashboard, gatewayBaseUrl } from "./api";
+import { fetchDashboard, fetchRuntimeDashboard, gatewayBaseUrl } from "./api";
 import { GatesPanel } from "./components/GatesPanel";
 import { LatestImagesPanel } from "./components/LatestImagesPanel";
 import { ModeHintsPanel } from "./components/ModeHintsPanel";
+import { RuntimeCards } from "./components/RuntimeCards";
 import { SafeCommandsPanel } from "./components/SafeCommandsPanel";
 import { ServicesPanel } from "./components/ServicesPanel";
 import { SummaryCards } from "./components/SummaryCards";
 import { WarningsPanel } from "./components/WarningsPanel";
 import { DashboardLayout } from "./layout/DashboardLayout";
-import type { DashboardModel } from "./types";
+import type { DashboardModel, RuntimeDashboardModel } from "./types";
 
 export function App() {
   const [dashboard, setDashboard] = useState<DashboardModel | null>(null);
+  const [runtimeDashboard, setRuntimeDashboard] = useState<RuntimeDashboardModel | null>(null);
   const [error, setError] = useState("");
+  const [runtimeError, setRuntimeError] = useState("");
   const [loading, setLoading] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<string>("never");
 
   async function refresh() {
     setLoading(true);
     setError("");
+    setRuntimeError("");
     try {
       const next = await fetchDashboard();
       setDashboard(next);
       setLastRefresh(new Date().toLocaleString());
     } catch (err) {
       setError(err instanceof Error ? err.message : "unknown error");
+    }
+    try {
+      const nextRuntime = await fetchRuntimeDashboard();
+      setRuntimeDashboard(nextRuntime);
+    } catch (err) {
+      setRuntimeError(err instanceof Error ? err.message : "unknown runtime error");
     } finally {
       setLoading(false);
     }
@@ -72,6 +82,7 @@ export function App() {
       </Alert>
 
       <SummaryCards dashboard={dashboard} />
+      <RuntimeCards error={runtimeError} runtime={runtimeDashboard} />
 
       {dashboard ? (
         <>
@@ -99,7 +110,7 @@ export function App() {
               </Box>
             </CardContent>
           </Card>
-          <WarningsPanel warnings={dashboard.warnings} />
+          <WarningsPanel warnings={[...dashboard.warnings, ...(runtimeDashboard?.warnings ?? [])]} />
         </>
       ) : null}
 

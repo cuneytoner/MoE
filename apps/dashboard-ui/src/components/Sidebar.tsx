@@ -2,6 +2,7 @@ import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import MemoryOutlinedIcon from "@mui/icons-material/MemoryOutlined";
 import PermMediaOutlinedIcon from "@mui/icons-material/PermMediaOutlined";
 import StorageRoundedIcon from "@mui/icons-material/StorageRounded";
 import { Card, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
@@ -9,6 +10,7 @@ import type { ReactNode } from "react";
 
 const items: Array<{ label: string; href: string; icon: ReactNode }> = [
   { label: "Overview", href: "#overview", icon: <DashboardRoundedIcon /> },
+  { label: "Runtime", href: "#runtime", icon: <MemoryOutlinedIcon /> },
   { label: "Services", href: "#services", icon: <StorageRoundedIcon /> },
   { label: "Media", href: "#media", icon: <PermMediaOutlinedIcon /> },
   { label: "Gates", href: "#gates", icon: <LockOutlinedIcon /> },

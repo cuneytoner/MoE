@@ -30,6 +30,14 @@ services:
       MEDIA_DASHBOARD_ENABLED: ${MEDIA_DASHBOARD_ENABLED:-true}
       MEDIA_OUTPUTS_DIR: ${MEDIA_OUTPUTS_DIR:-/home/cuneyt/MoE/runtime/media/outputs}
       MEDIA_DASHBOARD_MAX_IMAGES: ${MEDIA_DASHBOARD_MAX_IMAGES:-20}
+      RUNTIME_DASHBOARD_ENABLED: ${RUNTIME_DASHBOARD_ENABLED:-true}
+      MEDIA_JOBS_DIR: ${MEDIA_JOBS_DIR:-/home/cuneyt/MoE/runtime/media/jobs}
+      RUNTIME_DASHBOARD_MAX_JOBS: ${RUNTIME_DASHBOARD_MAX_JOBS:-5}
+      LLAMA_SERVER_URL: ${LLAMA_SERVER_URL:-http://host.docker.internal:8000}
+      PC2_PROMPT_INTERPRETER_URL: ${PC2_PROMPT_INTERPRETER_URL:-http://192.168.50.2:8230}
+      PC2_NIGHTLY_URL: ${PC2_NIGHTLY_URL:-http://192.168.50.2:8200}
+      PC2_RESEARCH_URL: ${PC2_RESEARCH_URL:-http://192.168.50.2:8210}
+      PC2_FEEDBACK_URL: ${PC2_FEEDBACK_URL:-http://192.168.50.2:8220}
       CONTROL_API_URL: ${CONTROL_API_URL:-http://host.docker.internal:8400}
       COMFYUI_URL: ${COMFYUI_URL:-http://host.docker.internal:8188}
     ports:
@@ -38,6 +46,7 @@ services:
       - ../../configs/model-routing.yaml:/app/configs/model-routing.yaml:ro
       - ../../:/workspace:ro
       - ${MEDIA_OUTPUTS_DIR:-/home/cuneyt/MoE/runtime/media/outputs}:/home/cuneyt/MoE/runtime/media/outputs:ro
+      - ${MEDIA_JOBS_DIR:-/home/cuneyt/MoE/runtime/media/jobs}:/home/cuneyt/MoE/runtime/media/jobs:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:

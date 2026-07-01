@@ -105,13 +105,9 @@ make tree
 
 ## Current Milestone
 
-Milestone 26.8.1: Dashboard Material Kit Theme Integration in progress
+Milestone 26.8.2: Dashboard Runtime Cards in progress
 
 Next planned milestone:
-
-Milestone 26.8.2: Dashboard UX Polish / Charts
-
-Later planned milestone:
 
 Milestone 26.9: Dashboard Guarded Actions
 
@@ -140,6 +136,7 @@ make image-full-cycle
 make dashboard-ui-up
 make dashboard-ui-health
 make dashboard-ui-open
+make runtime-dashboard-status
 
 Optional runtime command pack:
 

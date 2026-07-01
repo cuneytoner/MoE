@@ -335,3 +335,5 @@ make dashboard-ui-open
 The UI shows Media Lab health, gates, warnings, safe command hints, mode hints, and latest image paths. It does not start/stop services, call Docker, trigger real generation, or serve generated image bytes.
 
 Milestone 26.8.1 keeps the same read-only behavior and upgrades the browser UI to a Material UI / Minimal Dashboard inspired theme.
+
+Milestone 26.8.2 adds runtime cards to the Dashboard UI. These cards read `/gateway/runtime/dashboard` to show PC-1 GPU/llama/ComfyUI state, PC-2 worker reachability, latest media job metadata, and image lifecycle hints. Missing ComfyUI, Control API, PC-2 workers, or GPU status are warnings rather than fatal errors.

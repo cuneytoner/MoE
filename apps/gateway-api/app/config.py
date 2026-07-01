@@ -83,6 +83,38 @@ class Settings(BaseSettings):
         default="http://host.docker.internal:8188",
         alias="COMFYUI_URL",
     )
+    runtime_dashboard_enabled: bool = Field(
+        default=True,
+        alias="RUNTIME_DASHBOARD_ENABLED",
+    )
+    media_jobs_dir: str = Field(
+        default="/home/cuneyt/MoE/runtime/media/jobs",
+        alias="MEDIA_JOBS_DIR",
+    )
+    runtime_dashboard_max_jobs: int = Field(
+        default=5,
+        alias="RUNTIME_DASHBOARD_MAX_JOBS",
+    )
+    llama_server_url: str = Field(
+        default="http://host.docker.internal:8000",
+        alias="LLAMA_SERVER_URL",
+    )
+    pc2_prompt_interpreter_url: str = Field(
+        default="http://192.168.50.2:8230",
+        alias="PC2_PROMPT_INTERPRETER_URL",
+    )
+    pc2_nightly_url: str = Field(
+        default="http://192.168.50.2:8200",
+        alias="PC2_NIGHTLY_URL",
+    )
+    pc2_research_url: str = Field(
+        default="http://192.168.50.2:8210",
+        alias="PC2_RESEARCH_URL",
+    )
+    pc2_feedback_url: str = Field(
+        default="http://192.168.50.2:8220",
+        alias="PC2_FEEDBACK_URL",
+    )
 
 
 def _default_model_routing_config() -> str:

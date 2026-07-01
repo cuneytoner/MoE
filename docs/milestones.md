@@ -598,7 +598,7 @@ Goals:
 
 ## Milestone 26.8.1: Dashboard Material Kit Theme Integration
 
-Status: IN PROGRESS
+Status: DONE
 
 Goals:
 - Upgrade `apps/dashboard-ui` to a Material UI / Minimal Dashboard inspired visual theme.
@@ -606,13 +606,15 @@ Goals:
 - Preserve read-only behavior and the single Gateway dashboard data source.
 - Do not vendor the external template, copy unrelated demo pages, or add large assets.
 
-## Milestone 26.8.2: Dashboard UX Polish / Charts
+## Milestone 26.8.2: Dashboard Runtime Cards
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Goals:
-- Add optional dashboard polish such as charts, filtering, and richer empty states.
-- Keep the UI read-only unless later guarded-action milestones explicitly approve actions.
+- Add read-only runtime status cards to the Dashboard UI.
+- Add `/gateway/runtime/dashboard` for PC-1 runtime, GPU, llama-server, ComfyUI, PC-2 worker, media job, and image lifecycle observations.
+- Keep missing runtime services as warnings.
+- Keep the UI read-only and keep actions out of scope.
 
 ## Milestone 26.9: Dashboard Guarded Actions
 

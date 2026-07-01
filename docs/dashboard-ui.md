@@ -13,10 +13,11 @@ The dashboard gives one browser surface for:
 - runtime mode hints
 - PC-1 and PC-2 role summary
 
-It reads Gateway's existing dashboard endpoint:
+It reads Gateway's dashboard endpoints:
 
 ```text
 GET /gateway/media/dashboard
+GET /gateway/runtime/dashboard
 ```
 
 ## What It Does Not Do
@@ -56,6 +57,21 @@ https://github.com/minimal-ui-kit/material-kit-react
 ```
 
 The full external template is not vendored into this repository. No unrelated demo pages or large assets are copied. The local implementation remains focused on AI Brain OS / MoE status, safety gates, runtime hints, and media output paths.
+
+## Runtime Cards
+
+Milestone 26.8.2 adds runtime cards backed by the read-only Gateway runtime dashboard endpoint.
+
+Cards include:
+
+- GPU name, VRAM used/free/total, and utilization
+- llama-server reachability, URL, and active model when reported
+- ComfyUI reachability and Docker bridge hint
+- PC-2 worker reachability for Prompt Interpreter, Nightly Learning, Research Ingestion, and Feedback Worker
+- latest visible media job ID, state, mode, job type, and job path
+- image lifecycle summary with dry-run availability, real generation lock state, recommended mode, and next safe step
+
+Missing Control API, ComfyUI, llama-server, GPU, media jobs, or PC-2 workers are warnings. They do not make the dashboard an action surface and they do not trigger recovery actions.
 
 ## Run
 
@@ -122,6 +138,7 @@ Gateway unreachable:
 
 ```bash
 curl -fsS http://127.0.0.1:8100/gateway/media/dashboard
+curl -fsS http://127.0.0.1:8100/gateway/runtime/dashboard
 ```
 
 Prompt Interpreter unreachable:
@@ -140,6 +157,13 @@ Latest images empty:
 
 ```bash
 make image-latest
+```
+
+Runtime cards empty or warning-only:
+
+```bash
+make runtime-dashboard-status
+make test-runtime-dashboard
 ```
 
 Dashboard container not running:

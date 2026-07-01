@@ -908,6 +908,20 @@ Scope:
 - Do not vendor the external template or copy unrelated demo pages/assets.
 - Do not add service control, Docker control, suspend controls, shell execution, or real generation triggers.
 
+## Milestone 26.8.2 Prompt Summary
+
+Add read-only Dashboard Runtime Cards.
+
+Scope:
+
+- Add `GET /gateway/runtime/dashboard`.
+- Observe PC-1 GPU, llama-server, ComfyUI, PC-2 workers, latest media jobs, and image lifecycle state.
+- Use fixed HTTP checks and fixed allowlisted GPU status probing only.
+- Read media job JSON files from the runtime jobs directory without mutating them.
+- Add Dashboard UI runtime cards for GPU, llama-server, ComfyUI, PC-2 workers, latest job, and image lifecycle.
+- Missing ComfyUI, Control API, GPU, llama-server, and PC-2 workers should be warnings, not fatal errors.
+- Do not start or stop services, call Docker from UI, SSH into PC-2, execute arbitrary shell, switch models, mutate runtime data, or trigger generation.
+
 ## Milestone 26.9 Prompt Placeholder
 
 Add dashboard guarded actions.

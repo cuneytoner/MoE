@@ -137,6 +137,8 @@ M26.8 adds the Dashboard UI MVP as a read-only viewer. It displays status and hi
 
 M26.8.1 updates the Dashboard UI visual layer with Material UI cards, chips, alerts, and navigation. This does not change the control-plane boundary: the dashboard still does not start or stop services, call Docker, suspend machines, execute shell commands, trigger generation, or apply runtime modes.
 
+M26.8.2 lets the dashboard observe runtime state through `/gateway/runtime/dashboard`. The endpoint and UI cards are read-only observers. Control Plane remains separate and no dashboard card applies runtime modes, starts/stops services, controls Docker, switches models, or triggers image generation.
+
 ## Service Allowlist
 
 Known services:

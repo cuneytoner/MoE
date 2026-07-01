@@ -431,6 +431,8 @@ It lists latest generated image paths and generation gates only. It does not tri
 
 Milestone 26.8.1 keeps those boundaries and replaces the plain dashboard styling with Material UI cards, chips, alerts, and navigation.
 
+Milestone 26.8.2 adds read-only runtime cards for GPU VRAM/utilization, llama-server, ComfyUI bridge readiness, latest media job metadata, and image lifecycle hints. These cards do not start ComfyUI, enable real generation, or serve generated images.
+
 ## Runtime Paths
 
 Future image outputs belong under:
