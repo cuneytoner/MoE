@@ -107,6 +107,12 @@ OpenAI-compatible responses keep `choices[]` intact and include memory metadata 
 
 See [memory-injection.md](memory-injection.md) for request examples and safety details.
 
+## Feedback Capture
+
+Milestone 28.5 adds `POST /gateway/feedback` for safe metadata-only feedback capture. It stores append-only JSONL under `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl` and does not store full prompt or response text.
+
+`GET /gateway/feedback/status` returns aggregate status only. See [feedback.md](feedback.md).
+
 ## Test
 
 ```bash
@@ -114,6 +120,7 @@ make test-openai-compatible-gateway
 make test-gateway-chat-proxy
 make test-gateway-chat-router
 make test-gateway-memory-injection
+make test-gateway-feedback
 ```
 
 The test skips gracefully when Gateway or llama-server is unavailable and fails only when reachable services violate the contract.

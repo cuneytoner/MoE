@@ -154,6 +154,8 @@ M28.3 exposes Gateway OpenAI-compatible routes at `http://localhost:8100/v1`. Co
 
 M28.4 adds optional Gateway memory injection before forwarding chat to llama-server. `memory="auto"` searches the fixed configured `MEMORY_SEARCH_URL` and injects bounded local memory context only when usable results exist. `memory="off"` disables search. Memory search failures are non-fatal and return metadata while chat continues when llama-server is reachable.
 
+M28.5 adds metadata-only Gateway feedback capture under `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`. It stores ratings, tags, ids, router intent, and model metadata, but not full prompts or full responses.
+
 ## Registry And Inventory
 
 Validate the source-controlled registry against local active model paths:

@@ -26,6 +26,9 @@ from app.models.gateway import (
     GatewayCodeDiffSuggestResponse,
     GatewayCodePatchPlanRequest,
     GatewayCodePatchPlanResponse,
+    GatewayFeedbackRequest,
+    GatewayFeedbackResponse,
+    GatewayFeedbackStatusResponse,
     GatewayHealthResponse,
     GatewayMediaDryRunJobRequest,
     GatewayMediaHealthResponse,
@@ -65,6 +68,7 @@ from app.services.chat_proxy import (
     proxy_chat_to_llama,
 )
 from app.services.chat_router import classify_chat_intent
+from app.services.feedback_capture import append_feedback, feedback_status
 from app.services.memory_injection import build_memory_injected_request
 from app.services.patch_planner import (
     diff_suggest_system_prompt,
@@ -280,6 +284,52 @@ async def runtime_dashboard() -> dict[str, Any]:
             },
         }
     return await build_runtime_dashboard(settings)
+
+
+@app.post(
+    "/gateway/feedback",
+    response_model=GatewayFeedbackResponse,
+    response_model_exclude_none=True,
+)
+async def gateway_feedback(
+    request: GatewayFeedbackRequest,
+) -> GatewayFeedbackResponse:
+    settings = get_settings()
+    try:
+        record = append_feedback(request, settings.gateway_feedback_path)
+    except Exception as exc:
+        return GatewayFeedbackResponse(
+            status="error",
+            service="gateway-feedback",
+            path=settings.gateway_feedback_path,
+            detail=f"feedback append failed: {exc.__class__.__name__}: {exc}",
+        )
+
+    return GatewayFeedbackResponse(
+        status="ok",
+        service="gateway-feedback",
+        id=str(record["id"]),
+        path=settings.gateway_feedback_path,
+    )
+
+
+@app.get("/gateway/feedback/status", response_model=GatewayFeedbackStatusResponse)
+async def gateway_feedback_status() -> GatewayFeedbackStatusResponse:
+    settings = get_settings()
+    try:
+        status = feedback_status(settings.gateway_feedback_path)
+    except Exception as exc:
+        return GatewayFeedbackStatusResponse(
+            status="error",
+            service="gateway-feedback",
+            path=settings.gateway_feedback_path,
+            exists=False,
+            record_count=0,
+            latest_created_at=None,
+            detail=f"feedback status failed: {exc.__class__.__name__}: {exc}",
+        )
+
+    return GatewayFeedbackStatusResponse(**status)
 
 
 @app.get("/gateway/models", response_model=GatewayModelsResponse)

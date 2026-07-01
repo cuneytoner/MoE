@@ -115,6 +115,10 @@ class Settings(BaseSettings):
         default=3000,
         alias="GATEWAY_MEMORY_CONTEXT_MAX_CHARS",
     )
+    gateway_feedback_path: str = Field(
+        default="/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl",
+        alias="GATEWAY_FEEDBACK_PATH",
+    )
     pc2_prompt_interpreter_url: str = Field(
         default="http://192.168.50.2:8230",
         alias="PC2_PROMPT_INTERPRETER_URL",

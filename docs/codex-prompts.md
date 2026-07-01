@@ -1171,3 +1171,13 @@ Before accepting Codex changes, check:
 - Return `/gateway/chat` memory metadata and OpenAI-compatible `x_gateway_memory`.
 - Do not store new memory, log full prompts, expose raw memory metadata, control services, or switch models.
 - Validate with `make test-gateway-memory-injection`.
+
+## Milestone 28.5 Gateway Feedback Capture
+
+- Add `POST /gateway/feedback` for allowlisted metadata-only feedback records.
+- Add `GET /gateway/feedback/status` with aggregate count/latest timestamp only.
+- Write append-only JSONL only under `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`.
+- Validate rating, source, reason length, tag count/length, and request/response id lengths.
+- Do not store full prompt text, full response text, secrets, runtime logs, or generated data in the repo.
+- Do not execute shell commands, control Docker, switch models, or change OpenAI chat compatibility.
+- Validate with `make test-gateway-feedback`.

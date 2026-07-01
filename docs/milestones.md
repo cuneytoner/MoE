@@ -726,6 +726,18 @@ Goals:
 - Keep memory service failures non-fatal and do not store new memories.
 - Preserve no shell execution, no Docker control, no model switching, and no full prompt logging.
 
+## Milestone 28.5: Gateway Feedback Capture
+
+Status: IN PROGRESS
+
+Goals:
+- Add `POST /gateway/feedback` for metadata-only feedback capture.
+- Add `GET /gateway/feedback/status` with aggregate status only.
+- Store append-only JSONL under `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`.
+- Validate source, rating, reason length, tag count/length, and id lengths.
+- Do not store full prompts or full responses by default.
+- Keep feedback capture free of shell execution, Docker control, model switching, and repo runtime writes.
+
 ## Milestone 28: 3D Model Generation Pipeline
 
 Status: PLANNED

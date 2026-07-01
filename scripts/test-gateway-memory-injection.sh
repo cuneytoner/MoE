@@ -72,7 +72,7 @@ case "$gateway_status" in
     status="$(jq -r '.status // empty' <<<"$gateway_response")"
     memory_mode="$(jq -r '.memory.mode // empty' <<<"$gateway_response")"
     memory_status="$(jq -r '.memory.status // empty' <<<"$gateway_response")"
-    memory_injected="$(jq -r '.memory.injected // empty' <<<"$gateway_response")"
+    memory_injected="$(jq -r 'if has("memory") and (.memory | has("injected")) then (.memory.injected | tostring) else "" end' <<<"$gateway_response")"
     if [ "$status" = "ok" ] \
       && [ "$memory_mode" = "off" ] \
       && [ "$memory_status" = "disabled" ] \

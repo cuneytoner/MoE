@@ -1,6 +1,6 @@
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class GatewayHealthResponse(BaseModel):
@@ -162,6 +162,47 @@ class GatewayChatProxyResponse(BaseModel):
     router: GatewayChatRouterMetadata | None = None
     memory: dict[str, Any] | None = None
     raw: dict[str, Any] | None = None
+    detail: str | None = None
+
+
+class GatewayFeedbackRequest(BaseModel):
+    request_id: str | None = Field(default=None, max_length=128)
+    response_id: str | None = Field(default=None, max_length=128)
+    source: Literal["continue", "gateway", "dashboard", "manual", "unknown"] = "unknown"
+    rating: Literal["accepted", "rejected", "useful", "not_useful", "neutral"]
+    reason: str | None = Field(default=None, max_length=1000)
+    tags: list[str] = Field(default_factory=list, max_length=20)
+    router_intent: str | None = Field(default=None, max_length=128)
+    model: str | None = Field(default=None, max_length=256)
+
+    @field_validator("tags")
+    @classmethod
+    def validate_tags(cls, tags: list[str]) -> list[str]:
+        cleaned = []
+        for tag in tags:
+            if len(tag) > 64:
+                raise ValueError("tags must be 64 characters or fewer")
+            stripped = tag.strip()
+            if stripped:
+                cleaned.append(stripped)
+        return cleaned
+
+
+class GatewayFeedbackResponse(BaseModel):
+    status: str
+    service: str
+    id: str | None = None
+    path: str | None = None
+    detail: str | None = None
+
+
+class GatewayFeedbackStatusResponse(BaseModel):
+    status: str
+    service: str
+    path: str
+    exists: bool
+    record_count: int
+    latest_created_at: str | None = None
     detail: str | None = None
 
 
