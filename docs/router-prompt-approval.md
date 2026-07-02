@@ -56,3 +56,13 @@ This milestone does not:
 - commit generated runtime reports
 
 The packet prepares approval-ready summaries only. Any manual edit must happen in a separate explicitly approved implementation task and be reviewed through Git diffs.
+
+## Memory Candidates
+
+Milestone 29.2 can read this approval packet, along with aggregate feedback and learning reports, to create memory candidate review output:
+
+```bash
+make feedback-memory-candidates-local
+```
+
+The output is `/home/cuneyt/MoE/runtime/reports/memory-candidates/feedback-memory-candidates.json`. It does not write to Memory API, modify memory, train models, or store raw prompts or model responses.

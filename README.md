@@ -86,6 +86,7 @@ docs:
 - improvement-plan.md
 - improvement-patch-planner.md
 - router-prompt-approval.md
+- feedback-memory-candidates.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -116,11 +117,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 29.1: Human-Approved Router and Prompt Update Workflow
+Milestone 29.2: Feedback-to-Memory Candidate Review
 
 Next planned milestone:
 
-Milestone 29.2: Feedback-to-Memory Candidate Review
+Milestone 29.3: Human-Approved Memory Store Workflow
 
 ## Model Inventory
 
@@ -181,6 +182,8 @@ make improvement-patch-plan-local
 make test-improvement-patch-plan
 make router-prompt-approval-local
 make test-router-prompt-approval
+make feedback-memory-candidates-local
+make test-feedback-memory-candidates
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

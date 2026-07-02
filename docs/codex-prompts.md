@@ -1248,3 +1248,14 @@ Before accepting Codex changes, check:
 - Do not include raw feedback reason text, raw prompt text, raw model response text, or individual feedback records.
 - Do not apply patches, edit target files, mutate memory, modify router config, modify prompt templates, call Memory API, call Gateway, call llama-server, train, fine-tune, download models, switch models, execute shell commands from apps, control Docker, or control services.
 - Validate with `make router-prompt-approval-local`, `make test-router-prompt-approval`, and default source-only tests.
+
+## Milestone 29.2 Feedback-to-Memory Candidate Review
+
+- Add `scripts/feedback-memory-candidates-local.sh` and `scripts/test-feedback-memory-candidates.sh`.
+- Read available aggregate runtime inputs: feedback summary, learning-loop report, human-approved improvement plan, and router/prompt approval packet.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-candidates/feedback-memory-candidates.json`.
+- Include `candidate_status=pending_human_review`, `memory_write_supported=false`, `human_review_required=true`, candidates, rejected or blocked candidates, validation plan, safety boundaries, reviewer checklist, and next steps.
+- Generate deterministic memory candidates from aggregate report data only.
+- Do not include raw feedback reason text, raw prompt text, raw model response text, individual feedback records, secrets, credentials, or sensitive data.
+- Do not write to Memory API, call Memory API, apply generated candidates, mutate memory, modify router config, modify prompt templates, call Gateway, call llama-server, train, fine-tune, download models, switch models, execute shell commands from apps, control Docker, control services, or depend on PC2.
+- Validate with `make feedback-memory-candidates-local`, `make test-feedback-memory-candidates`, and default source-only tests.

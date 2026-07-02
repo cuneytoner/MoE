@@ -85,6 +85,8 @@ Milestone 29.0 adds a reviewed improvement patch planner that reads the human-ap
 
 Milestone 29.1 adds a human-approved router and prompt update workflow that reads the reviewed patch plan and writes a pending approval packet for router, prompt, docs, tests, and model-routing candidates. It blocks memory, ops, unknown, and high-risk items and does not apply patches or edit files.
 
+Milestone 29.2 adds a feedback-to-memory candidate review that reads aggregate feedback and reviewed learning reports, then writes human-reviewable memory candidates under `/home/cuneyt/MoE/runtime/reports/memory-candidates/feedback-memory-candidates.json`. It does not call Memory API, write memory entries, train models, modify memory, or store raw prompts or model responses.
+
 ## Status
 
 `GET /gateway/feedback/status` returns aggregate file status only:
@@ -211,4 +213,8 @@ make improvement-plan-local
 make test-improvement-plan
 make improvement-patch-plan-local
 make test-improvement-patch-plan
+make router-prompt-approval-local
+make test-router-prompt-approval
+make feedback-memory-candidates-local
+make test-feedback-memory-candidates
 ```

@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.1 Human-Approved Router and Prompt Update Workflow.
-- Next planned: M29.2 Feedback-to-Memory Candidate Review.
+- Completed through M29.2 Feedback-to-Memory Candidate Review.
+- Next planned: M29.3 Human-Approved Memory Store Workflow.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -813,14 +813,27 @@ Goals:
 
 ## Milestone 29.2: Feedback-to-Memory Candidate Review
 
+Status: DONE
+
+Goals:
+- Add a local feedback-to-memory candidate review generator.
+- Read available aggregate feedback, learning-loop, improvement plan, and router/prompt approval runtime reports.
+- Write human-reviewable memory candidates under `/home/cuneyt/MoE/runtime/reports/memory-candidates`.
+- Keep `candidate_status=pending_human_review`, `memory_write_supported=false`, and `human_review_required=true`.
+- Handle missing inputs gracefully with input availability metadata.
+- Avoid raw prompts, raw model responses, raw feedback reason bodies, individual feedback records, secrets, credentials, and sensitive data.
+- Do not call Memory API, write memory entries, train, fine-tune, mutate memory, modify router config, modify prompt templates, call Gateway, call llama-server, switch models, execute shell commands from apps, control Docker, or depend on PC2.
+
+## Milestone 29.3: Human-Approved Memory Store Workflow
+
 Status: PLANNED
 
 Goals:
-- Convert useful feedback summaries into candidate memory entries.
-- Require human approval before storing anything in Memory API.
-- Avoid raw prompt, raw response, and sensitive data storage.
-- Keep candidate records under runtime reports until approved.
-- Do not automatically write memories.
+- Review approved memory candidates before any storage action.
+- Require explicit human approval for each memory entry.
+- Keep Memory API writes manual, observable, and reversible by review process.
+- Avoid raw prompts, raw responses, secrets, credentials, and sensitive data.
+- Do not automatically train, fine-tune, mutate router config, modify prompts, switch models, execute shell commands, or control Docker.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

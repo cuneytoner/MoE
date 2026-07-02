@@ -81,3 +81,11 @@ make router-prompt-approval-local
 ```
 
 The approval packet is written to `/home/cuneyt/MoE/runtime/reports/approvals/router-prompt-update-approval-packet.json`. It remains advisory, sets `apply_supported=false`, and does not edit files or mutate runtime state.
+
+Milestone 29.2 converts aggregate reports into human-reviewable memory candidates:
+
+```bash
+make feedback-memory-candidates-local
+```
+
+The candidate review is written to `/home/cuneyt/MoE/runtime/reports/memory-candidates/feedback-memory-candidates.json`. It does not write to Memory API, call Memory API, train models, mutate memory, or include raw prompts, raw model responses, or individual feedback records.
