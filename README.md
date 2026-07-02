@@ -87,6 +87,7 @@ docs:
 - improvement-patch-planner.md
 - router-prompt-approval.md
 - feedback-memory-candidates.md
+- memory-store-workflow.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -184,6 +185,9 @@ make router-prompt-approval-local
 make test-router-prompt-approval
 make feedback-memory-candidates-local
 make test-feedback-memory-candidates
+make memory-store-plan-local
+make memory-store-approved
+make test-memory-store-workflow
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

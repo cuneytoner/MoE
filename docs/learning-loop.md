@@ -89,3 +89,12 @@ make feedback-memory-candidates-local
 ```
 
 The candidate review is written to `/home/cuneyt/MoE/runtime/reports/memory-candidates/feedback-memory-candidates.json`. It does not write to Memory API, call Memory API, train models, mutate memory, or include raw prompts, raw model responses, or individual feedback records.
+
+Milestone 29.3 turns reviewed candidates into a human-approved memory store plan:
+
+```bash
+make memory-store-plan-local
+make memory-store-approved
+```
+
+The plan is written to `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-plan.json`. It is dry-run by default and requires `APPLY=1` before any Memory API write.

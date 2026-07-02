@@ -826,14 +826,29 @@ Goals:
 
 ## Milestone 29.3: Human-Approved Memory Store Workflow
 
+Status: DONE
+
+Goals:
+- Add a local memory store plan generator for feedback memory candidates.
+- Read `/home/cuneyt/MoE/runtime/reports/memory-candidates/feedback-memory-candidates.json`.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-plan.json`.
+- Support optional human approval file `/home/cuneyt/MoE/runtime/reports/memory-store/approved-memory-candidates.json`.
+- Keep default mode dry-run and require `APPLY=1` before any Memory API write.
+- Store only sanitized approved candidate memory text through `/memory/add`.
+- Keep `memory_write_supported=false`, `apply_supported=false`, and `human_review_required=true` in the plan.
+- Do not store raw prompts, raw responses, raw feedback reason bodies, individual feedback records, secrets, credentials, or sensitive data.
+- Do not automatically train, fine-tune, mutate router config, modify prompts, modify model mappings, switch models, execute shell commands from apps, control Docker, or control services.
+
+## Milestone 29.4: Memory Store Audit Report
+
 Status: PLANNED
 
 Goals:
-- Review approved memory candidates before any storage action.
-- Require explicit human approval for each memory entry.
-- Keep Memory API writes manual, observable, and reversible by review process.
-- Avoid raw prompts, raw responses, secrets, credentials, and sensitive data.
-- Do not automatically train, fine-tune, mutate router config, modify prompts, switch models, execute shell commands, or control Docker.
+- Generate a human-reviewable audit report for any approved memory storage run.
+- Summarize stored candidate ids, Memory API responses, failures, and validation steps.
+- Keep audit output under `/home/cuneyt/MoE/runtime/reports/memory-store`.
+- Do not expose raw prompts, raw responses, secrets, credentials, or sensitive data.
+- Do not train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

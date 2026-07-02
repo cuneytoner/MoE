@@ -1259,3 +1259,15 @@ Before accepting Codex changes, check:
 - Do not include raw feedback reason text, raw prompt text, raw model response text, individual feedback records, secrets, credentials, or sensitive data.
 - Do not write to Memory API, call Memory API, apply generated candidates, mutate memory, modify router config, modify prompt templates, call Gateway, call llama-server, train, fine-tune, download models, switch models, execute shell commands from apps, control Docker, control services, or depend on PC2.
 - Validate with `make feedback-memory-candidates-local`, `make test-feedback-memory-candidates`, and default source-only tests.
+
+## Milestone 29.3 Human-Approved Memory Store Workflow
+
+- Add `scripts/memory-store-plan-local.sh`, `scripts/memory-store-approved.sh`, and `scripts/test-memory-store-workflow.sh`.
+- Read `/home/cuneyt/MoE/runtime/reports/memory-candidates/feedback-memory-candidates.json`.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-plan.json`.
+- Support optional approval file `/home/cuneyt/MoE/runtime/reports/memory-store/approved-memory-candidates.json`.
+- Keep the store workflow dry-run by default; only `APPLY=1 make memory-store-approved` may call Memory API.
+- Use Memory API `/memory/add` payload shape with `text`, `source`, and `metadata`.
+- Store only sanitized approved candidate text. Never store blocked candidates, raw prompts, raw model responses, raw feedback reason bodies, individual feedback records, secrets, credentials, or sensitive data.
+- Do not train, fine-tune, mutate router config, modify prompt templates, modify model mappings, switch models, execute shell commands from apps, control Docker, or control services.
+- Validate with `make memory-store-plan-local`, `make memory-store-approved`, `make test-memory-store-workflow`, and default source-only tests.

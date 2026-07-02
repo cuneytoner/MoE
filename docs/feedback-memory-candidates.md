@@ -45,3 +45,12 @@ This milestone does not:
 - commit generated runtime reports
 
 Candidates are short project-level lessons only. A human must inspect and approve each candidate before any later memory storage workflow.
+
+Milestone 29.3 adds that later workflow:
+
+```bash
+make memory-store-plan-local
+make memory-store-approved
+```
+
+It remains dry-run by default. Memory API writes require a human-created approval file and explicit `APPLY=1`. See [memory-store-workflow.md](memory-store-workflow.md).
