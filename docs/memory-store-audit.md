@@ -63,3 +63,5 @@ This milestone is audit-only. It does not:
 - commit generated runtime reports
 
 The audit recommendations are not applied automatically.
+
+Milestone 29.5 adds append-only apply logging for later approved store attempts. See [memory-store-apply-log.md](memory-store-apply-log.md).

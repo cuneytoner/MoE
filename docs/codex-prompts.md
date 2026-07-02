@@ -1283,3 +1283,14 @@ Before accepting Codex changes, check:
 - Keep `audit_status=review_required`, `memory_write_supported=false`, `apply_supported=false`, and `human_review_required=true`.
 - Do not write to Memory API, call Memory API, call Gateway, call llama-server, auto-approve candidates, mutate memory, train, fine-tune, switch models, execute shell commands from apps, control Docker, or depend on PC2.
 - Validate with `make memory-store-audit-local`, `make test-memory-store-audit`, `make test-memory-store-workflow`, and default source-only tests.
+
+## Milestone 29.5 Human-Approved Memory Store Apply Log
+
+- Update `scripts/memory-store-approved.sh` to append runtime apply-log JSONL entries around approved candidate store attempts.
+- Add `scripts/memory-store-apply-log-status.sh` and `scripts/test-memory-store-apply-log.sh`.
+- Write apply log entries to `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-apply-log.jsonl`.
+- Write latest summary to `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-apply-summary.json`.
+- Keep default mode dry-run. Do not log dry-runs unless `LOG_DRY_RUN=1`.
+- Never run `APPLY=1` in tests. Only user-run `APPLY=1 make memory-store-approved` may call Memory API.
+- Log safe metadata only: no raw prompts, raw model responses, proposed memory text, full API responses, secrets, credentials, or sensitive data.
+- Validate with `make memory-store-approved`, `LOG_DRY_RUN=1 make memory-store-approved`, `make memory-store-apply-log-status`, `make test-memory-store-apply-log`, and default source-only tests.

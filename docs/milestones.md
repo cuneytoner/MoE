@@ -855,14 +855,27 @@ Goals:
 
 ## Milestone 29.5: Human-Approved Memory Store Apply Log
 
+Status: DONE
+
+Goals:
+- Add append-only apply logging around approved memory store attempts.
+- Keep default mode dry-run and do not log dry-runs unless `LOG_DRY_RUN=1`.
+- Append one JSONL entry per approved candidate attempt when `APPLY=1`.
+- Write latest summary to `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-apply-summary.json`.
+- Add `make memory-store-apply-log-status`.
+- Keep tests dry-run only and never run `APPLY=1`.
+- Do not include raw prompts, raw responses, proposed memory text, full API response bodies, secrets, credentials, or sensitive data.
+- Do not train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
+
+## Milestone 29.6: Memory Candidate Approval File Helper
+
 Status: PLANNED
 
 Goals:
-- Generate a human-reviewable apply log after an intentional `APPLY=1` memory store run.
-- Record approved candidate ids, sanitized memory text hashes or ids, Memory API response status, failures, and validation steps.
-- Keep apply logs under `/home/cuneyt/MoE/runtime/reports/memory-store`.
-- Do not include raw prompts, raw responses, secrets, credentials, or sensitive data.
-- Do not train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
+- Generate a human-editable approval file template from reviewed memory candidates and audit recommendations.
+- Keep approval output under `/home/cuneyt/MoE/runtime/reports/memory-store`.
+- Require human edits before any candidate is considered approved.
+- Do not call Memory API, auto-approve candidates, train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

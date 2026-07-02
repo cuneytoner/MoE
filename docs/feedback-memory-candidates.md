@@ -62,3 +62,5 @@ make memory-store-audit-local
 ```
 
 See [memory-store-audit.md](memory-store-audit.md).
+
+Approved store attempts can later be audited through the append-only apply log. See [memory-store-apply-log.md](memory-store-apply-log.md).

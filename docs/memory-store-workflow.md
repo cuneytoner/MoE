@@ -93,3 +93,14 @@ make test-memory-store-audit
 ```
 
 The audit is written to `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-audit.json`. It is review-only and does not approve candidates or write to Memory API.
+
+## Apply Log
+
+Milestone 29.5 adds append-only runtime logging around approved store attempts:
+
+```bash
+make memory-store-apply-log-status
+LOG_DRY_RUN=1 make memory-store-approved
+```
+
+Dry-runs do not log unless `LOG_DRY_RUN=1`. Real Memory API writes still require `APPLY=1`. See [memory-store-apply-log.md](memory-store-apply-log.md).

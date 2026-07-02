@@ -145,6 +145,8 @@ Milestone 29.3 adds a human-approved memory store workflow. `make memory-store-p
 
 Milestone 29.4 adds a memory store audit and candidate dedup review. `make memory-store-audit-local` reads the memory store plan, optionally enriches candidates from the feedback memory candidate report, groups candidates by normalized category/title, and writes `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-audit.json` with review-only recommendations. It never calls Memory API, Gateway, llama-server, Docker, PC2, or auto-approves candidates.
 
+Milestone 29.5 adds append-only apply logging around `make memory-store-approved`. Dry-run mode does not log unless `LOG_DRY_RUN=1`; `APPLY=1` appends one JSONL entry per approved candidate attempt and writes `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-apply-summary.json`. Logs include safe metadata only and exclude raw prompts, raw responses, proposed memory text, and full API response bodies.
+
 apps/nightly-learning-worker:
 
 Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.

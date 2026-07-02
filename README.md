@@ -89,6 +89,7 @@ docs:
 - feedback-memory-candidates.md
 - memory-store-workflow.md
 - memory-store-audit.md
+- memory-store-apply-log.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -191,6 +192,8 @@ make memory-store-approved
 make test-memory-store-workflow
 make memory-store-audit-local
 make test-memory-store-audit
+make memory-store-apply-log-status
+make test-memory-store-apply-log
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status
