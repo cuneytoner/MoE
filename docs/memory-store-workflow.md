@@ -82,3 +82,14 @@ make test-memory-store-workflow
 ```
 
 The test verifies dry-run behavior without requiring Memory API to be reachable and confirms no generated plan is written inside the repository.
+
+## Audit
+
+Milestone 29.4 audits the generated memory store plan for duplicate candidate groups:
+
+```bash
+make memory-store-audit-local
+make test-memory-store-audit
+```
+
+The audit is written to `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-audit.json`. It is review-only and does not approve candidates or write to Memory API.

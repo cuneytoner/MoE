@@ -98,3 +98,11 @@ make memory-store-approved
 ```
 
 The plan is written to `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-plan.json`. It is dry-run by default and requires `APPLY=1` before any Memory API write.
+
+Milestone 29.4 audits that plan for duplicate candidate groups:
+
+```bash
+make memory-store-audit-local
+```
+
+The audit remains review-only and writes `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-audit.json`.

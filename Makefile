@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 
-.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models download-flux-schnell-models-plan download-flux-schnell-models-apply check-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health comfyui-vram-status comfyui-flux-smoke-test comfyui-first-image-plan comfyui-first-image-apply image-readiness image-dry-run image-mode-prepare image-real-run image-latest image-safe-shutdown image-full-cycle dashboard-ui-up dashboard-ui-down dashboard-ui-health dashboard-ui-open control-api-test control-api-up control-api-down runtime-status runtime-dashboard-status runtime-mode-coding-plan runtime-mode-image-plan runtime-mode-video-plan runtime-mode-3d-suite-plan runtime-mode-media-off-plan check-models model-inventory model-registry-check status tree runtime-prepare docker-up docker-down docker-ps docker-logs docker-summary-snapshot docker-summary-status health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down media-image-dry-run media-image-real-run media-latest-images gateway-media-plan gateway-media-dry-run gateway-media-real-plan media-dashboard-status media-dashboard-open feedback-summary-local feedback-sync-status feedback-sync-to-pc2 learning-loop-report-local improvement-plan-local improvement-patch-plan-local router-prompt-approval-local feedback-memory-candidates-local memory-store-plan-local memory-store-approved pc1-sleep-prepare pc1-suspend pc1-startup-coding pc1-startup-media-dry pc1-status pc2-local-sleep-prepare pc2-local-suspend pc2-local-startup-workers pc2-local-status cluster-sleep-prepare cluster-suspend cluster-startup-coding cluster-startup-media-dry cluster-status pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-system-status pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report pc2-prompt-interpreter-up pc2-prompt-interpreter-down pc2-prompt-interpreter-health pc2-prompt-interpreter-sample model-start model-stop model-status model-health model-switch test-gateway test-gateway-media test-media-dashboard test-runtime-dashboard test-dashboard-ui test-openai-compatible-gateway test-gateway-chat-proxy test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-gateway-memory-injection test-gateway-feedback test-feedback-worker-bridge test-feedback-sync test-learning-loop-report test-improvement-plan test-improvement-patch-plan test-router-prompt-approval test-feedback-memory-candidates test-memory-store-workflow test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-prompt-interpreter-worker test-media-api test-media-image-bridge test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
+.PHONY: help check-layout check-python-syntax check-media-layout check-image-models check-comfyui-layout check-comfyui-layout-create check-comfyui-runtime plan-image-model-downloads plan-flux-schnell-models download-flux-schnell-models-plan download-flux-schnell-models-apply check-flux-schnell-models link-comfyui-models-dry-run link-comfyui-models-apply install-comfyui-runtime comfyui-up comfyui-down comfyui-health comfyui-vram-status comfyui-flux-smoke-test comfyui-first-image-plan comfyui-first-image-apply image-readiness image-dry-run image-mode-prepare image-real-run image-latest image-safe-shutdown image-full-cycle dashboard-ui-up dashboard-ui-down dashboard-ui-health dashboard-ui-open control-api-test control-api-up control-api-down runtime-status runtime-dashboard-status runtime-mode-coding-plan runtime-mode-image-plan runtime-mode-video-plan runtime-mode-3d-suite-plan runtime-mode-media-off-plan check-models model-inventory model-registry-check status tree runtime-prepare docker-up docker-down docker-ps docker-logs docker-summary-snapshot docker-summary-status health gateway-health memory-dev memory-health nightly-worker-health nightly-worker-run-dry nightly-learning-test-env-help media-api-up media-api-down media-image-dry-run media-image-real-run media-latest-images gateway-media-plan gateway-media-dry-run gateway-media-real-plan media-dashboard-status media-dashboard-open feedback-summary-local feedback-sync-status feedback-sync-to-pc2 learning-loop-report-local improvement-plan-local improvement-patch-plan-local router-prompt-approval-local feedback-memory-candidates-local memory-store-plan-local memory-store-approved memory-store-audit-local pc1-sleep-prepare pc1-suspend pc1-startup-coding pc1-startup-media-dry pc1-status pc2-local-sleep-prepare pc2-local-suspend pc2-local-startup-workers pc2-local-status cluster-sleep-prepare cluster-suspend cluster-startup-coding cluster-startup-media-dry cluster-status pc2-check-connectivity pc2-check-layout pc2-sync-code pc2-system-status pc2-nightly-up pc2-nightly-down pc2-nightly-health pc2-nightly-dry-run pc2-research-up pc2-research-down pc2-research-health pc2-research-dry-run pc2-feedback-up pc2-feedback-down pc2-feedback-health pc2-feedback-sample pc2-improvement-report pc2-prompt-interpreter-up pc2-prompt-interpreter-down pc2-prompt-interpreter-health pc2-prompt-interpreter-sample model-start model-stop model-status model-health model-switch test-gateway test-gateway-media test-media-dashboard test-runtime-dashboard test-dashboard-ui test-openai-compatible-gateway test-gateway-chat-proxy test-gateway-chat test-gateway-chat-memory test-gateway-chat-router test-gateway-memory-injection test-gateway-feedback test-feedback-worker-bridge test-feedback-sync test-learning-loop-report test-improvement-plan test-improvement-patch-plan test-router-prompt-approval test-feedback-memory-candidates test-memory-store-workflow test-memory-store-audit test-continue-gateway test-code-agent-runtime test-code-patch-runtime test-nightly-learning test-research-ingestion test-feedback-worker test-prompt-interpreter-worker test-media-api test-media-image-bridge test-image-dry-run test-embed test-bge-m3 test-memory test-stack test
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -92,6 +92,7 @@ help:
 > @echo "  make feedback-memory-candidates-local Generate feedback memory candidate review under runtime"
 > @echo "  make memory-store-plan-local Generate human-approved memory store plan under runtime"
 > @echo "  make memory-store-approved Dry-run approved memory storage; APPLY=1 writes to Memory API"
+> @echo "  make memory-store-audit-local Generate memory store audit under runtime"
 > @echo "  make pc1-sleep-prepare Prepare PC-1 for sleep without suspending"
 > @echo "  make pc1-suspend Guarded PC-1 suspend, requires APPLY=1"
 > @echo "  make pc1-startup-coding Start PC-1 coding stack"
@@ -142,6 +143,7 @@ help:
 > @echo "  make test-router-prompt-approval Run local router/prompt approval packet tests"
 > @echo "  make test-feedback-memory-candidates Run local feedback memory candidate review tests"
 > @echo "  make test-memory-store-workflow Run local human-approved memory store workflow tests"
+> @echo "  make test-memory-store-audit Run local memory store audit tests"
 > @echo "  make test-continue-gateway Run optional Continue.dev Gateway chat smoke test"
 > @echo "  make test-code-agent-runtime Run optional repo-aware code agent runtime test"
 > @echo "  make test-code-patch-runtime Run optional safe patch/diff runtime test"
@@ -407,6 +409,9 @@ memory-store-plan-local:
 memory-store-approved:
 > @./scripts/memory-store-approved.sh
 
+memory-store-audit-local:
+> @./scripts/memory-store-audit-local.sh
+
 runtime-dashboard-status:
 > @./scripts/runtime-dashboard-status.sh
 
@@ -589,6 +594,9 @@ test-feedback-memory-candidates:
 
 test-memory-store-workflow:
 > @./scripts/test-memory-store-workflow.sh
+
+test-memory-store-audit:
+> @./scripts/test-memory-store-audit.sh
 
 test-continue-gateway:
 > @./scripts/test-continue-gateway.sh

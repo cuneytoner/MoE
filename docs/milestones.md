@@ -839,15 +839,29 @@ Goals:
 - Do not store raw prompts, raw responses, raw feedback reason bodies, individual feedback records, secrets, credentials, or sensitive data.
 - Do not automatically train, fine-tune, mutate router config, modify prompts, modify model mappings, switch models, execute shell commands from apps, control Docker, or control services.
 
-## Milestone 29.4: Memory Store Audit Report
+## Milestone 29.4: Memory Store Audit and Candidate Dedup Review
+
+Status: DONE
+
+Goals:
+- Add a local audit generator for memory store plans.
+- Read `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-plan.json`.
+- Optionally read `/home/cuneyt/MoE/runtime/reports/memory-candidates/feedback-memory-candidates.json`.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-audit.json`.
+- Detect duplicate or near-duplicate candidate groups by normalized category and title.
+- Recommend review actions only; never approve, reject, merge, or apply changes automatically.
+- Keep `audit_status=review_required`, `memory_write_supported=false`, `apply_supported=false`, and `human_review_required=true`.
+- Do not write to Memory API, call Memory API, call Gateway, call llama-server, train, mutate memory, modify router config, modify prompts, switch models, execute shell commands from apps, control Docker, or depend on PC2.
+
+## Milestone 29.5: Human-Approved Memory Store Apply Log
 
 Status: PLANNED
 
 Goals:
-- Generate a human-reviewable audit report for any approved memory storage run.
-- Summarize stored candidate ids, Memory API responses, failures, and validation steps.
-- Keep audit output under `/home/cuneyt/MoE/runtime/reports/memory-store`.
-- Do not expose raw prompts, raw responses, secrets, credentials, or sensitive data.
+- Generate a human-reviewable apply log after an intentional `APPLY=1` memory store run.
+- Record approved candidate ids, sanitized memory text hashes or ids, Memory API response status, failures, and validation steps.
+- Keep apply logs under `/home/cuneyt/MoE/runtime/reports/memory-store`.
+- Do not include raw prompts, raw responses, secrets, credentials, or sensitive data.
 - Do not train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery

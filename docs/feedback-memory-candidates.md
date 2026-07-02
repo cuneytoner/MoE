@@ -54,3 +54,11 @@ make memory-store-approved
 ```
 
 It remains dry-run by default. Memory API writes require a human-created approval file and explicit `APPLY=1`. See [memory-store-workflow.md](memory-store-workflow.md).
+
+The next review step can audit duplicate memory candidate groups before approval:
+
+```bash
+make memory-store-audit-local
+```
+
+See [memory-store-audit.md](memory-store-audit.md).

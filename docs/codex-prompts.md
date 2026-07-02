@@ -1271,3 +1271,15 @@ Before accepting Codex changes, check:
 - Store only sanitized approved candidate text. Never store blocked candidates, raw prompts, raw model responses, raw feedback reason bodies, individual feedback records, secrets, credentials, or sensitive data.
 - Do not train, fine-tune, mutate router config, modify prompt templates, modify model mappings, switch models, execute shell commands from apps, control Docker, or control services.
 - Validate with `make memory-store-plan-local`, `make memory-store-approved`, `make test-memory-store-workflow`, and default source-only tests.
+
+## Milestone 29.4 Memory Store Audit and Candidate Dedup Review
+
+- Add `scripts/memory-store-audit-local.sh` and `scripts/test-memory-store-audit.sh`.
+- Read `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-plan.json`.
+- Optionally read `/home/cuneyt/MoE/runtime/reports/memory-candidates/feedback-memory-candidates.json`.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/memory-store-audit.json`.
+- Group duplicate candidates by normalized category and title.
+- Include counts, duplicate groups, unique groups, approved/blocked/pending summaries, recommendations, validation plan, safety boundaries, reviewer checklist, and next steps.
+- Keep `audit_status=review_required`, `memory_write_supported=false`, `apply_supported=false`, and `human_review_required=true`.
+- Do not write to Memory API, call Memory API, call Gateway, call llama-server, auto-approve candidates, mutate memory, train, fine-tune, switch models, execute shell commands from apps, control Docker, or depend on PC2.
+- Validate with `make memory-store-audit-local`, `make test-memory-store-audit`, `make test-memory-store-workflow`, and default source-only tests.
