@@ -73,3 +73,11 @@ Milestone 29.0 turns the human-approved improvement plan into a reviewed patch p
 ```bash
 make improvement-patch-plan-local
 ```
+
+Milestone 29.1 turns that reviewed patch plan into a pending human approval packet for router, prompt, docs, tests, and model-routing candidates:
+
+```bash
+make router-prompt-approval-local
+```
+
+The approval packet is written to `/home/cuneyt/MoE/runtime/reports/approvals/router-prompt-update-approval-packet.json`. It remains advisory, sets `apply_supported=false`, and does not edit files or mutate runtime state.

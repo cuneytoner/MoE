@@ -75,6 +75,15 @@ make improvement-plan-local
 
 The plan is written under `/home/cuneyt/MoE/runtime/reports/improvement-plans/human-approved-improvement-plan.json` and remains advisory. It proposes patch-plan style recommendations only and does not apply source, config, prompt, router, memory, Docker, service, or runtime changes.
 
+Milestone 29.0 converts that improvement plan into a reviewed patch plan, and Milestone 29.1 converts the patch plan into a pending approval packet:
+
+```bash
+make improvement-patch-plan-local
+make router-prompt-approval-local
+```
+
+The approval packet is written under `/home/cuneyt/MoE/runtime/reports/approvals/router-prompt-update-approval-packet.json` and remains advisory only. It does not edit files, mutate memory, modify router config, update prompts, or call services.
+
 ## Commands
 
 ```bash
@@ -83,8 +92,12 @@ make feedback-sync-status
 make feedback-sync-to-pc2
 make learning-loop-report-local
 make improvement-plan-local
+make improvement-patch-plan-local
+make router-prompt-approval-local
 make test-feedback-worker-bridge
 make test-feedback-sync
 make test-learning-loop-report
 make test-improvement-plan
+make test-improvement-patch-plan
+make test-router-prompt-approval
 ```

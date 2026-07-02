@@ -1236,3 +1236,15 @@ Before accepting Codex changes, check:
 - Do not include raw feedback reason text, raw prompt text, raw model response text, or individual feedback records.
 - Do not apply patches, edit target files, mutate memory, modify router config, modify prompt templates, call Memory API, call Gateway, call llama-server, train, fine-tune, download models, switch models, execute shell commands from apps, control Docker, or control services.
 - Validate with `make improvement-patch-plan-local`, `make test-improvement-patch-plan`, and default source-only tests.
+
+## Milestone 29.1 Human-Approved Router and Prompt Update Workflow
+
+- Add `scripts/router-prompt-approval-local.sh` and `scripts/test-router-prompt-approval.sh`.
+- Read `/home/cuneyt/MoE/runtime/reports/patch-plans/reviewed-improvement-patch-plan.json`.
+- Write `/home/cuneyt/MoE/runtime/reports/approvals/router-prompt-update-approval-packet.json`.
+- Include `approval_status=pending_human_review`, `apply_supported=false`, `human_review_required=true`, approval items, blocked items, validation plan, safety boundaries, reviewer checklist, and next steps.
+- Allow approval items only for router, prompt, docs, tests, and model-routing categories.
+- Block memory, ops, unknown, and high-risk items.
+- Do not include raw feedback reason text, raw prompt text, raw model response text, or individual feedback records.
+- Do not apply patches, edit target files, mutate memory, modify router config, modify prompt templates, call Memory API, call Gateway, call llama-server, train, fine-tune, download models, switch models, execute shell commands from apps, control Docker, or control services.
+- Validate with `make router-prompt-approval-local`, `make test-router-prompt-approval`, and default source-only tests.

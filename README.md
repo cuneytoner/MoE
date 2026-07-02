@@ -85,6 +85,7 @@ docs:
 - learning-loop.md
 - improvement-plan.md
 - improvement-patch-planner.md
+- router-prompt-approval.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -115,11 +116,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 29.0: Reviewed Improvement Patch Planner
+Milestone 29.1: Human-Approved Router and Prompt Update Workflow
 
 Next planned milestone:
 
-Milestone 29.1: Human-Approved Router and Prompt Update Workflow
+Milestone 29.2: Feedback-to-Memory Candidate Review
 
 ## Model Inventory
 
@@ -178,6 +179,8 @@ make improvement-plan-local
 make test-improvement-plan
 make improvement-patch-plan-local
 make test-improvement-patch-plan
+make router-prompt-approval-local
+make test-router-prompt-approval
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

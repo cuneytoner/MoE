@@ -67,3 +67,11 @@ make improvement-patch-plan-local
 ```
 
 That patch plan is written to `/home/cuneyt/MoE/runtime/reports/patch-plans/reviewed-improvement-patch-plan.json` and remains advisory. It does not apply patches or edit target files.
+
+Milestone 29.1 consumes the reviewed patch plan to create a pending human approval packet:
+
+```bash
+make router-prompt-approval-local
+```
+
+That packet is written to `/home/cuneyt/MoE/runtime/reports/approvals/router-prompt-update-approval-packet.json` and keeps router, prompt, docs, tests, and model-routing candidates reviewable without applying changes.

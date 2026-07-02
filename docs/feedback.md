@@ -83,6 +83,8 @@ Milestone 28.9 adds a human-approved improvement plan that reads the reviewed le
 
 Milestone 29.0 adds a reviewed improvement patch planner that reads the human-approved improvement plan and writes patch groups for human review only. It does not apply patches or edit target files.
 
+Milestone 29.1 adds a human-approved router and prompt update workflow that reads the reviewed patch plan and writes a pending approval packet for router, prompt, docs, tests, and model-routing candidates. It blocks memory, ops, unknown, and high-risk items and does not apply patches or edit files.
+
 ## Status
 
 `GET /gateway/feedback/status` returns aggregate file status only:

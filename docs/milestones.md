@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.0 Reviewed Improvement Patch Planner.
-- Next planned: M29.1 Human-Approved Router and Prompt Update Workflow.
+- Completed through M29.1 Human-Approved Router and Prompt Update Workflow.
+- Next planned: M29.2 Feedback-to-Memory Candidate Review.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -800,14 +800,16 @@ Goals:
 
 ## Milestone 29.1: Human-Approved Router and Prompt Update Workflow
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Apply only explicitly approved router keyword, routing example, prompt template, and documentation updates.
-- Keep changes reviewable through Git diffs.
-- Preserve tests and validation gates.
-- Avoid automatic self-modification.
-- Keep all model/runtime operations manual and explicit.
+- Add a local approval packet generator for reviewed router, prompt, docs, tests, and model-routing update candidates.
+- Read the reviewed improvement patch plan from `/home/cuneyt/MoE/runtime/reports/patch-plans/reviewed-improvement-patch-plan.json`.
+- Write a pending human-review approval packet under `/home/cuneyt/MoE/runtime/reports/approvals`.
+- Keep `apply_supported=false` and `human_review_required=true`.
+- Separate allowed approval items from blocked memory, ops, unknown, and high-risk items.
+- Require explicit human approval before any code, config, prompt, router, documentation, memory, Docker, service, or runtime change.
+- Do not automatically edit files, mutate memory, modify router config, update prompts, train, fine-tune, switch models, execute shell commands from apps, control Docker, or control services.
 
 ## Milestone 29.2: Feedback-to-Memory Candidate Review
 

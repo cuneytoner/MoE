@@ -61,3 +61,14 @@ This milestone does not:
 - commit generated runtime reports
 
 Any future implementation must be separately approved and reviewed through Git diffs.
+
+## Approval Packet
+
+Milestone 29.1 consumes the reviewed patch plan to create a pending human approval packet:
+
+```bash
+make router-prompt-approval-local
+make test-router-prompt-approval
+```
+
+The packet is written to `/home/cuneyt/MoE/runtime/reports/approvals/router-prompt-update-approval-packet.json`. It separates allowed router, prompt, docs, tests, and model-routing candidates from blocked memory, ops, unknown, and high-risk items. It remains advisory and does not apply patches or edit target files.
