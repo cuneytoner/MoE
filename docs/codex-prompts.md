@@ -1294,3 +1294,15 @@ Before accepting Codex changes, check:
 - Never run `APPLY=1` in tests. Only user-run `APPLY=1 make memory-store-approved` may call Memory API.
 - Log safe metadata only: no raw prompts, raw model responses, proposed memory text, full API responses, secrets, credentials, or sensitive data.
 - Validate with `make memory-store-approved`, `LOG_DRY_RUN=1 make memory-store-approved`, `make memory-store-apply-log-status`, `make test-memory-store-apply-log`, and default source-only tests.
+
+## Milestone 29.6 Memory Candidate Approval File Helper
+
+- Add `scripts/memory-candidate-approval-helper-local.sh`, `scripts/memory-candidate-list-local.sh`, and `scripts/test-memory-candidate-approval-helper.sh`.
+- Read memory candidates, memory store plan, and memory store audit from runtime if present.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/memory-candidate-approval-helper-report.json`.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/approved-memory-candidates.example.json`.
+- Never create `/home/cuneyt/MoE/runtime/reports/memory-store/approved-memory-candidates.json`.
+- Keep `auto_approval_supported=false`, `memory_write_supported=false`, and `human_review_required=true`.
+- Do not call Memory API, Gateway, llama-server, Docker, or model runtimes.
+- Do not approve candidates automatically, write memories, include raw prompts, include raw responses, include individual feedback records, train, fine-tune, switch models, or commit generated runtime reports.
+- Validate with `make memory-candidate-approval-helper-local`, `make memory-candidate-list-local`, `make test-memory-candidate-approval-helper`, and default source-only tests.

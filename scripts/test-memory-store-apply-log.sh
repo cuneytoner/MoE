@@ -76,9 +76,9 @@ cat > "$MEMORY_STORE_PLAN_PATH" <<'JSON'
 JSON
 pass "created minimal runtime memory store plan with one approved candidate"
 
-dry_run_output="$(
-  MEMORY_API_URL="http://127.0.0.1:1" make -C "$ROOT" memory-store-approved
-)"
+dry_run_output_file="${test_tmp_dir}/memory-store-approved-dry-run.out"
+MEMORY_API_URL="http://127.0.0.1:1" make -C "$ROOT" memory-store-approved > "$dry_run_output_file"
+dry_run_output="$(cat "$dry_run_output_file")"
 printf '%s\n' "$dry_run_output"
 if ! grep -q "DRY-RUN" <<<"$dry_run_output"; then
   fail "memory-store-approved did not run in dry-run mode"
@@ -92,7 +92,17 @@ if [ "$after_plain_count" -ne "$before_count" ]; then
 fi
 pass "dry-run without LOG_DRY_RUN did not append apply log"
 
+before_logged_count=0
+if [ -f "$MEMORY_STORE_APPLY_LOG_PATH" ]; then
+  before_logged_count="$(wc -l < "$MEMORY_STORE_APPLY_LOG_PATH")"
+fi
+
 LOG_DRY_RUN=1 MEMORY_API_URL="http://127.0.0.1:1" make -C "$ROOT" memory-store-approved
+
+after_logged_count="$(wc -l < "$MEMORY_STORE_APPLY_LOG_PATH")"
+if [ "$after_logged_count" -le "$before_logged_count" ]; then
+  fail "LOG_DRY_RUN=1 did not append an apply-log entry"
+fi
 
 [ -f "$MEMORY_STORE_APPLY_LOG_PATH" ] || fail "missing apply log: $MEMORY_STORE_APPLY_LOG_PATH"
 [ -f "$MEMORY_STORE_APPLY_SUMMARY_PATH" ] || fail "missing apply summary: $MEMORY_STORE_APPLY_SUMMARY_PATH"

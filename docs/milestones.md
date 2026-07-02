@@ -869,13 +869,27 @@ Goals:
 
 ## Milestone 29.6: Memory Candidate Approval File Helper
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Generate a human-editable approval file template from reviewed memory candidates and audit recommendations.
 - Keep approval output under `/home/cuneyt/MoE/runtime/reports/memory-store`.
 - Require human edits before any candidate is considered approved.
-- Do not call Memory API, auto-approve candidates, train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/memory-candidate-approval-helper-report.json`.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/approved-memory-candidates.example.json`.
+- Never create `/home/cuneyt/MoE/runtime/reports/memory-store/approved-memory-candidates.json`.
+- Add `make memory-candidate-approval-helper-local`, `make memory-candidate-list-local`, and `make test-memory-candidate-approval-helper`.
+- Do not call Memory API, Gateway, llama-server, auto-approve candidates, write memories, train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
+
+## Milestone 29.7: Memory Approval Dry-Run End-to-End Flow
+
+Status: PLANNED
+
+Goals:
+- Add a guided validation flow from candidate review to helper report, manual approval file, plan regeneration, dry-run store, audit, and apply-log status.
+- Keep the default path dry-run only.
+- Require explicit human-created approval files and explicit `APPLY=1` before any Memory API writes.
+- Do not auto-approve candidates, call Memory API in tests, train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

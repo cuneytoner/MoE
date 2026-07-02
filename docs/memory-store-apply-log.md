@@ -65,3 +65,5 @@ Memory API writes still require:
 - a reachable Memory API
 
 The apply log is runtime data and must not be committed.
+
+Milestone 29.6 adds a manual approval helper before this apply-log step. It prepares a helper report and example approval file, but does not create the real approval file or call Memory API. See [memory-candidate-approval-helper.md](memory-candidate-approval-helper.md).

@@ -104,3 +104,14 @@ LOG_DRY_RUN=1 make memory-store-approved
 ```
 
 Dry-runs do not log unless `LOG_DRY_RUN=1`. Real Memory API writes still require `APPLY=1`. See [memory-store-apply-log.md](memory-store-apply-log.md).
+
+## Approval Helper
+
+Milestone 29.6 adds a helper report and example approval file for manual review:
+
+```bash
+make memory-candidate-approval-helper-local
+make memory-candidate-list-local
+```
+
+The helper does not create the real `approved-memory-candidates.json`, does not approve candidates automatically, and does not call Memory API. See [memory-candidate-approval-helper.md](memory-candidate-approval-helper.md).
