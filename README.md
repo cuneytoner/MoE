@@ -92,6 +92,7 @@ docs:
 - memory-store-apply-log.md
 - memory-candidate-approval-helper.md
 - memory-approval-dry-run-e2e.md
+- memory-approval-dashboard.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -202,6 +203,7 @@ make test-memory-candidate-approval-helper
 make memory-approval-dry-run-e2e-local
 make memory-approval-dry-run-e2e-status
 make test-memory-approval-dry-run-e2e
+make test-memory-approval-dashboard
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status

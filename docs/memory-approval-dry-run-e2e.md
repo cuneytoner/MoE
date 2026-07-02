@@ -78,3 +78,5 @@ This workflow does not:
 - control Docker
 - train or fine-tune models
 - commit generated runtime reports
+
+Milestone 29.8 exposes the E2E status through a read-only dashboard endpoint. See [memory-approval-dashboard.md](memory-approval-dashboard.md).

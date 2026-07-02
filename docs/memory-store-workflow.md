@@ -127,3 +127,13 @@ make memory-approval-dry-run-e2e-status
 ```
 
 It never runs `APPLY=1`, never writes to Memory API, and removes its test approval fixture by default. See [memory-approval-dry-run-e2e.md](memory-approval-dry-run-e2e.md).
+
+## Dashboard
+
+Milestone 29.8 adds a read-only dashboard view for the approval workflow:
+
+```text
+GET /gateway/memory-approval/dashboard
+```
+
+The view reads runtime reports only and provides compact summaries without approval, apply, store, or script execution controls. See [memory-approval-dashboard.md](memory-approval-dashboard.md).

@@ -105,6 +105,16 @@ Start the UI:
 make dashboard-ui-up
 ```
 
+## Memory Approval
+
+Milestone 29.8 adds a read-only Memory Approval section backed by:
+
+```text
+GET /gateway/memory-approval/dashboard
+```
+
+The view shows runtime report summaries, candidate counts, duplicate groups, apply-log counts, and dry-run E2E status. It does not create approval files, run scripts, call Memory API, run `APPLY=1`, or expose approve/apply/store controls.
+
 Check it:
 
 ```bash

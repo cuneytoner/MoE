@@ -178,3 +178,81 @@ export type RuntimeDashboardModel = {
   system: SystemStatus;
   warnings: string[];
 };
+
+export type MemoryApprovalReportMetadata = {
+  path: string;
+  exists: boolean;
+  valid: boolean;
+  modified_at?: string | null;
+  size_bytes?: number | null;
+};
+
+export type MemoryApprovalCandidate = {
+  id: string;
+  category: string;
+  risk: string;
+  current_status: string;
+  duplicate_group_id?: string | null;
+  title: string;
+  review_hint: string;
+};
+
+export type MemoryApprovalDuplicateGroup = {
+  group_id: string;
+  category: string;
+  normalized_title: string;
+  count: number;
+  candidate_ids: string[];
+  recommended_action: string;
+};
+
+export type MemoryApprovalDashboardModel = {
+  service: string;
+  generated_at: string;
+  read_only: boolean;
+  apply_supported: boolean;
+  approval_supported: boolean;
+  memory_write_supported: boolean;
+  human_review_required: boolean;
+  reports: Record<string, MemoryApprovalReportMetadata>;
+  summary: {
+    total_candidates: number;
+    approved_count: number;
+    blocked_count: number;
+    duplicate_group_count: number;
+    duplicate_candidate_count: number;
+    dry_run_attempt_count: number;
+    stored_count: number;
+    failed_count: number;
+    skipped_count: number;
+  };
+  candidates: MemoryApprovalCandidate[];
+  duplicates: MemoryApprovalDuplicateGroup[];
+  approval: {
+    real_approval_file_exists: boolean;
+    example_approval_file_exists: boolean;
+    approval_file_path: string;
+    example_approval_file_path: string;
+    approved_candidate_ids_count: number;
+  };
+  apply_log: {
+    log_exists: boolean;
+    summary_exists: boolean;
+    total_attempts: number;
+    stored_count: number;
+    failed_count: number;
+    skipped_count: number;
+    dry_run_count: number;
+    latest_attempt_at?: string | null;
+  };
+  e2e: {
+    report_exists: boolean;
+    e2e_status?: string | null;
+    dry_run_only?: boolean | null;
+    apply_used?: boolean | null;
+    test_approval_fixture_used?: boolean | null;
+    test_approval_fixture_removed?: boolean | null;
+  };
+  warnings: string[];
+  safety_boundaries: string[];
+};

@@ -2,10 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import { Alert, Box, Card, CardContent, Stack, Typography } from "@mui/material";
-import { fetchDashboard, fetchRuntimeDashboard, gatewayBaseUrl } from "./api";
+import { fetchDashboard, fetchMemoryApprovalDashboard, fetchRuntimeDashboard, gatewayBaseUrl } from "./api";
 import { GatesPanel } from "./components/GatesPanel";
 import { LatestImagesPanel } from "./components/LatestImagesPanel";
 import { ModeHintsPanel } from "./components/ModeHintsPanel";
+import { MemoryApprovalPanel } from "./components/MemoryApprovalPanel";
 import { RuntimeCards } from "./components/RuntimeCards";
 import { SafeCommandsPanel } from "./components/SafeCommandsPanel";
 import { ServicesPanel } from "./components/ServicesPanel";
@@ -13,13 +14,15 @@ import { SummaryCards } from "./components/SummaryCards";
 import { SystemResourceCards } from "./components/SystemResourceCards";
 import { WarningsPanel } from "./components/WarningsPanel";
 import { DashboardLayout } from "./layout/DashboardLayout";
-import type { DashboardModel, RuntimeDashboardModel } from "./types";
+import type { DashboardModel, MemoryApprovalDashboardModel, RuntimeDashboardModel } from "./types";
 
 export function App() {
   const [dashboard, setDashboard] = useState<DashboardModel | null>(null);
   const [runtimeDashboard, setRuntimeDashboard] = useState<RuntimeDashboardModel | null>(null);
+  const [memoryApprovalDashboard, setMemoryApprovalDashboard] = useState<MemoryApprovalDashboardModel | null>(null);
   const [error, setError] = useState("");
   const [runtimeError, setRuntimeError] = useState("");
+  const [memoryApprovalError, setMemoryApprovalError] = useState("");
   const [loading, setLoading] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<string>("never");
 
@@ -27,6 +30,7 @@ export function App() {
     setLoading(true);
     setError("");
     setRuntimeError("");
+    setMemoryApprovalError("");
     try {
       const next = await fetchDashboard();
       setDashboard(next);
@@ -39,6 +43,12 @@ export function App() {
       setRuntimeDashboard(nextRuntime);
     } catch (err) {
       setRuntimeError(err instanceof Error ? err.message : "unknown runtime error");
+    }
+    try {
+      const nextMemoryApproval = await fetchMemoryApprovalDashboard();
+      setMemoryApprovalDashboard(nextMemoryApproval);
+    } catch (err) {
+      setMemoryApprovalError(err instanceof Error ? err.message : "unknown memory approval error");
     } finally {
       setLoading(false);
     }
@@ -92,6 +102,7 @@ export function App() {
           </Box>
         </Stack>
       ) : null}
+      <MemoryApprovalPanel error={memoryApprovalError} memoryApproval={memoryApprovalDashboard} />
 
       {dashboard ? (
         <>
@@ -119,12 +130,18 @@ export function App() {
               </Box>
             </CardContent>
           </Card>
-          <WarningsPanel warnings={[...dashboard.warnings, ...(runtimeDashboard?.warnings ?? [])]} />
+          <WarningsPanel
+            warnings={[
+              ...dashboard.warnings,
+              ...(runtimeDashboard?.warnings ?? []),
+              ...(memoryApprovalDashboard?.warnings ?? []),
+            ]}
+          />
         </>
       ) : null}
 
       <Typography align="center" color="text.secondary" variant="body2">
-        M26.8.3 Dashboard System Resource Cards. Read-only. No service control.
+        M29.8 Memory Approval Dashboard. Read-only. No service control.
       </Typography>
     </DashboardLayout>
   );

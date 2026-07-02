@@ -896,12 +896,26 @@ Goals:
 
 ## Milestone 29.8: Memory Approval Dashboard Read-Only View
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add a read-only dashboard view for memory candidates, helper report, audit summary, dry-run E2E report, and apply-log status.
 - Keep the dashboard read-only with no approval, apply, Memory API write, service control, shell execution, Docker control, model switching, training, or fine-tuning actions.
 - Continue keeping generated reports under `/home/cuneyt/MoE/runtime`.
+- Add `GET /gateway/memory-approval/dashboard`.
+- Add Dashboard UI Memory Approval section with compact counts, candidates, duplicate groups, warnings, approval file status, apply-log status, and E2E status.
+- Add `make test-memory-approval-dashboard`.
+- Do not accept arbitrary paths, execute scripts, call Memory API, call llama-server, auto-approve candidates, create approval files, or write memories.
+
+## Milestone 29.9: Memory Approval Manual Store Runbook
+
+Status: PLANNED
+
+Goals:
+- Add a human-run manual store runbook for the approved memory workflow.
+- Keep the runbook dry-run-first and explicit about `APPLY=1` risk.
+- Require human-created approval files, plan inspection, dashboard review, apply-log review, and post-run verification.
+- Do not add automated approval, Memory API write tests, service control, shell execution from apps, Docker control, model switching, training, or fine-tuning.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

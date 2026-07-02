@@ -69,3 +69,5 @@ Milestone 29.5 adds append-only apply logging for later approved store attempts.
 Milestone 29.6 adds a helper report that combines candidates, plan status, and audit duplicate information into a manual review aid. See [memory-candidate-approval-helper.md](memory-candidate-approval-helper.md).
 
 Milestone 29.7 runs the helper, plan, dry-run store, apply-log status, and audit as a dry-run-only E2E flow. See [memory-approval-dry-run-e2e.md](memory-approval-dry-run-e2e.md).
+
+Milestone 29.8 exposes audit and duplicate summaries through a read-only dashboard endpoint. See [memory-approval-dashboard.md](memory-approval-dashboard.md).

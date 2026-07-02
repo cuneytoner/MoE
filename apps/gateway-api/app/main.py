@@ -70,6 +70,7 @@ from app.services.chat_proxy import (
 from app.services.chat_router import classify_chat_intent
 from app.services.feedback_capture import append_feedback, feedback_status
 from app.services.memory_injection import build_memory_injected_request
+from app.services.memory_approval_dashboard import build_memory_approval_dashboard
 from app.services.patch_planner import (
     diff_suggest_system_prompt,
     parse_diff_suggestion,
@@ -284,6 +285,11 @@ async def runtime_dashboard() -> dict[str, Any]:
             },
         }
     return await build_runtime_dashboard(settings)
+
+
+@app.get("/gateway/memory-approval/dashboard")
+async def memory_approval_dashboard() -> dict[str, Any]:
+    return build_memory_approval_dashboard()
 
 
 @app.post(

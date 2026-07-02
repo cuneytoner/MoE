@@ -1318,3 +1318,15 @@ Before accepting Codex changes, check:
 - Keep `dry_run_only=true`, `apply_used=false`, `memory_write_supported=false`, and `human_review_required=true`.
 - Do not write to Memory API, call Gateway, call llama-server, auto-approve candidates, train, fine-tune, switch models, control Docker, or commit generated runtime reports.
 - Validate with `make memory-approval-dry-run-e2e-local`, `USE_TEST_APPROVAL_FIXTURE=1 make memory-approval-dry-run-e2e-local`, `make memory-approval-dry-run-e2e-status`, `make test-memory-approval-dry-run-e2e`, and default source-only tests.
+
+## Milestone 29.8 Memory Approval Dashboard Read-Only View
+
+- Add `GET /gateway/memory-approval/dashboard`.
+- Read fixed runtime JSON/JSONL reports only; do not accept arbitrary paths.
+- Return report metadata, aggregate summary counts, compact candidate cards, duplicate groups, approval file status, apply-log status, E2E status, warnings, and safety boundaries.
+- Keep `read_only=true`, `apply_supported=false`, `approval_supported=false`, `memory_write_supported=false`, and `human_review_required=true`.
+- Add a Dashboard UI Memory Approval section using the endpoint.
+- Do not add approve/apply/store buttons or write-oriented UI controls.
+- Do not call Memory API, Gateway-to-Memory write routes, llama-server, Docker, scripts, model runtimes, or services.
+- Do not auto-approve candidates, create approval files, write memories, train, fine-tune, switch models, or expose raw prompts/responses.
+- Validate with `make test-memory-approval-dashboard`, M29 memory workflow tests, and default source-only tests.
