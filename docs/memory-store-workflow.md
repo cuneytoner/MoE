@@ -115,3 +115,15 @@ make memory-candidate-list-local
 ```
 
 The helper does not create the real `approved-memory-candidates.json`, does not approve candidates automatically, and does not call Memory API. See [memory-candidate-approval-helper.md](memory-candidate-approval-helper.md).
+
+## Dry-Run E2E
+
+Milestone 29.7 adds a dry-run-only end-to-end check for candidate review, helper output, plan generation, store dry-run, apply-log status, and audit:
+
+```bash
+make memory-approval-dry-run-e2e-local
+USE_TEST_APPROVAL_FIXTURE=1 make memory-approval-dry-run-e2e-local
+make memory-approval-dry-run-e2e-status
+```
+
+It never runs `APPLY=1`, never writes to Memory API, and removes its test approval fixture by default. See [memory-approval-dry-run-e2e.md](memory-approval-dry-run-e2e.md).

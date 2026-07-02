@@ -1306,3 +1306,15 @@ Before accepting Codex changes, check:
 - Do not call Memory API, Gateway, llama-server, Docker, or model runtimes.
 - Do not approve candidates automatically, write memories, include raw prompts, include raw responses, include individual feedback records, train, fine-tune, switch models, or commit generated runtime reports.
 - Validate with `make memory-candidate-approval-helper-local`, `make memory-candidate-list-local`, `make test-memory-candidate-approval-helper`, and default source-only tests.
+
+## Milestone 29.7 Memory Approval Dry-Run End-to-End Flow
+
+- Add `scripts/memory-approval-dry-run-e2e-local.sh`, `scripts/memory-approval-dry-run-e2e-status.sh`, and `scripts/test-memory-approval-dry-run-e2e.sh`.
+- Orchestrate the safe local memory approval workflow: helper, candidate list, plan generation, `LOG_DRY_RUN=1 make memory-store-approved`, apply-log status, and audit.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/memory-approval-dry-run-e2e-report.json`.
+- Reject runs where `APPLY=1` is present.
+- Allow `USE_TEST_APPROVAL_FIXTURE=1` to create a temporary `test_fixture=true`, `dry_run_only=true` approval file under runtime; remove it by default.
+- Never overwrite a non-test real approval file.
+- Keep `dry_run_only=true`, `apply_used=false`, `memory_write_supported=false`, and `human_review_required=true`.
+- Do not write to Memory API, call Gateway, call llama-server, auto-approve candidates, train, fine-tune, switch models, control Docker, or commit generated runtime reports.
+- Validate with `make memory-approval-dry-run-e2e-local`, `USE_TEST_APPROVAL_FIXTURE=1 make memory-approval-dry-run-e2e-local`, `make memory-approval-dry-run-e2e-status`, `make test-memory-approval-dry-run-e2e`, and default source-only tests.

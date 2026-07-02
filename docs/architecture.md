@@ -149,6 +149,8 @@ Milestone 29.5 adds append-only apply logging around `make memory-store-approved
 
 Milestone 29.6 adds a helper-only approval review step. `make memory-candidate-approval-helper-local` reads memory candidates, the store plan, and the audit report if present, then writes `/home/cuneyt/MoE/runtime/reports/memory-store/memory-candidate-approval-helper-report.json` and `/home/cuneyt/MoE/runtime/reports/memory-store/approved-memory-candidates.example.json`. It never creates the real approval file, auto-approves candidates, calls Memory API, or writes memories.
 
+Milestone 29.7 adds a dry-run-only end-to-end memory approval validation flow. `make memory-approval-dry-run-e2e-local` orchestrates the helper, list, plan, approved-store dry-run, apply-log status, and audit steps, then writes `/home/cuneyt/MoE/runtime/reports/memory-store/memory-approval-dry-run-e2e-report.json`. `USE_TEST_APPROVAL_FIXTURE=1` may create a temporary test approval file, but the script removes it by default and refuses to overwrite a non-test approval file. It never runs `APPLY=1` or writes to Memory API.
+
 apps/nightly-learning-worker:
 
 Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.

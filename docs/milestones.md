@@ -883,13 +883,25 @@ Goals:
 
 ## Milestone 29.7: Memory Approval Dry-Run End-to-End Flow
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add a guided validation flow from candidate review to helper report, manual approval file, plan regeneration, dry-run store, audit, and apply-log status.
 - Keep the default path dry-run only.
 - Require explicit human-created approval files and explicit `APPLY=1` before any Memory API writes.
-- Do not auto-approve candidates, call Memory API in tests, train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
+- Write `/home/cuneyt/MoE/runtime/reports/memory-store/memory-approval-dry-run-e2e-report.json`.
+- Add `make memory-approval-dry-run-e2e-local`, `make memory-approval-dry-run-e2e-status`, and `make test-memory-approval-dry-run-e2e`.
+- Support `USE_TEST_APPROVAL_FIXTURE=1` for a temporary dry-run-only test approval file, removed by default.
+- Never run `APPLY=1`, write to Memory API, auto-approve candidates, call Gateway, call llama-server, train, fine-tune, switch models, mutate router config, modify prompts, control Docker, or control services.
+
+## Milestone 29.8: Memory Approval Dashboard Read-Only View
+
+Status: PLANNED
+
+Goals:
+- Add a read-only dashboard view for memory candidates, helper report, audit summary, dry-run E2E report, and apply-log status.
+- Keep the dashboard read-only with no approval, apply, Memory API write, service control, shell execution, Docker control, model switching, training, or fine-tuning actions.
+- Continue keeping generated reports under `/home/cuneyt/MoE/runtime`.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

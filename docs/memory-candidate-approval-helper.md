@@ -28,6 +28,8 @@ The real approval file is never created by the helper:
 /home/cuneyt/MoE/runtime/reports/memory-store/approved-memory-candidates.json
 ```
 
+The dry-run E2E workflow can create a temporary test approval fixture at the real approval path only when `USE_TEST_APPROVAL_FIXTURE=1` is set. It marks the file as `test_fixture: true`, removes it by default, and never runs `APPLY=1`. See [memory-approval-dry-run-e2e.md](memory-approval-dry-run-e2e.md).
+
 ## Commands
 
 Generate the helper report and example file:

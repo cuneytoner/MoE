@@ -73,3 +73,5 @@ make memory-candidate-list-local
 ```
 
 See [memory-candidate-approval-helper.md](memory-candidate-approval-helper.md).
+
+The end-to-end dry-run flow can validate candidate review through helper, plan, dry-run store, apply-log status, and audit without writing memories. See [memory-approval-dry-run-e2e.md](memory-approval-dry-run-e2e.md).
