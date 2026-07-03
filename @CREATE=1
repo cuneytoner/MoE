@@ -1,0 +1,15 @@
+Checking planned ComfyUI runtime layout
+  runtime dir: /home/cuneyt/MoE/runtime/media-engines/comfyui
+  create mode: 0
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui/venv
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui/logs
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui/workflows
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI/models/checkpoints
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI/models/clip
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI/models/text_encoders
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI/models/vae
+PASS: /home/cuneyt/MoE/runtime/media-engines/comfyui/ComfyUI/models/unet
+INFO: This check does not install ComfyUI, create model symlinks, touch model files, or run GPU jobs.
+PASS: planned ComfyUI runtime directories exist.

@@ -1340,3 +1340,14 @@ Before accepting Codex changes, check:
 - Real writes remain manual only with `APPLY=1 make memory-store-approved`; tests never run `APPLY=1`.
 - Do not call Memory API, run `APPLY=1`, approve candidates automatically, create runtime approval files, train, fine-tune, switch models, control Docker, or modify runtime files from tests.
 - Validate with `make check-layout`, `make memory-store-manual-preflight`, `make test-memory-store-manual-preflight`, M29 memory approval tests, and default source-only tests.
+
+## Milestone 29.10 Memory Store Real Apply Guardrail Review
+
+- Add `scripts/memory-store-real-apply-guardrail.sh` and `scripts/test-memory-store-real-apply-guardrail.sh`.
+- Add `make memory-store-real-apply-guardrail` and `make test-memory-store-real-apply-guardrail`.
+- Integrate the guardrail before the `APPLY=1` Memory API write loop in `scripts/memory-store-approved.sh`.
+- Keep the guardrail read-only: no Memory API calls, Gateway calls, llama-server calls, runtime writes, approval-file mutation, or `APPLY=1` execution.
+- Reject missing or invalid `memory-store-plan.json`, missing or invalid `approved-memory-candidates.json`, test fixtures, `dry_run_only=true`, missing approved candidates, missing `human_review_required=true`, and raw prompt/response field markers.
+- Warn on batch apply with more than one approved candidate unless `ALLOW_BATCH_MEMORY_APPLY=1` is set; this only silences the warning and does not bypass FAIL checks.
+- Real writes remain manual and explicit with `APPLY=1 make memory-store-approved`; tests never run `APPLY=1`.
+- Validate with `make check-layout`, `make memory-store-real-apply-guardrail`, `make test-memory-store-real-apply-guardrail`, M29 memory approval tests, and default source-only tests.

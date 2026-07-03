@@ -148,3 +148,5 @@ make test-memory-store-manual-preflight
 ```
 
 Real writes remain manual only with `APPLY=1 make memory-store-approved`, and tests never run `APPLY=1`. See [memory-approval-manual-store-runbook.md](memory-approval-manual-store-runbook.md).
+
+Milestone 29.10 adds `make memory-store-real-apply-guardrail`, a read-only review that runs before any `APPLY=1` write. It rejects test fixtures and raw prompt/response markers before Memory API writes; batch apply with more than one approved candidate prints a warning unless `ALLOW_BATCH_MEMORY_APPLY=1` is set, which silences only that warning and never bypasses FAIL checks.

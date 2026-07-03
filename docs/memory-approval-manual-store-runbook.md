@@ -6,7 +6,7 @@ This runbook defines the manual, human-approved process for storing reviewed mem
 
 Real memory writes are optional and manual. The default workflow is dry-run only. Tests must never run `APPLY=1`.
 
-This runbook belongs to M29.9 and prepares the operator checklist for a future explicit manual store operation.
+This runbook belongs to M29.9 and prepares the operator checklist for a future explicit manual store operation. M29.10 adds a read-only real apply guardrail review before any `APPLY=1` write.
 
 ## Safety boundaries
 
@@ -322,6 +322,7 @@ Before any real write, confirm:
 - [ ] `approved_candidate_ids` contains only manually reviewed ids.
 - [ ] Duplicate groups were reviewed.
 - [ ] Store plan shows the expected approved candidate count.
+- [ ] Real apply guardrail passes.
 - [ ] Dry-run store was executed successfully.
 - [ ] `LOG_DRY_RUN=1 make memory-store-approved` was executed.
 - [ ] Apply summary shows `stored_count: 0` before real apply.
@@ -334,6 +335,14 @@ Run preflight:
 ```bash
 make memory-store-manual-preflight
 ```
+
+Run the read-only real apply guardrail:
+
+```bash
+make memory-store-real-apply-guardrail
+```
+
+The guardrail rejects test fixtures, `dry_run_only=true` approval files, missing approvals, missing approved plan entries, and raw prompt/response markers before Memory API writes. If more than one candidate is approved it prints a batch warning; `ALLOW_BATCH_MEMORY_APPLY=1` silences only that warning and does not bypass any FAIL checks.
 
 Optional live Gateway check:
 
@@ -356,6 +365,7 @@ Recommended first real write policy:
 - approve only one candidate
 - run dry-run first
 - run preflight
+- run real apply guardrail
 - run `APPLY=1 make memory-store-approved`
 - inspect apply log immediately
 - verify Memory API search manually after write
