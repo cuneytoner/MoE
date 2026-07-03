@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.9 Memory Approval Manual Store Runbook.
-- Next planned: M29.10 Memory Store Real Apply Guardrail Review.
+- Completed through M29.10 Memory Store Real Apply Guardrail Review.
+- Next planned: M29.11 Gateway Continue Compatibility Hardening.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -921,13 +921,26 @@ Goals:
 
 ## Milestone 29.10: Memory Store Real Apply Guardrail Review
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Review the human-operated real apply guardrails before any future refinement of the approved memory store path.
+- Add a read-only `make memory-store-real-apply-guardrail` check before the `APPLY=1` write path.
 - Keep real writes manual only through explicit user-run `APPLY=1 make memory-store-approved`.
 - Do not run `APPLY=1` automatically from tests, preflight, dashboard, apps, or scheduled workflows.
+- Reject test fixtures, `dry_run_only=true` approval files, missing approved candidates, and raw prompt/response markers before Memory API writes.
+- Warn on batch apply with more than one approved candidate unless `ALLOW_BATCH_MEMORY_APPLY=1` is set; this flag only silences the batch warning and does not bypass FAIL checks.
 - Do not add automated approval, Memory API write tests, service control, shell execution from apps, Docker control, model switching, training, or fine-tuning.
+
+## Milestone 29.11: Gateway Continue Compatibility Hardening
+
+Status: PLANNED
+
+Goals:
+- Harden Gateway compatibility for Continue and OpenAI-compatible clients.
+- Normalize stream and tool payload handling without enabling unsupported write actions.
+- Return consistent JSON error bodies for Continue-facing Gateway failures.
+- Keep Gateway from writing files, executing shell commands, switching models, calling Memory API write routes, controlling Docker, or mutating runtime state automatically.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

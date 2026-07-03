@@ -73,3 +73,5 @@ Milestone 29.7 uses `LOG_DRY_RUN=1` inside a dry-run-only E2E validation flow an
 Milestone 29.8 shows apply-log counts and latest attempt time in a read-only dashboard view. See [memory-approval-dashboard.md](memory-approval-dashboard.md).
 
 Milestone 29.9 adds a manual store runbook and `make memory-store-manual-preflight` for checking apply-log readiness before any human-run `APPLY=1 make memory-store-approved`. Tests never run `APPLY=1`. See [memory-approval-manual-store-runbook.md](memory-approval-manual-store-runbook.md).
+
+Milestone 29.10 adds `make memory-store-real-apply-guardrail`, which is read-only and runs before any real apply write. It rejects test fixtures and raw prompt/response markers before Memory API writes. Batch apply with more than one candidate requires extra caution; `ALLOW_BATCH_MEMORY_APPLY=1` silences only the batch warning, not FAIL checks.

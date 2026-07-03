@@ -185,6 +185,8 @@ if [ "$APPLY" != "1" ]; then
   exit 0
 fi
 
+"$ROOT/scripts/memory-store-real-apply-guardrail.sh"
+
 echo "APPLY=1: storing approved memory candidates through ${MEMORY_API_URL%/}/memory/add"
 for payload in "$payload_dir"/memory-payload-*.json; do
   [ -f "$payload" ] || continue
