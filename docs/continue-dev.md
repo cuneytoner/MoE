@@ -50,6 +50,14 @@ POST /v1/chat/completions
 
 Gateway converts the OpenAI-compatible request into the existing router-aware `/gateway/chat` flow. It keeps system messages and prior user/assistant turns as conversation context, then sends the latest user turn through the Gateway chat path. Runtime model switching remains manual.
 
+M29.11 normalizes Continue stream/tool payloads for compatibility. Continue can point Gateway-Auto style configs at:
+
+```text
+http://localhost:8100/v1
+```
+
+Gateway accepts `stream: true` but normalizes it to non-streaming internally. It accepts `tools` and `tool_choice` fields but ignores them safely; it does not execute tools from Continue/OpenAI tool payloads.
+
 Use the default `MoE Gateway` profile for normal editor chat. Use a model-specific Gateway profile only after manually switching the host runtime to that model:
 
 ```bash
@@ -90,7 +98,8 @@ make model-switch MODEL=qwen-coder-32b-main
 - Workspace access is read-only.
 - Gateway does not execute shell commands.
 - Gateway does not switch the model runtime.
-- Streaming is not supported by the Gateway OpenAI compatibility adapter yet.
+- Streaming is normalized to non-streaming by the Gateway OpenAI compatibility adapter.
+- Continue/OpenAI tool payloads are accepted for compatibility but never executed.
 - Continue.dev can use Gateway chat now; repo-aware coding agent behavior is a future milestone.
 
 ## Smoke Tests

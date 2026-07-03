@@ -102,11 +102,12 @@ case "$chat_http_status" in
     fi
     ;;
   503)
-    detail="$(jq -r '.detail // empty' <<<"$chat_response")"
-    if [ -n "$detail" ]; then
-      skip "llama-server unavailable through Gateway chat: $detail"
+    error_message="$(jq -r '.error.message // empty' <<<"$chat_response")"
+    error_code="$(jq -r '.error.code // empty' <<<"$chat_response")"
+    if [ -n "$error_message" ] && [ -n "$error_code" ]; then
+      skip "llama-server unavailable through Gateway chat: $error_message"
     fi
-    fail "Gateway OpenAI /v1/chat/completions 503 missing detail: $chat_response"
+    fail "Gateway OpenAI /v1/chat/completions 503 missing JSON error body: $chat_response"
     ;;
   *)
     fail "Gateway OpenAI /v1/chat/completions returned HTTP $chat_http_status: $chat_response"
@@ -120,12 +121,51 @@ stream_http_status="$(
     -d '{"model":"gateway-auto","messages":[{"role":"user","content":"hello"}],"stream":true}' \
     "$GATEWAY_API_URL/v1/chat/completions" || true
 )"
+stream_response="$(cat /tmp/moe-openai-gateway-stream.json 2>/dev/null || true)"
 
-if [ "$stream_http_status" = "400" ]; then
-  pass "Gateway OpenAI /v1/chat/completions rejects streaming"
+if [ "$stream_http_status" = "200" ] \
+  && [ "$(jq -r '.choices[0].message.content // empty' <<<"$stream_response")" != "" ] \
+  && [ "$(jq -r '.x_gateway_compat.stream_requested' <<<"$stream_response")" = "true" ] \
+  && [ "$(jq -r '.x_gateway_compat.stream_normalized' <<<"$stream_response")" = "true" ]; then
+  pass "Gateway OpenAI /v1/chat/completions normalizes streaming"
 else
-  stream_response="$(cat /tmp/moe-openai-gateway-stream.json 2>/dev/null || true)"
-  fail "Gateway OpenAI expected HTTP 400 for stream=true, got $stream_http_status: $stream_response"
+  fail "Gateway OpenAI expected HTTP 200 for normalized stream=true, got $stream_http_status: $stream_response"
+fi
+
+tools_http_status="$(
+  curl -sS -o /tmp/moe-openai-gateway-tools.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"model":"gateway-auto","messages":[{"role":"user","content":"hello"}],"tools":[{"type":"function","function":{"name":"write_file","description":"must not run","parameters":{"type":"object","properties":{}}}}],"tool_choice":"auto","parallel_tool_calls":true,"response_format":{"type":"text"},"top_p":0.9,"n":1,"user":"continue"}' \
+    "$GATEWAY_API_URL/v1/chat/completions" || true
+)"
+tools_response="$(cat /tmp/moe-openai-gateway-tools.json 2>/dev/null || true)"
+
+if [ "$tools_http_status" = "200" ] \
+  && [ "$(jq -r '.choices[0].message.content // empty' <<<"$tools_response")" != "" ] \
+  && [ "$(jq -r '.x_gateway_compat.tools_ignored' <<<"$tools_response")" = "true" ] \
+  && [ "$(jq -r '.x_gateway_compat.tool_choice_ignored' <<<"$tools_response")" = "true" ]; then
+  pass "Gateway OpenAI /v1/chat/completions ignores tool payloads"
+else
+  fail "Gateway OpenAI expected HTTP 200 for ignored tool payloads, got $tools_http_status: $tools_response"
+fi
+
+invalid_http_status="$(
+  curl -sS -o /tmp/moe-openai-gateway-invalid.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"model":"gateway-auto","messages":[]}' \
+    "$GATEWAY_API_URL/v1/chat/completions" || true
+)"
+invalid_response="$(cat /tmp/moe-openai-gateway-invalid.json 2>/dev/null || true)"
+
+if [ "$invalid_http_status" = "400" ] \
+  && [ "$(jq -r '.error.message // empty' <<<"$invalid_response")" != "" ] \
+  && [ "$(jq -r '.error.type // empty' <<<"$invalid_response")" = "invalid_request_error" ] \
+  && [ "$(jq -r '.error.code // empty' <<<"$invalid_response")" = "invalid_request" ]; then
+  pass "Gateway OpenAI /v1/chat/completions returns JSON error bodies"
+else
+  fail "Gateway OpenAI expected JSON error body for invalid messages, got $invalid_http_status: $invalid_response"
 fi
 
 echo "Gateway OpenAI-compatible test passed"

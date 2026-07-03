@@ -121,7 +121,9 @@ Milestone 28.1 adds a minimal Gateway chat proxy at `/gateway/chat`. It accepts 
 
 Milestone 28.2 adds deterministic advisory model routing metadata to the same endpoint. Gateway classifies chat requests into `fast_code`, `deep_code`, `review_debug`, `architecture`, or `general`, selects an advisory model id/path, compares it with the active llama-server model from `/v1/models` when available, and returns mismatch information without failing. The router never switches models or controls services.
 
-Milestone 28.3 adds OpenAI-compatible Gateway routes at `/v1/models` and `/v1/chat/completions` so Continue.dev can point to `http://localhost:8100/v1`. These routes proxy the local llama-server runtime, reuse Gateway chat validation and advisory router metadata, and keep streaming unsupported until a later milestone.
+Milestone 28.3 adds OpenAI-compatible Gateway routes at `/v1/models` and `/v1/chat/completions` so Continue.dev can point to `http://localhost:8100/v1`. These routes proxy the local llama-server runtime, reuse Gateway chat validation and advisory router metadata, and initially keep streaming unsupported.
+
+Milestone 29.11 hardens Continue compatibility for `/v1/chat/completions`. Gateway accepts Continue/OpenAI stream and tool payload fields, normalizes `stream: true` to the non-streaming internal path, returns `x_gateway_compat`, and ignores `tools` / `tool_choice` safely. It still does not execute tools from Continue/OpenAI payloads, execute shell commands, control Docker, switch models, write files, or call Memory API write routes.
 
 Milestone 28.4 adds optional search-only memory injection to `/gateway/chat` and `/v1/chat/completions`. Gateway extracts the latest user message, calls the fixed configured `MEMORY_SEARCH_URL`, injects a bounded system context only when usable results exist, and returns memory metadata without storing new memory or exposing raw memory records in response metadata. Chat remains available when memory search is unavailable.
 
