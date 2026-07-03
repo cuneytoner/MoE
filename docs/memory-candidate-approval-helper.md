@@ -32,6 +32,8 @@ The dry-run E2E workflow can create a temporary test approval fixture at the rea
 
 The read-only dashboard view shows helper report candidate cards and review hints without approval controls. See [memory-approval-dashboard.md](memory-approval-dashboard.md).
 
+The manual store runbook uses the helper output and `make memory-store-manual-preflight` as part of the final human review path before any explicit `APPLY=1 make memory-store-approved`. See [memory-approval-manual-store-runbook.md](memory-approval-manual-store-runbook.md).
+
 ## Commands
 
 Generate the helper report and example file:

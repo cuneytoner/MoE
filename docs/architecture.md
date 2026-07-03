@@ -153,6 +153,8 @@ Milestone 29.7 adds a dry-run-only end-to-end memory approval validation flow. `
 
 Milestone 29.8 adds read-only Gateway and Dashboard visibility for memory approval. `GET /gateway/memory-approval/dashboard` reads fixed runtime reports only and returns compact summaries, candidate cards, duplicate groups, approval file presence, apply-log counts, E2E status, warnings, and safety boundaries. The endpoint does not accept paths, execute scripts, call Memory API, call llama-server, control Docker, approve candidates, create files, or write memories. The Dashboard UI renders this data in a Memory Approval section with no action buttons.
 
+Milestone 29.9 adds a manual memory approval store runbook and `make memory-store-manual-preflight`. The preflight checks source/runtime readiness before a human-operated real write, while real Memory API writes remain manual only through `APPLY=1 make memory-store-approved`; tests never run `APPLY=1`.
+
 apps/nightly-learning-worker:
 
 Read-only background worker skeleton for Milestone 24. It exposes FastAPI on port `8200`, checks bounded project metadata from the read-only source mount, optionally probes Gateway and Memory API health, and writes JSON reports only under `/home/cuneyt/MoE/runtime/reports/nightly`. It can optionally send distilled lessons to Memory API when explicitly requested. PC-2 activation is manual through source-only helper scripts and Docker Compose `learning` profile commands. It does not modify source files, apply patches, execute shell commands, control Docker from Gateway, control PC-2 from Gateway, or switch model runtime.

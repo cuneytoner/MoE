@@ -80,3 +80,5 @@ This workflow does not:
 - commit generated runtime reports
 
 Milestone 29.8 exposes the E2E status through a read-only dashboard endpoint. See [memory-approval-dashboard.md](memory-approval-dashboard.md).
+
+Milestone 29.9 adds a manual store runbook and `make memory-store-manual-preflight` for the human-operated real write checklist. This E2E flow and its tests remain dry-run-only and never run `APPLY=1`. See [memory-approval-manual-store-runbook.md](memory-approval-manual-store-runbook.md).

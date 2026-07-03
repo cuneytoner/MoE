@@ -93,6 +93,7 @@ docs:
 - memory-candidate-approval-helper.md
 - memory-approval-dry-run-e2e.md
 - memory-approval-dashboard.md
+- memory-approval-manual-store-runbook.md
 - models.md
 - runtime-rules.md
 - deployment.md
@@ -123,11 +124,11 @@ make tree
 
 ## Current Milestone
 
-Milestone 29.2: Feedback-to-Memory Candidate Review
+Completed through Milestone 29.9: Memory Approval Manual Store Runbook
 
 Next planned milestone:
 
-Milestone 29.3: Human-Approved Memory Store Workflow
+Milestone 29.10: Memory Store Real Apply Guardrail Review
 
 ## Model Inventory
 
@@ -204,9 +205,15 @@ make memory-approval-dry-run-e2e-local
 make memory-approval-dry-run-e2e-status
 make test-memory-approval-dry-run-e2e
 make test-memory-approval-dashboard
+make memory-store-manual-preflight
+make test-memory-store-manual-preflight
 make pc2-system-status
 make docker-summary-snapshot
 make docker-summary-status
+
+M29.9 memory approval manual store runbook:
+
+`make memory-store-manual-preflight` validates the manual store checklist before any real write. `make test-memory-store-manual-preflight` covers the preflight script in dry-run-safe tests. Real Memory API writes remain manual only through `APPLY=1 make memory-store-approved`; tests never run `APPLY=1`.
 
 Optional runtime command pack:
 

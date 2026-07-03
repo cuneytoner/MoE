@@ -677,3 +677,11 @@ test-stack:
 > @./scripts/test-stack.sh
 
 test: check-layout check-python-syntax
+
+.PHONY: memory-store-manual-preflight
+memory-store-manual-preflight:
+> ./scripts/memory-store-manual-preflight.sh
+
+.PHONY: test-memory-store-manual-preflight
+test-memory-store-manual-preflight:
+> ./scripts/test-memory-store-manual-preflight.sh

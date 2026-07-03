@@ -71,3 +71,5 @@ Milestone 29.6 adds a helper report that combines candidates, plan status, and a
 Milestone 29.7 runs the helper, plan, dry-run store, apply-log status, and audit as a dry-run-only E2E flow. See [memory-approval-dry-run-e2e.md](memory-approval-dry-run-e2e.md).
 
 Milestone 29.8 exposes audit and duplicate summaries through a read-only dashboard endpoint. See [memory-approval-dashboard.md](memory-approval-dashboard.md).
+
+Milestone 29.9 adds a manual store runbook and `make memory-store-manual-preflight` so audit review remains part of the human-operated real write checklist. See [memory-approval-manual-store-runbook.md](memory-approval-manual-store-runbook.md).
