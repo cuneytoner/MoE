@@ -105,11 +105,12 @@ case "$openai_chat_http_status" in
     fi
     ;;
   503)
-    openai_chat_detail="$(jq -r '.detail // empty' <<<"$openai_chat_response")"
-    if [ -n "$openai_chat_detail" ]; then
+    openai_chat_error="$(jq -r '.error.message // empty' <<<"$openai_chat_response")"
+    openai_chat_error_code="$(jq -r '.error.code // empty' <<<"$openai_chat_response")"
+    if [ -n "$openai_chat_error" ] && [ -n "$openai_chat_error_code" ]; then
       pass "Gateway API /v1/chat/completions controlled unavailable"
     else
-      fail "Gateway API /v1/chat/completions missing unavailable detail: $openai_chat_response"
+      fail "Gateway API /v1/chat/completions missing JSON unavailable error: $openai_chat_response"
     fi
     ;;
   *)
@@ -124,12 +125,51 @@ openai_stream_http_status="$(
     -d '{"model":"local-gateway","messages":[{"role":"user","content":"hello"}],"stream":true}' \
     "$GATEWAY_API_URL/v1/chat/completions" || true
 )"
+openai_stream_response="$(cat /tmp/moe-gateway-openai-stream-response.json 2>/dev/null || true)"
 
-if [ "$openai_stream_http_status" = "400" ]; then
-  pass "Gateway API /v1/chat/completions rejects streaming"
+if [ "$openai_stream_http_status" = "200" ] \
+  && [ "$(jq -r '.choices[0].message.content // empty' <<<"$openai_stream_response")" != "" ] \
+  && [ "$(jq -r '.x_gateway_compat.stream_requested' <<<"$openai_stream_response")" = "true" ] \
+  && [ "$(jq -r '.x_gateway_compat.stream_normalized' <<<"$openai_stream_response")" = "true" ]; then
+  pass "Gateway API /v1/chat/completions normalizes streaming"
 else
-  openai_stream_response="$(cat /tmp/moe-gateway-openai-stream-response.json 2>/dev/null || true)"
-  fail "Gateway API /v1/chat/completions expected HTTP 400 for stream=true, got $openai_stream_http_status: $openai_stream_response"
+  fail "Gateway API /v1/chat/completions expected HTTP 200 normalized stream response, got $openai_stream_http_status: $openai_stream_response"
+fi
+
+openai_tools_http_status="$(
+  curl -sS -o /tmp/moe-gateway-openai-tools-response.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"model":"local-gateway","messages":[{"role":"user","content":"hello"}],"tools":[{"type":"function","function":{"name":"dangerous_shell","description":"must not run","parameters":{"type":"object","properties":{}}}}],"tool_choice":"auto","parallel_tool_calls":true}' \
+    "$GATEWAY_API_URL/v1/chat/completions" || true
+)"
+openai_tools_response="$(cat /tmp/moe-gateway-openai-tools-response.json 2>/dev/null || true)"
+
+if [ "$openai_tools_http_status" = "200" ] \
+  && [ "$(jq -r '.choices[0].message.content // empty' <<<"$openai_tools_response")" != "" ] \
+  && [ "$(jq -r '.x_gateway_compat.tools_ignored' <<<"$openai_tools_response")" = "true" ] \
+  && [ "$(jq -r '.x_gateway_compat.tool_choice_ignored' <<<"$openai_tools_response")" = "true" ]; then
+  pass "Gateway API /v1/chat/completions ignores OpenAI tool payloads"
+else
+  fail "Gateway API /v1/chat/completions expected HTTP 200 ignored tools response, got $openai_tools_http_status: $openai_tools_response"
+fi
+
+openai_invalid_http_status="$(
+  curl -sS -o /tmp/moe-gateway-openai-invalid-response.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"model":"local-gateway","messages":[]}' \
+    "$GATEWAY_API_URL/v1/chat/completions" || true
+)"
+openai_invalid_response="$(cat /tmp/moe-gateway-openai-invalid-response.json 2>/dev/null || true)"
+
+if [ "$openai_invalid_http_status" = "400" ] \
+  && [ "$(jq -r '.error.message // empty' <<<"$openai_invalid_response")" != "" ] \
+  && [ "$(jq -r '.error.type // empty' <<<"$openai_invalid_response")" = "invalid_request_error" ] \
+  && [ "$(jq -r '.error.code // empty' <<<"$openai_invalid_response")" = "invalid_request" ]; then
+  pass "Gateway API /v1/chat/completions returns JSON error body"
+else
+  fail "Gateway API /v1/chat/completions expected JSON error body for invalid messages, got $openai_invalid_http_status: $openai_invalid_response"
 fi
 
 models_http_status="$(

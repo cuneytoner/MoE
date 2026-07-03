@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.10 Memory Store Real Apply Guardrail Review.
-- Next planned: M29.11 Gateway Continue Compatibility Hardening.
+- Completed through M29.11 Gateway Continue Compatibility Hardening.
+- Next planned: M29.12 Gateway-Auto Runtime Routing Hardening.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -934,13 +934,26 @@ Goals:
 
 ## Milestone 29.11: Gateway Continue Compatibility Hardening
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Harden Gateway compatibility for Continue and OpenAI-compatible clients.
 - Normalize stream and tool payload handling without enabling unsupported write actions.
 - Return consistent JSON error bodies for Continue-facing Gateway failures.
+- Accept `stream`, `tools`, `tool_choice`, `parallel_tool_calls`, `response_format`, `stop`, penalties, `top_p`, `n`, and `user` in `/v1/chat/completions`.
+- Normalize `stream=true` to the existing non-streaming internal path and return `x_gateway_compat`.
+- Ignore Continue/OpenAI tool payloads safely; never execute tools from these payloads.
 - Keep Gateway from writing files, executing shell commands, switching models, calling Memory API write routes, controlling Docker, or mutating runtime state automatically.
+
+## Milestone 29.12: Gateway-Auto Runtime Routing Hardening
+
+Status: PLANNED
+
+Goals:
+- Harden `gateway-auto` runtime routing behavior for Continue and OpenAI-compatible clients.
+- Keep runtime routing advisory unless a future reviewed milestone explicitly adds guarded switching.
+- Improve model alignment metadata and mismatch handling for active llama-server models.
+- Do not switch models, execute shell commands, control Docker, write files, call Memory API write routes, train, or fine-tune automatically.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

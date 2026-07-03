@@ -95,7 +95,19 @@ Gateway converts the request into the existing router-aware `/gateway/chat` flow
 - `model: local-gateway` lets Gateway use the currently loaded runtime model
 - non-`local-gateway` model values are passed through to the model runtime
 
-Streaming is not supported yet. Requests with `stream: true` return HTTP 400 with a clear JSON error.
+M29.11 normalizes Continue/OpenAI compatibility fields. Requests with `stream: true` are accepted and normalized to the existing non-streaming internal path, returning a normal JSON chat completion with `x_gateway_compat.stream_requested=true` and `x_gateway_compat.stream_normalized=true`. `tools`, `tool_choice`, and related tool payload fields are accepted for compatibility but ignored; Gateway does not execute tools from Continue/OpenAI tool payloads.
+
+Rejected or failed `/v1/chat/completions` requests return an OpenAI-style JSON error body:
+
+```json
+{
+  "error": {
+    "message": "invalid OpenAI chat completion request",
+    "type": "invalid_request_error",
+    "code": "invalid_request"
+  }
+}
+```
 
 This adapter does not edit files, execute shell commands, or switch the model runtime.
 

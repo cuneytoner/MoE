@@ -6,7 +6,7 @@ M28.3 lets Continue.dev talk to Gateway through an OpenAI-compatible base URL:
 http://localhost:8100/v1
 ```
 
-Gateway forwards non-streaming chat requests to the active local llama-server and adds advisory router metadata in `x_gateway_router`. It does not require a real API key, switch models, execute shell commands, control Docker, or read/write files.
+Gateway forwards chat requests to the active local llama-server and adds advisory router metadata in `x_gateway_router`. M29.11 normalizes Continue `stream: true` requests to non-streaming internally and accepts `tools` / `tool_choice` payloads without executing them. It does not require a real API key, switch models, execute shell commands, control Docker, or read/write files.
 
 ## Recommended Config
 
@@ -28,6 +28,14 @@ defaultModel: Gateway-Qwen
 ```
 
 `model: gateway-auto` is advisory. Gateway does not treat it as a model path and does not switch the running llama-server model.
+
+Gateway-Auto configs can point Continue at:
+
+```text
+http://localhost:8100/v1
+```
+
+Compatibility metadata is returned in `x_gateway_compat`, including whether streaming was requested and normalized and whether tool payloads were ignored.
 
 ## Troubleshooting Fallback
 

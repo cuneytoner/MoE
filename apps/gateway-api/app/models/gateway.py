@@ -451,7 +451,7 @@ class GatewayMediaJobResponse(BaseModel):
 
 
 class OpenAIChatMessage(BaseModel):
-    role: str
+    role: Literal["system", "user", "assistant"]
     content: str
 
 
@@ -461,6 +461,16 @@ class OpenAIChatCompletionRequest(BaseModel):
     temperature: float = Field(default=0.2, ge=0.0, le=2.0)
     max_tokens: int = Field(default=512, ge=1, le=8192)
     stream: bool = False
+    tools: list[dict[str, Any]] | None = None
+    tool_choice: str | dict[str, Any] | None = None
+    parallel_tool_calls: bool | None = None
+    response_format: dict[str, Any] | None = None
+    stop: str | list[str] | None = None
+    presence_penalty: float | None = None
+    frequency_penalty: float | None = None
+    top_p: float | None = None
+    n: int | None = None
+    user: str | None = None
     routing: Literal["auto", "off"] = "auto"
     memory: Literal["auto", "off"] = "auto"
     memory_limit: int = Field(default=3, ge=1, le=8)
@@ -487,3 +497,4 @@ class OpenAIChatCompletionResponse(BaseModel):
     usage: OpenAIChatCompletionUsage
     x_gateway_router: dict[str, Any] | None = None
     x_gateway_memory: dict[str, Any] | None = None
+    x_gateway_compat: dict[str, Any] | None = None

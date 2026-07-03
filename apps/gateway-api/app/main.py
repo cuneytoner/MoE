@@ -4,6 +4,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
 from app.clients.embed_worker import EmbedWorkerClient
@@ -707,22 +708,45 @@ async def openai_models() -> dict[str, Any]:
 
 @app.post("/v1/chat/completions", response_model=OpenAIChatCompletionResponse)
 async def openai_chat_completions(
-    request: OpenAIChatCompletionRequest,
-) -> OpenAIChatCompletionResponse:
-    if request.stream:
-        raise HTTPException(
+    request_body: dict[str, Any],
+) -> OpenAIChatCompletionResponse | JSONResponse:
+    try:
+        request = OpenAIChatCompletionRequest(**request_body)
+    except ValidationError as exc:
+        return _openai_error_response(
             status_code=400,
-            detail="streaming is not supported by the Gateway OpenAI compatibility adapter yet",
+            message=f"invalid OpenAI chat completion request: {exc.errors()}",
+            error_type="invalid_request_error",
+            code="invalid_request",
         )
 
     try:
         proxy_request = _openai_to_gateway_chat_proxy_request(request)
     except ValidationError as exc:
-        raise HTTPException(status_code=400, detail=exc.errors()) from exc
-    _validate_chat_proxy_request(proxy_request)
+        return _openai_error_response(
+            status_code=400,
+            message=f"invalid Gateway chat proxy request: {exc.errors()}",
+            error_type="invalid_request_error",
+            code="invalid_request",
+        )
+    try:
+        _validate_chat_proxy_request(proxy_request)
+    except HTTPException as exc:
+        return _openai_error_response(
+            status_code=exc.status_code,
+            message=str(exc.detail),
+            error_type="invalid_request_error",
+            code="invalid_request",
+        )
+
     response = await _gateway_chat_proxy(proxy_request)
     if response.status == "unavailable":
-        raise HTTPException(status_code=503, detail=response.detail)
+        return _openai_error_response(
+            status_code=503,
+            message=response.detail or "Gateway chat proxy unavailable",
+            error_type="service_unavailable",
+            code="gateway_chat_proxy_unavailable",
+        )
 
     raw = response.raw or {}
     usage = raw.get("usage") if isinstance(raw.get("usage"), dict) else {}
@@ -745,6 +769,7 @@ async def openai_chat_completions(
         usage=OpenAIChatCompletionUsage(**usage),
         x_gateway_router=response.router.model_dump() if response.router else None,
         x_gateway_memory=response.memory,
+        x_gateway_compat=_openai_compat_metadata(request),
     )
 
 
@@ -946,6 +971,37 @@ def _openai_to_gateway_chat_proxy_request(
         routing=request.routing,
         memory=request.memory,
         memory_limit=request.memory_limit,
+    )
+
+
+def _openai_compat_metadata(request: OpenAIChatCompletionRequest) -> dict[str, Any]:
+    tools_ignored = bool(request.tools)
+    tool_choice_ignored = request.tool_choice is not None
+    stream_requested = bool(request.stream)
+    return {
+        "stream_requested": stream_requested,
+        "stream_normalized": stream_requested,
+        "tools_ignored": tools_ignored,
+        "tool_choice_ignored": tool_choice_ignored,
+    }
+
+
+def _openai_error_response(
+    *,
+    status_code: int,
+    message: str,
+    error_type: str,
+    code: str,
+) -> JSONResponse:
+    return JSONResponse(
+        status_code=status_code,
+        content={
+            "error": {
+                "message": message,
+                "type": error_type,
+                "code": code,
+            }
+        },
     )
 
 

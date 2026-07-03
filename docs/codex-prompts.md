@@ -1351,3 +1351,13 @@ Before accepting Codex changes, check:
 - Warn on batch apply with more than one approved candidate unless `ALLOW_BATCH_MEMORY_APPLY=1` is set; this only silences the warning and does not bypass FAIL checks.
 - Real writes remain manual and explicit with `APPLY=1 make memory-store-approved`; tests never run `APPLY=1`.
 - Validate with `make check-layout`, `make memory-store-real-apply-guardrail`, `make test-memory-store-real-apply-guardrail`, M29 memory approval tests, and default source-only tests.
+
+## Milestone 29.11 Gateway Continue Compatibility Hardening
+
+- Update `/v1/chat/completions` to tolerate Continue/OpenAI extra fields: `stream`, `tools`, `tool_choice`, `parallel_tool_calls`, `response_format`, `stop`, penalties, `top_p`, `n`, and `user`.
+- Normalize `stream=true` to the existing non-streaming internal path and return `x_gateway_compat.stream_requested=true` and `x_gateway_compat.stream_normalized=true`.
+- Accept `tools` and `tool_choice` fields but ignore them safely; never execute tools from Continue/OpenAI tool payloads.
+- Return OpenAI-style JSON error bodies for rejected or failed `/v1/chat/completions` requests.
+- Keep Gateway-Auto configs pointed at `http://localhost:8100/v1`.
+- Do not execute shell commands, control Docker, switch models, write files, call Memory API write routes, train, fine-tune, or mutate runtime state.
+- Validate with `make test-openai-compatible-gateway`, `make test-continue-gateway`, Gateway API tests, and default source-only tests.
