@@ -71,3 +71,5 @@ Milestone 29.6 adds a manual approval helper before this apply-log step. It prep
 Milestone 29.7 uses `LOG_DRY_RUN=1` inside a dry-run-only E2E validation flow and writes `/home/cuneyt/MoE/runtime/reports/memory-store/memory-approval-dry-run-e2e-report.json`. See [memory-approval-dry-run-e2e.md](memory-approval-dry-run-e2e.md).
 
 Milestone 29.8 shows apply-log counts and latest attempt time in a read-only dashboard view. See [memory-approval-dashboard.md](memory-approval-dashboard.md).
+
+Milestone 29.9 adds a manual store runbook and `make memory-store-manual-preflight` for checking apply-log readiness before any human-run `APPLY=1 make memory-store-approved`. Tests never run `APPLY=1`. See [memory-approval-manual-store-runbook.md](memory-approval-manual-store-runbook.md).

@@ -1330,3 +1330,13 @@ Before accepting Codex changes, check:
 - Do not call Memory API, Gateway-to-Memory write routes, llama-server, Docker, scripts, model runtimes, or services.
 - Do not auto-approve candidates, create approval files, write memories, train, fine-tune, switch models, or expose raw prompts/responses.
 - Validate with `make test-memory-approval-dashboard`, M29 memory workflow tests, and default source-only tests.
+
+## Milestone 29.9 Memory Approval Manual Store Runbook
+
+- Add `docs/memory-approval-manual-store-runbook.md`, `scripts/memory-store-manual-preflight.sh`, and `scripts/test-memory-store-manual-preflight.sh`.
+- Add `make memory-store-manual-preflight` and `make test-memory-store-manual-preflight`.
+- Cross-reference the runbook from the M29 memory store workflow, audit, apply-log, helper, dry-run E2E, dashboard, architecture, README, and milestone docs.
+- Keep the runbook dry-run-first and require manual review of approval file, plan, audit, dashboard, and apply-log status before any real write.
+- Real writes remain manual only with `APPLY=1 make memory-store-approved`; tests never run `APPLY=1`.
+- Do not call Memory API, run `APPLY=1`, approve candidates automatically, create runtime approval files, train, fine-tune, switch models, control Docker, or modify runtime files from tests.
+- Validate with `make check-layout`, `make memory-store-manual-preflight`, `make test-memory-store-manual-preflight`, M29 memory approval tests, and default source-only tests.

@@ -29,3 +29,5 @@ The Dashboard UI shows a read-only Memory Approval section with candidate totals
 This view does not approve candidates, create approval files, edit approval files, run scripts, run `APPLY=1`, call Memory API, write memories, call Gateway-to-Memory write routes, call llama-server, expose raw prompts or responses, switch models, control Docker, train, or fine-tune models.
 
 Missing runtime reports are surfaced as warnings instead of endpoint failures.
+
+Milestone 29.9 uses this read-only view in the manual store runbook. Run `make memory-store-manual-preflight` before any human-run `APPLY=1 make memory-store-approved`; dashboard tests and preflight tests never run `APPLY=1`. See [memory-approval-manual-store-runbook.md](memory-approval-manual-store-runbook.md).

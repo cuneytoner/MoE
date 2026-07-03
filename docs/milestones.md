@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.2 Feedback-to-Memory Candidate Review.
-- Next planned: M29.3 Human-Approved Memory Store Workflow.
+- Completed through M29.9 Memory Approval Manual Store Runbook.
+- Next planned: M29.10 Memory Store Real Apply Guardrail Review.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -909,12 +909,24 @@ Goals:
 
 ## Milestone 29.9: Memory Approval Manual Store Runbook
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add a human-run manual store runbook for the approved memory workflow.
 - Keep the runbook dry-run-first and explicit about `APPLY=1` risk.
 - Require human-created approval files, plan inspection, dashboard review, apply-log review, and post-run verification.
+- Add `make memory-store-manual-preflight` and `make test-memory-store-manual-preflight`.
+- Keep tests dry-run-only and never run `APPLY=1`.
+- Do not add automated approval, Memory API write tests, service control, shell execution from apps, Docker control, model switching, training, or fine-tuning.
+
+## Milestone 29.10: Memory Store Real Apply Guardrail Review
+
+Status: PLANNED
+
+Goals:
+- Review the human-operated real apply guardrails before any future refinement of the approved memory store path.
+- Keep real writes manual only through explicit user-run `APPLY=1 make memory-store-approved`.
+- Do not run `APPLY=1` automatically from tests, preflight, dashboard, apps, or scheduled workflows.
 - Do not add automated approval, Memory API write tests, service control, shell execution from apps, Docker control, model switching, training, or fine-tuning.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery

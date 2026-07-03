@@ -137,3 +137,14 @@ GET /gateway/memory-approval/dashboard
 ```
 
 The view reads runtime reports only and provides compact summaries without approval, apply, store, or script execution controls. See [memory-approval-dashboard.md](memory-approval-dashboard.md).
+
+## Manual Store Runbook
+
+Milestone 29.9 adds a manual store runbook and preflight for the human-operated real write path:
+
+```bash
+make memory-store-manual-preflight
+make test-memory-store-manual-preflight
+```
+
+Real writes remain manual only with `APPLY=1 make memory-store-approved`, and tests never run `APPLY=1`. See [memory-approval-manual-store-runbook.md](memory-approval-manual-store-runbook.md).
