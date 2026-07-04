@@ -118,3 +118,6 @@ Source code should be stable, reviewable, and version-controlled.
 The codebase is the blueprint.
 
 ~/MoE is the machine room.
+## Gateway Runtime Switch Plans
+
+M29.13 makes `/gateway/runtime/switch-plan` planning-only. Gateway returns guardrails, human preflight checks, and natural-language next steps, not executable command fields. Gateway must not start, stop, restart, or switch runtime models automatically. Any future real runtime switching requires a separate guarded milestone and human operation.

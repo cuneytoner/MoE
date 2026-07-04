@@ -40,11 +40,20 @@ class GatewayRuntimeSwitchPlanRequest(BaseModel):
 class GatewayRuntimeSwitchPlanResponse(BaseModel):
     status: str
     intent: str
-    target: str
-    target_runtime_id: str | None = None
-    current_runtime_model: str | None = None
-    switch_required: bool
-    manual_command: str
+    apply_supported: bool = False
+    auto_execution_supported: bool = False
+    runtime_switch_supported: bool = False
+    runtime_switch_attempted: bool = False
+    requires_human_operator: bool = True
+    target_model_id: str
+    target_runtime_model_id: str | None = None
+    current_active_model: str | None = None
+    active_model_matches_target: bool
+    risk_level: Literal["low", "medium", "high"]
+    model_mapping_status: str
+    guardrails: list[str] = Field(default_factory=list)
+    preflight_checks: list[str] = Field(default_factory=list)
+    manual_next_steps: list[str] = Field(default_factory=list)
     reason: str
 
 

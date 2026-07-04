@@ -135,7 +135,7 @@ TOOL_CATALOG: dict[str, dict[str, Any]] = {
         "read_only": False,
     },
     "runtime_switch_plan": {
-        "description": "Return an advisory manual runtime switch command without executing it.",
+        "description": "Return an advisory manual runtime switch plan without executing it.",
         "auto_execution_supported": False,
         "executable": False,
         "read_only": False,

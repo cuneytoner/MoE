@@ -152,6 +152,8 @@ M28.2 adds advisory model routing metadata to `/gateway/chat`. The router may re
 
 M29.12 keeps Gateway-Auto advisory-only while making mismatch metadata clearer for Continue/OpenAI clients. Gateway reports `active_model_mismatch_level`, `active_model_mismatch_reason`, `effective_runtime_model`, and safe `next_steps`; it does not switch models automatically. Future real runtime switching would require a separate guarded milestone.
 
+M29.13 hardens `/gateway/runtime/switch-plan` as a planning-only guardrail. The endpoint returns safety guardrails, human preflight checks, and natural-language next steps, not executable command fields. Gateway still never switches runtime models automatically; real runtime switching would require a later guarded milestone and human operation.
+
 M28.3 exposes Gateway OpenAI-compatible routes at `http://localhost:8100/v1`. Continue.dev should use `apiBase: http://localhost:8100/v1` for normal use. Direct `http://localhost:8000/v1` llama-server access is a troubleshooting fallback only.
 
 M28.4 adds optional Gateway memory injection before forwarding chat to llama-server. `memory="auto"` searches the fixed configured `MEMORY_SEARCH_URL` and injects bounded local memory context only when usable results exist. `memory="off"` disables search. Memory search failures are non-fatal and return metadata while chat continues when llama-server is reachable.

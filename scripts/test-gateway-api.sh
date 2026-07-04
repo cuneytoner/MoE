@@ -249,6 +249,9 @@ tools_read_only_execution="$(jq -r '.read_only_execution_enabled' <<<"$tools_res
 tools_model_chat="$(jq -r 'if .tools.model_chat then "present" else "missing" end' <<<"$tools_response")"
 tools_memory_search="$(jq -r 'if .tools.memory_search then "present" else "missing" end' <<<"$tools_response")"
 tools_runtime_switch_plan="$(jq -r 'if .tools.runtime_switch_plan then "present" else "missing" end' <<<"$tools_response")"
+tools_runtime_switch_plan_executable="$(jq -r '.tools.runtime_switch_plan.executable | tostring' <<<"$tools_response")"
+tools_runtime_switch_plan_read_only="$(jq -r '.tools.runtime_switch_plan.read_only | tostring' <<<"$tools_response")"
+tools_runtime_switch_plan_auto_execution="$(jq -r '.tools.runtime_switch_plan.auto_execution_supported | tostring' <<<"$tools_response")"
 tools_docker_status_check="$(jq -r 'if .tools.docker_status_check then "present" else "missing" end' <<<"$tools_response")"
 tools_shell_command_suggestion="$(jq -r 'if .tools.shell_command_suggestion then "present" else "missing" end' <<<"$tools_response")"
 tools_gateway_health_check="$(jq -r 'if .tools.gateway_health_check then "present" else "missing" end' <<<"$tools_response")"
@@ -266,6 +269,9 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_model_chat" = "present" ] \
   && [ "$tools_memory_search" = "present" ] \
   && [ "$tools_runtime_switch_plan" = "present" ] \
+  && [ "$tools_runtime_switch_plan_executable" = "false" ] \
+  && [ "$tools_runtime_switch_plan_read_only" = "false" ] \
+  && [ "$tools_runtime_switch_plan_auto_execution" = "false" ] \
   && [ "$tools_docker_status_check" = "present" ] \
   && [ "$tools_shell_command_suggestion" = "present" ] \
   && [ "$tools_gateway_health_check" = "present" ] \
@@ -402,6 +408,45 @@ assert_tool_execute_rejected "model_chat"
 assert_tool_execute_rejected "memory_search"
 assert_tool_execute_rejected "none"
 assert_tool_execute_error "unknown_tool"
+
+runtime_switch_plan_http_status="$(
+  curl -sS -o /tmp/moe-gateway-runtime-switch-plan.json -w "%{http_code}" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"intent":"review"}' \
+    "$GATEWAY_API_URL/gateway/runtime/switch-plan" || true
+)"
+runtime_switch_plan_response="$(cat /tmp/moe-gateway-runtime-switch-plan.json 2>/dev/null || true)"
+
+runtime_switch_plan_status="$(jq -r '.status // empty' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_apply_supported="$(jq -r '.apply_supported | tostring' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_auto_execution_supported="$(jq -r '.auto_execution_supported | tostring' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_supported="$(jq -r '.runtime_switch_supported | tostring' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_attempted="$(jq -r '.runtime_switch_attempted | tostring' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_human="$(jq -r '.requires_human_operator | tostring' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_next_steps_type="$(jq -r 'if (.manual_next_steps | type) == "array" then "array" else "other" end' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_guardrails_type="$(jq -r 'if (.guardrails | type) == "array" then "array" else "other" end' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_preflight_type="$(jq -r 'if (.preflight_checks | type) == "array" then "array" else "other" end' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_forbidden_count="$(
+  (grep -Eio '"command"|"commands"|shell|docker compose|pkill|kill|systemctl|APPLY=1' \
+    <<<"$runtime_switch_plan_response" || true) | wc -l
+)"
+
+if [ "$runtime_switch_plan_http_status" = "200" ] \
+  && [ "$runtime_switch_plan_status" = "plan_only" ] \
+  && [ "$runtime_switch_plan_apply_supported" = "false" ] \
+  && [ "$runtime_switch_plan_auto_execution_supported" = "false" ] \
+  && [ "$runtime_switch_plan_supported" = "false" ] \
+  && [ "$runtime_switch_plan_attempted" = "false" ] \
+  && [ "$runtime_switch_plan_human" = "true" ] \
+  && [ "$runtime_switch_plan_next_steps_type" = "array" ] \
+  && [ "$runtime_switch_plan_guardrails_type" = "array" ] \
+  && [ "$runtime_switch_plan_preflight_type" = "array" ] \
+  && [ "$runtime_switch_plan_forbidden_count" -eq 0 ]; then
+  pass "Gateway API /gateway/runtime/switch-plan plan-only guardrail"
+else
+  fail "Gateway API /gateway/runtime/switch-plan returned unexpected response: HTTP $runtime_switch_plan_http_status $runtime_switch_plan_response"
+fi
 
 if ! workspace_status_response="$(curl -fsS "$GATEWAY_API_URL/gateway/workspace/status")"; then
   fail "Gateway API /gateway/workspace/status request failed"
@@ -610,7 +655,15 @@ assert_switch_plan() {
   local response
   local plan_status
   local plan_target
-  local manual_command
+  local apply_supported
+  local auto_execution_supported
+  local runtime_switch_supported
+  local runtime_switch_attempted
+  local requires_human_operator
+  local manual_next_steps_type
+  local guardrails_type
+  local preflight_checks_type
+  local forbidden_count
 
   body="$(jq -nc --arg message "$message" '{message: $message}')"
   if ! response="$(post_json "/gateway/runtime/switch-plan" "$body")"; then
@@ -618,12 +671,31 @@ assert_switch_plan() {
   fi
 
   plan_status="$(jq -r '.status // empty' <<<"$response")"
-  plan_target="$(jq -r '.target // empty' <<<"$response")"
-  manual_command="$(jq -r '.manual_command // empty' <<<"$response")"
+  plan_target="$(jq -r '.target_model_id // empty' <<<"$response")"
+  apply_supported="$(jq -r '.apply_supported | tostring' <<<"$response")"
+  auto_execution_supported="$(jq -r '.auto_execution_supported | tostring' <<<"$response")"
+  runtime_switch_supported="$(jq -r '.runtime_switch_supported | tostring' <<<"$response")"
+  runtime_switch_attempted="$(jq -r '.runtime_switch_attempted | tostring' <<<"$response")"
+  requires_human_operator="$(jq -r '.requires_human_operator | tostring' <<<"$response")"
+  manual_next_steps_type="$(jq -r 'if (.manual_next_steps | type) == "array" then "array" else "other" end' <<<"$response")"
+  guardrails_type="$(jq -r 'if (.guardrails | type) == "array" then "array" else "other" end' <<<"$response")"
+  preflight_checks_type="$(jq -r 'if (.preflight_checks | type) == "array" then "array" else "other" end' <<<"$response")"
+  forbidden_count="$(
+    (grep -Eio '"command"|"commands"|shell|docker compose|pkill|kill|systemctl|APPLY=1' \
+      <<<"$response" || true) | wc -l
+  )"
 
-  if [ "$plan_status" = "ok" ] \
+  if [ "$plan_status" = "plan_only" ] \
     && [ "$plan_target" = "$expected_target" ] \
-    && [ -n "$manual_command" ]; then
+    && [ "$apply_supported" = "false" ] \
+    && [ "$auto_execution_supported" = "false" ] \
+    && [ "$runtime_switch_supported" = "false" ] \
+    && [ "$runtime_switch_attempted" = "false" ] \
+    && [ "$requires_human_operator" = "true" ] \
+    && [ "$manual_next_steps_type" = "array" ] \
+    && [ "$guardrails_type" = "array" ] \
+    && [ "$preflight_checks_type" = "array" ] \
+    && [ "$forbidden_count" -eq 0 ]; then
     pass "Gateway API /gateway/runtime/switch-plan target=$expected_target"
   else
     fail "Gateway API /gateway/runtime/switch-plan expected $expected_target, got: $response"
