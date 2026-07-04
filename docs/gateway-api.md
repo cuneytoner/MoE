@@ -490,6 +490,16 @@ M29.13 keeps this endpoint planning-only. Switch plans contain safety checklists
 
 M29.14 links switch plans to `docs/gateway-runtime-switch-runbook.md`. The runbook reference is safe documentation only: Gateway still does not switch models, and future real guarded switching remains separate future work.
 
+### GET /gateway/runtime/profile-preflight
+
+Returns a read-only profile readiness review for configured Gateway runtime targets.
+
+```bash
+curl -fsS http://localhost:8100/gateway/runtime/profile-preflight | jq
+```
+
+M29.15 checks model routing mappings, configured `runtime_model_id` values, local file existence when the runtime id is a local path, and current active runtime metadata. It does not switch models, start services, download missing model files, control Docker, write files, or call Memory API write routes. Missing files are reported as warnings with `status: review_required`.
+
 ### POST /gateway/chat
 
 Calls the OpenAI-compatible model runtime `/chat/completions` endpoint.

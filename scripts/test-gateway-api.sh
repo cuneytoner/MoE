@@ -239,6 +239,31 @@ else
   fail "Gateway API /gateway/model-routing returned unexpected response: $model_routing_response"
 fi
 
+runtime_profile_preflight_http_status="$(
+  curl -sS -o /tmp/moe-gateway-runtime-profile-preflight.json -w "%{http_code}" \
+    "$GATEWAY_API_URL/gateway/runtime/profile-preflight" || true
+)"
+runtime_profile_preflight_response="$(cat /tmp/moe-gateway-runtime-profile-preflight.json 2>/dev/null || true)"
+runtime_profile_preflight_read_only="$(jq -r '.read_only | tostring' <<<"$runtime_profile_preflight_response")"
+runtime_profile_preflight_supported="$(jq -r '.runtime_switch_supported | tostring' <<<"$runtime_profile_preflight_response")"
+runtime_profile_preflight_attempted="$(jq -r '.runtime_switch_attempted | tostring' <<<"$runtime_profile_preflight_response")"
+runtime_profile_preflight_profiles_type="$(jq -r 'if (.profiles | type) == "array" then "array" else "other" end' <<<"$runtime_profile_preflight_response")"
+runtime_profile_preflight_forbidden_count="$(
+  (grep -Eio '"command"|"commands"|shell|docker compose|pkill|kill|systemctl|APPLY=1' \
+    <<<"$runtime_profile_preflight_response" || true) | wc -l
+)"
+
+if [ "$runtime_profile_preflight_http_status" = "200" ] \
+  && [ "$runtime_profile_preflight_read_only" = "true" ] \
+  && [ "$runtime_profile_preflight_supported" = "false" ] \
+  && [ "$runtime_profile_preflight_attempted" = "false" ] \
+  && [ "$runtime_profile_preflight_profiles_type" = "array" ] \
+  && [ "$runtime_profile_preflight_forbidden_count" -eq 0 ]; then
+  pass "Gateway API /gateway/runtime/profile-preflight"
+else
+  fail "Gateway API /gateway/runtime/profile-preflight returned unexpected response: HTTP $runtime_profile_preflight_http_status $runtime_profile_preflight_response"
+fi
+
 if ! tools_response="$(curl -fsS "$GATEWAY_API_URL/gateway/tools")"; then
   fail "Gateway API /gateway/tools request failed"
 fi
@@ -257,6 +282,10 @@ tools_shell_command_suggestion="$(jq -r 'if .tools.shell_command_suggestion then
 tools_gateway_health_check="$(jq -r 'if .tools.gateway_health_check then "present" else "missing" end' <<<"$tools_response")"
 tools_memory_deep_health_check="$(jq -r 'if .tools.memory_deep_health_check then "present" else "missing" end' <<<"$tools_response")"
 tools_runtime_status_check="$(jq -r 'if .tools.runtime_status_check then "present" else "missing" end' <<<"$tools_response")"
+tools_runtime_profile_preflight="$(jq -r 'if .tools.runtime_profile_preflight then "present" else "missing" end' <<<"$tools_response")"
+tools_runtime_profile_preflight_executable="$(jq -r '.tools.runtime_profile_preflight.executable | tostring' <<<"$tools_response")"
+tools_runtime_profile_preflight_read_only="$(jq -r '.tools.runtime_profile_preflight.read_only | tostring' <<<"$tools_response")"
+tools_runtime_profile_preflight_auto_execution="$(jq -r '.tools.runtime_profile_preflight.auto_execution_supported | tostring' <<<"$tools_response")"
 tools_workspace_status="$(jq -r 'if .tools.workspace_status then "present" else "missing" end' <<<"$tools_response")"
 tools_code_context="$(jq -r 'if .tools.code_context then "present" else "missing" end' <<<"$tools_response")"
 tools_code_ask="$(jq -r 'if .tools.code_ask then "present" else "missing" end' <<<"$tools_response")"
@@ -277,6 +306,10 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_gateway_health_check" = "present" ] \
   && [ "$tools_memory_deep_health_check" = "present" ] \
   && [ "$tools_runtime_status_check" = "present" ] \
+  && [ "$tools_runtime_profile_preflight" = "present" ] \
+  && [ "$tools_runtime_profile_preflight_executable" = "true" ] \
+  && [ "$tools_runtime_profile_preflight_read_only" = "true" ] \
+  && [ "$tools_runtime_profile_preflight_auto_execution" = "false" ] \
   && [ "$tools_workspace_status" = "present" ] \
   && [ "$tools_code_context" = "present" ] \
   && [ "$tools_code_ask" = "present" ] \
@@ -391,6 +424,7 @@ assert_tool_execute_ok "memory_health_check" '{}'
 assert_tool_execute_ok "memory_deep_health_check" '{}'
 assert_tool_execute_ok "embed_worker_health_check" '{}'
 assert_tool_execute_ok "runtime_status_check" '{}'
+assert_tool_execute_ok "runtime_profile_preflight" '{}'
 assert_tool_execute_ok "model_routing_read" '{}'
 assert_tool_execute_ok "tools_read" '{}'
 assert_tool_execute_ok "workspace_status" '{}'
