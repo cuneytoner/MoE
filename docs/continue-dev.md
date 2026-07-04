@@ -56,7 +56,7 @@ M29.11 normalizes Continue stream/tool payloads for compatibility. Continue can 
 http://localhost:8100/v1
 ```
 
-Gateway accepts `stream: true` but normalizes it to non-streaming internally. It accepts `tools` and `tool_choice` fields but ignores them safely; it does not execute tools from Continue/OpenAI tool payloads.
+Gateway accepts `stream: true` and returns a minimal OpenAI-compatible SSE wrapper for Continue, while still using one internal non-streaming model call. This is compatibility streaming, not true token-by-token runtime streaming. It accepts `tools` and `tool_choice` fields but ignores them safely; it does not execute tools from Continue/OpenAI tool payloads.
 
 Use the default `MoE Gateway` profile for normal editor chat. Use a model-specific Gateway profile only after manually switching the host runtime to that model:
 
@@ -98,7 +98,7 @@ make model-switch MODEL=qwen-coder-32b-main
 - Workspace access is read-only.
 - Gateway does not execute shell commands.
 - Gateway does not switch the model runtime.
-- Streaming is normalized to non-streaming by the Gateway OpenAI compatibility adapter.
+- `stream: true` uses a minimal SSE wrapper over the non-streaming Gateway model call.
 - Continue/OpenAI tool payloads are accepted for compatibility but never executed.
 - Continue.dev can use Gateway chat now; repo-aware coding agent behavior is a future milestone.
 

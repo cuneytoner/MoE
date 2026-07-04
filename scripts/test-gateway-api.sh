@@ -119,21 +119,28 @@ case "$openai_chat_http_status" in
 esac
 
 openai_stream_http_status="$(
-  curl -sS -o /tmp/moe-gateway-openai-stream-response.json -w "%{http_code}" \
+  curl -sS -D /tmp/moe-gateway-openai-stream-headers.txt \
+    -o /tmp/moe-gateway-openai-stream-response.txt \
+    -w "%{http_code}" \
     -H "Content-Type: application/json" \
     -X POST \
     -d '{"model":"local-gateway","messages":[{"role":"user","content":"hello"}],"stream":true}' \
     "$GATEWAY_API_URL/v1/chat/completions" || true
 )"
-openai_stream_response="$(cat /tmp/moe-gateway-openai-stream-response.json 2>/dev/null || true)"
+openai_stream_headers="$(cat /tmp/moe-gateway-openai-stream-headers.txt 2>/dev/null || true)"
+openai_stream_response="$(cat /tmp/moe-gateway-openai-stream-response.txt 2>/dev/null || true)"
 
 if [ "$openai_stream_http_status" = "200" ] \
-  && [ "$(jq -r '.choices[0].message.content // empty' <<<"$openai_stream_response")" != "" ] \
-  && [ "$(jq -r '.x_gateway_compat.stream_requested' <<<"$openai_stream_response")" = "true" ] \
-  && [ "$(jq -r '.x_gateway_compat.stream_normalized' <<<"$openai_stream_response")" = "true" ]; then
-  pass "Gateway API /v1/chat/completions normalizes streaming"
+  && grep -qi 'content-type:.*text/event-stream' <<<"$openai_stream_headers" \
+  && grep -q 'data: ' <<<"$openai_stream_response" \
+  && grep -q '"object":"chat.completion.chunk"' <<<"$openai_stream_response" \
+  && grep -q '"choices"' <<<"$openai_stream_response" \
+  && grep -q '"stream_requested":true' <<<"$openai_stream_response" \
+  && grep -q '"stream_wrapped":true' <<<"$openai_stream_response" \
+  && grep -q '\[DONE\]' <<<"$openai_stream_response"; then
+  pass "Gateway API /v1/chat/completions wraps streaming as SSE"
 else
-  fail "Gateway API /v1/chat/completions expected HTTP 200 normalized stream response, got $openai_stream_http_status: $openai_stream_response"
+  fail "Gateway API /v1/chat/completions expected HTTP 200 SSE stream response, got $openai_stream_http_status headers=[$openai_stream_headers] body=[$openai_stream_response]"
 fi
 
 openai_tools_http_status="$(

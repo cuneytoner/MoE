@@ -1355,7 +1355,8 @@ Before accepting Codex changes, check:
 ## Milestone 29.11 Gateway Continue Compatibility Hardening
 
 - Update `/v1/chat/completions` to tolerate Continue/OpenAI extra fields: `stream`, `tools`, `tool_choice`, `parallel_tool_calls`, `response_format`, `stop`, penalties, `top_p`, `n`, and `user`.
-- Normalize `stream=true` to the existing non-streaming internal path and return `x_gateway_compat.stream_requested=true` and `x_gateway_compat.stream_normalized=true`.
+- Support `stream=true` with a minimal OpenAI-compatible SSE wrapper over the existing non-streaming internal model call and return `x_gateway_compat.stream_requested=true` and `x_gateway_compat.stream_wrapped=true`.
+- Keep SSE support as compatibility streaming, not true token-by-token runtime streaming.
 - Accept `tools` and `tool_choice` fields but ignore them safely; never execute tools from Continue/OpenAI tool payloads.
 - Return OpenAI-style JSON error bodies for rejected or failed `/v1/chat/completions` requests.
 - Keep Gateway-Auto configs pointed at `http://localhost:8100/v1`.

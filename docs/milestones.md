@@ -941,7 +941,8 @@ Goals:
 - Normalize stream and tool payload handling without enabling unsupported write actions.
 - Return consistent JSON error bodies for Continue-facing Gateway failures.
 - Accept `stream`, `tools`, `tool_choice`, `parallel_tool_calls`, `response_format`, `stop`, penalties, `top_p`, `n`, and `user` in `/v1/chat/completions`.
-- Normalize `stream=true` to the existing non-streaming internal path and return `x_gateway_compat`.
+- Support `stream=true` with a minimal OpenAI-compatible SSE wrapper over the existing non-streaming internal model call and return `x_gateway_compat`.
+- Keep SSE support as compatibility streaming, not true token-by-token runtime streaming.
 - Ignore Continue/OpenAI tool payloads safely; never execute tools from these payloads.
 - Keep Gateway from writing files, executing shell commands, switching models, calling Memory API write routes, controlling Docker, or mutating runtime state automatically.
 

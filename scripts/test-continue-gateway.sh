@@ -49,28 +49,31 @@ else
   fail "Gateway OpenAI-compatible chat returned unexpected response: $response"
 fi
 
-if ! continue_response="$(
-  curl -fsS \
+continue_headers_file="/tmp/moe-continue-gateway-stream-headers.txt"
+continue_body_file="/tmp/moe-continue-gateway-stream.txt"
+continue_http_status="$(
+  curl -sS -D "$continue_headers_file" \
+    -o "$continue_body_file" \
+    -w "%{http_code}" \
     -H "Content-Type: application/json" \
     -X POST \
     -d '{"model":"local-gateway","messages":[{"role":"system","content":"You are a concise local coding assistant."},{"role":"user","content":"Return only the word OK."}],"temperature":0.2,"max_tokens":16,"stream":true,"tools":[{"type":"function","function":{"name":"shell","description":"must not run","parameters":{"type":"object","properties":{}}}}],"tool_choice":"auto","parallel_tool_calls":true,"response_format":{"type":"text"},"stop":["\n\n"],"presence_penalty":0,"frequency_penalty":0,"top_p":1,"n":1,"user":"continue"}' \
-    "$GATEWAY_API_URL/v1/chat/completions"
-)"; then
-  fail "Gateway Continue-compatible stream/tool payload request failed"
-fi
+    "$GATEWAY_API_URL/v1/chat/completions" || true
+)"
+continue_headers="$(cat "$continue_headers_file" 2>/dev/null || true)"
+continue_response="$(cat "$continue_body_file" 2>/dev/null || true)"
 
-continue_content="$(jq -r '.choices[0].message.content // empty' <<<"$continue_response")"
-stream_requested="$(jq -r '.x_gateway_compat.stream_requested' <<<"$continue_response")"
-stream_normalized="$(jq -r '.x_gateway_compat.stream_normalized' <<<"$continue_response")"
-tools_ignored="$(jq -r '.x_gateway_compat.tools_ignored' <<<"$continue_response")"
-tool_choice_ignored="$(jq -r '.x_gateway_compat.tool_choice_ignored' <<<"$continue_response")"
-
-if [ -n "$continue_content" ] \
-  && [ "$stream_requested" = "true" ] \
-  && [ "$stream_normalized" = "true" ] \
-  && [ "$tools_ignored" = "true" ] \
-  && [ "$tool_choice_ignored" = "true" ]; then
-  pass "Gateway normalizes Continue.dev stream/tool payloads without tool execution"
+if [ "$continue_http_status" = "200" ] \
+  && grep -qi 'content-type:.*text/event-stream' <<<"$continue_headers" \
+  && grep -q 'data: ' <<<"$continue_response" \
+  && grep -q '"object":"chat.completion.chunk"' <<<"$continue_response" \
+  && grep -q '"choices"' <<<"$continue_response" \
+  && grep -q '"stream_requested":true' <<<"$continue_response" \
+  && grep -q '"stream_wrapped":true' <<<"$continue_response" \
+  && grep -q '"tools_ignored":true' <<<"$continue_response" \
+  && grep -q '"tool_choice_ignored":true' <<<"$continue_response" \
+  && grep -q '\[DONE\]' <<<"$continue_response"; then
+  pass "Gateway wraps Continue.dev stream/tool payloads as SSE without tool execution"
 else
-  fail "Gateway Continue-compatible payload returned unexpected response: $continue_response"
+  fail "Gateway Continue-compatible payload expected HTTP 200 SSE response, got $continue_http_status headers=[$continue_headers] body=[$continue_response]"
 fi

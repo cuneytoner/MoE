@@ -1,10 +1,11 @@
+import json
 import time
 from typing import Any
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import ValidationError
 
 from app.clients.embed_worker import EmbedWorkerClient
@@ -709,7 +710,7 @@ async def openai_models() -> dict[str, Any]:
 @app.post("/v1/chat/completions", response_model=OpenAIChatCompletionResponse)
 async def openai_chat_completions(
     request_body: dict[str, Any],
-) -> OpenAIChatCompletionResponse | JSONResponse:
+) -> OpenAIChatCompletionResponse | JSONResponse | StreamingResponse:
     try:
         request = OpenAIChatCompletionRequest(**request_body)
     except ValidationError as exc:
@@ -750,8 +751,7 @@ async def openai_chat_completions(
 
     raw = response.raw or {}
     usage = raw.get("usage") if isinstance(raw.get("usage"), dict) else {}
-
-    return OpenAIChatCompletionResponse(
+    completion = OpenAIChatCompletionResponse(
         id=str(raw.get("id") or f"chatcmpl-local-{uuid4().hex}"),
         object=str(raw.get("object") or "chat.completion"),
         created=int(raw.get("created") or time.time()),
@@ -771,6 +771,12 @@ async def openai_chat_completions(
         x_gateway_memory=response.memory,
         x_gateway_compat=_openai_compat_metadata(request),
     )
+    if request.stream:
+        return StreamingResponse(
+            _openai_chat_completion_stream(completion),
+            media_type="text/event-stream",
+        )
+    return completion
 
 
 async def _gateway_chat_proxy(
@@ -980,10 +986,64 @@ def _openai_compat_metadata(request: OpenAIChatCompletionRequest) -> dict[str, A
     stream_requested = bool(request.stream)
     return {
         "stream_requested": stream_requested,
-        "stream_normalized": stream_requested,
+        "stream_normalized": False,
+        "stream_wrapped": stream_requested,
         "tools_ignored": tools_ignored,
         "tool_choice_ignored": tool_choice_ignored,
     }
+
+
+async def _openai_chat_completion_stream(
+    completion: OpenAIChatCompletionResponse,
+):
+    compat = completion.x_gateway_compat or {}
+    base = {
+        "id": completion.id,
+        "object": "chat.completion.chunk",
+        "created": completion.created,
+        "model": completion.model,
+        "x_gateway_compat": compat,
+    }
+    content = ""
+    if completion.choices:
+        content = completion.choices[0].message.content
+
+    chunks = [
+        {
+            **base,
+            "choices": [
+                {
+                    "index": 0,
+                    "delta": {"role": "assistant"},
+                    "finish_reason": None,
+                }
+            ],
+        },
+        {
+            **base,
+            "choices": [
+                {
+                    "index": 0,
+                    "delta": {"content": content},
+                    "finish_reason": None,
+                }
+            ],
+        },
+        {
+            **base,
+            "choices": [
+                {
+                    "index": 0,
+                    "delta": {},
+                    "finish_reason": "stop",
+                }
+            ],
+        },
+    ]
+
+    for chunk in chunks:
+        yield f"data: {json.dumps(chunk, separators=(',', ':'))}\n\n"
+    yield "data: [DONE]\n\n"
 
 
 def _openai_error_response(

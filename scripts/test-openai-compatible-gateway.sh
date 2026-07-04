@@ -115,21 +115,28 @@ case "$chat_http_status" in
 esac
 
 stream_http_status="$(
-  curl -sS -o /tmp/moe-openai-gateway-stream.json -w "%{http_code}" \
+  curl -sS -D /tmp/moe-openai-gateway-stream-headers.txt \
+    -o /tmp/moe-openai-gateway-stream.txt \
+    -w "%{http_code}" \
     -H "Content-Type: application/json" \
     -X POST \
     -d '{"model":"gateway-auto","messages":[{"role":"user","content":"hello"}],"stream":true}' \
     "$GATEWAY_API_URL/v1/chat/completions" || true
 )"
-stream_response="$(cat /tmp/moe-openai-gateway-stream.json 2>/dev/null || true)"
+stream_headers="$(cat /tmp/moe-openai-gateway-stream-headers.txt 2>/dev/null || true)"
+stream_response="$(cat /tmp/moe-openai-gateway-stream.txt 2>/dev/null || true)"
 
 if [ "$stream_http_status" = "200" ] \
-  && [ "$(jq -r '.choices[0].message.content // empty' <<<"$stream_response")" != "" ] \
-  && [ "$(jq -r '.x_gateway_compat.stream_requested' <<<"$stream_response")" = "true" ] \
-  && [ "$(jq -r '.x_gateway_compat.stream_normalized' <<<"$stream_response")" = "true" ]; then
-  pass "Gateway OpenAI /v1/chat/completions normalizes streaming"
+  && grep -qi 'content-type:.*text/event-stream' <<<"$stream_headers" \
+  && grep -q 'data: ' <<<"$stream_response" \
+  && grep -q '"object":"chat.completion.chunk"' <<<"$stream_response" \
+  && grep -q '"choices"' <<<"$stream_response" \
+  && grep -q '"stream_requested":true' <<<"$stream_response" \
+  && grep -q '"stream_wrapped":true' <<<"$stream_response" \
+  && grep -q '\[DONE\]' <<<"$stream_response"; then
+  pass "Gateway OpenAI /v1/chat/completions wraps streaming as SSE"
 else
-  fail "Gateway OpenAI expected HTTP 200 for normalized stream=true, got $stream_http_status: $stream_response"
+  fail "Gateway OpenAI expected HTTP 200 SSE for stream=true, got $stream_http_status headers=[$stream_headers] body=[$stream_response]"
 fi
 
 tools_http_status="$(
