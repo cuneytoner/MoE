@@ -191,7 +191,7 @@ Example response:
       "apply_supported": false
     },
     "runtime_switch_plan": {
-      "description": "Return an advisory manual runtime switch command without executing it.",
+      "description": "Return an advisory manual runtime switch plan without executing it.",
       "auto_execution_supported": false,
       "executable": false,
       "read_only": false
@@ -451,7 +451,7 @@ If the runtime is unavailable, Gateway still returns `status: ok` with `runtime_
 
 ### POST /gateway/runtime/switch-plan
 
-Returns a safe manual switch plan. Gateway does not execute host commands.
+Returns a safe planning-only switch review. Gateway does not execute host commands.
 
 ```bash
 curl -fsS -H "Content-Type: application/json" -X POST \
@@ -463,18 +463,25 @@ Example response fields:
 
 ```json
 {
-  "status": "ok",
+  "status": "plan_only",
   "intent": "review",
-  "target": "qwen-coder-32b-main",
-  "target_runtime_id": "/home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-32B-Instruct-IQ4_XS.gguf",
-  "current_runtime_model": "/home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-14B-Instruct-IQ4_XS.gguf",
-  "switch_required": true,
-  "manual_command": "make model-switch MODEL=qwen-coder-32b-main",
-  "reason": "Target model differs from current runtime model"
+  "apply_supported": false,
+  "auto_execution_supported": false,
+  "runtime_switch_supported": false,
+  "runtime_switch_attempted": false,
+  "requires_human_operator": true,
+  "target_model_id": "qwen-coder-32b-main",
+  "target_runtime_model_id": "/home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-32B-Instruct-IQ4_XS.gguf",
+  "current_active_model": "/home/cuneyt/MoE_Models_Backup/Qwen2.5-Coder-14B-Instruct-IQ4_XS.gguf",
+  "active_model_matches_target": false,
+  "risk_level": "medium",
+  "guardrails": [],
+  "preflight_checks": [],
+  "manual_next_steps": []
 }
 ```
 
-Automatic switching is intentionally deferred. Run the returned command manually from the host when you want to switch models.
+M29.13 keeps this endpoint planning-only. Switch plans contain safety checklists and natural-language next steps, not executable command fields. Gateway still never switches runtime models automatically; real runtime switching would require a later guarded milestone and human operation.
 
 ### POST /gateway/chat
 

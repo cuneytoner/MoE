@@ -1370,3 +1370,13 @@ Before accepting Codex changes, check:
 - If a selected model target is missing from mapping, report `model_mapping_status`, use fallback safely when available, and do not fail chat only because advisory mapping fell back.
 - Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
 - Validate with `make test-gateway-chat-router`, `make test-openai-compatible-gateway`, `make test-continue-gateway`, Gateway API tests, and default source-only tests.
+
+## Milestone 29.13 Gateway Runtime Switch Plan Guardrail
+
+- Harden `/gateway/runtime/switch-plan` as a planning-only endpoint.
+- Return `status=plan_only`, `apply_supported=false`, `auto_execution_supported=false`, `runtime_switch_supported=false`, `runtime_switch_attempted=false`, `requires_human_operator=true`, target/current model metadata, `risk_level`, guardrails, preflight checks, and natural-language next steps.
+- Do not return executable command fields or command-like strings from the switch-plan response.
+- Keep `runtime_switch_plan` non-executable in the tool catalog and verify `/gateway/tools/execute` still rejects it.
+- If target or intent mapping is unknown, use fallback safely when available and include `model_mapping_status` plus a safe warning.
+- Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
+- Validate with Gateway API tests and default source-only tests.

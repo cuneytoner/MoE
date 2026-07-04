@@ -643,29 +643,59 @@ async def runtime_switch_plan(
     mapping = get_model_mapping(settings.model_routing_config)
     client = ModelRuntimeClient(settings.model_runtime_url)
     status = await client.status()
-    intent, target = _switch_plan_target(request, mapping)
-    target_runtime_id = mapping.runtime_id(target)
-    current_model = status["current_model"]
-    switch_required = current_model != target_runtime_id
-    manual_command = f"make model-switch MODEL={target}"
-    reason = (
-        "Target model differs from current runtime model"
-        if switch_required
-        else "Target model is already loaded"
+    intent, requested_target = _switch_plan_target(request, mapping)
+    target, target_runtime_id, model_mapping_status, mapping_warning = (
+        _resolve_switch_plan_target(requested_target, mapping)
     )
+    current_model = status["current_model"]
+    active_model_matches_target = bool(
+        current_model
+        and target_runtime_id
+        and current_model == target_runtime_id
+    )
+    guardrails = [
+        "Gateway produced a planning-only runtime switch review.",
+        "Gateway did not start, stop, restart, or switch the model runtime.",
+        "Gateway performed no terminal, container, filesystem, model-runtime, or memory-write action.",
+        "This plan is informational and requires a human operator.",
+    ]
+    if mapping_warning:
+        guardrails.append(mapping_warning)
     if not status["runtime_available"]:
-        switch_required = True
-        reason = "Model runtime is unavailable"
+        guardrails.append("Current model runtime status is unavailable or unknown.")
+    risk_level = _runtime_switch_plan_risk_level(
+        runtime_available=bool(status["runtime_available"]),
+        active_model_matches_target=active_model_matches_target,
+        model_mapping_status=model_mapping_status,
+    )
 
     return GatewayRuntimeSwitchPlanResponse(
-        status="ok",
+        status="plan_only",
         intent=intent,
-        target=target,
-        target_runtime_id=target_runtime_id,
-        current_runtime_model=current_model,
-        switch_required=switch_required,
-        manual_command=manual_command,
-        reason=reason,
+        target_model_id=target,
+        target_runtime_model_id=target_runtime_id,
+        current_active_model=current_model,
+        active_model_matches_target=active_model_matches_target,
+        risk_level=risk_level,
+        model_mapping_status=model_mapping_status,
+        guardrails=guardrails,
+        preflight_checks=[
+            "Confirm no long-running generation or coding task depends on the current runtime.",
+            "Confirm the desired model file exists in the documented model inventory.",
+            "Confirm enough RAM and VRAM are available for the desired model.",
+            "Verify the Gateway and Continue clients can reconnect after a manual runtime change.",
+        ],
+        manual_next_steps=[
+            "Stop the current model runtime manually only after saving work.",
+            "Start the desired runtime model using the documented local runbook.",
+            "Verify /v1/models before reconnecting Continue.",
+            "Return to Gateway chat after confirming the active runtime model.",
+        ],
+        reason=_runtime_switch_plan_reason(
+            runtime_available=bool(status["runtime_available"]),
+            active_model_matches_target=active_model_matches_target,
+            model_mapping_status=model_mapping_status,
+        ),
     )
 
 
@@ -1208,6 +1238,68 @@ def _switch_plan_target(
     decision = route_message(request.message)
     target = mapping.target_for_intent(decision.intent)
     return decision.intent, str(target["model_target"])
+
+
+def _resolve_switch_plan_target(
+    requested_target: str,
+    mapping: ModelMapping,
+) -> tuple[str, str | None, str, str | None]:
+    runtime_id = mapping.runtime_id(requested_target)
+    if runtime_id:
+        return requested_target, runtime_id, "mapped", None
+
+    fallback = mapping.fallback_model_target
+    fallback_runtime_id = mapping.runtime_id(fallback)
+    if fallback_runtime_id:
+        return (
+            fallback,
+            fallback_runtime_id,
+            "fallback_missing_requested_runtime",
+            (
+                f"Requested target {requested_target} is not mapped to a runtime model; "
+                f"planning with fallback target {fallback}."
+            ),
+        )
+
+    return (
+        requested_target,
+        None,
+        "missing_requested_and_fallback_runtime",
+        (
+            f"Requested target {requested_target} and fallback target {fallback} "
+            "are not mapped to runtime models."
+        ),
+    )
+
+
+def _runtime_switch_plan_risk_level(
+    *,
+    runtime_available: bool,
+    active_model_matches_target: bool,
+    model_mapping_status: str,
+) -> str:
+    if "missing" in model_mapping_status:
+        return "high"
+    if not runtime_available:
+        return "medium"
+    if active_model_matches_target:
+        return "low"
+    return "medium"
+
+
+def _runtime_switch_plan_reason(
+    *,
+    runtime_available: bool,
+    active_model_matches_target: bool,
+    model_mapping_status: str,
+) -> str:
+    if "missing" in model_mapping_status:
+        return "Runtime switch planning found a missing model mapping; no action was attempted."
+    if not runtime_available:
+        return "Runtime is unavailable or unknown; no action was attempted."
+    if active_model_matches_target:
+        return "Current active runtime model already matches the planned target; no action was attempted."
+    return "Planned target differs from active runtime model; no action was attempted."
 
 
 def _intent_guidance(intent: str) -> str:
