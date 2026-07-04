@@ -98,7 +98,22 @@ case "$openai_chat_http_status" in
   200)
     openai_chat_object="$(jq -r '.object // empty' <<<"$openai_chat_response")"
     openai_chat_choices_type="$(jq -r 'if (.choices | type) == "array" then "array" else "other" end' <<<"$openai_chat_response")"
-    if [ "$openai_chat_object" = "chat.completion" ] && [ "$openai_chat_choices_type" = "array" ]; then
+    openai_router_routing_mode="$(jq -r '.x_gateway_router.routing_mode // empty' <<<"$openai_chat_response")"
+    openai_router_runtime_switch_supported="$(jq -r '.x_gateway_router.runtime_switch_supported | tostring' <<<"$openai_chat_response")"
+    openai_router_runtime_switch_attempted="$(jq -r '.x_gateway_router.runtime_switch_attempted | tostring' <<<"$openai_chat_response")"
+    openai_router_continue_safe="$(jq -r '.x_gateway_router.continue_safe | tostring' <<<"$openai_chat_response")"
+    openai_router_mismatch_level="$(jq -r '.x_gateway_router.active_model_mismatch_level // empty' <<<"$openai_chat_response")"
+    openai_router_effective_runtime_model="$(jq -r '.x_gateway_router.effective_runtime_model // empty' <<<"$openai_chat_response")"
+    openai_router_next_steps_type="$(jq -r 'if (.x_gateway_router.next_steps | type) == "array" then "array" else "other" end' <<<"$openai_chat_response")"
+    if [ "$openai_chat_object" = "chat.completion" ] \
+      && [ "$openai_chat_choices_type" = "array" ] \
+      && [ "$openai_router_routing_mode" = "advisory_only" ] \
+      && [ "$openai_router_runtime_switch_supported" = "false" ] \
+      && [ "$openai_router_runtime_switch_attempted" = "false" ] \
+      && [ "$openai_router_continue_safe" = "true" ] \
+      && { [ "$openai_router_mismatch_level" = "none" ] || [ "$openai_router_mismatch_level" = "info" ] || [ "$openai_router_mismatch_level" = "warning" ]; } \
+      && [ -n "$openai_router_effective_runtime_model" ] \
+      && [ "$openai_router_next_steps_type" = "array" ]; then
       pass "Gateway API /v1/chat/completions"
     else
       fail "Gateway API /v1/chat/completions returned unexpected response: $openai_chat_response"

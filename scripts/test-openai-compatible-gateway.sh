@@ -92,10 +92,24 @@ case "$chat_http_status" in
     content="$(jq -r '.choices[0].message.content // empty' <<<"$chat_response")"
     router_mode="$(jq -r '.x_gateway_router.mode // .router.mode // empty' <<<"$chat_response")"
     router_intent="$(jq -r '.x_gateway_router.intent // .router.intent // empty' <<<"$chat_response")"
+    router_routing_mode="$(jq -r '.x_gateway_router.routing_mode // empty' <<<"$chat_response")"
+    router_runtime_switch_supported="$(jq -r '.x_gateway_router.runtime_switch_supported | tostring' <<<"$chat_response")"
+    router_runtime_switch_attempted="$(jq -r '.x_gateway_router.runtime_switch_attempted | tostring' <<<"$chat_response")"
+    router_continue_safe="$(jq -r '.x_gateway_router.continue_safe | tostring' <<<"$chat_response")"
+    router_mismatch_level="$(jq -r '.x_gateway_router.active_model_mismatch_level // empty' <<<"$chat_response")"
+    router_effective_runtime_model="$(jq -r '.x_gateway_router.effective_runtime_model // empty' <<<"$chat_response")"
+    router_next_steps_type="$(jq -r 'if (.x_gateway_router.next_steps | type) == "array" then "array" else "other" end' <<<"$chat_response")"
     if [ "$object" = "chat.completion" ] \
       && [ -n "$content" ] \
       && [ "$router_mode" = "advisory" ] \
-      && [ -n "$router_intent" ]; then
+      && [ -n "$router_intent" ] \
+      && [ "$router_routing_mode" = "advisory_only" ] \
+      && [ "$router_runtime_switch_supported" = "false" ] \
+      && [ "$router_runtime_switch_attempted" = "false" ] \
+      && [ "$router_continue_safe" = "true" ] \
+      && { [ "$router_mismatch_level" = "none" ] || [ "$router_mismatch_level" = "info" ] || [ "$router_mismatch_level" = "warning" ]; } \
+      && [ -n "$router_effective_runtime_model" ] \
+      && [ "$router_next_steps_type" = "array" ]; then
       pass "Gateway OpenAI /v1/chat/completions"
     else
       fail "Gateway OpenAI /v1/chat/completions returned bad contract: $chat_response"

@@ -72,6 +72,14 @@ assert_router_ok() {
   selected_model_id="$(jq -r '.router.selected_model_id // empty' <<<"$response")"
   selected_model_path="$(jq -r '.router.selected_model_path // empty' <<<"$response")"
   active_model_matches="$(jq -r '.router.active_model_matches | tostring' <<<"$response")"
+  routing_mode="$(jq -r '.router.routing_mode // empty' <<<"$response")"
+  runtime_switch_supported="$(jq -r '.router.runtime_switch_supported | tostring' <<<"$response")"
+  runtime_switch_attempted="$(jq -r '.router.runtime_switch_attempted | tostring' <<<"$response")"
+  continue_safe="$(jq -r '.router.continue_safe | tostring' <<<"$response")"
+  active_model_mismatch_level="$(jq -r '.router.active_model_mismatch_level // empty' <<<"$response")"
+  effective_runtime_model="$(jq -r '.router.effective_runtime_model // empty' <<<"$response")"
+  next_steps_type="$(jq -r 'if (.router.next_steps | type) == "array" then "array" else "other" end' <<<"$response")"
+  unsafe_next_steps="$(jq -r '[.router.next_steps[]? | select(test("make model-switch|docker|curl|bash|sh "; "i"))] | length' <<<"$response")"
   reasons_type="$(jq -r 'if (.router.reasons | type) == "array" then "array" else "other" end' <<<"$response")"
 
   if [ "$status" = "ok" ] \
@@ -80,6 +88,14 @@ assert_router_ok() {
     && [ -n "$selected_model_id" ] \
     && [ -n "$selected_model_path" ] \
     && { [ "$active_model_matches" = "true" ] || [ "$active_model_matches" = "false" ]; } \
+    && [ "$routing_mode" = "advisory_only" ] \
+    && [ "$runtime_switch_supported" = "false" ] \
+    && [ "$runtime_switch_attempted" = "false" ] \
+    && [ "$continue_safe" = "true" ] \
+    && { [ "$active_model_mismatch_level" = "none" ] || [ "$active_model_mismatch_level" = "info" ] || [ "$active_model_mismatch_level" = "warning" ]; } \
+    && [ -n "$effective_runtime_model" ] \
+    && [ "$next_steps_type" = "array" ] \
+    && [ "$unsafe_next_steps" = "0" ] \
     && [ "$reasons_type" = "array" ]; then
     pass "Gateway chat router intent=$intent"
   else
@@ -111,9 +127,13 @@ fi
 
 disabled_mode="$(jq -r '.router.mode // empty' <<<"$disabled_response")"
 disabled_intent="$(jq -r '.router.intent // empty' <<<"$disabled_response")"
+disabled_routing_mode="$(jq -r '.router.routing_mode // empty' <<<"$disabled_response")"
+disabled_runtime_switch_attempted="$(jq -r '.router.runtime_switch_attempted | tostring' <<<"$disabled_response")"
 if [ "$disabled_status" = "ok" ] \
   && [ "$disabled_mode" = "disabled" ] \
-  && [ "$disabled_intent" = "general" ]; then
+  && [ "$disabled_intent" = "general" ] \
+  && [ "$disabled_routing_mode" = "advisory_only" ] \
+  && [ "$disabled_runtime_switch_attempted" = "false" ]; then
   pass "Gateway chat router disabled mode"
 else
   fail "Gateway chat router disabled mode returned unexpected response: $disabled_response"

@@ -150,6 +150,8 @@ The M28.1 Gateway chat proxy uses `LLAMA_SERVER_BASE_URL` with default `http://h
 
 M28.2 adds advisory model routing metadata to `/gateway/chat`. The router may recommend `qwen-coder-14b-fast`, `qwen-coder-32b-main`, or `deepseek-coder-lite`, but it never starts, stops, restarts, or switches the active `llama-server` model. `active_model_matches=false` is expected when the advisory model differs from the currently loaded runtime model.
 
+M29.12 keeps Gateway-Auto advisory-only while making mismatch metadata clearer for Continue/OpenAI clients. Gateway reports `active_model_mismatch_level`, `active_model_mismatch_reason`, `effective_runtime_model`, and safe `next_steps`; it does not switch models automatically. Future real runtime switching would require a separate guarded milestone.
+
 M28.3 exposes Gateway OpenAI-compatible routes at `http://localhost:8100/v1`. Continue.dev should use `apiBase: http://localhost:8100/v1` for normal use. Direct `http://localhost:8000/v1` llama-server access is a troubleshooting fallback only.
 
 M28.4 adds optional Gateway memory injection before forwarding chat to llama-server. `memory="auto"` searches the fixed configured `MEMORY_SEARCH_URL` and injects bounded local memory context only when usable results exist. `memory="off"` disables search. Memory search failures are non-fatal and return metadata while chat continues when llama-server is reachable.

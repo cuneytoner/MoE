@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.11 Gateway Continue Compatibility Hardening.
-- Next planned: M29.12 Gateway-Auto Runtime Routing Hardening.
+- Completed through M29.12 Gateway-Auto Runtime Routing Hardening.
+- Next planned: M29.13 Gateway Runtime Switch Plan Guardrail.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -948,13 +948,24 @@ Goals:
 
 ## Milestone 29.12: Gateway-Auto Runtime Routing Hardening
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Harden `gateway-auto` runtime routing behavior for Continue and OpenAI-compatible clients.
 - Keep runtime routing advisory unless a future reviewed milestone explicitly adds guarded switching.
 - Improve model alignment metadata and mismatch handling for active llama-server models.
+- Add advisory-only switch support/attempt flags, mismatch level/reason fields, `effective_runtime_model`, `continue_safe`, and safe next steps to Gateway router metadata.
+- Keep fallback mapping safe when a selected model target is missing from model routing config.
 - Do not switch models, execute shell commands, control Docker, write files, call Memory API write routes, train, or fine-tune automatically.
+
+## Milestone 29.13: Gateway Runtime Switch Plan Guardrail
+
+Status: PLANNED
+
+Goals:
+- Plan guardrails for any future Gateway runtime switch flow without adding automatic switching.
+- Keep runtime switch output advisory and human-reviewed unless a later guarded milestone explicitly changes behavior.
+- Do not switch models, start or stop services, execute shell commands, control Docker, write files, call Memory API write routes, train, or fine-tune automatically.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

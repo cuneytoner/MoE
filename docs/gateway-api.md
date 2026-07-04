@@ -97,6 +97,8 @@ Gateway converts the request into the existing router-aware `/gateway/chat` flow
 
 M29.11 normalizes Continue/OpenAI compatibility fields. Requests with `stream: true` return a minimal OpenAI-compatible SSE wrapper with `chat.completion.chunk` events and `data: [DONE]`, while Gateway still performs one internal non-streaming model call. This is compatibility streaming for clients like Continue, not true token-by-token runtime streaming. Stream chunks include `x_gateway_compat.stream_requested=true` and `x_gateway_compat.stream_wrapped=true`. `tools`, `tool_choice`, and related tool payload fields are accepted for compatibility but ignored; Gateway does not execute tools from Continue/OpenAI tool payloads.
 
+M29.12 hardens Gateway-Auto runtime routing metadata. `x_gateway_router` remains advisory-only and includes `routing_mode: "advisory_only"`, `runtime_switch_supported: false`, `runtime_switch_attempted: false`, `continue_safe: true`, `effective_runtime_model`, mismatch level/reason fields, and safe `next_steps`. Gateway reports active runtime mismatches clearly but does not switch models automatically.
+
 Rejected or failed `/v1/chat/completions` requests return an OpenAI-style JSON error body:
 
 ```json
