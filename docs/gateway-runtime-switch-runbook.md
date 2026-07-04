@@ -14,12 +14,15 @@ M29.14 links Gateway runtime switch planning to this manual runbook. Gateway-Aut
 ## Manual Review Flow
 
 1. Read the `/gateway/runtime/switch-plan` response and confirm it is `status: plan_only`.
-2. Check `/v1/models` before any manual runtime change.
-3. Confirm Continue still points to Gateway-Auto through `http://localhost:8100/v1`.
-4. If a runtime change is still desired, the human operator manually stops the current `llama-server` process and starts the desired model using the documented local process.
-5. Check `/v1/models` after the manual runtime change.
-6. Verify `/v1/chat/completions` through Gateway after the runtime change.
-7. If the new runtime is unhealthy, rollback means manually restarting the previous known-good `llama-server` command.
+2. Review `GET /gateway/runtime/profile-preflight` for mapping readiness and missing local model file warnings.
+3. Check `/v1/models` before any manual runtime change.
+4. Confirm Continue still points to Gateway-Auto through `http://localhost:8100/v1`.
+5. If a runtime change is still desired, the human operator manually stops the current `llama-server` process and starts the desired model using the documented local process.
+6. Check `/v1/models` after the manual runtime change.
+7. Verify `/v1/chat/completions` through Gateway after the runtime change.
+8. If the new runtime is unhealthy, rollback means manually restarting the previous known-good `llama-server` command.
+
+M29.15 adds runtime profile preflight as a read-only check. It validates mapping and local file readiness only; missing model files remain warnings or review-required items, not automatic downloads or fixes.
 
 ## Continue Checks
 

@@ -31,6 +31,27 @@ class GatewayRuntimeStatusResponse(BaseModel):
     current_model: str | None = None
 
 
+class GatewayRuntimeProfilePreflightProfile(BaseModel):
+    model_target: str
+    runtime_model_id: str | None = None
+    mapping_status: str
+    file_path: str | None = None
+    file_exists: bool | None = None
+    readiness: Literal["ready", "missing_file", "unknown", "review_required"]
+    warnings: list[str] = Field(default_factory=list)
+
+
+class GatewayRuntimeProfilePreflightResponse(BaseModel):
+    status: Literal["ok", "review_required"]
+    service: Literal["gateway-runtime-profile-preflight"]
+    read_only: bool = True
+    runtime_switch_supported: bool = False
+    runtime_switch_attempted: bool = False
+    model_runtime_url: str
+    active_model: str | None = None
+    profiles: list[GatewayRuntimeProfilePreflightProfile]
+
+
 class GatewayRuntimeSwitchPlanRequest(BaseModel):
     message: str = Field(default="")
     intent: str | None = None

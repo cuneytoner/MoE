@@ -1388,3 +1388,11 @@ Before accepting Codex changes, check:
 - Keep runbook references safe documentation only.
 - Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
 - Keep future real guarded switching separate from this milestone.
+
+## Milestone 29.15 Runtime Profile Preflight
+
+- Add read-only `GET /gateway/runtime/profile-preflight`.
+- Add read-only `runtime_profile_preflight` tool execution.
+- Check configured model routing targets, `runtime_model_id` values, local file existence for path-like ids, and active runtime metadata.
+- Report missing model files as warnings or `review_required`; do not download or repair them automatically.
+- Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
