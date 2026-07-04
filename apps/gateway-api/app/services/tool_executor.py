@@ -13,6 +13,7 @@ from app.services.patch_planner import (
 )
 from app.services.repo_agent import RepoAgentService
 from app.services.runtime_profile_preflight import build_runtime_profile_preflight
+from app.services.runtime_profile_run_catalog import build_runtime_profile_run_catalog
 from app.services.tool_planner import tool_catalog
 from app.services.workspace import WorkspaceService
 
@@ -87,6 +88,9 @@ async def _execute_read_only_tool(
 
     if tool == "runtime_profile_preflight":
         return await build_runtime_profile_preflight(settings)
+
+    if tool == "runtime_profile_run_catalog":
+        return await build_runtime_profile_run_catalog(settings)
 
     if tool == "model_routing_read":
         mapping = get_model_mapping(settings.model_routing_config)

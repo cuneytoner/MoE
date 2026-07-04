@@ -500,6 +500,16 @@ curl -fsS http://localhost:8100/gateway/runtime/profile-preflight | jq
 
 M29.15 checks model routing mappings, configured `runtime_model_id` values, local file existence when the runtime id is a local path, and current active runtime metadata. It does not switch models, start services, download missing model files, control Docker, write files, or call Memory API write routes. Missing files are reported as warnings with `status: review_required`.
 
+### GET /gateway/runtime/profile-run-catalog
+
+Returns documentation-only runtime profile run settings for human review.
+
+```bash
+curl -fsS http://localhost:8100/gateway/runtime/profile-run-catalog | jq
+```
+
+M29.16 derives safe catalog metadata from `configs/model-routing.yaml`, `configs/models.yaml`, and `configs/runtime.yaml` where possible. It exposes model paths and run settings for review, but it does not execute host scripts, switch models, start services, control Docker, write files, or call Memory API write routes. Host scripts remain manual/operator controlled.
+
 ### POST /gateway/chat
 
 Calls the OpenAI-compatible model runtime `/chat/completions` endpoint.

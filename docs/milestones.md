@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.15 Runtime Profile Preflight.
-- Next planned: M29.16 Runtime Profile Run Command Catalog.
+- Completed through M29.16 Runtime Profile Run Command Catalog.
+- Next planned: M29.17 Runtime Profile Compatibility Matrix.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -990,11 +990,20 @@ Goals:
 
 ## Milestone 29.16: Runtime Profile Run Command Catalog
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Catalog documented runtime profile run instructions for human operators.
 - Keep the catalog documentation-only and non-executable.
+- Do not start, stop, restart, or switch model runtimes automatically.
+
+## Milestone 29.17: Runtime Profile Compatibility Matrix
+
+Status: PLANNED
+
+Goals:
+- Validate runtime profile compatibility metadata in a read-only way.
+- Keep compatibility checks documentation/validation only.
 - Do not start, stop, restart, or switch model runtimes automatically.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery

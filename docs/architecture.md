@@ -133,6 +133,8 @@ Milestone 29.14 links runtime switch plans to `docs/gateway-runtime-switch-runbo
 
 Milestone 29.15 adds a read-only runtime profile preflight. Gateway checks model routing mappings, configured runtime model ids, local file existence for path-like model ids, and active runtime metadata without switching models or downloading missing files.
 
+Milestone 29.16 adds a documentation-only runtime profile run catalog. Gateway exposes configured model paths and run settings for human review, but it does not execute host scripts, switch models, control Docker, or mutate runtime state.
+
 Milestone 28.4 adds optional search-only memory injection to `/gateway/chat` and `/v1/chat/completions`. Gateway extracts the latest user message, calls the fixed configured `MEMORY_SEARCH_URL`, injects a bounded system context only when usable results exist, and returns memory metadata without storing new memory or exposing raw memory records in response metadata. Chat remains available when memory search is unavailable.
 
 Milestone 28.5 adds `POST /gateway/feedback` and `GET /gateway/feedback/status` for metadata-only feedback capture. Gateway appends allowlisted rating metadata to `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`, keeps full prompts and responses out of the record schema, and exposes only aggregate status for reads.

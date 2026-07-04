@@ -24,6 +24,8 @@ M29.14 links Gateway runtime switch planning to this manual runbook. Gateway-Aut
 
 M29.15 adds runtime profile preflight as a read-only check. It validates mapping and local file readiness only; missing model files remain warnings or review-required items, not automatic downloads or fixes.
 
+M29.16 adds `GET /gateway/runtime/profile-run-catalog` as a documentation-only catalog. It exposes runtime profile settings for human review, but does not execute host scripts or switch models. Host scripts remain manual/operator controlled.
+
 ## Continue Checks
 
 - Keep Continue configured for Gateway-Auto rather than direct model paths.

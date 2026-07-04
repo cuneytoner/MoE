@@ -1396,3 +1396,12 @@ Before accepting Codex changes, check:
 - Check configured model routing targets, `runtime_model_id` values, local file existence for path-like ids, and active runtime metadata.
 - Report missing model files as warnings or `review_required`; do not download or repair them automatically.
 - Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
+
+## Milestone 29.16 Runtime Profile Run Command Catalog
+
+- Add documentation-only `GET /gateway/runtime/profile-run-catalog`.
+- Add read-only `runtime_profile_run_catalog` tool execution.
+- Derive safe catalog metadata from model routing, model, and runtime configs where possible.
+- Expose run settings for human review without executable instructions.
+- Keep host scripts manual/operator controlled.
+- Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
