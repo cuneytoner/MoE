@@ -129,6 +129,8 @@ Milestone 29.12 hardens Gateway-Auto runtime routing metadata while keeping rout
 
 Milestone 29.13 hardens `/gateway/runtime/switch-plan` as a planning-only guardrail. The endpoint returns `status=plan_only`, explicit false apply/auto-execution/switch flags, safety guardrails, preflight checks, and natural-language next steps without executable command fields. Gateway still does not start, stop, restart, or switch runtime models automatically.
 
+Milestone 29.14 links runtime switch plans to `docs/gateway-runtime-switch-runbook.md`. These runbook references are documentation only; Gateway still does not switch models, and future real guarded switching remains separate future work.
+
 Milestone 28.4 adds optional search-only memory injection to `/gateway/chat` and `/v1/chat/completions`. Gateway extracts the latest user message, calls the fixed configured `MEMORY_SEARCH_URL`, injects a bounded system context only when usable results exist, and returns memory metadata without storing new memory or exposing raw memory records in response metadata. Chat remains available when memory search is unavailable.
 
 Milestone 28.5 adds `POST /gateway/feedback` and `GET /gateway/feedback/status` for metadata-only feedback capture. Gateway appends allowlisted rating metadata to `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`, keeps full prompts and responses out of the record schema, and exposes only aggregate status for reads.

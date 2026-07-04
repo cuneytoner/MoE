@@ -691,6 +691,19 @@ async def runtime_switch_plan(
             "Verify /v1/models before reconnecting Continue.",
             "Return to Gateway chat after confirming the active runtime model.",
         ],
+        runbook="docs/gateway-runtime-switch-runbook.md",
+        runbook_status="manual_only",
+        runbook_required=True,
+        verification_steps=[
+            "Review the Gateway runtime switch runbook before changing the local runtime.",
+            "Confirm /v1/models before and after the manual runtime change.",
+            "Confirm Continue still uses the Gateway-Auto profile at http://localhost:8100/v1.",
+            "Send a short /v1/chat/completions request after the manual runtime change.",
+        ],
+        rollback_guidance=(
+            "If the new runtime is not healthy, manually return to the previous "
+            "known-good local runtime from the operator runbook."
+        ),
         reason=_runtime_switch_plan_reason(
             runtime_available=bool(status["runtime_available"]),
             active_model_matches_target=active_model_matches_target,

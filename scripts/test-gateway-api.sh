@@ -427,6 +427,11 @@ runtime_switch_plan_human="$(jq -r '.requires_human_operator | tostring' <<<"$ru
 runtime_switch_plan_next_steps_type="$(jq -r 'if (.manual_next_steps | type) == "array" then "array" else "other" end' <<<"$runtime_switch_plan_response")"
 runtime_switch_plan_guardrails_type="$(jq -r 'if (.guardrails | type) == "array" then "array" else "other" end' <<<"$runtime_switch_plan_response")"
 runtime_switch_plan_preflight_type="$(jq -r 'if (.preflight_checks | type) == "array" then "array" else "other" end' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_runbook="$(jq -r '.runbook // empty' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_runbook_status="$(jq -r '.runbook_status // empty' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_runbook_required="$(jq -r '.runbook_required | tostring' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_verification_type="$(jq -r 'if (.verification_steps | type) == "array" then "array" else "other" end' <<<"$runtime_switch_plan_response")"
+runtime_switch_plan_rollback_guidance="$(jq -r '.rollback_guidance // empty' <<<"$runtime_switch_plan_response")"
 runtime_switch_plan_forbidden_count="$(
   (grep -Eio '"command"|"commands"|shell|docker compose|pkill|kill|systemctl|APPLY=1' \
     <<<"$runtime_switch_plan_response" || true) | wc -l
@@ -442,6 +447,11 @@ if [ "$runtime_switch_plan_http_status" = "200" ] \
   && [ "$runtime_switch_plan_next_steps_type" = "array" ] \
   && [ "$runtime_switch_plan_guardrails_type" = "array" ] \
   && [ "$runtime_switch_plan_preflight_type" = "array" ] \
+  && [ "$runtime_switch_plan_runbook" = "docs/gateway-runtime-switch-runbook.md" ] \
+  && [ "$runtime_switch_plan_runbook_status" = "manual_only" ] \
+  && [ "$runtime_switch_plan_runbook_required" = "true" ] \
+  && [ "$runtime_switch_plan_verification_type" = "array" ] \
+  && [ -n "$runtime_switch_plan_rollback_guidance" ] \
   && [ "$runtime_switch_plan_forbidden_count" -eq 0 ]; then
   pass "Gateway API /gateway/runtime/switch-plan plan-only guardrail"
 else
@@ -663,6 +673,11 @@ assert_switch_plan() {
   local manual_next_steps_type
   local guardrails_type
   local preflight_checks_type
+  local runbook
+  local runbook_status
+  local runbook_required
+  local verification_steps_type
+  local rollback_guidance
   local forbidden_count
 
   body="$(jq -nc --arg message "$message" '{message: $message}')"
@@ -680,6 +695,11 @@ assert_switch_plan() {
   manual_next_steps_type="$(jq -r 'if (.manual_next_steps | type) == "array" then "array" else "other" end' <<<"$response")"
   guardrails_type="$(jq -r 'if (.guardrails | type) == "array" then "array" else "other" end' <<<"$response")"
   preflight_checks_type="$(jq -r 'if (.preflight_checks | type) == "array" then "array" else "other" end' <<<"$response")"
+  runbook="$(jq -r '.runbook // empty' <<<"$response")"
+  runbook_status="$(jq -r '.runbook_status // empty' <<<"$response")"
+  runbook_required="$(jq -r '.runbook_required | tostring' <<<"$response")"
+  verification_steps_type="$(jq -r 'if (.verification_steps | type) == "array" then "array" else "other" end' <<<"$response")"
+  rollback_guidance="$(jq -r '.rollback_guidance // empty' <<<"$response")"
   forbidden_count="$(
     (grep -Eio '"command"|"commands"|shell|docker compose|pkill|kill|systemctl|APPLY=1' \
       <<<"$response" || true) | wc -l
@@ -695,6 +715,11 @@ assert_switch_plan() {
     && [ "$manual_next_steps_type" = "array" ] \
     && [ "$guardrails_type" = "array" ] \
     && [ "$preflight_checks_type" = "array" ] \
+    && [ "$runbook" = "docs/gateway-runtime-switch-runbook.md" ] \
+    && [ "$runbook_status" = "manual_only" ] \
+    && [ "$runbook_required" = "true" ] \
+    && [ "$verification_steps_type" = "array" ] \
+    && [ -n "$rollback_guidance" ] \
     && [ "$forbidden_count" -eq 0 ]; then
     pass "Gateway API /gateway/runtime/switch-plan target=$expected_target"
   else

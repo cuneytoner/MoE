@@ -477,11 +477,18 @@ Example response fields:
   "risk_level": "medium",
   "guardrails": [],
   "preflight_checks": [],
-  "manual_next_steps": []
+  "manual_next_steps": [],
+  "runbook": "docs/gateway-runtime-switch-runbook.md",
+  "runbook_status": "manual_only",
+  "runbook_required": true,
+  "verification_steps": [],
+  "rollback_guidance": "If the new runtime is not healthy, manually return to the previous known-good local runtime from the operator runbook."
 }
 ```
 
 M29.13 keeps this endpoint planning-only. Switch plans contain safety checklists and natural-language next steps, not executable command fields. Gateway still never switches runtime models automatically; real runtime switching would require a later guarded milestone and human operation.
+
+M29.14 links switch plans to `docs/gateway-runtime-switch-runbook.md`. The runbook reference is safe documentation only: Gateway still does not switch models, and future real guarded switching remains separate future work.
 
 ### POST /gateway/chat
 

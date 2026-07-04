@@ -239,6 +239,7 @@ required_paths=(
   "docs/memory-approval-dry-run-e2e.md"
   "docs/memory-approval-dashboard.md"
   "docs/memory-approval-manual-store-runbook.md"
+  "docs/gateway-runtime-switch-runbook.md"
   "docs/codex-prompts.md"
   "docs/docker-foundation.md"
   "docs/memory-api.md"

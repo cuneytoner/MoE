@@ -491,7 +491,7 @@ Scope:
 - Validate model id, file existence, and GGUF magic before switching.
 - Use existing host stop/start/health scripts.
 - Add Gateway runtime status endpoint.
-- Add Gateway switch-plan endpoint that returns manual commands only.
+- Add Gateway switch-plan endpoint that returns manual planning metadata only.
 - Do not let Gateway execute host shell commands.
 - Keep automatic switching deferred.
 
@@ -1380,3 +1380,11 @@ Before accepting Codex changes, check:
 - If target or intent mapping is unknown, use fallback safely when available and include `model_mapping_status` plus a safe warning.
 - Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
 - Validate with Gateway API tests and default source-only tests.
+
+## Milestone 29.14 Gateway Runtime Runbook Integration
+
+- Link `/gateway/runtime/switch-plan` to `docs/gateway-runtime-switch-runbook.md`.
+- Return `runbook`, `runbook_status=manual_only`, `runbook_required=true`, verification steps, and natural-language rollback guidance.
+- Keep runbook references safe documentation only.
+- Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
+- Keep future real guarded switching separate from this milestone.

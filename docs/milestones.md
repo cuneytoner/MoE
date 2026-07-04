@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.13 Gateway Runtime Switch Plan Guardrail.
-- Next planned: M29.14 Gateway Runtime Runbook Integration.
+- Completed through M29.14 Gateway Runtime Runbook Integration.
+- Next planned: M29.15 Runtime Profile Preflight.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -252,7 +252,7 @@ Status: DONE
 Goals:
 - Add host-side safe model runtime switch script.
 - Expose Gateway runtime status.
-- Expose Gateway switch-plan endpoint that returns manual commands only.
+- Expose Gateway switch-plan endpoint that returns manual planning metadata only.
 - Keep Gateway from executing host shell commands.
 - Keep automatic runtime switching deferred.
 
@@ -971,12 +971,21 @@ Goals:
 
 ## Milestone 29.14: Gateway Runtime Runbook Integration
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Integrate Gateway runtime switch planning with documentation and runbook references only.
 - Keep runbook integration informational and human-operated.
 - Do not add automatic model switching, service control, shell execution, Docker control, file writes, Memory API write calls, training, or fine-tuning.
+
+## Milestone 29.15: Runtime Profile Preflight
+
+Status: PLANNED
+
+Goals:
+- Validate runtime profile readiness without switching models.
+- Keep checks source/runtime-read-only unless a future guarded milestone explicitly changes behavior.
+- Do not start, stop, restart, or switch model runtimes automatically.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
 

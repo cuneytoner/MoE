@@ -54,6 +54,11 @@ class GatewayRuntimeSwitchPlanResponse(BaseModel):
     guardrails: list[str] = Field(default_factory=list)
     preflight_checks: list[str] = Field(default_factory=list)
     manual_next_steps: list[str] = Field(default_factory=list)
+    runbook: str
+    runbook_status: Literal["manual_only"]
+    runbook_required: bool = True
+    verification_steps: list[str] = Field(default_factory=list)
+    rollback_guidance: str
     reason: str
 
 

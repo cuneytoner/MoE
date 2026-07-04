@@ -31,6 +31,8 @@ defaultModel: Gateway-Qwen
 
 M29.12 hardens Gateway-Auto metadata for Continue. Gateway reports advisory routing, active runtime mismatches, and safe next steps in `x_gateway_router`, but `runtime_switch_supported=false` and `runtime_switch_attempted=false` remain part of the contract. Future real runtime switching would require a separate guarded milestone.
 
+M29.14 links `/gateway/runtime/switch-plan` to `docs/gateway-runtime-switch-runbook.md` for manual review. The runbook reference is documentation only; Gateway still does not switch models automatically.
+
 Gateway-Auto configs can point Continue at:
 
 ```text

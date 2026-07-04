@@ -154,6 +154,8 @@ M29.12 keeps Gateway-Auto advisory-only while making mismatch metadata clearer f
 
 M29.13 hardens `/gateway/runtime/switch-plan` as a planning-only guardrail. The endpoint returns safety guardrails, human preflight checks, and natural-language next steps, not executable command fields. Gateway still never switches runtime models automatically; real runtime switching would require a later guarded milestone and human operation.
 
+M29.14 links runtime switch planning to `docs/gateway-runtime-switch-runbook.md`. The runbook reference is documentation only; Gateway still does not switch models, and future guarded switching remains separate future work.
+
 M28.3 exposes Gateway OpenAI-compatible routes at `http://localhost:8100/v1`. Continue.dev should use `apiBase: http://localhost:8100/v1` for normal use. Direct `http://localhost:8000/v1` llama-server access is a troubleshooting fallback only.
 
 M28.4 adds optional Gateway memory injection before forwarding chat to llama-server. `memory="auto"` searches the fixed configured `MEMORY_SEARCH_URL` and injects bounded local memory context only when usable results exist. `memory="off"` disables search. Memory search failures are non-fatal and return metadata while chat continues when llama-server is reachable.
