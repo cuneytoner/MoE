@@ -65,6 +65,7 @@ class ChatRoute:
     confidence: float
     selected_model_id: str
     selected_model_path: str | None
+    model_mapping_status: str
     mode: str
     reasons: list[str]
     user_model_preference: str | None = None
@@ -73,19 +74,45 @@ class ChatRoute:
         self,
         active_model: str | None,
     ) -> dict[str, object]:
+        active_model_matches = _model_matches(
+            active_model=active_model,
+            selected_model_path=self.selected_model_path,
+        )
+        mismatch_level = _active_model_mismatch_level(
+            active_model=active_model,
+            active_model_matches=active_model_matches,
+        )
+        mismatch_reason = _active_model_mismatch_reason(
+            active_model=active_model,
+            selected_model_path=self.selected_model_path,
+            active_model_matches=active_model_matches,
+        )
         return {
             "intent": self.intent,
             "confidence": self.confidence,
             "selected_model_id": self.selected_model_id,
             "selected_model_path": self.selected_model_path,
             "active_model": active_model,
-            "active_model_matches": _model_matches(
-                active_model=active_model,
-                selected_model_path=self.selected_model_path,
-            ),
+            "active_model_matches": active_model_matches,
+            "active_model_mismatch_level": mismatch_level,
+            "active_model_mismatch_reason": mismatch_reason,
+            "routing_mode": "advisory_only",
+            "runtime_switch_supported": False,
+            "runtime_switch_attempted": False,
+            "model_mapping_status": self.model_mapping_status,
             "mode": self.mode,
             "reasons": self.reasons,
             "user_model_preference": self.user_model_preference,
+            "effective_runtime_model": (
+                active_model
+                or self.user_model_preference
+                or self.selected_model_id
+            ),
+            "continue_safe": True,
+            "next_steps": [
+                "Gateway is advisory-only and did not switch models.",
+                "Restart the local model runtime manually if you want a different active model.",
+            ],
         }
 
 
@@ -94,14 +121,20 @@ def classify_chat_intent(
     mapping: ModelMapping,
 ) -> ChatRoute:
     if request.routing == "off":
-        selected_model_id = MODEL_TARGETS["general"]
+        selected_model_id, selected_model_path, mapping_status, mapping_reason = (
+            _resolve_model_target(MODEL_TARGETS["general"], mapping)
+        )
+        reasons = ["routing=off; heuristic model selection skipped"]
+        if mapping_reason:
+            reasons.append(mapping_reason)
         return ChatRoute(
             intent="general",
             confidence=0.0,
             selected_model_id=selected_model_id,
-            selected_model_path=mapping.runtime_id(selected_model_id),
+            selected_model_path=selected_model_path,
+            model_mapping_status=mapping_status,
             mode="disabled",
-            reasons=["routing=off; heuristic model selection skipped"],
+            reasons=reasons,
             user_model_preference=request.model,
         )
 
@@ -113,14 +146,19 @@ def classify_chat_intent(
             matches[intent] = intent_matches
 
     intent = _select_intent(matches)
-    selected_model_id = MODEL_TARGETS[intent]
+    selected_model_id, selected_model_path, mapping_status, mapping_reason = (
+        _resolve_model_target(MODEL_TARGETS[intent], mapping)
+    )
     reasons = _reasons(intent=intent, matches=matches, request=request)
+    if mapping_reason:
+        reasons.append(mapping_reason)
     confidence = _confidence(intent=intent, matches=matches)
     return ChatRoute(
         intent=intent,
         confidence=confidence,
         selected_model_id=selected_model_id,
-        selected_model_path=mapping.runtime_id(selected_model_id),
+        selected_model_path=selected_model_path,
+        model_mapping_status=mapping_status,
         mode="advisory",
         reasons=reasons,
         user_model_preference=request.model,
@@ -173,3 +211,65 @@ def _model_matches(active_model: str | None, selected_model_path: str | None) ->
     if not active_model or not selected_model_path:
         return False
     return active_model == selected_model_path
+
+
+def _resolve_model_target(
+    selected_model_id: str,
+    mapping: ModelMapping,
+) -> tuple[str, str | None, str, str | None]:
+    selected_model_path = mapping.runtime_id(selected_model_id)
+    if selected_model_path:
+        return selected_model_id, selected_model_path, "mapped", None
+
+    fallback_model_id = mapping.fallback_model_target
+    fallback_model_path = mapping.runtime_id(fallback_model_id)
+    if fallback_model_path:
+        return (
+            fallback_model_id,
+            fallback_model_path,
+            "fallback_missing_selected_runtime",
+            (
+                f"selected model target {selected_model_id} is missing from model mapping; "
+                f"using safe fallback {fallback_model_id}"
+            ),
+        )
+
+    return (
+        selected_model_id,
+        None,
+        "missing_selected_and_fallback_runtime",
+        (
+            f"selected model target {selected_model_id} and fallback target "
+            f"{fallback_model_id} are missing runtime mappings"
+        ),
+    )
+
+
+def _active_model_mismatch_level(
+    *,
+    active_model: str | None,
+    active_model_matches: bool,
+) -> str:
+    if active_model_matches:
+        return "none"
+    if not active_model:
+        return "info"
+    return "warning"
+
+
+def _active_model_mismatch_reason(
+    *,
+    active_model: str | None,
+    selected_model_path: str | None,
+    active_model_matches: bool,
+) -> str:
+    if active_model_matches:
+        return "active runtime model matches the advisory selected model"
+    if not active_model:
+        return "active runtime model is unavailable or unknown; Gateway did not switch models"
+    if not selected_model_path:
+        return "advisory selected model has no mapped runtime id; Gateway did not switch models"
+    return (
+        "active runtime model differs from the advisory selected model; "
+        "Gateway did not switch models"
+    )

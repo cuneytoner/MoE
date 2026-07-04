@@ -29,6 +29,8 @@ defaultModel: Gateway-Qwen
 
 `model: gateway-auto` is advisory. Gateway does not treat it as a model path and does not switch the running llama-server model.
 
+M29.12 hardens Gateway-Auto metadata for Continue. Gateway reports advisory routing, active runtime mismatches, and safe next steps in `x_gateway_router`, but `runtime_switch_supported=false` and `runtime_switch_attempted=false` remain part of the contract. Future real runtime switching would require a separate guarded milestone.
+
 Gateway-Auto configs can point Continue at:
 
 ```text

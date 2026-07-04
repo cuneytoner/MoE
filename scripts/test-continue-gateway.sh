@@ -42,8 +42,23 @@ fi
 
 status_object="$(jq -r '.object // empty' <<<"$response")"
 content="$(jq -r '.choices[0].message.content // empty' <<<"$response")"
+router_routing_mode="$(jq -r '.x_gateway_router.routing_mode // empty' <<<"$response")"
+router_runtime_switch_supported="$(jq -r '.x_gateway_router.runtime_switch_supported | tostring' <<<"$response")"
+router_runtime_switch_attempted="$(jq -r '.x_gateway_router.runtime_switch_attempted | tostring' <<<"$response")"
+router_continue_safe="$(jq -r '.x_gateway_router.continue_safe | tostring' <<<"$response")"
+router_mismatch_level="$(jq -r '.x_gateway_router.active_model_mismatch_level // empty' <<<"$response")"
+router_effective_runtime_model="$(jq -r '.x_gateway_router.effective_runtime_model // empty' <<<"$response")"
+router_next_steps_type="$(jq -r 'if (.x_gateway_router.next_steps | type) == "array" then "array" else "other" end' <<<"$response")"
 
-if [ "$status_object" = "chat.completion" ] && [ -n "$content" ]; then
+if [ "$status_object" = "chat.completion" ] \
+  && [ -n "$content" ] \
+  && [ "$router_routing_mode" = "advisory_only" ] \
+  && [ "$router_runtime_switch_supported" = "false" ] \
+  && [ "$router_runtime_switch_attempted" = "false" ] \
+  && [ "$router_continue_safe" = "true" ] \
+  && { [ "$router_mismatch_level" = "none" ] || [ "$router_mismatch_level" = "info" ] || [ "$router_mismatch_level" = "warning" ]; } \
+  && [ -n "$router_effective_runtime_model" ] \
+  && [ "$router_next_steps_type" = "array" ]; then
   pass "Gateway OpenAI-compatible chat for Continue.dev"
 else
   fail "Gateway OpenAI-compatible chat returned unexpected response: $response"

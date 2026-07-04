@@ -149,9 +149,18 @@ class GatewayChatRouterMetadata(BaseModel):
     selected_model_path: str | None = None
     active_model: str | None = None
     active_model_matches: bool
+    active_model_mismatch_level: Literal["none", "info", "warning"]
+    active_model_mismatch_reason: str
+    routing_mode: Literal["advisory_only"]
+    runtime_switch_supported: bool = False
+    runtime_switch_attempted: bool = False
+    model_mapping_status: str
     mode: Literal["advisory", "disabled"]
     reasons: list[str] = Field(default_factory=list)
     user_model_preference: str | None = None
+    effective_runtime_model: str
+    continue_safe: bool = True
+    next_steps: list[str] = Field(default_factory=list)
 
 
 class GatewayChatProxyResponse(BaseModel):

@@ -97,6 +97,8 @@ Milestone 28.2 adds deterministic advisory routing metadata. The router classifi
 
 The router selects an advisory model id and path, reports the currently active llama-server model when available, and sets `active_model_matches`. This is informational only. Gateway does not start, stop, restart, or switch llama-server models.
 
+M29.12 adds clearer Gateway-Auto safety metadata: `routing_mode: "advisory_only"`, `runtime_switch_supported: false`, `runtime_switch_attempted: false`, `continue_safe: true`, `effective_runtime_model`, `active_model_mismatch_level`, `active_model_mismatch_reason`, and safe `next_steps`. Future real runtime switching would require a separate guarded milestone.
+
 When `routing="off"`, the router block uses `mode: "disabled"` and skips heuristic selection.
 
 ## Memory Injection

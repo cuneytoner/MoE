@@ -1362,3 +1362,11 @@ Before accepting Codex changes, check:
 - Keep Gateway-Auto configs pointed at `http://localhost:8100/v1`.
 - Do not execute shell commands, control Docker, switch models, write files, call Memory API write routes, train, fine-tune, or mutate runtime state.
 - Validate with `make test-openai-compatible-gateway`, `make test-continue-gateway`, Gateway API tests, and default source-only tests.
+
+## Milestone 29.12 Gateway-Auto Runtime Routing Hardening
+
+- Harden Gateway-Auto runtime routing metadata for Continue/OpenAI-compatible clients without adding automatic switching.
+- Keep existing router fields and add `routing_mode=advisory_only`, `runtime_switch_supported=false`, `runtime_switch_attempted=false`, `active_model_mismatch_level`, `active_model_mismatch_reason`, `effective_runtime_model`, `continue_safe=true`, and safe `next_steps`.
+- If a selected model target is missing from mapping, report `model_mapping_status`, use fallback safely when available, and do not fail chat only because advisory mapping fell back.
+- Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
+- Validate with `make test-gateway-chat-router`, `make test-openai-compatible-gateway`, `make test-continue-gateway`, Gateway API tests, and default source-only tests.
