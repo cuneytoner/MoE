@@ -52,6 +52,36 @@ class GatewayRuntimeProfilePreflightResponse(BaseModel):
     profiles: list[GatewayRuntimeProfilePreflightProfile]
 
 
+class GatewayRuntimeProfileRunCatalogProfile(BaseModel):
+    model_target: str
+    runtime_model_id: str | None = None
+    model_config_id: str | None = None
+    model_path: str | None = None
+    context: int | None = None
+    gpu_layers: int | None = None
+    threads: int | None = None
+    batch_size: int | None = None
+    ubatch_size: int | None = None
+    cache_type_k: str | None = None
+    cache_type_v: str | None = None
+    flash_attention: bool | None = None
+    readiness_hint: str
+    warnings: list[str] = Field(default_factory=list)
+    manual_run_reference: str
+
+
+class GatewayRuntimeProfileRunCatalogResponse(BaseModel):
+    status: Literal["ok", "review_required"]
+    service: Literal["gateway-runtime-profile-run-catalog"]
+    read_only: bool = True
+    documentation_only: bool = True
+    runtime_switch_supported: bool = False
+    runtime_switch_attempted: bool = False
+    auto_execution_supported: bool = False
+    runbook: Literal["docs/gateway-runtime-switch-runbook.md"]
+    profiles: list[GatewayRuntimeProfileRunCatalogProfile]
+
+
 class GatewayRuntimeSwitchPlanRequest(BaseModel):
     message: str = Field(default="")
     intent: str | None = None

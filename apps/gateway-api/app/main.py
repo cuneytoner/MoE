@@ -44,6 +44,7 @@ from app.models.gateway import (
     GatewayRouteRequest,
     GatewayRouteResponse,
     GatewayRuntimeProfilePreflightResponse,
+    GatewayRuntimeProfileRunCatalogResponse,
     GatewayRuntimeStatusResponse,
     GatewayRuntimeSwitchPlanRequest,
     GatewayRuntimeSwitchPlanResponse,
@@ -83,6 +84,7 @@ from app.services.patch_planner import (
 from app.services.repo_agent import RepoAgentService
 from app.services.runtime_dashboard import build_runtime_dashboard
 from app.services.runtime_profile_preflight import build_runtime_profile_preflight
+from app.services.runtime_profile_run_catalog import build_runtime_profile_run_catalog
 from app.services.router import RouteDecision, route_message
 from app.services.tool_executor import execute_tool
 from app.services.tool_planner import tool_catalog
@@ -299,6 +301,17 @@ async def runtime_profile_preflight() -> GatewayRuntimeProfilePreflightResponse:
     settings = get_settings()
     return GatewayRuntimeProfilePreflightResponse(
         **await build_runtime_profile_preflight(settings)
+    )
+
+
+@app.get(
+    "/gateway/runtime/profile-run-catalog",
+    response_model=GatewayRuntimeProfileRunCatalogResponse,
+)
+async def runtime_profile_run_catalog() -> GatewayRuntimeProfileRunCatalogResponse:
+    settings = get_settings()
+    return GatewayRuntimeProfileRunCatalogResponse(
+        **await build_runtime_profile_run_catalog(settings)
     )
 
 
