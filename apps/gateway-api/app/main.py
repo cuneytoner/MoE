@@ -91,6 +91,9 @@ from app.services.runtime_profile_compatibility_matrix import (
 from app.services.runtime_profile_dashboard_summary import (
     build_runtime_profile_dashboard_summary,
 )
+from app.services.runtime_profile_operator_checklist import (
+    build_runtime_profile_operator_checklist,
+)
 from app.services.runtime_profile_preflight import build_runtime_profile_preflight
 from app.services.runtime_profile_recommendation_summary import (
     build_runtime_profile_recommendation_summary,
@@ -356,6 +359,12 @@ async def runtime_profile_recommendation_summary() -> (
 async def runtime_profile_dashboard_summary() -> dict[str, Any]:
     settings = get_settings()
     return await build_runtime_profile_dashboard_summary(settings)
+
+
+@app.get("/gateway/runtime/profile-operator-checklist")
+async def runtime_profile_operator_checklist() -> dict[str, Any]:
+    settings = get_settings()
+    return await build_runtime_profile_operator_checklist(settings)
 
 
 @app.get("/gateway/memory-approval/dashboard")

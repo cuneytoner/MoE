@@ -1429,3 +1429,11 @@ Before accepting Codex changes, check:
 - Add a read-only Dashboard UI card with default, review, fallback, compatibility, risk, and warning summary.
 - Do not add action buttons.
 - Do not inspect live GPU state, execute scripts, switch models, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
+
+## Milestone 29.20 Runtime Profile Operator Checklist Export
+
+- Add read-only `GET /gateway/runtime/profile-operator-checklist`.
+- Add read-only `runtime_profile_operator_checklist` tool execution.
+- Export manual operator checklist items for runtime profile decisions.
+- Keep checklist export documentation-only and manual-review-only.
+- Do not inspect live GPU state, execute scripts, switch models, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.

@@ -540,6 +540,16 @@ curl -fsS http://localhost:8100/gateway/runtime/profile-dashboard-summary | jq
 
 M29.19 also embeds the same compact summary as `runtime_profile_summary` in `GET /gateway/runtime/dashboard`. This is visibility only: no action buttons, script execution, model switching, live GPU probing, Docker control, file writes, or Memory API write routes are exposed.
 
+### GET /gateway/runtime/profile-operator-checklist
+
+Returns a read-only operator checklist export for human runtime profile review.
+
+```bash
+curl -fsS http://localhost:8100/gateway/runtime/profile-operator-checklist | jq
+```
+
+M29.20 exports manual review checklist items for profile decisions. It does not execute scripts, switch models, write files, inspect live GPU state, control Docker, or call Memory API write routes.
+
 ### POST /gateway/chat
 
 Calls the OpenAI-compatible model runtime `/chat/completions` endpoint.

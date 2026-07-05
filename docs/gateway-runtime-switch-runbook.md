@@ -32,6 +32,8 @@ M29.18 adds `GET /gateway/runtime/profile-recommendation-summary` as a read-only
 
 M29.19 surfaces the recommendation summary in dashboard/read-only form. It is visibility only, exposes no action buttons, and still does not inspect live GPU state, execute scripts, or switch models.
 
+M29.20 adds `GET /gateway/runtime/profile-operator-checklist` as a read-only checklist export. It helps a human operator review profile choices, compatibility risk, Continue configuration, active runtime verification, rollback profile knowledge, and the advisory-only boundary.
+
 ## Continue Checks
 
 - Keep Continue configured for Gateway-Auto rather than direct model paths.

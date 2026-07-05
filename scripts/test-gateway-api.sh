@@ -400,6 +400,41 @@ else
   fail "Gateway API /gateway/runtime/profile-dashboard-summary returned unexpected response: HTTP $runtime_profile_dashboard_http_status $runtime_profile_dashboard_response"
 fi
 
+runtime_profile_operator_checklist_http_status="$(
+  curl -sS -o /tmp/moe-gateway-runtime-profile-operator-checklist.json -w "%{http_code}" \
+    "$GATEWAY_API_URL/gateway/runtime/profile-operator-checklist" || true
+)"
+runtime_profile_operator_checklist_response="$(cat /tmp/moe-gateway-runtime-profile-operator-checklist.json 2>/dev/null || true)"
+runtime_profile_operator_checklist_read_only="$(jq -r '.read_only | tostring' <<<"$runtime_profile_operator_checklist_response")"
+runtime_profile_operator_checklist_docs_only="$(jq -r '.documentation_only | tostring' <<<"$runtime_profile_operator_checklist_response")"
+runtime_profile_operator_checklist_export_only="$(jq -r '.export_only | tostring' <<<"$runtime_profile_operator_checklist_response")"
+runtime_profile_operator_checklist_supported="$(jq -r '.runtime_switch_supported | tostring' <<<"$runtime_profile_operator_checklist_response")"
+runtime_profile_operator_checklist_attempted="$(jq -r '.runtime_switch_attempted | tostring' <<<"$runtime_profile_operator_checklist_response")"
+runtime_profile_operator_checklist_auto_execution="$(jq -r '.auto_execution_supported | tostring' <<<"$runtime_profile_operator_checklist_response")"
+runtime_profile_operator_checklist_type="$(jq -r 'if (.checklist | type) == "array" then "array" else "other" end' <<<"$runtime_profile_operator_checklist_response")"
+runtime_profile_operator_checklist_count="$(jq -r '.checklist | length' <<<"$runtime_profile_operator_checklist_response")"
+runtime_profile_operator_checklist_source="$(jq -r '.source_endpoint // empty' <<<"$runtime_profile_operator_checklist_response")"
+runtime_profile_operator_checklist_forbidden_count="$(
+  (grep -Eio '"command"|"commands"|shell|docker compose|pkill|kill|systemctl|APPLY=1' \
+    <<<"$runtime_profile_operator_checklist_response" || true) | wc -l
+)"
+
+if [ "$runtime_profile_operator_checklist_http_status" = "200" ] \
+  && [ "$runtime_profile_operator_checklist_read_only" = "true" ] \
+  && [ "$runtime_profile_operator_checklist_docs_only" = "true" ] \
+  && [ "$runtime_profile_operator_checklist_export_only" = "true" ] \
+  && [ "$runtime_profile_operator_checklist_supported" = "false" ] \
+  && [ "$runtime_profile_operator_checklist_attempted" = "false" ] \
+  && [ "$runtime_profile_operator_checklist_auto_execution" = "false" ] \
+  && [ "$runtime_profile_operator_checklist_type" = "array" ] \
+  && [ "$runtime_profile_operator_checklist_count" -gt 0 ] \
+  && [ "$runtime_profile_operator_checklist_source" = "/gateway/runtime/profile-recommendation-summary" ] \
+  && [ "$runtime_profile_operator_checklist_forbidden_count" -eq 0 ]; then
+  pass "Gateway API /gateway/runtime/profile-operator-checklist"
+else
+  fail "Gateway API /gateway/runtime/profile-operator-checklist returned unexpected response: HTTP $runtime_profile_operator_checklist_http_status $runtime_profile_operator_checklist_response"
+fi
+
 if ! tools_response="$(curl -fsS "$GATEWAY_API_URL/gateway/tools")"; then
   fail "Gateway API /gateway/tools request failed"
 fi
@@ -438,6 +473,10 @@ tools_runtime_profile_dashboard_summary="$(jq -r 'if .tools.runtime_profile_dash
 tools_runtime_profile_dashboard_summary_executable="$(jq -r '.tools.runtime_profile_dashboard_summary.executable | tostring' <<<"$tools_response")"
 tools_runtime_profile_dashboard_summary_read_only="$(jq -r '.tools.runtime_profile_dashboard_summary.read_only | tostring' <<<"$tools_response")"
 tools_runtime_profile_dashboard_summary_auto_execution="$(jq -r '.tools.runtime_profile_dashboard_summary.auto_execution_supported | tostring' <<<"$tools_response")"
+tools_runtime_profile_operator_checklist="$(jq -r 'if .tools.runtime_profile_operator_checklist then "present" else "missing" end' <<<"$tools_response")"
+tools_runtime_profile_operator_checklist_executable="$(jq -r '.tools.runtime_profile_operator_checklist.executable | tostring' <<<"$tools_response")"
+tools_runtime_profile_operator_checklist_read_only="$(jq -r '.tools.runtime_profile_operator_checklist.read_only | tostring' <<<"$tools_response")"
+tools_runtime_profile_operator_checklist_auto_execution="$(jq -r '.tools.runtime_profile_operator_checklist.auto_execution_supported | tostring' <<<"$tools_response")"
 tools_workspace_status="$(jq -r 'if .tools.workspace_status then "present" else "missing" end' <<<"$tools_response")"
 tools_code_context="$(jq -r 'if .tools.code_context then "present" else "missing" end' <<<"$tools_response")"
 tools_code_ask="$(jq -r 'if .tools.code_ask then "present" else "missing" end' <<<"$tools_response")"
@@ -478,6 +517,10 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_runtime_profile_dashboard_summary_executable" = "true" ] \
   && [ "$tools_runtime_profile_dashboard_summary_read_only" = "true" ] \
   && [ "$tools_runtime_profile_dashboard_summary_auto_execution" = "false" ] \
+  && [ "$tools_runtime_profile_operator_checklist" = "present" ] \
+  && [ "$tools_runtime_profile_operator_checklist_executable" = "true" ] \
+  && [ "$tools_runtime_profile_operator_checklist_read_only" = "true" ] \
+  && [ "$tools_runtime_profile_operator_checklist_auto_execution" = "false" ] \
   && [ "$tools_workspace_status" = "present" ] \
   && [ "$tools_code_context" = "present" ] \
   && [ "$tools_code_ask" = "present" ] \
@@ -597,6 +640,7 @@ assert_tool_execute_ok "runtime_profile_run_catalog" '{}'
 assert_tool_execute_ok "runtime_profile_compatibility_matrix" '{}'
 assert_tool_execute_ok "runtime_profile_recommendation_summary" '{}'
 assert_tool_execute_ok "runtime_profile_dashboard_summary" '{}'
+assert_tool_execute_ok "runtime_profile_operator_checklist" '{}'
 assert_tool_execute_ok "model_routing_read" '{}'
 assert_tool_execute_ok "tools_read" '{}'
 assert_tool_execute_ok "workspace_status" '{}'
