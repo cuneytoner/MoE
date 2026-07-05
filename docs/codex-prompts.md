@@ -1123,15 +1123,16 @@ Expected boundaries:
 - Map PC-1 media/GPU role, PC-2 support role, GPU/VRAM readiness, existing image/media scripts and docs, model folders, model checks, service checks, and safe readiness flow.
 - Keep image generation future work. Do not add real generation commands, automatic llama-server stop/start, automatic model switching, app code, Docker Compose behavior, or service execution features.
 
-## Milestone 31.0 Prompt Placeholder
+## Milestone 31.0 Prompt: Image Processing Pipeline Runbook
 
-Add image processing pipeline runbook.
+Create the first beginner-friendly image processing pipeline runbook.
 
 Expected boundaries:
 
-- Document the real image processing pipeline runbook after readiness mapping is complete.
-- Keep real generation guarded and operator-reviewed.
-- Preserve coding-mode recovery steps and GPU/VRAM safety notes.
+- Add `docs/ops/22-image-processing-pipeline-runbook.md`, `docs/ops/23-image-model-inventory-guide.md`, and `docs/ops/24-image-first-dry-run-plan.md`.
+- Explain pipeline overview, PC-1/PC-2 roles, required folders, required model files, required services, VRAM safety, readiness checks, and dry-run planning.
+- Do not include real image generation commands yet.
+- Keep changes documentation-only. Do not alter runtime behavior, app code, Docker Compose behavior, service execution features, automatic model switching, or automatic image generation.
 
 ## Milestone 31.1 Prompt Placeholder
 
@@ -1142,6 +1143,16 @@ Expected boundaries:
 - Document exact ComfyUI and Flux startup readiness checklist.
 - Keep startup operator-reviewed and explicit.
 - Avoid automatic image generation until a guarded runbook permits it.
+
+## Milestone 31.2 Prompt Placeholder
+
+Add image mode VRAM safety / LLM stop plan.
+
+Expected boundaries:
+
+- Document manual llama-server stop/start planning for image mode VRAM safety.
+- Keep all stop/start actions explicit and operator-reviewed.
+- Do not add automatic model switching or automatic image generation.
 
 ## Future Automation Placeholder
 

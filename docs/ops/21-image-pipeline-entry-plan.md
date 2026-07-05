@@ -4,7 +4,7 @@ This page prepares M31.0. It is planning only and does not include a real genera
 
 ## What M31.0 Should Implement Or Document Next
 
-- A first real image generation runbook.
+- A beginner-friendly image processing pipeline runbook.
 - Exact ComfyUI / Flux startup checklist.
 - Required model files and expected locations.
 - How to confirm enough PC-1 VRAM is available.
@@ -19,6 +19,9 @@ This page prepares M31.0. It is planning only and does not include a real genera
 4. [guided-image-generation.md](../guided-image-generation.md)
 5. [image-generation.md](../image-generation.md)
 6. [media-lab.md](../media-lab.md)
+7. [22 Image Processing Pipeline Runbook](22-image-processing-pipeline-runbook.md)
+8. [23 Image Model Inventory Guide](23-image-model-inventory-guide.md)
+9. [24 Image First Dry Run Plan](24-image-first-dry-run-plan.md)
 
 ## Which Checks Must Pass Before First Real Generation
 
@@ -83,4 +86,4 @@ Expected good sign: existing readiness and media helper scripts are visible for 
 - What is the rollback path back to coding mode?
 - Which checks prove Continue/Gateway-Auto still works afterward?
 
-Do not run real image generation until these questions are answered in M31.0.
+Do not run real image generation until these questions are answered in M31.1 or a later guarded runbook.

@@ -59,6 +59,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Media readiness map | [19-media-readiness-map.md](19-media-readiness-map.md) |
 | Image mode safety rules | [20-image-mode-safety-rules.md](20-image-mode-safety-rules.md) |
 | Image pipeline entry plan | [21-image-pipeline-entry-plan.md](21-image-pipeline-entry-plan.md) |
+| Image processing pipeline runbook | [22-image-processing-pipeline-runbook.md](22-image-processing-pipeline-runbook.md) |
+| Image model inventory guide | [23-image-model-inventory-guide.md](23-image-model-inventory-guide.md) |
+| Image first dry-run plan | [24-image-first-dry-run-plan.md](24-image-first-dry-run-plan.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -79,7 +82,10 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 13. [19 Media Readiness Map](19-media-readiness-map.md)
 14. [20 Image Mode Safety Rules](20-image-mode-safety-rules.md)
 15. [21 Image Pipeline Entry Plan](21-image-pipeline-entry-plan.md)
+16. [22 Image Processing Pipeline Runbook](22-image-processing-pipeline-runbook.md)
+17. [23 Image Model Inventory Guide](23-image-model-inventory-guide.md)
+18. [24 Image First Dry Run Plan](24-image-first-dry-run-plan.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
-Image processing work begins in M31.0. Read [18-image-mode-entry-checklist.md](18-image-mode-entry-checklist.md), [19-media-readiness-map.md](19-media-readiness-map.md), [20-image-mode-safety-rules.md](20-image-mode-safety-rules.md), and [21-image-pipeline-entry-plan.md](21-image-pipeline-entry-plan.md) before running real image generation.
+M31.0 defines the image pipeline. M31.1 will handle ComfyUI / Flux startup checklist. Real generation remains explicit operator action.

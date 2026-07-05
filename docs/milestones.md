@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M30.4 Media / Image Runtime Readiness Map.
-- Next planned: M31.0 Image Processing Pipeline Runbook.
+- Completed through M31.0 Image Processing Pipeline Runbook.
+- Next planned: M31.1 ComfyUI / Flux Startup Checklist.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1108,11 +1108,13 @@ Goals:
 
 ## Milestone 31.0: Image Processing Pipeline Runbook
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Document the real image processing pipeline runbook after readiness mapping is complete.
-- Keep real generation guarded and operator-reviewed.
+- Add beginner-friendly image processing pipeline runbook.
+- Add image model inventory guide.
+- Add first dry-run planning guide without real generation commands.
+- Keep real generation explicit and reserved for M31.1 or later.
 - Preserve coding-mode recovery steps and GPU/VRAM safety notes.
 
 ## Milestone 31.1: ComfyUI / Flux Startup Checklist
@@ -1124,7 +1126,16 @@ Goals:
 - Keep startup operator-reviewed and explicit.
 - Avoid automatic image generation until a guarded runbook permits it.
 
-## Milestone 31.2: Homelab Ops and Remote Access Hardening
+## Milestone 31.2: Image Mode VRAM Safety / LLM Stop Plan
+
+Status: PLANNED
+
+Goals:
+- Document manual llama-server stop/start planning for image mode VRAM safety.
+- Keep all stop/start actions explicit and operator-reviewed.
+- Do not add automatic model switching or automatic image generation.
+
+## Milestone 31.3: Homelab Ops and Remote Access Hardening
 
 Status: PLANNED
 
