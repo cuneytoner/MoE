@@ -51,6 +51,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | First day complete walkthrough | [11-first-day-walkthrough.md](11-first-day-walkthrough.md) |
 | Zero to running compact checklist | [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md) |
 | Service location reference | [13-service-location-reference.md](13-service-location-reference.md) |
+| Backup restore drill | [14-backup-restore-drill.md](14-backup-restore-drill.md) |
+| Disaster recovery card | [15-disaster-recovery-card.md](15-disaster-recovery-card.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -63,3 +65,7 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 5. [03 Daily Startup](03-daily-startup.md)
 6. [07 Troubleshooting](07-troubleshooting.md)
 7. [08 Command Cheatsheet](08-command-cheatsheet.md)
+8. [14 Backup Restore Drill](14-backup-restore-drill.md)
+9. [15 Disaster Recovery Card](15-disaster-recovery-card.md)
+
+Run the backup drill after major milestones or before moving to a new machine.

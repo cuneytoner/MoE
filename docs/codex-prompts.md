@@ -1089,15 +1089,28 @@ Expected boundaries:
 - Improve troubleshooting to include symptom, likely cause, first check, fallback action, and related doc links.
 - Keep changes documentation-only. Do not alter Gateway runtime behavior, application code, Docker Compose behavior, or service execution features.
 
-## Milestone 30.2 Prompt Placeholder
+## Milestone 30.2 Prompt: Backup / Restore Drill Documentation
 
-Add backup / restore drill documentation.
+Add beginner-friendly backup and restore drill documentation for the two-PC MoE system.
 
 Expected boundaries:
 
-- Define source, runtime, database, vector store, model, config, and docs backup strategy.
-- Keep source, runtime data, and model files in their assigned locations.
-- Keep restore actions human-operated and verification-first.
+- Add `docs/ops/14-backup-restore-drill.md` with a concrete drill using `/media/cuneyt/Backup/MoE-Drill`.
+- Add `docs/ops/15-disaster-recovery-card.md` as a one-page emergency card.
+- Use exact PC-1, PC-2, PC-1-to-PC-2, and Postgres-container command labels.
+- Restore only into a temporary `restore-test` folder. Never restore over live source.
+- Warn about `--delete`, large model files, secrets, backups not belonging in Git, and avoiding Docker volume prune.
+- Keep changes documentation-only. Do not alter runtime behavior, app code, Docker Compose behavior, or service execution features.
+
+## Milestone 30.3 Prompt Placeholder
+
+Add PC-1 / PC-2 startup service matrix documentation.
+
+Expected boundaries:
+
+- Document exact startup ownership for PC-1 and PC-2 services.
+- Clarify single-machine versus two-machine service placement.
+- Keep the matrix documentation-only and operator-reviewed.
 
 ## Milestone 31 Prompt Placeholder
 

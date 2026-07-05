@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M30.1 Operator Runbook Walkthrough QA.
-- Next planned: M30.2 Backup / Restore Drill Documentation.
+- Completed through M30.2 Backup / Restore Drill Documentation.
+- Next planned: M30.3 PC-1 / PC-2 Startup Service Matrix.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1067,17 +1067,24 @@ Goals:
 
 ## Milestone 30.2: Backup / Restore Drill Documentation
 
+Status: DONE
+
+Goals:
+- Add a beginner-friendly backup/restore drill under `docs/ops/14-backup-restore-drill.md`.
+- Prove backups can be copied, inspected, restored into a temporary test folder, and compared without deleting or overwriting live source.
+- Add a one-page emergency card under `docs/ops/15-disaster-recovery-card.md`.
+- Keep the milestone documentation-only with no runtime behavior, app code, or Docker Compose changes.
+
+## Milestone 30.3: PC-1 / PC-2 Startup Service Matrix
+
 Status: PLANNED
 
 Goals:
-- Define backup strategy for source, runtime, Docker state, PostgreSQL, Qdrant, models, llama.cpp, environment templates, and docs.
-- Keep source, runtime data, and model files in their assigned locations.
-- Exclude pid files from backups and make logs optional.
-- Add checksum manifest strategy for model files.
-- Add restore process for a new PC.
-- Add disaster recovery checklist.
+- Document exact startup ownership for PC-1 and PC-2 services.
+- Clarify single-machine versus two-machine service placement.
+- Keep the matrix documentation-only and operator-reviewed.
 
-## Milestone 30.3: Hardware Role Profiles / Environment Reassignment
+## Milestone 30.4: Hardware Role Profiles / Environment Reassignment
 
 Status: PLANNED
 

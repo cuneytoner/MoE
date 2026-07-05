@@ -285,6 +285,8 @@ required_paths=(
   "docs/ops/11-first-day-walkthrough.md"
   "docs/ops/12-zero-to-running-checklist.md"
   "docs/ops/13-service-location-reference.md"
+  "docs/ops/14-backup-restore-drill.md"
+  "docs/ops/15-disaster-recovery-card.md"
   "scripts/runtime-prepare.sh"
   "scripts/runtime/pc1-sleep-prepare.sh"
   "scripts/runtime/pc1-suspend.sh"

@@ -2,6 +2,8 @@
 
 Restore is manual. Do not download models into the repo. Do not expect Gateway to restore or switch runtime services automatically.
 
+For emergency triage, read [15-disaster-recovery-card.md](15-disaster-recovery-card.md). To prove a backup is usable before a real restore, run [14-backup-restore-drill.md](14-backup-restore-drill.md).
+
 ## Restore PC-1
 
 ### Run on PC-1
@@ -111,3 +113,5 @@ Expected good signs:
 - Gateway health returns JSON.
 - llama-server `/v1/models` returns a model list.
 - PC-2 Memory API health returns JSON if PC-2 memory services are enabled.
+
+Before trusting a restored machine, compare it against the drill checklist in [14-backup-restore-drill.md](14-backup-restore-drill.md).

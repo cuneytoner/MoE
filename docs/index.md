@@ -14,6 +14,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Daily Startup](ops/03-daily-startup.md)
 - [Daily Shutdown](ops/04-daily-shutdown.md)
 - [Backup](ops/05-backup.md)
+- [Backup Restore Drill](ops/14-backup-restore-drill.md)
+- [Disaster Recovery Card](ops/15-disaster-recovery-card.md)
 - [Restore New Machine](ops/06-restore-new-machine.md)
 - [Troubleshooting](ops/07-troubleshooting.md)
 - [Command Cheatsheet](ops/08-command-cheatsheet.md)

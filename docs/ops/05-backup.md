@@ -2,6 +2,8 @@
 
 Backups are manual operator actions. Gateway does not run these commands.
 
+This page is the normal backup guide. To prove a backup can be restored, run the drill in [14-backup-restore-drill.md](14-backup-restore-drill.md).
+
 ## What To Back Up
 
 - PC-1 source repo: `~/DiskD/Projects/MoE/codebase`.
@@ -63,3 +65,7 @@ docker exec moe-postgres pg_dump -U moe moe > ~/MoE/runtime/backups/moe.sql
 ```
 
 Expected good sign: the `.sql` file appears under `~/MoE/runtime/backups/`. This is a runtime backup location, not a source repo file.
+
+## Prove The Backup Works
+
+After a normal backup, use [14-backup-restore-drill.md](14-backup-restore-drill.md). The drill restores into a temporary `restore-test` folder only and does not overwrite the live repo.

@@ -18,3 +18,11 @@ Use this as a compact checklist. Run rows in order.
 | 12 | PC-1 | Continue config | `apiBase: http://localhost:8100/v1` and `model: gateway-auto` | Continue points to Gateway-Auto | [07 Troubleshooting](07-troubleshooting.md#continue-returns-only-ok-or-no-answer) |
 
 If you are unsure where to run a command, stop and check [13-service-location-reference.md](13-service-location-reference.md).
+
+## Optional Backup Confidence Check
+
+| Check | Machine | Directory | Command or action | Expected good sign |
+| --- | --- | --- | --- | --- |
+| Read backup drill | PC-1 | `~/DiskD/Projects/MoE/codebase` | Open [14-backup-restore-drill.md](14-backup-restore-drill.md) | You understand the drill before running it |
+| Verify backup root exists | PC-1 | any | `test -d /media/cuneyt/Backup/MoE-Drill` | Command exits successfully |
+| Verify restore-test was successful | PC-1 | `/media/cuneyt/Backup/MoE-Drill/restore-test/pc1/codebase` | `git status --short` | Empty or expected backup-only differences |
