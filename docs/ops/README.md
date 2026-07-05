@@ -62,6 +62,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Image processing pipeline runbook | [22-image-processing-pipeline-runbook.md](22-image-processing-pipeline-runbook.md) |
 | Image model inventory guide | [23-image-model-inventory-guide.md](23-image-model-inventory-guide.md) |
 | Image first dry-run plan | [24-image-first-dry-run-plan.md](24-image-first-dry-run-plan.md) |
+| ComfyUI Flux startup checklist | [25-comfyui-flux-startup-checklist.md](25-comfyui-flux-startup-checklist.md) |
+| ComfyUI Flux blockers | [26-comfyui-flux-blockers.md](26-comfyui-flux-blockers.md) |
+| ComfyUI Flux startup evidence template | [27-comfyui-flux-startup-evidence-template.md](27-comfyui-flux-startup-evidence-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -85,7 +88,10 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 16. [22 Image Processing Pipeline Runbook](22-image-processing-pipeline-runbook.md)
 17. [23 Image Model Inventory Guide](23-image-model-inventory-guide.md)
 18. [24 Image First Dry Run Plan](24-image-first-dry-run-plan.md)
+19. [25 ComfyUI Flux Startup Checklist](25-comfyui-flux-startup-checklist.md)
+20. [26 ComfyUI Flux Blockers](26-comfyui-flux-blockers.md)
+21. [27 ComfyUI Flux Startup Evidence Template](27-comfyui-flux-startup-evidence-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
-M31.0 defines the image pipeline. M31.1 will handle ComfyUI / Flux startup checklist. Real generation remains explicit operator action.
+M31.0 defines the image pipeline. M31.1 adds the ComfyUI / Flux startup checklist. Real generation remains explicit operator action.

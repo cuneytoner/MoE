@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M31.0 Image Processing Pipeline Runbook.
-- Next planned: M31.1 ComfyUI / Flux Startup Checklist.
+- Completed through M31.1 ComfyUI / Flux Startup Checklist.
+- Next planned: M31.2 Image Mode VRAM Safety / LLM Stop Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1119,12 +1119,13 @@ Goals:
 
 ## Milestone 31.1: ComfyUI / Flux Startup Checklist
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Document exact ComfyUI and Flux startup readiness checklist.
-- Keep startup operator-reviewed and explicit.
-- Avoid automatic image generation until a guarded runbook permits it.
+- Add exact ComfyUI / Flux startup readiness checklist.
+- Add plain-language blocker guide.
+- Add copy/paste evidence template for operator review before real image generation.
+- Keep startup operator-reviewed and explicit with no real generation commands.
 
 ## Milestone 31.2: Image Mode VRAM Safety / LLM Stop Plan
 
@@ -1135,7 +1136,16 @@ Goals:
 - Keep all stop/start actions explicit and operator-reviewed.
 - Do not add automatic model switching or automatic image generation.
 
-## Milestone 31.3: Homelab Ops and Remote Access Hardening
+## Milestone 31.3: First Image Dry Run Evidence Review
+
+Status: PLANNED
+
+Goals:
+- Review collected ComfyUI / Flux startup evidence before any real generation.
+- Keep review documentation-only unless a later milestone explicitly adds guarded execution.
+- Do not add automatic image generation.
+
+## Milestone 31.4: Homelab Ops and Remote Access Hardening
 
 Status: PLANNED
 

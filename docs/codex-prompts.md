@@ -1134,15 +1134,16 @@ Expected boundaries:
 - Do not include real image generation commands yet.
 - Keep changes documentation-only. Do not alter runtime behavior, app code, Docker Compose behavior, service execution features, automatic model switching, or automatic image generation.
 
-## Milestone 31.1 Prompt Placeholder
+## Milestone 31.1 Prompt: ComfyUI / Flux Startup Checklist
 
-Add ComfyUI / Flux startup checklist.
+Create a beginner-friendly startup checklist for ComfyUI / Flux image runtime readiness.
 
 Expected boundaries:
 
-- Document exact ComfyUI and Flux startup readiness checklist.
+- Add `docs/ops/25-comfyui-flux-startup-checklist.md`, `docs/ops/26-comfyui-flux-blockers.md`, and `docs/ops/27-comfyui-flux-startup-evidence-template.md`.
+- Include exact PC-1 readiness checks for repo status, GPU, llama-server, Docker, scripts/docs, model files, and model folder sizes.
 - Keep startup operator-reviewed and explicit.
-- Avoid automatic image generation until a guarded runbook permits it.
+- Avoid real image generation commands, automatic model switching, automatic llama-server stop/start, app code changes, Docker Compose changes, or service execution features.
 
 ## Milestone 31.2 Prompt Placeholder
 
@@ -1153,6 +1154,16 @@ Expected boundaries:
 - Document manual llama-server stop/start planning for image mode VRAM safety.
 - Keep all stop/start actions explicit and operator-reviewed.
 - Do not add automatic model switching or automatic image generation.
+
+## Milestone 31.3 Prompt Placeholder
+
+Add first image dry-run evidence review.
+
+Expected boundaries:
+
+- Review collected ComfyUI / Flux startup evidence before any real generation.
+- Keep review documentation-only unless a later milestone explicitly adds guarded execution.
+- Do not add automatic image generation.
 
 ## Future Automation Placeholder
 

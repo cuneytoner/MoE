@@ -2,6 +2,12 @@
 
 This plan prepares the first dry-run only image pipeline check. Dry-run means no real image generation.
 
+Before dry-run, complete:
+
+- [25-comfyui-flux-startup-checklist.md](25-comfyui-flux-startup-checklist.md)
+- [26-comfyui-flux-blockers.md](26-comfyui-flux-blockers.md)
+- [27-comfyui-flux-startup-evidence-template.md](27-comfyui-flux-startup-evidence-template.md)
+
 ## What Dry-Run Means
 
 - Inspect scripts.

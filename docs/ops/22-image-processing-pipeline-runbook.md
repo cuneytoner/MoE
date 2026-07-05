@@ -139,6 +139,9 @@ Dry-run planning means inspection and readiness only. It should not create real 
 Read next:
 
 - [24-image-first-dry-run-plan.md](24-image-first-dry-run-plan.md)
+- [25-comfyui-flux-startup-checklist.md](25-comfyui-flux-startup-checklist.md)
+- [26-comfyui-flux-blockers.md](26-comfyui-flux-blockers.md)
+- [27-comfyui-flux-startup-evidence-template.md](27-comfyui-flux-startup-evidence-template.md)
 - [20-image-mode-safety-rules.md](20-image-mode-safety-rules.md)
 - [19-media-readiness-map.md](19-media-readiness-map.md)
 
