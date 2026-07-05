@@ -139,6 +139,8 @@ Milestone 29.17 adds a read-only runtime profile compatibility matrix for static
 
 Milestone 29.18 adds a read-only runtime profile recommendation summary. Gateway combines existing preflight, catalog, and matrix data into default/review/fallback recommendations for human review without executing scripts, switching models, or inspecting live GPU state.
 
+Milestone 29.19 surfaces runtime profile recommendations in dashboard/read-only form. Gateway adds a compact profile summary endpoint and embeds the same summary in `/gateway/runtime/dashboard`; the Dashboard UI displays it as a visibility-only card with no action buttons.
+
 Milestone 28.4 adds optional search-only memory injection to `/gateway/chat` and `/v1/chat/completions`. Gateway extracts the latest user message, calls the fixed configured `MEMORY_SEARCH_URL`, injects a bounded system context only when usable results exist, and returns memory metadata without storing new memory or exposing raw memory records in response metadata. Chat remains available when memory search is unavailable.
 
 Milestone 28.5 adds `POST /gateway/feedback` and `GET /gateway/feedback/status` for metadata-only feedback capture. Gateway appends allowlisted rating metadata to `/home/cuneyt/MoE/runtime/feedback/gateway-feedback.jsonl`, keeps full prompts and responses out of the record schema, and exposes only aggregate status for reads.

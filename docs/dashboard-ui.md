@@ -97,6 +97,8 @@ make docker-summary-status
 
 The snapshot is written outside the repository at `/home/cuneyt/MoE/runtime/status/docker-summary.json`. Gateway reads only that fixed JSON file and never mounts `docker.sock`, calls Docker, runs shell commands, or controls containers. The Docker Summary card displays snapshot counts when available and remains warning-only when the file is missing or invalid.
 
+Milestone 29.19 adds a read-only Runtime Profile Recommendation card backed by `runtime_profile_summary` from `GET /gateway/runtime/dashboard`. It displays default, review, and fallback profile recommendations with compatibility/risk labels, warning count, and a manual-only note. It exposes no action buttons, script execution, model switching, or live GPU probing.
+
 ## Run
 
 Start the UI:

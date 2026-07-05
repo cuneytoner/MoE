@@ -164,6 +164,8 @@ M29.17 adds `GET /gateway/runtime/profile-compatibility-matrix` and the read-onl
 
 M29.18 adds `GET /gateway/runtime/profile-recommendation-summary` and the read-only `runtime_profile_recommendation_summary` tool. The summary combines existing profile preflight, catalog, and matrix data into advisory default/review/fallback recommendations for human review only.
 
+M29.19 surfaces the recommendation summary in dashboard/read-only form through `GET /gateway/runtime/profile-dashboard-summary`, the `runtime_profile_summary` field on `/gateway/runtime/dashboard`, and the read-only Dashboard UI card. It exposes no action buttons and does not inspect live GPU state, execute scripts, or switch models.
+
 M28.3 exposes Gateway OpenAI-compatible routes at `http://localhost:8100/v1`. Continue.dev should use `apiBase: http://localhost:8100/v1` for normal use. Direct `http://localhost:8000/v1` llama-server access is a troubleshooting fallback only.
 
 M28.4 adds optional Gateway memory injection before forwarding chat to llama-server. `memory="auto"` searches the fixed configured `MEMORY_SEARCH_URL` and injects bounded local memory context only when usable results exist. `memory="off"` disables search. Memory search failures are non-fatal and return metadata while chat continues when llama-server is reachable.
