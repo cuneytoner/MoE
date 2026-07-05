@@ -82,6 +82,41 @@ class GatewayRuntimeProfileRunCatalogResponse(BaseModel):
     profiles: list[GatewayRuntimeProfileRunCatalogProfile]
 
 
+class GatewayRuntimeHardwareProfile(BaseModel):
+    name: Literal["pc1-rtx-5060-ti-16gb"]
+    gpu: Literal["NVIDIA RTX 5060 Ti"]
+    vram_gb: int
+    ram_gb: int
+    cpu: Literal["AMD Ryzen 7 7800X3D"]
+
+
+class GatewayRuntimeProfileCompatibilityProfile(BaseModel):
+    model_target: str
+    model_config_id: str | None = None
+    runtime_model_id: str | None = None
+    context: int | None = None
+    gpu_layers: int | None = None
+    batch_size: int | None = None
+    ubatch_size: int | None = None
+    compatibility: Literal["compatible", "borderline", "review_required", "unknown"]
+    risk_level: Literal["low", "medium", "high", "unknown"]
+    estimated_vram_pressure: Literal["low", "medium", "high", "unknown"]
+    notes: list[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+
+
+class GatewayRuntimeProfileCompatibilityMatrixResponse(BaseModel):
+    status: Literal["ok", "review_required"]
+    service: Literal["gateway-runtime-profile-compatibility-matrix"]
+    read_only: bool = True
+    documentation_only: bool = True
+    runtime_switch_supported: bool = False
+    runtime_switch_attempted: bool = False
+    auto_execution_supported: bool = False
+    hardware_profile: GatewayRuntimeHardwareProfile
+    profiles: list[GatewayRuntimeProfileCompatibilityProfile]
+
+
 class GatewayRuntimeSwitchPlanRequest(BaseModel):
     message: str = Field(default="")
     intent: str | None = None

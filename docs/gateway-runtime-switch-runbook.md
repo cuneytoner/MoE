@@ -26,6 +26,8 @@ M29.15 adds runtime profile preflight as a read-only check. It validates mapping
 
 M29.16 adds `GET /gateway/runtime/profile-run-catalog` as a documentation-only catalog. It exposes runtime profile settings for human review, but does not execute host scripts or switch models. Host scripts remain manual/operator controlled.
 
+M29.17 adds `GET /gateway/runtime/profile-compatibility-matrix` as a read-only advisory matrix. It uses static PC-1 hardware assumptions and does not inspect live GPU state, execute scripts, or switch models.
+
 ## Continue Checks
 
 - Keep Continue configured for Gateway-Auto rather than direct model paths.

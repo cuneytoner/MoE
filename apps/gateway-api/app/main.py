@@ -43,6 +43,7 @@ from app.models.gateway import (
     GatewayModelsResponse,
     GatewayRouteRequest,
     GatewayRouteResponse,
+    GatewayRuntimeProfileCompatibilityMatrixResponse,
     GatewayRuntimeProfilePreflightResponse,
     GatewayRuntimeProfileRunCatalogResponse,
     GatewayRuntimeStatusResponse,
@@ -83,6 +84,9 @@ from app.services.patch_planner import (
 )
 from app.services.repo_agent import RepoAgentService
 from app.services.runtime_dashboard import build_runtime_dashboard
+from app.services.runtime_profile_compatibility_matrix import (
+    build_runtime_profile_compatibility_matrix,
+)
 from app.services.runtime_profile_preflight import build_runtime_profile_preflight
 from app.services.runtime_profile_run_catalog import build_runtime_profile_run_catalog
 from app.services.router import RouteDecision, route_message
@@ -312,6 +316,19 @@ async def runtime_profile_run_catalog() -> GatewayRuntimeProfileRunCatalogRespon
     settings = get_settings()
     return GatewayRuntimeProfileRunCatalogResponse(
         **await build_runtime_profile_run_catalog(settings)
+    )
+
+
+@app.get(
+    "/gateway/runtime/profile-compatibility-matrix",
+    response_model=GatewayRuntimeProfileCompatibilityMatrixResponse,
+)
+async def runtime_profile_compatibility_matrix() -> (
+    GatewayRuntimeProfileCompatibilityMatrixResponse
+):
+    settings = get_settings()
+    return GatewayRuntimeProfileCompatibilityMatrixResponse(
+        **await build_runtime_profile_compatibility_matrix(settings)
     )
 
 

@@ -1405,3 +1405,11 @@ Before accepting Codex changes, check:
 - Expose run settings for human review without executable instructions.
 - Keep host scripts manual/operator controlled.
 - Do not start, stop, restart, or switch llama-server, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
+
+## Milestone 29.17 Runtime Profile Compatibility Matrix
+
+- Add read-only `GET /gateway/runtime/profile-compatibility-matrix`.
+- Add read-only `runtime_profile_compatibility_matrix` tool execution.
+- Use the runtime profile run catalog and static PC-1 hardware assumptions.
+- Report advisory compatibility, risk level, estimated VRAM pressure, notes, and warnings.
+- Do not inspect live GPU state, execute scripts, switch models, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.

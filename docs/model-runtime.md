@@ -160,6 +160,8 @@ M29.15 adds `GET /gateway/runtime/profile-preflight` and the read-only `runtime_
 
 M29.16 adds `GET /gateway/runtime/profile-run-catalog` and the read-only `runtime_profile_run_catalog` tool. The catalog exposes runtime profile settings for human review only; it does not execute scripts or switch models. Host runtime scripts remain manual/operator controlled.
 
+M29.17 adds `GET /gateway/runtime/profile-compatibility-matrix` and the read-only `runtime_profile_compatibility_matrix` tool. The matrix is advisory only and uses static PC-1 hardware assumptions; it does not inspect live GPU state, execute scripts, or switch models.
+
 M28.3 exposes Gateway OpenAI-compatible routes at `http://localhost:8100/v1`. Continue.dev should use `apiBase: http://localhost:8100/v1` for normal use. Direct `http://localhost:8000/v1` llama-server access is a troubleshooting fallback only.
 
 M28.4 adds optional Gateway memory injection before forwarding chat to llama-server. `memory="auto"` searches the fixed configured `MEMORY_SEARCH_URL` and injects bounded local memory context only when usable results exist. `memory="off"` disables search. Memory search failures are non-fatal and return metadata while chat continues when llama-server is reachable.
