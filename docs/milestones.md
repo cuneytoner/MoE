@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M30.2 Backup / Restore Drill Documentation.
-- Next planned: M30.3 PC-1 / PC-2 Startup Service Matrix.
+- Completed through M30.3 PC-1 / PC-2 Startup Service Matrix.
+- Next planned: M30.4 Media / Image Runtime Readiness Map.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1077,14 +1077,24 @@ Goals:
 
 ## Milestone 30.3: PC-1 / PC-2 Startup Service Matrix
 
+Status: DONE
+
+Goals:
+- Add startup service matrix documentation for coding, review/debug, memory/database, image generation, media placeholder, backup, restore, and troubleshooting modes.
+- Add copy/paste friendly mode startup recipes.
+- Add image mode entry checklist for readiness-only transition from coding mode to future media work.
+- Keep the milestone documentation-only with no runtime behavior, app code, Docker Compose, automatic model switching, or automatic image generation changes.
+
+## Milestone 30.4: Media / Image Runtime Readiness Map
+
 Status: PLANNED
 
 Goals:
-- Document exact startup ownership for PC-1 and PC-2 services.
-- Clarify single-machine versus two-machine service placement.
-- Keep the matrix documentation-only and operator-reviewed.
+- Map image/media runtime readiness requirements before real image processing runbooks.
+- Clarify GPU VRAM ownership, ComfyUI readiness, Flux/model file expectations, and safe return to coding mode.
+- Keep readiness mapping documentation-only unless a later milestone explicitly adds guarded behavior.
 
-## Milestone 30.4: Hardware Role Profiles / Environment Reassignment
+## Milestone 30.5: Hardware Role Profiles / Environment Reassignment
 
 Status: PLANNED
 
@@ -1095,7 +1105,16 @@ Goals:
 - Document how to update IPs, paths, and model defaults.
 - Document current PC1 and PC2 ownership assumptions.
 
-## Milestone 31.0: Homelab Ops and Remote Access Hardening
+## Milestone 31.0: Image Processing Pipeline Runbook
+
+Status: PLANNED
+
+Goals:
+- Document the real image processing pipeline runbook after readiness mapping is complete.
+- Keep real generation guarded and operator-reviewed.
+- Preserve coding-mode recovery steps and GPU/VRAM safety notes.
+
+## Milestone 31.1: Homelab Ops and Remote Access Hardening
 
 Status: PLANNED
 

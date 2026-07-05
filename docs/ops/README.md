@@ -53,6 +53,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Service location reference | [13-service-location-reference.md](13-service-location-reference.md) |
 | Backup restore drill | [14-backup-restore-drill.md](14-backup-restore-drill.md) |
 | Disaster recovery card | [15-disaster-recovery-card.md](15-disaster-recovery-card.md) |
+| Startup service matrix | [16-startup-service-matrix.md](16-startup-service-matrix.md) |
+| Mode startup recipes | [17-mode-startup-recipes.md](17-mode-startup-recipes.md) |
+| Image mode entry checklist | [18-image-mode-entry-checklist.md](18-image-mode-entry-checklist.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -67,5 +70,10 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 7. [08 Command Cheatsheet](08-command-cheatsheet.md)
 8. [14 Backup Restore Drill](14-backup-restore-drill.md)
 9. [15 Disaster Recovery Card](15-disaster-recovery-card.md)
+10. [16 Startup Service Matrix](16-startup-service-matrix.md)
+11. [17 Mode Startup Recipes](17-mode-startup-recipes.md)
+12. [18 Image Mode Entry Checklist](18-image-mode-entry-checklist.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
+
+Image processing starts after M30.4/M31.0. Use [18-image-mode-entry-checklist.md](18-image-mode-entry-checklist.md) before entering media work.

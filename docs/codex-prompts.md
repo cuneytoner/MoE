@@ -1102,25 +1102,36 @@ Expected boundaries:
 - Warn about `--delete`, large model files, secrets, backups not belonging in Git, and avoiding Docker volume prune.
 - Keep changes documentation-only. Do not alter runtime behavior, app code, Docker Compose behavior, or service execution features.
 
-## Milestone 30.3 Prompt Placeholder
+## Milestone 30.3 Prompt: PC-1 / PC-2 Startup Service Matrix
 
-Add PC-1 / PC-2 startup service matrix documentation.
-
-Expected boundaries:
-
-- Document exact startup ownership for PC-1 and PC-2 services.
-- Clarify single-machine versus two-machine service placement.
-- Keep the matrix documentation-only and operator-reviewed.
-
-## Milestone 31 Prompt Placeholder
-
-Add media workflow orchestrator.
+Add beginner-friendly operational documentation that explains exactly which services should run on PC-1 and PC-2 for each daily mode.
 
 Expected boundaries:
 
-- Chain image, video, 3D, rig, and animation jobs.
-- Add workflow status and asset tracking.
-- Keep orchestration state outside the codebase.
+- Add `docs/ops/16-startup-service-matrix.md`, `docs/ops/17-mode-startup-recipes.md`, and `docs/ops/18-image-mode-entry-checklist.md`.
+- Cover coding, review/debug, memory/database, image generation, media placeholder, backup, restore, and troubleshooting modes.
+- Include exact PC-1, PC-2, and PC-1-to-PC-2 command labels, IPs, checks, expected good signs, and warnings.
+- Keep image mode readiness-only. Do not add real image generation, automatic model switching, automatic llama-server stop/start, or service execution features.
+
+## Milestone 30.4 Prompt Placeholder
+
+Add media / image runtime readiness map documentation.
+
+Expected boundaries:
+
+- Map image/media runtime readiness requirements before real image processing runbooks.
+- Clarify GPU VRAM ownership, ComfyUI readiness, Flux/model file expectations, and safe return to coding mode.
+- Keep readiness mapping documentation-only unless a later milestone explicitly adds guarded behavior.
+
+## Milestone 31.0 Prompt Placeholder
+
+Add image processing pipeline runbook.
+
+Expected boundaries:
+
+- Document the real image processing pipeline runbook after readiness mapping is complete.
+- Keep real generation guarded and operator-reviewed.
+- Preserve coding-mode recovery steps and GPU/VRAM safety notes.
 
 ## Future Automation Placeholder
 
