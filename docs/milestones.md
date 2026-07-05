@@ -1,10 +1,10 @@
 # MoE / AI-Brain-OS Milestones
 
 Current active phase:
-- M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.20 Runtime Profile Operator Checklist Export.
-- Next planned: M29.21 Runtime Profile Decision Audit Snapshot.
-- Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
+- M30 Ops resilience is active.
+- Completed through M30.0 Operator Runbook Pack.
+- Next planned: M30.1 Backup / Restore / Disaster Recovery.
+- Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
 
@@ -1043,7 +1043,18 @@ Goals:
 - Do not write runtime files unless a later milestone explicitly adds a guarded approval flow.
 - Do not start, stop, restart, or switch model runtimes automatically.
 
-## Milestone 30.0: Backup / Restore / Disaster Recovery
+## Milestone 30.0: Operator Runbook Pack
+
+Status: DONE
+
+Goals:
+- Add beginner-friendly operator runbooks under `docs/ops/`.
+- Explain PC-1 and PC-2 roles, service ports, Docker services, llama-server, Gateway, Memory API, Embed Worker, Postgres, Qdrant, and Continue.
+- Document fresh install, daily startup, daily shutdown, backup, restore, troubleshooting, command cheatsheet, Git workflow, and runtime profile guide.
+- Keep the pack documentation-only and source-only.
+- Emphasize verify-first operation and manual-only runtime actions.
+
+## Milestone 30.1: Backup / Restore / Disaster Recovery
 
 Status: PLANNED
 
@@ -1055,7 +1066,7 @@ Goals:
 - Add restore process for a new PC.
 - Add disaster recovery checklist.
 
-## Milestone 30.1: Hardware Role Profiles / Environment Reassignment
+## Milestone 30.2: Hardware Role Profiles / Environment Reassignment
 
 Status: PLANNED
 

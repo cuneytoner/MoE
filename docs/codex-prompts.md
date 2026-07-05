@@ -1061,15 +1061,32 @@ Expected boundaries:
 - Start with mechanical and object rigs before character rigs.
 - Keep generated files under runtime media storage.
 
-## Milestone 30 Prompt Placeholder
+## Milestone 30.0 Prompt: Operator Runbook Pack
 
-Add animation pipeline.
+Implement the M30.0 Operator Runbook Pack as documentation-only source changes.
 
 Expected boundaries:
 
-- Convert text requests into keyframe plans.
-- Support Blender camera and object animation.
-- Render preview outputs under runtime media storage.
+- Add `docs/ops/` with beginner-friendly runbooks for system map, fresh install, daily startup, daily shutdown, backup, restore, troubleshooting, command cheatsheet, Git workflow, and runtime profile review.
+- Explain PC-1 and PC-2 roles, service ports, Gateway, Continue, llama-server, Memory API, Embed Worker, Postgres, Qdrant, and Docker services.
+- Keep commands terminal-first and clearly separate read-only checks from manual start, stop, rebuild, backup, and restore actions.
+- Do not add runtime behavior, automatic switching, shell execution, Docker control, Memory API writes, model downloads, or runtime file creation.
+- Update layout validation, milestone docs, and docs index references.
+
+M30.0 follow-up hardening:
+
+- Improve the runbooks for true beginner use with exact PC-1 and PC-2 labels, direct-link IPs `192.168.50.1` and `192.168.50.2`, exact repo/model/runtime paths, expected good signs, and PC-1-to-PC-2 health checks.
+- Keep all improvements documentation-only.
+
+## Milestone 30.1 Prompt Placeholder
+
+Add backup / restore / disaster recovery hardening.
+
+Expected boundaries:
+
+- Define source, runtime, database, vector store, model, config, and docs backup strategy.
+- Keep source, runtime data, and model files in their assigned locations.
+- Keep restore actions human-operated and verification-first.
 
 ## Milestone 31 Prompt Placeholder
 
