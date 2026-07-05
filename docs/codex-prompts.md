@@ -1113,15 +1113,15 @@ Expected boundaries:
 - Include exact PC-1, PC-2, and PC-1-to-PC-2 command labels, IPs, checks, expected good signs, and warnings.
 - Keep image mode readiness-only. Do not add real image generation, automatic model switching, automatic llama-server stop/start, or service execution features.
 
-## Milestone 30.4 Prompt Placeholder
+## Milestone 30.4 Prompt: Media / Image Runtime Readiness Map
 
-Add media / image runtime readiness map documentation.
+Create a beginner-friendly readiness map for future image/media processing.
 
 Expected boundaries:
 
-- Map image/media runtime readiness requirements before real image processing runbooks.
-- Clarify GPU VRAM ownership, ComfyUI readiness, Flux/model file expectations, and safe return to coding mode.
-- Keep readiness mapping documentation-only unless a later milestone explicitly adds guarded behavior.
+- Add `docs/ops/19-media-readiness-map.md`, `docs/ops/20-image-mode-safety-rules.md`, and `docs/ops/21-image-pipeline-entry-plan.md`.
+- Map PC-1 media/GPU role, PC-2 support role, GPU/VRAM readiness, existing image/media scripts and docs, model folders, model checks, service checks, and safe readiness flow.
+- Keep image generation future work. Do not add real generation commands, automatic llama-server stop/start, automatic model switching, app code, Docker Compose behavior, or service execution features.
 
 ## Milestone 31.0 Prompt Placeholder
 
@@ -1132,6 +1132,16 @@ Expected boundaries:
 - Document the real image processing pipeline runbook after readiness mapping is complete.
 - Keep real generation guarded and operator-reviewed.
 - Preserve coding-mode recovery steps and GPU/VRAM safety notes.
+
+## Milestone 31.1 Prompt Placeholder
+
+Add ComfyUI / Flux startup checklist.
+
+Expected boundaries:
+
+- Document exact ComfyUI and Flux startup readiness checklist.
+- Keep startup operator-reviewed and explicit.
+- Avoid automatic image generation until a guarded runbook permits it.
 
 ## Future Automation Placeholder
 

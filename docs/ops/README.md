@@ -56,6 +56,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Startup service matrix | [16-startup-service-matrix.md](16-startup-service-matrix.md) |
 | Mode startup recipes | [17-mode-startup-recipes.md](17-mode-startup-recipes.md) |
 | Image mode entry checklist | [18-image-mode-entry-checklist.md](18-image-mode-entry-checklist.md) |
+| Media readiness map | [19-media-readiness-map.md](19-media-readiness-map.md) |
+| Image mode safety rules | [20-image-mode-safety-rules.md](20-image-mode-safety-rules.md) |
+| Image pipeline entry plan | [21-image-pipeline-entry-plan.md](21-image-pipeline-entry-plan.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -73,7 +76,10 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 10. [16 Startup Service Matrix](16-startup-service-matrix.md)
 11. [17 Mode Startup Recipes](17-mode-startup-recipes.md)
 12. [18 Image Mode Entry Checklist](18-image-mode-entry-checklist.md)
+13. [19 Media Readiness Map](19-media-readiness-map.md)
+14. [20 Image Mode Safety Rules](20-image-mode-safety-rules.md)
+15. [21 Image Pipeline Entry Plan](21-image-pipeline-entry-plan.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
-Image processing starts after M30.4/M31.0. Use [18-image-mode-entry-checklist.md](18-image-mode-entry-checklist.md) before entering media work.
+Image processing work begins in M31.0. Read [18-image-mode-entry-checklist.md](18-image-mode-entry-checklist.md), [19-media-readiness-map.md](19-media-readiness-map.md), [20-image-mode-safety-rules.md](20-image-mode-safety-rules.md), and [21-image-pipeline-entry-plan.md](21-image-pipeline-entry-plan.md) before running real image generation.

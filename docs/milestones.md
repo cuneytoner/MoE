@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M30.3 PC-1 / PC-2 Startup Service Matrix.
-- Next planned: M30.4 Media / Image Runtime Readiness Map.
+- Completed through M30.4 Media / Image Runtime Readiness Map.
+- Next planned: M31.0 Image Processing Pipeline Runbook.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1087,12 +1087,13 @@ Goals:
 
 ## Milestone 30.4: Media / Image Runtime Readiness Map
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Map image/media runtime readiness requirements before real image processing runbooks.
-- Clarify GPU VRAM ownership, ComfyUI readiness, Flux/model file expectations, and safe return to coding mode.
-- Keep readiness mapping documentation-only unless a later milestone explicitly adds guarded behavior.
+- Add media/image readiness map documentation for PC-1 GPU/media work.
+- Add image mode safety rules before real image generation.
+- Add image pipeline entry plan for M31.0.
+- Keep the milestone documentation-only with no runtime behavior, app code, Docker Compose, automatic model switching, or automatic image generation changes.
 
 ## Milestone 30.5: Hardware Role Profiles / Environment Reassignment
 
@@ -1114,7 +1115,16 @@ Goals:
 - Keep real generation guarded and operator-reviewed.
 - Preserve coding-mode recovery steps and GPU/VRAM safety notes.
 
-## Milestone 31.1: Homelab Ops and Remote Access Hardening
+## Milestone 31.1: ComfyUI / Flux Startup Checklist
+
+Status: PLANNED
+
+Goals:
+- Document exact ComfyUI and Flux startup readiness checklist.
+- Keep startup operator-reviewed and explicit.
+- Avoid automatic image generation until a guarded runbook permits it.
+
+## Milestone 31.2: Homelab Ops and Remote Access Hardening
 
 Status: PLANNED
 

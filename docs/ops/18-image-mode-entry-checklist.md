@@ -2,6 +2,12 @@
 
 This is the bridge from coding mode to future image/media work. It is readiness-only. It does not run real image generation.
 
+Read next:
+
+- [19 Media Readiness Map](19-media-readiness-map.md)
+- [20 Image Mode Safety Rules](20-image-mode-safety-rules.md)
+- [21 Image Pipeline Entry Plan](21-image-pipeline-entry-plan.md)
+
 ## When Do We Move From Coding Mode To Image Mode?
 
 Move to image mode when the task needs PC-1 GPU VRAM for ComfyUI, Flux, image models, video, 3D, or media workflows.
