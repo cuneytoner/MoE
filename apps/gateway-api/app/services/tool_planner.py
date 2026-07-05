@@ -69,6 +69,12 @@ TOOL_CATALOG: dict[str, dict[str, Any]] = {
         "executable": True,
         "read_only": True,
     },
+    "runtime_profile_recommendation_summary": {
+        "description": "Read advisory runtime profile recommendation summary.",
+        "auto_execution_supported": False,
+        "executable": True,
+        "read_only": True,
+    },
     "model_routing_read": {
         "description": "Read Gateway advisory model routing config.",
         "auto_execution_supported": False,

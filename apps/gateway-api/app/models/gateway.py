@@ -117,6 +117,37 @@ class GatewayRuntimeProfileCompatibilityMatrixResponse(BaseModel):
     profiles: list[GatewayRuntimeProfileCompatibilityProfile]
 
 
+class GatewayRuntimeProfileRecommendation(BaseModel):
+    model_target: str
+    model_config_id: str | None = None
+    compatibility: Literal["compatible", "borderline", "review_required", "unknown"]
+    risk_level: Literal["low", "medium", "high", "unknown"]
+    reason: str
+    warnings: list[str] = Field(default_factory=list)
+
+
+class GatewayRuntimeProfileRecommendations(BaseModel):
+    default: GatewayRuntimeProfileRecommendation
+    review: GatewayRuntimeProfileRecommendation
+    fallback: GatewayRuntimeProfileRecommendation
+
+
+class GatewayRuntimeProfileRecommendationSummaryResponse(BaseModel):
+    status: Literal["ok", "review_required"]
+    service: Literal["gateway-runtime-profile-recommendation-summary"]
+    read_only: bool = True
+    documentation_only: bool = True
+    runtime_switch_supported: bool = False
+    runtime_switch_attempted: bool = False
+    auto_execution_supported: bool = False
+    runbook: Literal["docs/gateway-runtime-switch-runbook.md"]
+    hardware_profile: GatewayRuntimeHardwareProfile
+    recommendations: GatewayRuntimeProfileRecommendations
+    profiles: list[GatewayRuntimeProfileCompatibilityProfile]
+    warnings: list[str] = Field(default_factory=list)
+    next_steps: list[str] = Field(default_factory=list)
+
+
 class GatewayRuntimeSwitchPlanRequest(BaseModel):
     message: str = Field(default="")
     intent: str | None = None

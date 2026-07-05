@@ -1413,3 +1413,11 @@ Before accepting Codex changes, check:
 - Use the runtime profile run catalog and static PC-1 hardware assumptions.
 - Report advisory compatibility, risk level, estimated VRAM pressure, notes, and warnings.
 - Do not inspect live GPU state, execute scripts, switch models, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
+
+## Milestone 29.18 Runtime Profile Recommendation Summary
+
+- Add read-only `GET /gateway/runtime/profile-recommendation-summary`.
+- Add read-only `runtime_profile_recommendation_summary` tool execution.
+- Combine existing profile preflight, run catalog, and compatibility matrix data into advisory default/review/fallback recommendations.
+- Keep recommendations for human review only.
+- Do not inspect live GPU state, execute scripts, switch models, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.

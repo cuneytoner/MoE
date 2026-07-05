@@ -334,6 +334,41 @@ else
   fail "Gateway API /gateway/runtime/profile-compatibility-matrix returned unexpected response: HTTP $runtime_profile_compatibility_http_status $runtime_profile_compatibility_response"
 fi
 
+runtime_profile_recommendation_http_status="$(
+  curl -sS -o /tmp/moe-gateway-runtime-profile-recommendation-summary.json -w "%{http_code}" \
+    "$GATEWAY_API_URL/gateway/runtime/profile-recommendation-summary" || true
+)"
+runtime_profile_recommendation_response="$(cat /tmp/moe-gateway-runtime-profile-recommendation-summary.json 2>/dev/null || true)"
+runtime_profile_recommendation_read_only="$(jq -r '.read_only | tostring' <<<"$runtime_profile_recommendation_response")"
+runtime_profile_recommendation_docs_only="$(jq -r '.documentation_only | tostring' <<<"$runtime_profile_recommendation_response")"
+runtime_profile_recommendation_supported="$(jq -r '.runtime_switch_supported | tostring' <<<"$runtime_profile_recommendation_response")"
+runtime_profile_recommendation_attempted="$(jq -r '.runtime_switch_attempted | tostring' <<<"$runtime_profile_recommendation_response")"
+runtime_profile_recommendation_auto_execution="$(jq -r '.auto_execution_supported | tostring' <<<"$runtime_profile_recommendation_response")"
+runtime_profile_recommendation_default="$(jq -r '.recommendations.default.model_target // empty' <<<"$runtime_profile_recommendation_response")"
+runtime_profile_recommendation_review="$(jq -r '.recommendations.review.model_target // empty' <<<"$runtime_profile_recommendation_response")"
+runtime_profile_recommendation_fallback="$(jq -r '.recommendations.fallback.model_target // empty' <<<"$runtime_profile_recommendation_response")"
+runtime_profile_recommendation_next_steps_type="$(jq -r 'if (.next_steps | type) == "array" then "array" else "other" end' <<<"$runtime_profile_recommendation_response")"
+runtime_profile_recommendation_forbidden_count="$(
+  (grep -Eio '"command"|"commands"|shell|docker compose|pkill|kill|systemctl|APPLY=1' \
+    <<<"$runtime_profile_recommendation_response" || true) | wc -l
+)"
+
+if [ "$runtime_profile_recommendation_http_status" = "200" ] \
+  && [ "$runtime_profile_recommendation_read_only" = "true" ] \
+  && [ "$runtime_profile_recommendation_docs_only" = "true" ] \
+  && [ "$runtime_profile_recommendation_supported" = "false" ] \
+  && [ "$runtime_profile_recommendation_attempted" = "false" ] \
+  && [ "$runtime_profile_recommendation_auto_execution" = "false" ] \
+  && [ -n "$runtime_profile_recommendation_default" ] \
+  && [ -n "$runtime_profile_recommendation_review" ] \
+  && [ -n "$runtime_profile_recommendation_fallback" ] \
+  && [ "$runtime_profile_recommendation_next_steps_type" = "array" ] \
+  && [ "$runtime_profile_recommendation_forbidden_count" -eq 0 ]; then
+  pass "Gateway API /gateway/runtime/profile-recommendation-summary"
+else
+  fail "Gateway API /gateway/runtime/profile-recommendation-summary returned unexpected response: HTTP $runtime_profile_recommendation_http_status $runtime_profile_recommendation_response"
+fi
+
 if ! tools_response="$(curl -fsS "$GATEWAY_API_URL/gateway/tools")"; then
   fail "Gateway API /gateway/tools request failed"
 fi
@@ -364,6 +399,10 @@ tools_runtime_profile_compatibility_matrix="$(jq -r 'if .tools.runtime_profile_c
 tools_runtime_profile_compatibility_matrix_executable="$(jq -r '.tools.runtime_profile_compatibility_matrix.executable | tostring' <<<"$tools_response")"
 tools_runtime_profile_compatibility_matrix_read_only="$(jq -r '.tools.runtime_profile_compatibility_matrix.read_only | tostring' <<<"$tools_response")"
 tools_runtime_profile_compatibility_matrix_auto_execution="$(jq -r '.tools.runtime_profile_compatibility_matrix.auto_execution_supported | tostring' <<<"$tools_response")"
+tools_runtime_profile_recommendation_summary="$(jq -r 'if .tools.runtime_profile_recommendation_summary then "present" else "missing" end' <<<"$tools_response")"
+tools_runtime_profile_recommendation_summary_executable="$(jq -r '.tools.runtime_profile_recommendation_summary.executable | tostring' <<<"$tools_response")"
+tools_runtime_profile_recommendation_summary_read_only="$(jq -r '.tools.runtime_profile_recommendation_summary.read_only | tostring' <<<"$tools_response")"
+tools_runtime_profile_recommendation_summary_auto_execution="$(jq -r '.tools.runtime_profile_recommendation_summary.auto_execution_supported | tostring' <<<"$tools_response")"
 tools_workspace_status="$(jq -r 'if .tools.workspace_status then "present" else "missing" end' <<<"$tools_response")"
 tools_code_context="$(jq -r 'if .tools.code_context then "present" else "missing" end' <<<"$tools_response")"
 tools_code_ask="$(jq -r 'if .tools.code_ask then "present" else "missing" end' <<<"$tools_response")"
@@ -396,6 +435,10 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_runtime_profile_compatibility_matrix_executable" = "true" ] \
   && [ "$tools_runtime_profile_compatibility_matrix_read_only" = "true" ] \
   && [ "$tools_runtime_profile_compatibility_matrix_auto_execution" = "false" ] \
+  && [ "$tools_runtime_profile_recommendation_summary" = "present" ] \
+  && [ "$tools_runtime_profile_recommendation_summary_executable" = "true" ] \
+  && [ "$tools_runtime_profile_recommendation_summary_read_only" = "true" ] \
+  && [ "$tools_runtime_profile_recommendation_summary_auto_execution" = "false" ] \
   && [ "$tools_workspace_status" = "present" ] \
   && [ "$tools_code_context" = "present" ] \
   && [ "$tools_code_ask" = "present" ] \
@@ -513,6 +556,7 @@ assert_tool_execute_ok "runtime_status_check" '{}'
 assert_tool_execute_ok "runtime_profile_preflight" '{}'
 assert_tool_execute_ok "runtime_profile_run_catalog" '{}'
 assert_tool_execute_ok "runtime_profile_compatibility_matrix" '{}'
+assert_tool_execute_ok "runtime_profile_recommendation_summary" '{}'
 assert_tool_execute_ok "model_routing_read" '{}'
 assert_tool_execute_ok "tools_read" '{}'
 assert_tool_execute_ok "workspace_status" '{}'
