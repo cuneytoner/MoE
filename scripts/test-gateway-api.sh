@@ -299,6 +299,41 @@ else
   fail "Gateway API /gateway/runtime/profile-run-catalog returned unexpected response: HTTP $runtime_profile_run_catalog_http_status $runtime_profile_run_catalog_response"
 fi
 
+runtime_profile_compatibility_http_status="$(
+  curl -sS -o /tmp/moe-gateway-runtime-profile-compatibility-matrix.json -w "%{http_code}" \
+    "$GATEWAY_API_URL/gateway/runtime/profile-compatibility-matrix" || true
+)"
+runtime_profile_compatibility_response="$(cat /tmp/moe-gateway-runtime-profile-compatibility-matrix.json 2>/dev/null || true)"
+runtime_profile_compatibility_read_only="$(jq -r '.read_only | tostring' <<<"$runtime_profile_compatibility_response")"
+runtime_profile_compatibility_docs_only="$(jq -r '.documentation_only | tostring' <<<"$runtime_profile_compatibility_response")"
+runtime_profile_compatibility_supported="$(jq -r '.runtime_switch_supported | tostring' <<<"$runtime_profile_compatibility_response")"
+runtime_profile_compatibility_attempted="$(jq -r '.runtime_switch_attempted | tostring' <<<"$runtime_profile_compatibility_response")"
+runtime_profile_compatibility_auto_execution="$(jq -r '.auto_execution_supported | tostring' <<<"$runtime_profile_compatibility_response")"
+runtime_profile_compatibility_vram="$(jq -r '.hardware_profile.vram_gb // empty' <<<"$runtime_profile_compatibility_response")"
+runtime_profile_compatibility_profiles_type="$(jq -r 'if (.profiles | type) == "array" then "array" else "other" end' <<<"$runtime_profile_compatibility_response")"
+runtime_profile_compatibility_count="$(jq -r '[.profiles[]? | select((.compatibility // "") != "")] | length' <<<"$runtime_profile_compatibility_response")"
+runtime_profile_compatibility_risk_count="$(jq -r '[.profiles[]? | select((.risk_level // "") != "")] | length' <<<"$runtime_profile_compatibility_response")"
+runtime_profile_compatibility_forbidden_count="$(
+  (grep -Eio '"command"|"commands"|shell|docker compose|pkill|kill|systemctl|APPLY=1' \
+    <<<"$runtime_profile_compatibility_response" || true) | wc -l
+)"
+
+if [ "$runtime_profile_compatibility_http_status" = "200" ] \
+  && [ "$runtime_profile_compatibility_read_only" = "true" ] \
+  && [ "$runtime_profile_compatibility_docs_only" = "true" ] \
+  && [ "$runtime_profile_compatibility_supported" = "false" ] \
+  && [ "$runtime_profile_compatibility_attempted" = "false" ] \
+  && [ "$runtime_profile_compatibility_auto_execution" = "false" ] \
+  && [ "$runtime_profile_compatibility_vram" = "16" ] \
+  && [ "$runtime_profile_compatibility_profiles_type" = "array" ] \
+  && [ "$runtime_profile_compatibility_count" -gt 0 ] \
+  && [ "$runtime_profile_compatibility_risk_count" -gt 0 ] \
+  && [ "$runtime_profile_compatibility_forbidden_count" -eq 0 ]; then
+  pass "Gateway API /gateway/runtime/profile-compatibility-matrix"
+else
+  fail "Gateway API /gateway/runtime/profile-compatibility-matrix returned unexpected response: HTTP $runtime_profile_compatibility_http_status $runtime_profile_compatibility_response"
+fi
+
 if ! tools_response="$(curl -fsS "$GATEWAY_API_URL/gateway/tools")"; then
   fail "Gateway API /gateway/tools request failed"
 fi
@@ -325,6 +360,10 @@ tools_runtime_profile_run_catalog="$(jq -r 'if .tools.runtime_profile_run_catalo
 tools_runtime_profile_run_catalog_executable="$(jq -r '.tools.runtime_profile_run_catalog.executable | tostring' <<<"$tools_response")"
 tools_runtime_profile_run_catalog_read_only="$(jq -r '.tools.runtime_profile_run_catalog.read_only | tostring' <<<"$tools_response")"
 tools_runtime_profile_run_catalog_auto_execution="$(jq -r '.tools.runtime_profile_run_catalog.auto_execution_supported | tostring' <<<"$tools_response")"
+tools_runtime_profile_compatibility_matrix="$(jq -r 'if .tools.runtime_profile_compatibility_matrix then "present" else "missing" end' <<<"$tools_response")"
+tools_runtime_profile_compatibility_matrix_executable="$(jq -r '.tools.runtime_profile_compatibility_matrix.executable | tostring' <<<"$tools_response")"
+tools_runtime_profile_compatibility_matrix_read_only="$(jq -r '.tools.runtime_profile_compatibility_matrix.read_only | tostring' <<<"$tools_response")"
+tools_runtime_profile_compatibility_matrix_auto_execution="$(jq -r '.tools.runtime_profile_compatibility_matrix.auto_execution_supported | tostring' <<<"$tools_response")"
 tools_workspace_status="$(jq -r 'if .tools.workspace_status then "present" else "missing" end' <<<"$tools_response")"
 tools_code_context="$(jq -r 'if .tools.code_context then "present" else "missing" end' <<<"$tools_response")"
 tools_code_ask="$(jq -r 'if .tools.code_ask then "present" else "missing" end' <<<"$tools_response")"
@@ -353,6 +392,10 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_runtime_profile_run_catalog_executable" = "true" ] \
   && [ "$tools_runtime_profile_run_catalog_read_only" = "true" ] \
   && [ "$tools_runtime_profile_run_catalog_auto_execution" = "false" ] \
+  && [ "$tools_runtime_profile_compatibility_matrix" = "present" ] \
+  && [ "$tools_runtime_profile_compatibility_matrix_executable" = "true" ] \
+  && [ "$tools_runtime_profile_compatibility_matrix_read_only" = "true" ] \
+  && [ "$tools_runtime_profile_compatibility_matrix_auto_execution" = "false" ] \
   && [ "$tools_workspace_status" = "present" ] \
   && [ "$tools_code_context" = "present" ] \
   && [ "$tools_code_ask" = "present" ] \
@@ -469,6 +512,7 @@ assert_tool_execute_ok "embed_worker_health_check" '{}'
 assert_tool_execute_ok "runtime_status_check" '{}'
 assert_tool_execute_ok "runtime_profile_preflight" '{}'
 assert_tool_execute_ok "runtime_profile_run_catalog" '{}'
+assert_tool_execute_ok "runtime_profile_compatibility_matrix" '{}'
 assert_tool_execute_ok "model_routing_read" '{}'
 assert_tool_execute_ok "tools_read" '{}'
 assert_tool_execute_ok "workspace_status" '{}'

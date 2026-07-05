@@ -25,6 +25,7 @@ required_paths=(
   "apps/gateway-api/app/services/model_mapping.py"
   "apps/gateway-api/app/services/runtime_dashboard.py"
   "apps/gateway-api/app/services/runtime_profile_catalog_defaults.py"
+  "apps/gateway-api/app/services/runtime_profile_compatibility_matrix.py"
   "apps/gateway-api/app/services/runtime_profile_preflight.py"
   "apps/gateway-api/app/services/runtime_profile_run_catalog.py"
   "apps/gateway-api/app/services/router.py"

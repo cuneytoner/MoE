@@ -510,6 +510,16 @@ curl -fsS http://localhost:8100/gateway/runtime/profile-run-catalog | jq
 
 M29.16 derives safe catalog metadata from `configs/model-routing.yaml`, `configs/models.yaml`, and `configs/runtime.yaml` where possible. It exposes model paths and run settings for review, but it does not execute host scripts, switch models, start services, control Docker, write files, or call Memory API write routes. Host scripts remain manual/operator controlled.
 
+### GET /gateway/runtime/profile-compatibility-matrix
+
+Returns a read-only advisory compatibility matrix for the static PC-1 hardware profile.
+
+```bash
+curl -fsS http://localhost:8100/gateway/runtime/profile-compatibility-matrix | jq
+```
+
+M29.17 estimates runtime profile compatibility from the documentation-only run catalog and static PC-1 assumptions: RTX 5060 Ti 16 GB VRAM, 32 GB RAM, and Ryzen 7 7800X3D. It does not execute scripts, switch models, inspect live GPU state, control Docker, write files, or call Memory API write routes.
+
 ### POST /gateway/chat
 
 Calls the OpenAI-compatible model runtime `/chat/completions` endpoint.
