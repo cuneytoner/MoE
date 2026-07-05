@@ -1078,9 +1078,20 @@ M30.0 follow-up hardening:
 - Improve the runbooks for true beginner use with exact PC-1 and PC-2 labels, direct-link IPs `192.168.50.1` and `192.168.50.2`, exact repo/model/runtime paths, expected good signs, and PC-1-to-PC-2 health checks.
 - Keep all improvements documentation-only.
 
-## Milestone 30.1 Prompt Placeholder
+## Milestone 30.1 Prompt: Operator Runbook Walkthrough QA
 
-Add backup / restore / disaster recovery hardening.
+Improve the M30.0 Operator Runbook Pack with scenario-based beginner walkthroughs.
+
+Expected boundaries:
+
+- Add `docs/ops/11-first-day-walkthrough.md`, `docs/ops/12-zero-to-running-checklist.md`, and `docs/ops/13-service-location-reference.md`.
+- Include exact PC-1 and PC-2 command labels, direct-link IPs, directories, expected good signs, and fallback links.
+- Improve troubleshooting to include symptom, likely cause, first check, fallback action, and related doc links.
+- Keep changes documentation-only. Do not alter Gateway runtime behavior, application code, Docker Compose behavior, or service execution features.
+
+## Milestone 30.2 Prompt Placeholder
+
+Add backup / restore drill documentation.
 
 Expected boundaries:
 

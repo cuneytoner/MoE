@@ -32,6 +32,8 @@ Every command block should tell you where to run it:
 
 Verify first, act second.
 
+If you are unsure where to run a command, stop and check [13-service-location-reference.md](13-service-location-reference.md).
+
 ## Which Document Should I Open?
 
 | Situation | Open this |
@@ -46,5 +48,18 @@ Verify first, act second.
 | Command cheat sheet | [08-command-cheatsheet.md](08-command-cheatsheet.md) |
 | Git workflow | [09-git-workflow.md](09-git-workflow.md) |
 | Runtime profile endpoints | [10-runtime-profile-guide.md](10-runtime-profile-guide.md) |
+| First day complete walkthrough | [11-first-day-walkthrough.md](11-first-day-walkthrough.md) |
+| Zero to running compact checklist | [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md) |
+| Service location reference | [13-service-location-reference.md](13-service-location-reference.md) |
 
-If you are lost, open [00-system-map.md](00-system-map.md), then [03-daily-startup.md](03-daily-startup.md), then [07-troubleshooting.md](07-troubleshooting.md).
+If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
+
+## Recommended Reading Order
+
+1. [00 System Map](00-system-map.md)
+2. [13 Service Location Reference](13-service-location-reference.md)
+3. [11 First Day Walkthrough](11-first-day-walkthrough.md)
+4. [12 Zero To Running Checklist](12-zero-to-running-checklist.md)
+5. [03 Daily Startup](03-daily-startup.md)
+6. [07 Troubleshooting](07-troubleshooting.md)
+7. [08 Command Cheatsheet](08-command-cheatsheet.md)

@@ -1,9 +1,14 @@
 # MoE / AI-Brain-OS Docs Index
 
+## Operations / Start Here
+
 Start with the operator runbooks if you are bringing the system up, moving to a new machine, or troubleshooting a live setup:
 
 - [Operator Runbook Pack](ops/README.md)
 - [System Map](ops/00-system-map.md)
+- [First Day Walkthrough](ops/11-first-day-walkthrough.md)
+- [Zero To Running Checklist](ops/12-zero-to-running-checklist.md)
+- [Service Location Reference](ops/13-service-location-reference.md)
 - [Fresh Install PC-1](ops/01-fresh-install-pc1.md)
 - [Fresh Install PC-2](ops/02-fresh-install-pc2.md)
 - [Daily Startup](ops/03-daily-startup.md)

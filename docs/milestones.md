@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M30.0 Operator Runbook Pack.
-- Next planned: M30.1 Backup / Restore / Disaster Recovery.
+- Completed through M30.1 Operator Runbook Walkthrough QA.
+- Next planned: M30.2 Backup / Restore Drill Documentation.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1054,7 +1054,18 @@ Goals:
 - Keep the pack documentation-only and source-only.
 - Emphasize verify-first operation and manual-only runtime actions.
 
-## Milestone 30.1: Backup / Restore / Disaster Recovery
+## Milestone 30.1: Operator Runbook Walkthrough QA
+
+Status: DONE
+
+Goals:
+- Add scenario-based first-day operator walkthrough docs under `docs/ops/`.
+- Add a compact zero-to-running checklist with exact machine, directory, command, expected good sign, and fallback doc links.
+- Add service location reference so beginners know which machine owns Gateway, llama-server, Memory API, Embed Worker, Postgres, Qdrant, Continue, models, and Git commands.
+- Improve troubleshooting into symptom, likely cause, first check, fallback action, and related doc format.
+- Keep the milestone documentation-only with no runtime behavior changes.
+
+## Milestone 30.2: Backup / Restore Drill Documentation
 
 Status: PLANNED
 
@@ -1066,7 +1077,7 @@ Goals:
 - Add restore process for a new PC.
 - Add disaster recovery checklist.
 
-## Milestone 30.2: Hardware Role Profiles / Environment Reassignment
+## Milestone 30.3: Hardware Role Profiles / Environment Reassignment
 
 Status: PLANNED
 
