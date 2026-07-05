@@ -520,6 +520,16 @@ curl -fsS http://localhost:8100/gateway/runtime/profile-compatibility-matrix | j
 
 M29.17 estimates runtime profile compatibility from the documentation-only run catalog and static PC-1 assumptions: RTX 5060 Ti 16 GB VRAM, 32 GB RAM, and Ryzen 7 7800X3D. It does not execute scripts, switch models, inspect live GPU state, control Docker, write files, or call Memory API write routes.
 
+### GET /gateway/runtime/profile-recommendation-summary
+
+Returns a read-only advisory recommendation summary for common runtime profile use cases.
+
+```bash
+curl -fsS http://localhost:8100/gateway/runtime/profile-recommendation-summary | jq
+```
+
+M29.18 summarizes existing preflight/catalog/matrix data for human review. It recommends default, review, and fallback profiles, but it does not execute scripts, switch models, inspect live GPU state, control Docker, write files, or call Memory API write routes.
+
 ### POST /gateway/chat
 
 Calls the OpenAI-compatible model runtime `/chat/completions` endpoint.

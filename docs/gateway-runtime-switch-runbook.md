@@ -28,6 +28,8 @@ M29.16 adds `GET /gateway/runtime/profile-run-catalog` as a documentation-only c
 
 M29.17 adds `GET /gateway/runtime/profile-compatibility-matrix` as a read-only advisory matrix. It uses static PC-1 hardware assumptions and does not inspect live GPU state, execute scripts, or switch models.
 
+M29.18 adds `GET /gateway/runtime/profile-recommendation-summary` as a read-only advisory summary. It summarizes existing preflight, catalog, and matrix data for human review only.
+
 ## Continue Checks
 
 - Keep Continue configured for Gateway-Auto rather than direct model paths.

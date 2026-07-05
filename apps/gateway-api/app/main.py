@@ -45,6 +45,7 @@ from app.models.gateway import (
     GatewayRouteResponse,
     GatewayRuntimeProfileCompatibilityMatrixResponse,
     GatewayRuntimeProfilePreflightResponse,
+    GatewayRuntimeProfileRecommendationSummaryResponse,
     GatewayRuntimeProfileRunCatalogResponse,
     GatewayRuntimeStatusResponse,
     GatewayRuntimeSwitchPlanRequest,
@@ -88,6 +89,9 @@ from app.services.runtime_profile_compatibility_matrix import (
     build_runtime_profile_compatibility_matrix,
 )
 from app.services.runtime_profile_preflight import build_runtime_profile_preflight
+from app.services.runtime_profile_recommendation_summary import (
+    build_runtime_profile_recommendation_summary,
+)
 from app.services.runtime_profile_run_catalog import build_runtime_profile_run_catalog
 from app.services.router import RouteDecision, route_message
 from app.services.tool_executor import execute_tool
@@ -329,6 +333,19 @@ async def runtime_profile_compatibility_matrix() -> (
     settings = get_settings()
     return GatewayRuntimeProfileCompatibilityMatrixResponse(
         **await build_runtime_profile_compatibility_matrix(settings)
+    )
+
+
+@app.get(
+    "/gateway/runtime/profile-recommendation-summary",
+    response_model=GatewayRuntimeProfileRecommendationSummaryResponse,
+)
+async def runtime_profile_recommendation_summary() -> (
+    GatewayRuntimeProfileRecommendationSummaryResponse
+):
+    settings = get_settings()
+    return GatewayRuntimeProfileRecommendationSummaryResponse(
+        **await build_runtime_profile_recommendation_summary(settings)
     )
 
 

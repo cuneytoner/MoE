@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.17 Runtime Profile Compatibility Matrix.
-- Next planned: M29.18 Runtime Profile Recommendation Summary.
+- Completed through M29.18 Runtime Profile Recommendation Summary.
+- Next planned: M29.19 Gateway Runtime Profile Dashboard Summary.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1009,11 +1009,20 @@ Goals:
 
 ## Milestone 29.18: Runtime Profile Recommendation Summary
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Summarize runtime profile recommendations in a read-only advisory way.
 - Keep recommendations documentation-only unless a future guarded milestone explicitly changes behavior.
+- Do not start, stop, restart, or switch model runtimes automatically.
+
+## Milestone 29.19: Gateway Runtime Profile Dashboard Summary
+
+Status: PLANNED
+
+Goals:
+- Expose runtime profile recommendation summary in dashboard/read-only UI only.
+- Keep dashboard integration read-only and advisory.
 - Do not start, stop, restart, or switch model runtimes automatically.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
