@@ -25,6 +25,7 @@ required_paths=(
   "apps/dashboard-ui/src/components/AppHeader.tsx"
   "apps/dashboard-ui/src/components/Sidebar.tsx"
   "apps/dashboard-ui/src/components/RuntimeCards.tsx"
+  "apps/dashboard-ui/src/components/RuntimeProfileRecommendationCard.tsx"
   "apps/dashboard-ui/src/components/GpuCard.tsx"
   "apps/dashboard-ui/src/components/LlamaServerCard.tsx"
   "apps/dashboard-ui/src/components/Pc2WorkersCard.tsx"

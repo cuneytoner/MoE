@@ -148,6 +148,39 @@ export type SystemStatus = {
   };
 };
 
+export type RuntimeProfileRecommendation = {
+  model_target: string;
+  model_config_id?: string | null;
+  compatibility: string;
+  risk_level: string;
+  reason: string;
+  warnings: string[];
+};
+
+export type RuntimeProfileSummary = {
+  status: string;
+  hardware_profile: {
+    name: string;
+    gpu: string;
+    vram_gb: number;
+    ram_gb: number;
+    cpu: string;
+  };
+  recommendations: {
+    default: RuntimeProfileRecommendation;
+    review: RuntimeProfileRecommendation;
+    fallback: RuntimeProfileRecommendation;
+  };
+  warnings: string[];
+  next_steps: string[];
+  source_endpoint: string;
+  read_only: boolean;
+  documentation_only: boolean;
+  runtime_switch_supported: boolean;
+  runtime_switch_attempted: boolean;
+  auto_execution_supported: boolean;
+};
+
 export type RuntimeDashboardModel = {
   status: string;
   service: string;
@@ -175,6 +208,7 @@ export type RuntimeDashboardModel = {
     total_visible_jobs: number;
   };
   image_lifecycle: ImageLifecycle;
+  runtime_profile_summary?: RuntimeProfileSummary;
   system: SystemStatus;
   warnings: string[];
 };

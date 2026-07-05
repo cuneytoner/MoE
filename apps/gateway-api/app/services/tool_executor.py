@@ -15,6 +15,9 @@ from app.services.repo_agent import RepoAgentService
 from app.services.runtime_profile_compatibility_matrix import (
     build_runtime_profile_compatibility_matrix,
 )
+from app.services.runtime_profile_dashboard_summary import (
+    build_runtime_profile_dashboard_summary,
+)
 from app.services.runtime_profile_preflight import build_runtime_profile_preflight
 from app.services.runtime_profile_recommendation_summary import (
     build_runtime_profile_recommendation_summary,
@@ -103,6 +106,9 @@ async def _execute_read_only_tool(
 
     if tool == "runtime_profile_recommendation_summary":
         return await build_runtime_profile_recommendation_summary(settings)
+
+    if tool == "runtime_profile_dashboard_summary":
+        return await build_runtime_profile_dashboard_summary(settings)
 
     if tool == "model_routing_read":
         mapping = get_model_mapping(settings.model_routing_config)

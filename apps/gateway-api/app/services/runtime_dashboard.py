@@ -11,6 +11,10 @@ from typing import Any
 
 import httpx
 
+from app.services.runtime_profile_dashboard_summary import (
+    build_compact_runtime_profile_summary,
+)
+
 
 SAFETY = {
     "read_only": True,
@@ -105,6 +109,7 @@ async def build_runtime_dashboard(settings: Any) -> dict[str, Any]:
         "pc2": pc2,
         "media_jobs": media_jobs,
         "image_lifecycle": image_lifecycle,
+        "runtime_profile_summary": await build_compact_runtime_profile_summary(settings),
         "system": system,
         "warnings": warnings,
     }

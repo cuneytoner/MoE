@@ -46,6 +46,8 @@ system_pc1_uptime_type="$(jq -r 'if (.system.pc1.uptime | type) == "object" then
 system_pc2_status="$(jq -r '.system.pc2.status // empty' <<<"$response")"
 system_docker_status="$(jq -r '.system.docker.status // empty' <<<"$response")"
 warnings_type="$(jq -r 'if (.warnings | type) == "array" then "array" else "other" end' <<<"$response")"
+runtime_profile_summary_type="$(jq -r 'if (.runtime_profile_summary | type) == "object" then "object" else "other" end' <<<"$response")"
+runtime_profile_summary_source="$(jq -r '.runtime_profile_summary.source_endpoint // empty' <<<"$response")"
 
 if [ "$status" = "ok" ] \
   && [ "$service" = "gateway-runtime-dashboard" ] \
@@ -65,6 +67,8 @@ if [ "$status" = "ok" ] \
   && [ "$system_pc1_uptime_type" = "object" ] \
   && [ -n "$system_pc2_status" ] \
   && [ -n "$system_docker_status" ] \
+  && [ "$runtime_profile_summary_type" = "object" ] \
+  && [ "$runtime_profile_summary_source" = "/gateway/runtime/profile-recommendation-summary" ] \
   && [ "$warnings_type" = "array" ]; then
   pass "Gateway runtime dashboard contract"
 else

@@ -1421,3 +1421,11 @@ Before accepting Codex changes, check:
 - Combine existing profile preflight, run catalog, and compatibility matrix data into advisory default/review/fallback recommendations.
 - Keep recommendations for human review only.
 - Do not inspect live GPU state, execute scripts, switch models, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.
+
+## Milestone 29.19 Gateway Runtime Profile Dashboard Summary
+
+- Surface runtime profile recommendations in dashboard/read-only form.
+- Add compact `GET /gateway/runtime/profile-dashboard-summary` and embed `runtime_profile_summary` in `/gateway/runtime/dashboard`.
+- Add a read-only Dashboard UI card with default, review, fallback, compatibility, risk, and warning summary.
+- Do not add action buttons.
+- Do not inspect live GPU state, execute scripts, switch models, call shell, control Docker, write files, call Memory API write routes, train, or fine-tune.

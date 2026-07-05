@@ -30,6 +30,8 @@ M29.17 adds `GET /gateway/runtime/profile-compatibility-matrix` as a read-only a
 
 M29.18 adds `GET /gateway/runtime/profile-recommendation-summary` as a read-only advisory summary. It summarizes existing preflight, catalog, and matrix data for human review only.
 
+M29.19 surfaces the recommendation summary in dashboard/read-only form. It is visibility only, exposes no action buttons, and still does not inspect live GPU state, execute scripts, or switch models.
+
 ## Continue Checks
 
 - Keep Continue configured for Gateway-Auto rather than direct model paths.

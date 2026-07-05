@@ -369,6 +369,37 @@ else
   fail "Gateway API /gateway/runtime/profile-recommendation-summary returned unexpected response: HTTP $runtime_profile_recommendation_http_status $runtime_profile_recommendation_response"
 fi
 
+runtime_profile_dashboard_http_status="$(
+  curl -sS -o /tmp/moe-gateway-runtime-profile-dashboard-summary.json -w "%{http_code}" \
+    "$GATEWAY_API_URL/gateway/runtime/profile-dashboard-summary" || true
+)"
+runtime_profile_dashboard_response="$(cat /tmp/moe-gateway-runtime-profile-dashboard-summary.json 2>/dev/null || true)"
+runtime_profile_dashboard_read_only="$(jq -r '.read_only | tostring' <<<"$runtime_profile_dashboard_response")"
+runtime_profile_dashboard_docs_only="$(jq -r '.documentation_only | tostring' <<<"$runtime_profile_dashboard_response")"
+runtime_profile_dashboard_supported="$(jq -r '.runtime_switch_supported | tostring' <<<"$runtime_profile_dashboard_response")"
+runtime_profile_dashboard_attempted="$(jq -r '.runtime_switch_attempted | tostring' <<<"$runtime_profile_dashboard_response")"
+runtime_profile_dashboard_auto_execution="$(jq -r '.auto_execution_supported | tostring' <<<"$runtime_profile_dashboard_response")"
+runtime_profile_dashboard_source="$(jq -r '.source_endpoint // empty' <<<"$runtime_profile_dashboard_response")"
+runtime_profile_dashboard_summary_type="$(jq -r 'if (.summary | type) == "object" then "object" else "other" end' <<<"$runtime_profile_dashboard_response")"
+runtime_profile_dashboard_forbidden_count="$(
+  (grep -Eio '"command"|"commands"|shell|docker compose|pkill|kill|systemctl|APPLY=1' \
+    <<<"$runtime_profile_dashboard_response" || true) | wc -l
+)"
+
+if [ "$runtime_profile_dashboard_http_status" = "200" ] \
+  && [ "$runtime_profile_dashboard_read_only" = "true" ] \
+  && [ "$runtime_profile_dashboard_docs_only" = "true" ] \
+  && [ "$runtime_profile_dashboard_supported" = "false" ] \
+  && [ "$runtime_profile_dashboard_attempted" = "false" ] \
+  && [ "$runtime_profile_dashboard_auto_execution" = "false" ] \
+  && [ "$runtime_profile_dashboard_source" = "/gateway/runtime/profile-recommendation-summary" ] \
+  && [ "$runtime_profile_dashboard_summary_type" = "object" ] \
+  && [ "$runtime_profile_dashboard_forbidden_count" -eq 0 ]; then
+  pass "Gateway API /gateway/runtime/profile-dashboard-summary"
+else
+  fail "Gateway API /gateway/runtime/profile-dashboard-summary returned unexpected response: HTTP $runtime_profile_dashboard_http_status $runtime_profile_dashboard_response"
+fi
+
 if ! tools_response="$(curl -fsS "$GATEWAY_API_URL/gateway/tools")"; then
   fail "Gateway API /gateway/tools request failed"
 fi
@@ -403,6 +434,10 @@ tools_runtime_profile_recommendation_summary="$(jq -r 'if .tools.runtime_profile
 tools_runtime_profile_recommendation_summary_executable="$(jq -r '.tools.runtime_profile_recommendation_summary.executable | tostring' <<<"$tools_response")"
 tools_runtime_profile_recommendation_summary_read_only="$(jq -r '.tools.runtime_profile_recommendation_summary.read_only | tostring' <<<"$tools_response")"
 tools_runtime_profile_recommendation_summary_auto_execution="$(jq -r '.tools.runtime_profile_recommendation_summary.auto_execution_supported | tostring' <<<"$tools_response")"
+tools_runtime_profile_dashboard_summary="$(jq -r 'if .tools.runtime_profile_dashboard_summary then "present" else "missing" end' <<<"$tools_response")"
+tools_runtime_profile_dashboard_summary_executable="$(jq -r '.tools.runtime_profile_dashboard_summary.executable | tostring' <<<"$tools_response")"
+tools_runtime_profile_dashboard_summary_read_only="$(jq -r '.tools.runtime_profile_dashboard_summary.read_only | tostring' <<<"$tools_response")"
+tools_runtime_profile_dashboard_summary_auto_execution="$(jq -r '.tools.runtime_profile_dashboard_summary.auto_execution_supported | tostring' <<<"$tools_response")"
 tools_workspace_status="$(jq -r 'if .tools.workspace_status then "present" else "missing" end' <<<"$tools_response")"
 tools_code_context="$(jq -r 'if .tools.code_context then "present" else "missing" end' <<<"$tools_response")"
 tools_code_ask="$(jq -r 'if .tools.code_ask then "present" else "missing" end' <<<"$tools_response")"
@@ -439,6 +474,10 @@ if [ "$tools_status" = "ok" ] \
   && [ "$tools_runtime_profile_recommendation_summary_executable" = "true" ] \
   && [ "$tools_runtime_profile_recommendation_summary_read_only" = "true" ] \
   && [ "$tools_runtime_profile_recommendation_summary_auto_execution" = "false" ] \
+  && [ "$tools_runtime_profile_dashboard_summary" = "present" ] \
+  && [ "$tools_runtime_profile_dashboard_summary_executable" = "true" ] \
+  && [ "$tools_runtime_profile_dashboard_summary_read_only" = "true" ] \
+  && [ "$tools_runtime_profile_dashboard_summary_auto_execution" = "false" ] \
   && [ "$tools_workspace_status" = "present" ] \
   && [ "$tools_code_context" = "present" ] \
   && [ "$tools_code_ask" = "present" ] \
@@ -557,6 +596,7 @@ assert_tool_execute_ok "runtime_profile_preflight" '{}'
 assert_tool_execute_ok "runtime_profile_run_catalog" '{}'
 assert_tool_execute_ok "runtime_profile_compatibility_matrix" '{}'
 assert_tool_execute_ok "runtime_profile_recommendation_summary" '{}'
+assert_tool_execute_ok "runtime_profile_dashboard_summary" '{}'
 assert_tool_execute_ok "model_routing_read" '{}'
 assert_tool_execute_ok "tools_read" '{}'
 assert_tool_execute_ok "workspace_status" '{}'

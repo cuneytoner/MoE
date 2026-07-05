@@ -530,6 +530,16 @@ curl -fsS http://localhost:8100/gateway/runtime/profile-recommendation-summary |
 
 M29.18 summarizes existing preflight/catalog/matrix data for human review. It recommends default, review, and fallback profiles, but it does not execute scripts, switch models, inspect live GPU state, control Docker, write files, or call Memory API write routes.
 
+### GET /gateway/runtime/profile-dashboard-summary
+
+Returns the compact read-only runtime profile summary used by dashboard surfaces.
+
+```bash
+curl -fsS http://localhost:8100/gateway/runtime/profile-dashboard-summary | jq
+```
+
+M29.19 also embeds the same compact summary as `runtime_profile_summary` in `GET /gateway/runtime/dashboard`. This is visibility only: no action buttons, script execution, model switching, live GPU probing, Docker control, file writes, or Memory API write routes are exposed.
+
 ### POST /gateway/chat
 
 Calls the OpenAI-compatible model runtime `/chat/completions` endpoint.

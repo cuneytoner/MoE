@@ -5,6 +5,7 @@ import { ImageLifecycleCard } from "./ImageLifecycleCard";
 import { LatestJobCard } from "./LatestJobCard";
 import { LlamaServerCard } from "./LlamaServerCard";
 import { Pc2WorkersCard } from "./Pc2WorkersCard";
+import { RuntimeProfileRecommendationCard } from "./RuntimeProfileRecommendationCard";
 
 type Props = {
   runtime: RuntimeDashboardModel | null;
@@ -46,6 +47,7 @@ export function RuntimeCards({ runtime, error }: Props) {
           totalVisibleJobs={runtime.media_jobs.total_visible_jobs}
         />
         <ImageLifecycleCard lifecycle={runtime.image_lifecycle} />
+        <RuntimeProfileRecommendationCard summary={runtime.runtime_profile_summary} />
       </Box>
     </Stack>
   );

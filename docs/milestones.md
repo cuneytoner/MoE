@@ -2,8 +2,8 @@
 
 Current active phase:
 - M29 Reviewed Learning / Improvement Workflow is active.
-- Completed through M29.18 Runtime Profile Recommendation Summary.
-- Next planned: M29.19 Gateway Runtime Profile Dashboard Summary.
+- Completed through M29.19 Gateway Runtime Profile Dashboard Summary.
+- Next planned: M29.20 Runtime Profile Operator Checklist Export.
 - Future phases: M30 Ops resilience, M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1018,11 +1018,20 @@ Goals:
 
 ## Milestone 29.19: Gateway Runtime Profile Dashboard Summary
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Expose runtime profile recommendation summary in dashboard/read-only UI only.
 - Keep dashboard integration read-only and advisory.
+- Do not start, stop, restart, or switch model runtimes automatically.
+
+## Milestone 29.20: Runtime Profile Operator Checklist Export
+
+Status: PLANNED
+
+Goals:
+- Export runtime profile operator checklist content for human review.
+- Keep export documentation-only and non-executable.
 - Do not start, stop, restart, or switch model runtimes automatically.
 
 ## Milestone 30.0: Backup / Restore / Disaster Recovery
