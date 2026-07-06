@@ -71,6 +71,7 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | First image dry-run evidence review | [31-first-image-dry-run-evidence-review.md](31-first-image-dry-run-evidence-review.md) |
 | First image dry-run evidence template | [32-first-image-dry-run-evidence-template.md](32-first-image-dry-run-evidence-template.md) |
 | First image dry-run review checklist | [33-first-image-dry-run-review-checklist.md](33-first-image-dry-run-review-checklist.md) |
+| Image existing script map | [34-image-existing-script-map.md](34-image-existing-script-map.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -103,6 +104,7 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 25. [31 First Image Dry Run Evidence Review](31-first-image-dry-run-evidence-review.md)
 26. [32 First Image Dry Run Evidence Template](32-first-image-dry-run-evidence-template.md)
 27. [33 First Image Dry Run Review Checklist](33-first-image-dry-run-review-checklist.md)
+28. [34 Image Existing Script Map](34-image-existing-script-map.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 

@@ -305,6 +305,7 @@ required_paths=(
   "docs/ops/31-first-image-dry-run-evidence-review.md"
   "docs/ops/32-first-image-dry-run-evidence-template.md"
   "docs/ops/33-first-image-dry-run-review-checklist.md"
+  "docs/ops/34-image-existing-script-map.md"
   "scripts/runtime-prepare.sh"
   "scripts/runtime/pc1-sleep-prepare.sh"
   "scripts/runtime/pc1-suspend.sh"

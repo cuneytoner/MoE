@@ -34,6 +34,7 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [First Image Dry Run Evidence Review](ops/31-first-image-dry-run-evidence-review.md)
 - [First Image Dry Run Evidence Template](ops/32-first-image-dry-run-evidence-template.md)
 - [First Image Dry Run Review Checklist](ops/33-first-image-dry-run-review-checklist.md)
+- [Image Existing Script Map](ops/34-image-existing-script-map.md)
 - [Restore New Machine](ops/06-restore-new-machine.md)
 - [Troubleshooting](ops/07-troubleshooting.md)
 - [Command Cheatsheet](ops/08-command-cheatsheet.md)

@@ -1167,6 +1167,17 @@ Expected boundaries:
 - Keep review documentation-only. Do not alter runtime behavior, app code, Docker Compose behavior, service execution features, automatic model switching, or automatic image generation.
 - Do not include real image generation commands.
 
+## Milestone 31.3.1 Prompt: Image Mode Safety Alignment
+
+Align existing image-mode scripts and docs with operator safety rules before M31.4.
+
+Expected boundaries:
+
+- Update `scripts/image/image-mode-prepare.sh` so `STOP_LLM=1` uses `make model-stop`, `make model-status`, and a `pgrep` verification check instead of direct `pkill`.
+- Update dry-run script text and existing image-mode docs to match the guarded Makefile-controlled stop path.
+- Add `docs/ops/34-image-existing-script-map.md`.
+- Do not run real generation. Do not use `APPLY=1` in tests. Do not add Gateway shell execution, automatic model switching, or automatic image generation.
+
 ## Milestone 31.4 Prompt Placeholder
 
 Add first real image generation drill.

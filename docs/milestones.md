@@ -2,7 +2,7 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M31.3 First Image Dry Run Evidence Review.
+- Completed through M31.3.1 Image Mode Safety Alignment.
 - Next planned: M31.4 First Real Image Generation Drill.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
@@ -1147,6 +1147,16 @@ Goals:
 - Add first-image dry-run evidence template.
 - Add first-image dry-run review checklist for human/Codex review before M31.4.
 - Keep review documentation-only with no real generation commands.
+
+## Milestone 31.3.1: Image Mode Safety Alignment
+
+Status: DONE
+
+Goals:
+- Align image-mode scripts with operator safety rules.
+- Replace direct `pkill` stop behavior in image mode preparation with `make model-stop` and `make model-status`.
+- Add existing image/media script map before M31.4.
+- Keep Gateway out of shell execution and automatic llama-server control.
 
 ## Milestone 31.4: First Real Image Generation Drill
 

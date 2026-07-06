@@ -67,6 +67,14 @@ curl -fsS http://127.0.0.1:8000/v1/models | jq . || true
 
 Expected good sign: this no longer returns a model list if llama-server is stopped.
 
+## Image-mode Scripts Use make model-stop
+
+`scripts/image/image-mode-prepare.sh` with `STOP_LLM=1` uses `make model-stop`, then `make model-status`, then a `pgrep` verification check.
+
+Gateway still does not stop llama-server. The operator must explicitly run the guarded path with `APPLY=1 STOP_LLM=1`.
+
+`pkill` is not the normal path.
+
 ## Enter Image Mode
 
 After stopping llama-server manually, continue with readiness docs:

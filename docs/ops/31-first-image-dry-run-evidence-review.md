@@ -70,6 +70,8 @@ Expected good sign: llama-server is either clearly running with model JSON, or c
 
 If bad, read [29-manual-llm-stop-start-plan.md](29-manual-llm-stop-start-plan.md).
 
+If M31.4 proceeds, image-mode preparation must use the guarded path from `scripts/image/image-mode-prepare.sh`, not manual `pkill`.
+
 ## Evidence D: Docker/Media Container State
 
 ### Run on PC-1

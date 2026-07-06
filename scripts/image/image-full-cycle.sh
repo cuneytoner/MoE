@@ -14,6 +14,7 @@ if [ "${APPLY:-0}" != "1" ]; then
   "$SCRIPT_DIR/image-dry-run.sh"
   section "Real generation commands"
   echo "APPLY=1 STOP_LLM=1 scripts/image/image-mode-prepare.sh"
+  echo "Note: STOP_LLM=1 uses make model-stop, not pkill."
   echo "APPLY=1 MEDIA_REAL_GENERATION_ENABLED=true scripts/image/image-real-run.sh"
   echo "APPLY=1 START_LLM=1 scripts/image/image-safe-shutdown.sh"
   exit 0
