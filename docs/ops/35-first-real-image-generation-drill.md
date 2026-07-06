@@ -157,6 +157,16 @@ find . -maxdepth 1 -type f -name '@*' -print
 
 Expected good sign: no generated image files, model files, checkpoints, or root-level `@...` files are in the repo.
 
+## Successful Run Example
+
+The first successful real generation produced:
+
+```text
+/home/cuneyt/MoE/runtime/media/outputs/images/flux-first/moe_flux_first_20260706_133441_00001_.png
+```
+
+This path is outside the repo, which is the expected safe output location.
+
 ## What Evidence To Paste Back If Blocked
 
 Paste:

@@ -18,6 +18,12 @@ Runtime files must go to ~/MoE on each PC.
 
 Never put logs, database data, model files, cache, virtual environments, node_modules, or generated runtime files inside codebase.
 
+## Current Media Milestone Status
+
+- M31.5 Generated Image Output Handling / Git Safety DONE
+- M31.6 ComfyUI Workflow Inventory PLANNED
+- M31.7 Gateway Real Image Run Drill PLANNED
+
 ## Working Directory
 
 Codex should work inside:
@@ -1189,25 +1195,42 @@ Expected boundaries:
 - Keep real generation explicit, guarded, and operator-approved.
 - Preserve return-to-coding and VRAM safety checks.
 
-## Milestone 31.5 Prompt Placeholder
+## Milestone 31.5 Prompt: Generated Image Output Handling / Git Safety
 
 Add generated image output handling / Git safety documentation.
+
+Status: DONE
 
 Expected boundaries:
 
 - Document generated image output locations and Git safety checks.
 - Keep generated media out of source control.
 - Preserve runtime/source separation for image outputs.
+- Add beginner-friendly output inspection, archive, metadata-recording, and cleanup policy docs.
 
 ## Milestone 31.6 Prompt Placeholder
 
 Add ComfyUI workflow inventory.
+
+Status: PLANNED
 
 Expected boundaries:
 
 - Inventory ComfyUI workflows, required model files, inputs, outputs, and safety gates.
 - Keep real workflow execution explicit and operator-approved.
 - Do not add automatic image generation or Gateway shell execution.
+
+## Milestone 31.7 Prompt Placeholder
+
+Add Gateway real image run drill.
+
+Status: PLANNED
+
+Expected boundaries:
+
+- Document a Gateway-facing real image run drill after ComfyUI workflow inventory.
+- Keep real generation explicit and operator-approved.
+- Do not add Gateway shell execution, Docker control, automatic model switching, or automatic generation.
 
 ## Future Automation Placeholder
 

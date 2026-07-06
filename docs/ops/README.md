@@ -75,6 +75,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | First real image generation drill | [35-first-real-image-generation-drill.md](35-first-real-image-generation-drill.md) |
 | First real image generation evidence template | [36-first-real-image-generation-evidence-template.md](36-first-real-image-generation-evidence-template.md) |
 | Generated image Git safety | [37-generated-image-git-safety.md](37-generated-image-git-safety.md) |
+| Generated image output handling | [38-generated-image-output-handling.md](38-generated-image-output-handling.md) |
+| First image success record | [39-first-image-success-record.md](39-first-image-success-record.md) |
+| Image output cleanup policy | [40-image-output-cleanup-policy.md](40-image-output-cleanup-policy.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -111,6 +114,9 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 29. [35 First Real Image Generation Drill](35-first-real-image-generation-drill.md)
 30. [36 First Real Image Generation Evidence Template](36-first-real-image-generation-evidence-template.md)
 31. [37 Generated Image Git Safety](37-generated-image-git-safety.md)
+32. [38 Generated Image Output Handling](38-generated-image-output-handling.md)
+33. [39 First Image Success Record](39-first-image-success-record.md)
+34. [40 Image Output Cleanup Policy](40-image-output-cleanup-policy.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -119,3 +125,5 @@ M31.0 defines the image pipeline. M31.1 adds the ComfyUI / Flux startup checklis
 Before real image generation, read 25 through 33.
 
 Real image generation requires explicit `APPLY=1` and `MEDIA_REAL_GENERATION_ENABLED=true`. Do not run those commands unless you intentionally want generation.
+
+After real image generation, read 38 through 40 before archiving, deleting, or recording generated outputs.

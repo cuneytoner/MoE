@@ -61,6 +61,29 @@ Record:
 
 Use [36-first-real-image-generation-evidence-template.md](36-first-real-image-generation-evidence-template.md) for the review packet.
 
+## After First Successful Generation
+
+The first successful real image generation produced a PNG under:
+
+```text
+/home/cuneyt/MoE/runtime/media/outputs/images/flux-first/moe_flux_first_20260706_133441_00001_.png
+```
+
+This generated image path is outside the repo. That is the expected safe layout.
+
+After generation, run:
+
+### Run on PC-1
+
+```bash
+cd ~/DiskD/Projects/MoE/codebase
+git status --short
+```
+
+Expected good sign: `git status --short` does not show generated PNGs.
+
+If it does show a generated PNG, stop and inspect before committing. Do not stage or commit generated image binaries.
+
 ## Recommended Output Folder Policy
 
 - Generated images belong under `~/MoE/runtime/media/outputs/images`.

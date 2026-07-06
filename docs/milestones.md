@@ -2,9 +2,14 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M31.4 First Real Image Generation Drill.
-- Next planned: M31.5 Generated Image Output Handling / Git Safety.
+- Completed through M31.5 Generated Image Output Handling / Git Safety.
+- Next planned: M31.6 ComfyUI Workflow Inventory.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
+
+Current media milestone status:
+- M31.5 Generated Image Output Handling / Git Safety DONE
+- M31.6 ComfyUI Workflow Inventory PLANNED
+- M31.7 Gateway Real Image Run Drill PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1171,12 +1176,13 @@ Goals:
 
 ## Milestone 31.5: Generated Image Output Handling / Git Safety
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Document generated image output locations and Git safety checks.
 - Keep generated media out of source control.
 - Preserve runtime/source separation for image outputs.
+- Add beginner-friendly output inspection, archive, metadata-recording, and cleanup policy docs.
 
 ## Milestone 31.6: ComfyUI Workflow Inventory
 
@@ -1186,6 +1192,15 @@ Goals:
 - Inventory existing ComfyUI workflows.
 - Document workflow inputs, outputs, models, and safety gates.
 - Keep workflow execution explicit and operator-approved.
+
+## Milestone 31.7: Gateway Real Image Run Drill
+
+Status: PLANNED
+
+Goals:
+- Add a Gateway-facing real image run drill after workflow inventory review.
+- Keep real generation explicitly operator-approved.
+- Preserve Gateway safety boundaries: no shell execution, no Docker control, no automatic model switching, and no automatic generation.
 
 ## Milestone 32.0: Video Generation Service
 
