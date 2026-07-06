@@ -68,6 +68,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Image mode VRAM safety | [28-image-mode-vram-safety.md](28-image-mode-vram-safety.md) |
 | Manual LLM stop start plan | [29-manual-llm-stop-start-plan.md](29-manual-llm-stop-start-plan.md) |
 | Image mode return to coding | [30-image-mode-return-to-coding.md](30-image-mode-return-to-coding.md) |
+| First image dry-run evidence review | [31-first-image-dry-run-evidence-review.md](31-first-image-dry-run-evidence-review.md) |
+| First image dry-run evidence template | [32-first-image-dry-run-evidence-template.md](32-first-image-dry-run-evidence-template.md) |
+| First image dry-run review checklist | [33-first-image-dry-run-review-checklist.md](33-first-image-dry-run-review-checklist.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -97,9 +100,12 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 22. [28 Image Mode VRAM Safety](28-image-mode-vram-safety.md)
 23. [29 Manual LLM Stop Start Plan](29-manual-llm-stop-start-plan.md)
 24. [30 Image Mode Return To Coding](30-image-mode-return-to-coding.md)
+25. [31 First Image Dry Run Evidence Review](31-first-image-dry-run-evidence-review.md)
+26. [32 First Image Dry Run Evidence Template](32-first-image-dry-run-evidence-template.md)
+27. [33 First Image Dry Run Review Checklist](33-first-image-dry-run-review-checklist.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
 M31.0 defines the image pipeline. M31.1 adds the ComfyUI / Flux startup checklist. Real generation remains explicit operator action.
 
-Before real image generation, read 25, 26, 27, 28, 29, and 30.
+Before real image generation, read 25 through 33.

@@ -2,6 +2,8 @@
 
 Use this template to collect evidence before asking ChatGPT/Codex for the next image-mode step. Do not include secrets or huge logs.
 
+After this startup evidence, use [32-first-image-dry-run-evidence-template.md](32-first-image-dry-run-evidence-template.md) for the full first-image dry-run evidence bundle.
+
 ## Collection Commands
 
 ### Run on PC-1

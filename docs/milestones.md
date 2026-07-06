@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M31.2 Image Mode VRAM Safety / LLM Stop Plan.
-- Next planned: M31.3 First Image Dry Run Evidence Review.
+- Completed through M31.3 First Image Dry Run Evidence Review.
+- Next planned: M31.4 First Real Image Generation Drill.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1140,12 +1140,13 @@ Goals:
 
 ## Milestone 31.3: First Image Dry Run Evidence Review
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Review collected ComfyUI / Flux startup evidence before any real generation.
-- Keep review documentation-only unless a later milestone explicitly adds guarded execution.
-- Do not add automatic image generation.
+- Add first-image dry-run evidence collection guide.
+- Add first-image dry-run evidence template.
+- Add first-image dry-run review checklist for human/Codex review before M31.4.
+- Keep review documentation-only with no real generation commands.
 
 ## Milestone 31.4: First Real Image Generation Drill
 
@@ -1156,7 +1157,16 @@ Goals:
 - Keep real generation explicit, guarded, and operator-approved.
 - Preserve return-to-coding and VRAM safety checks.
 
-## Milestone 31.5: Homelab Ops and Remote Access Hardening
+## Milestone 31.5: Generated Image Output Handling / Git Safety
+
+Status: PLANNED
+
+Goals:
+- Document generated image output locations and Git safety checks.
+- Keep generated media out of source control.
+- Preserve runtime/source separation for image outputs.
+
+## Milestone 31.6: Homelab Ops and Remote Access Hardening
 
 Status: PLANNED
 

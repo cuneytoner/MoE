@@ -1156,15 +1156,16 @@ Expected boundaries:
 - Keep all stop/start actions explicit and operator-reviewed.
 - Do not add runtime behavior, app code, Docker Compose changes, automatic model switching, automatic image generation, or real generation commands.
 
-## Milestone 31.3 Prompt Placeholder
+## Milestone 31.3 Prompt: First Image Dry Run Evidence Review
 
-Add first image dry-run evidence review.
+Create a beginner-friendly dry-run evidence review workflow before first real image generation.
 
 Expected boundaries:
 
-- Review collected ComfyUI / Flux startup evidence before any real generation.
-- Keep review documentation-only unless a later milestone explicitly adds guarded execution.
-- Do not add automatic image generation.
+- Add `docs/ops/31-first-image-dry-run-evidence-review.md`, `docs/ops/32-first-image-dry-run-evidence-template.md`, and `docs/ops/33-first-image-dry-run-review-checklist.md`.
+- Define evidence collection for repo state, GPU/VRAM, llama-server, Docker/media containers, scripts, docs, model inventory, Gateway/media endpoints, and PC-2 support services.
+- Keep review documentation-only. Do not alter runtime behavior, app code, Docker Compose behavior, service execution features, automatic model switching, or automatic image generation.
+- Do not include real image generation commands.
 
 ## Milestone 31.4 Prompt Placeholder
 
@@ -1175,6 +1176,16 @@ Expected boundaries:
 - Document first real image generation drill after evidence review.
 - Keep real generation explicit, guarded, and operator-approved.
 - Preserve return-to-coding and VRAM safety checks.
+
+## Milestone 31.5 Prompt Placeholder
+
+Add generated image output handling / Git safety documentation.
+
+Expected boundaries:
+
+- Document generated image output locations and Git safety checks.
+- Keep generated media out of source control.
+- Preserve runtime/source separation for image outputs.
 
 ## Future Automation Placeholder
 

@@ -7,6 +7,9 @@ Before dry-run, complete:
 - [25-comfyui-flux-startup-checklist.md](25-comfyui-flux-startup-checklist.md)
 - [26-comfyui-flux-blockers.md](26-comfyui-flux-blockers.md)
 - [27-comfyui-flux-startup-evidence-template.md](27-comfyui-flux-startup-evidence-template.md)
+- [31-first-image-dry-run-evidence-review.md](31-first-image-dry-run-evidence-review.md)
+- [32-first-image-dry-run-evidence-template.md](32-first-image-dry-run-evidence-template.md)
+- [33-first-image-dry-run-review-checklist.md](33-first-image-dry-run-review-checklist.md)
 
 ## What Dry-Run Means
 
