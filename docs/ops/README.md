@@ -72,6 +72,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | First image dry-run evidence template | [32-first-image-dry-run-evidence-template.md](32-first-image-dry-run-evidence-template.md) |
 | First image dry-run review checklist | [33-first-image-dry-run-review-checklist.md](33-first-image-dry-run-review-checklist.md) |
 | Image existing script map | [34-image-existing-script-map.md](34-image-existing-script-map.md) |
+| First real image generation drill | [35-first-real-image-generation-drill.md](35-first-real-image-generation-drill.md) |
+| First real image generation evidence template | [36-first-real-image-generation-evidence-template.md](36-first-real-image-generation-evidence-template.md) |
+| Generated image Git safety | [37-generated-image-git-safety.md](37-generated-image-git-safety.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -105,9 +108,14 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 26. [32 First Image Dry Run Evidence Template](32-first-image-dry-run-evidence-template.md)
 27. [33 First Image Dry Run Review Checklist](33-first-image-dry-run-review-checklist.md)
 28. [34 Image Existing Script Map](34-image-existing-script-map.md)
+29. [35 First Real Image Generation Drill](35-first-real-image-generation-drill.md)
+30. [36 First Real Image Generation Evidence Template](36-first-real-image-generation-evidence-template.md)
+31. [37 Generated Image Git Safety](37-generated-image-git-safety.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
 M31.0 defines the image pipeline. M31.1 adds the ComfyUI / Flux startup checklist. Real generation remains explicit operator action.
 
 Before real image generation, read 25 through 33.
+
+Real image generation requires explicit `APPLY=1` and `MEDIA_REAL_GENERATION_ENABLED=true`. Do not run those commands unless you intentionally want generation.

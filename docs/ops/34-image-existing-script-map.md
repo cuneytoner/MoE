@@ -30,6 +30,21 @@ Gateway must not auto-run shell commands. Real image generation remains explicit
 - Gateway must not auto-run shell commands.
 - Generated images, model files, checkpoints, and `.safetensors` files must stay out of Git.
 
+## M31.4 First Real Image Flow
+
+Use this order for the first controlled real image generation drill:
+
+1. `make image-readiness`
+2. `make image-dry-run`
+3. `make comfyui-first-image-plan`
+4. `APPLY=1 STOP_LLM=1 scripts/image/image-mode-prepare.sh`
+5. `APPLY=1 MEDIA_REAL_GENERATION_ENABLED=true scripts/image/image-real-run.sh`
+6. `make image-latest`
+7. `make image-safe-shutdown`
+8. Return to coding mode with `make model-start MODEL=qwen-coder-14b-fast` and `make model-health`.
+
+Steps 4 and 5 are real operator actions. Do not run them unless you intentionally want image mode preparation and real generation.
+
 ## Before M31.4
 
 Read:
@@ -37,3 +52,4 @@ Read:
 - [31-first-image-dry-run-evidence-review.md](31-first-image-dry-run-evidence-review.md)
 - [32-first-image-dry-run-evidence-template.md](32-first-image-dry-run-evidence-template.md)
 - [33-first-image-dry-run-review-checklist.md](33-first-image-dry-run-review-checklist.md)
+- [35-first-real-image-generation-drill.md](35-first-real-image-generation-drill.md)

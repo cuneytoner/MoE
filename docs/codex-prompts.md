@@ -1178,13 +1178,14 @@ Expected boundaries:
 - Add `docs/ops/34-image-existing-script-map.md`.
 - Do not run real generation. Do not use `APPLY=1` in tests. Do not add Gateway shell execution, automatic model switching, or automatic image generation.
 
-## Milestone 31.4 Prompt Placeholder
+## Milestone 31.4 Prompt: First Real Image Generation Drill
 
 Add first real image generation drill.
 
 Expected boundaries:
 
-- Document first real image generation drill after evidence review.
+- Add `docs/ops/35-first-real-image-generation-drill.md`, `docs/ops/36-first-real-image-generation-evidence-template.md`, and `docs/ops/37-generated-image-git-safety.md`.
+- Document the guarded first real image generation sequence after evidence review.
 - Keep real generation explicit, guarded, and operator-approved.
 - Preserve return-to-coding and VRAM safety checks.
 
@@ -1197,6 +1198,16 @@ Expected boundaries:
 - Document generated image output locations and Git safety checks.
 - Keep generated media out of source control.
 - Preserve runtime/source separation for image outputs.
+
+## Milestone 31.6 Prompt Placeholder
+
+Add ComfyUI workflow inventory.
+
+Expected boundaries:
+
+- Inventory ComfyUI workflows, required model files, inputs, outputs, and safety gates.
+- Keep real workflow execution explicit and operator-approved.
+- Do not add automatic image generation or Gateway shell execution.
 
 ## Future Automation Placeholder
 

@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M31.3.1 Image Mode Safety Alignment.
-- Next planned: M31.4 First Real Image Generation Drill.
+- Completed through M31.4 First Real Image Generation Drill.
+- Next planned: M31.5 Generated Image Output Handling / Git Safety.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1160,10 +1160,12 @@ Goals:
 
 ## Milestone 31.4: First Real Image Generation Drill
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Document first real image generation drill after evidence review.
+- Add the first controlled real image generation drill runbook.
+- Add post-drill evidence template.
+- Add generated image Git safety guidance.
 - Keep real generation explicit, guarded, and operator-approved.
 - Preserve return-to-coding and VRAM safety checks.
 
@@ -1176,16 +1178,14 @@ Goals:
 - Keep generated media out of source control.
 - Preserve runtime/source separation for image outputs.
 
-## Milestone 31.6: Homelab Ops and Remote Access Hardening
+## Milestone 31.6: ComfyUI Workflow Inventory
 
 Status: PLANNED
 
 Goals:
-- Add safe remote access and monitoring documentation.
-- Plan Tailscale or equivalent private network access.
-- Document dashboard and service exposure boundaries.
-- Keep operational access explicit and reviewed.
-- Avoid unsafe public exposure of Gateway, Dashboard, Docker, databases, or model runtime.
+- Inventory existing ComfyUI workflows.
+- Document workflow inputs, outputs, models, and safety gates.
+- Keep workflow execution explicit and operator-approved.
 
 ## Milestone 32.0: Video Generation Service
 
