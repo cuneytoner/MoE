@@ -85,6 +85,16 @@ llama-server can use PC-1 GPU VRAM. Image generation can also use PC-1 GPU VRAM.
 
 Stopping llama-server must be a manual operator action. Gateway must not auto-stop it.
 
+## Before Image Mode, Complete M31.2 VRAM Safety Docs
+
+Read these before entering image mode:
+
+- [28-image-mode-vram-safety.md](28-image-mode-vram-safety.md)
+- [29-manual-llm-stop-start-plan.md](29-manual-llm-stop-start-plan.md)
+- [30-image-mode-return-to-coding.md](30-image-mode-return-to-coding.md)
+
+These docs explain how to inspect VRAM, decide whether llama-server should remain running, stop it manually only if needed, and return to coding mode afterward.
+
 ## Before Image Mode
 
 ### Run on PC-1

@@ -7,6 +7,9 @@ Read next:
 - [19 Media Readiness Map](19-media-readiness-map.md)
 - [20 Image Mode Safety Rules](20-image-mode-safety-rules.md)
 - [21 Image Pipeline Entry Plan](21-image-pipeline-entry-plan.md)
+- [28 Image Mode VRAM Safety](28-image-mode-vram-safety.md)
+- [29 Manual LLM Stop Start Plan](29-manual-llm-stop-start-plan.md)
+- [30 Image Mode Return To Coding](30-image-mode-return-to-coding.md)
 
 ## When Do We Move From Coding Mode To Image Mode?
 

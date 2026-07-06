@@ -1145,15 +1145,16 @@ Expected boundaries:
 - Keep startup operator-reviewed and explicit.
 - Avoid real image generation commands, automatic model switching, automatic llama-server stop/start, app code changes, Docker Compose changes, or service execution features.
 
-## Milestone 31.2 Prompt Placeholder
+## Milestone 31.2 Prompt: Image Mode VRAM Safety / LLM Stop Plan
 
-Add image mode VRAM safety / LLM stop plan.
+Create beginner-friendly documentation for VRAM safety when moving between coding mode and image mode.
 
 Expected boundaries:
 
-- Document manual llama-server stop/start planning for image mode VRAM safety.
+- Add `docs/ops/28-image-mode-vram-safety.md`, `docs/ops/29-manual-llm-stop-start-plan.md`, and `docs/ops/30-image-mode-return-to-coding.md`.
+- Explain when and how a human operator safely handles llama-server before image/media work.
 - Keep all stop/start actions explicit and operator-reviewed.
-- Do not add automatic model switching or automatic image generation.
+- Do not add runtime behavior, app code, Docker Compose changes, automatic model switching, automatic image generation, or real generation commands.
 
 ## Milestone 31.3 Prompt Placeholder
 
@@ -1164,6 +1165,16 @@ Expected boundaries:
 - Review collected ComfyUI / Flux startup evidence before any real generation.
 - Keep review documentation-only unless a later milestone explicitly adds guarded execution.
 - Do not add automatic image generation.
+
+## Milestone 31.4 Prompt Placeholder
+
+Add first real image generation drill.
+
+Expected boundaries:
+
+- Document first real image generation drill after evidence review.
+- Keep real generation explicit, guarded, and operator-approved.
+- Preserve return-to-coding and VRAM safety checks.
 
 ## Future Automation Placeholder
 

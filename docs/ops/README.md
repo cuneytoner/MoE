@@ -65,6 +65,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | ComfyUI Flux startup checklist | [25-comfyui-flux-startup-checklist.md](25-comfyui-flux-startup-checklist.md) |
 | ComfyUI Flux blockers | [26-comfyui-flux-blockers.md](26-comfyui-flux-blockers.md) |
 | ComfyUI Flux startup evidence template | [27-comfyui-flux-startup-evidence-template.md](27-comfyui-flux-startup-evidence-template.md) |
+| Image mode VRAM safety | [28-image-mode-vram-safety.md](28-image-mode-vram-safety.md) |
+| Manual LLM stop start plan | [29-manual-llm-stop-start-plan.md](29-manual-llm-stop-start-plan.md) |
+| Image mode return to coding | [30-image-mode-return-to-coding.md](30-image-mode-return-to-coding.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -91,7 +94,12 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 19. [25 ComfyUI Flux Startup Checklist](25-comfyui-flux-startup-checklist.md)
 20. [26 ComfyUI Flux Blockers](26-comfyui-flux-blockers.md)
 21. [27 ComfyUI Flux Startup Evidence Template](27-comfyui-flux-startup-evidence-template.md)
+22. [28 Image Mode VRAM Safety](28-image-mode-vram-safety.md)
+23. [29 Manual LLM Stop Start Plan](29-manual-llm-stop-start-plan.md)
+24. [30 Image Mode Return To Coding](30-image-mode-return-to-coding.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
 M31.0 defines the image pipeline. M31.1 adds the ComfyUI / Flux startup checklist. Real generation remains explicit operator action.
+
+Before real image generation, read 25, 26, 27, 28, 29, and 30.

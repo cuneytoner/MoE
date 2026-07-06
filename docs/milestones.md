@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M31.1 ComfyUI / Flux Startup Checklist.
-- Next planned: M31.2 Image Mode VRAM Safety / LLM Stop Plan.
+- Completed through M31.2 Image Mode VRAM Safety / LLM Stop Plan.
+- Next planned: M31.3 First Image Dry Run Evidence Review.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 ## Milestone 0: Clean Codebase
@@ -1129,10 +1129,12 @@ Goals:
 
 ## Milestone 31.2: Image Mode VRAM Safety / LLM Stop Plan
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Document manual llama-server stop/start planning for image mode VRAM safety.
+- Add image mode VRAM safety guide.
+- Add manual llama-server stop/start plan for image mode transitions.
+- Add return-to-coding checklist after image mode.
 - Keep all stop/start actions explicit and operator-reviewed.
 - Do not add automatic model switching or automatic image generation.
 
@@ -1145,7 +1147,16 @@ Goals:
 - Keep review documentation-only unless a later milestone explicitly adds guarded execution.
 - Do not add automatic image generation.
 
-## Milestone 31.4: Homelab Ops and Remote Access Hardening
+## Milestone 31.4: First Real Image Generation Drill
+
+Status: PLANNED
+
+Goals:
+- Document first real image generation drill after evidence review.
+- Keep real generation explicit, guarded, and operator-approved.
+- Preserve return-to-coding and VRAM safety checks.
+
+## Milestone 31.5: Homelab Ops and Remote Access Hardening
 
 Status: PLANNED
 

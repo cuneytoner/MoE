@@ -2,6 +2,11 @@
 
 Use this checklist before starting ComfyUI / Flux work. It is readiness-only and does not run image generation.
 
+Before making any VRAM decision, read:
+
+- [28-image-mode-vram-safety.md](28-image-mode-vram-safety.md)
+- [29-manual-llm-stop-start-plan.md](29-manual-llm-stop-start-plan.md)
+
 ## What This Checklist Is For
 
 - Confirm PC-1 is ready for image runtime work.
