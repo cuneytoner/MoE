@@ -4,6 +4,8 @@ This document records the current successful Flux Schnell ComfyUI workflow after
 
 It is for beginner-safe inspection and future review. It does not replace the guarded generation drill.
 
+This workflow inventory supports both the direct ComfyUI first-image path and future Gateway/media real runs when they use the same workflow.
+
 ## What This Document Is For
 
 - Explain which workflow file produced the first successful image.

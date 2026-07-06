@@ -173,6 +173,8 @@ The first successful real generation produced:
 
 This path is outside the repo, which is the expected safe output location.
 
+Direct ComfyUI first-image succeeded. For the full Gateway/media path, use [44-gateway-real-image-run-drill.md](44-gateway-real-image-run-drill.md).
+
 ## What Evidence To Paste Back If Blocked
 
 Paste:

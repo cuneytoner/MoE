@@ -45,6 +45,18 @@ Use this order for the first controlled real image generation drill:
 
 Steps 4 and 5 are real operator actions. Do not run them unless you intentionally want image mode preparation and real generation.
 
+## Gateway/media Real Run Path
+
+Use this order for the guarded full Gateway/media path:
+
+1. `make image-readiness`
+2. `make image-dry-run`
+3. `APPLY=1 MEDIA_REAL_GENERATION_ENABLED=true scripts/image/image-real-run.sh`
+4. `make image-latest`
+5. `APPLY=1 START_LLM=1 scripts/image/image-safe-shutdown.sh`
+
+Step 3 is a real operator action. Do not run it until readiness and dry-run are green, and do not run it if llama-server is still consuming VRAM.
+
 ## Before M31.4
 
 Read:

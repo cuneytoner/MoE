@@ -2,15 +2,16 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M31.6 ComfyUI Workflow Inventory.
-- Next planned: M31.7 Gateway Real Image Run Drill.
+- Completed through M31.7 Gateway Real Image Run Drill.
+- Next planned: M31.8 Prompt Variants / Batch Image Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
 - M31.5 Generated Image Output Handling / Git Safety DONE
 - M31.6 ComfyUI Workflow Inventory DONE
-- M31.7 Gateway Real Image Run Drill PLANNED
+- M31.7 Gateway Real Image Run Drill DONE
 - M31.8 Prompt Variants / Batch Image Plan PLANNED
+- M31.9 Media Dashboard Output Review PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1197,12 +1198,13 @@ Goals:
 
 ## Milestone 31.7: Gateway Real Image Run Drill
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add a Gateway-facing real image run drill after workflow inventory review.
 - Keep real generation explicitly operator-approved.
 - Preserve Gateway safety boundaries: no shell execution, no Docker control, no automatic model switching, and no automatic generation.
+- Add evidence and troubleshooting templates for the guarded Gateway/media image path.
 
 ## Milestone 31.8: Prompt Variants / Batch Image Plan
 
@@ -1212,6 +1214,15 @@ Goals:
 - Plan safe prompt variant and batch image experiments after the Gateway real image run drill.
 - Keep batch generation operator-reviewed and explicitly gated.
 - Preserve generated output, model, and Git safety boundaries.
+
+## Milestone 31.9: Media Dashboard Output Review
+
+Status: PLANNED
+
+Goals:
+- Review how generated image outputs are surfaced in the media dashboard.
+- Keep dashboard output review read-only.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 32.0: Video Generation Service
 

@@ -81,6 +81,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | ComfyUI workflow inventory | [41-comfyui-workflow-inventory.md](41-comfyui-workflow-inventory.md) |
 | Flux Schnell parameter guide | [42-flux-schnell-parameter-guide.md](42-flux-schnell-parameter-guide.md) |
 | ComfyUI workflow change log | [43-comfyui-workflow-change-log.md](43-comfyui-workflow-change-log.md) |
+| Gateway real image run drill | [44-gateway-real-image-run-drill.md](44-gateway-real-image-run-drill.md) |
+| Gateway real image evidence template | [45-gateway-real-image-evidence-template.md](45-gateway-real-image-evidence-template.md) |
+| Gateway real image troubleshooting | [46-gateway-real-image-troubleshooting.md](46-gateway-real-image-troubleshooting.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -123,6 +126,9 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 35. [41 ComfyUI Workflow Inventory](41-comfyui-workflow-inventory.md)
 36. [42 Flux Schnell Parameter Guide](42-flux-schnell-parameter-guide.md)
 37. [43 ComfyUI Workflow Change Log](43-comfyui-workflow-change-log.md)
+38. [44 Gateway Real Image Run Drill](44-gateway-real-image-run-drill.md)
+39. [45 Gateway Real Image Evidence Template](45-gateway-real-image-evidence-template.md)
+40. [46 Gateway Real Image Troubleshooting](46-gateway-real-image-troubleshooting.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -135,3 +141,5 @@ Real image generation requires explicit `APPLY=1` and `MEDIA_REAL_GENERATION_ENA
 After real image generation, read 38 through 40 before archiving, deleting, or recording generated outputs.
 
 Before changing workflow parameters, read 41 through 43 and record future edits in the workflow change log.
+
+For the full Gateway/media real image path, read 44 through 46 before running any guarded real command.
