@@ -88,6 +88,12 @@ Expected good sign: the plan prints the ComfyUI first image settings and says no
 
 Also review [34-image-existing-script-map.md](34-image-existing-script-map.md) before moving to real preparation.
 
+After a successful run, review:
+
+- [41-comfyui-workflow-inventory.md](41-comfyui-workflow-inventory.md)
+- [42-flux-schnell-parameter-guide.md](42-flux-schnell-parameter-guide.md)
+- [43-comfyui-workflow-change-log.md](43-comfyui-workflow-change-log.md)
+
 ## Step 5: Prepare Image Mode With Explicit Operator Approval
 
 Only run this when you intentionally want to prepare real image mode.

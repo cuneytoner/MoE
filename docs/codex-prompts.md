@@ -21,8 +21,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 ## Current Media Milestone Status
 
 - M31.5 Generated Image Output Handling / Git Safety DONE
-- M31.6 ComfyUI Workflow Inventory PLANNED
+- M31.6 ComfyUI Workflow Inventory DONE
 - M31.7 Gateway Real Image Run Drill PLANNED
+- M31.8 Prompt Variants / Batch Image Plan PLANNED
 
 ## Working Directory
 
@@ -1212,13 +1213,14 @@ Expected boundaries:
 
 Add ComfyUI workflow inventory.
 
-Status: PLANNED
+Status: DONE
 
 Expected boundaries:
 
 - Inventory ComfyUI workflows, required model files, inputs, outputs, and safety gates.
 - Keep real workflow execution explicit and operator-approved.
 - Do not add automatic image generation or Gateway shell execution.
+- Add beginner-friendly Flux Schnell parameter guidance and a manual workflow change log template.
 
 ## Milestone 31.7 Prompt Placeholder
 
@@ -1231,6 +1233,18 @@ Expected boundaries:
 - Document a Gateway-facing real image run drill after ComfyUI workflow inventory.
 - Keep real generation explicit and operator-approved.
 - Do not add Gateway shell execution, Docker control, automatic model switching, or automatic generation.
+
+## Milestone 31.8 Prompt Placeholder
+
+Add prompt variants / batch image plan.
+
+Status: PLANNED
+
+Expected boundaries:
+
+- Plan safe prompt variant and batch image experiments after the Gateway real image run drill.
+- Keep batch generation operator-reviewed and explicitly gated.
+- Do not add automatic image generation, Gateway shell execution, Docker control, or model switching.
 
 ## Future Automation Placeholder
 

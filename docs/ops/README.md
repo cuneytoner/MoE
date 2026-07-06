@@ -78,6 +78,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Generated image output handling | [38-generated-image-output-handling.md](38-generated-image-output-handling.md) |
 | First image success record | [39-first-image-success-record.md](39-first-image-success-record.md) |
 | Image output cleanup policy | [40-image-output-cleanup-policy.md](40-image-output-cleanup-policy.md) |
+| ComfyUI workflow inventory | [41-comfyui-workflow-inventory.md](41-comfyui-workflow-inventory.md) |
+| Flux Schnell parameter guide | [42-flux-schnell-parameter-guide.md](42-flux-schnell-parameter-guide.md) |
+| ComfyUI workflow change log | [43-comfyui-workflow-change-log.md](43-comfyui-workflow-change-log.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -117,6 +120,9 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 32. [38 Generated Image Output Handling](38-generated-image-output-handling.md)
 33. [39 First Image Success Record](39-first-image-success-record.md)
 34. [40 Image Output Cleanup Policy](40-image-output-cleanup-policy.md)
+35. [41 ComfyUI Workflow Inventory](41-comfyui-workflow-inventory.md)
+36. [42 Flux Schnell Parameter Guide](42-flux-schnell-parameter-guide.md)
+37. [43 ComfyUI Workflow Change Log](43-comfyui-workflow-change-log.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -127,3 +133,5 @@ Before real image generation, read 25 through 33.
 Real image generation requires explicit `APPLY=1` and `MEDIA_REAL_GENERATION_ENABLED=true`. Do not run those commands unless you intentionally want generation.
 
 After real image generation, read 38 through 40 before archiving, deleting, or recording generated outputs.
+
+Before changing workflow parameters, read 41 through 43 and record future edits in the workflow change log.

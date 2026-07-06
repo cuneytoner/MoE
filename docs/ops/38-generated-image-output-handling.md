@@ -107,6 +107,8 @@ Record the useful facts in notes, not the binary image file:
 
 Use [39-first-image-success-record.md](39-first-image-success-record.md) as the template.
 
+After recording output metadata, update [43-comfyui-workflow-change-log.md](43-comfyui-workflow-change-log.md) if workflow parameters changed.
+
 ## Verify Coding Mode After Image Generation
 
 After image generation and safe shutdown, coding mode should be restored before normal development continues.
