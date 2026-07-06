@@ -137,3 +137,15 @@ Use one variable at a time:
 | D | Same prompt as B | `512x512` | `6` | Same as C | Compare a small step increase only after A through C are reviewed. |
 
 Record every real run in [43-comfyui-workflow-change-log.md](43-comfyui-workflow-change-log.md). Do not commit generated image binaries.
+
+## Prompt Variant Strategy
+
+For first prompt variants:
+
+- Keep size fixed at `512x512`.
+- Keep steps fixed at `4`.
+- Change prompt text only.
+- Use a fixed seed for comparison.
+- Later, change seed for exploration after prompt effects are understood.
+
+For planned prompt variants and small batch comparisons, use [47-prompt-variants-plan.md](47-prompt-variants-plan.md), [48-small-batch-image-safety.md](48-small-batch-image-safety.md), [49-image-comparison-notes-template.md](49-image-comparison-notes-template.md), and [50-batch-output-naming-policy.md](50-batch-output-naming-policy.md).

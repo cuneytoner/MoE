@@ -23,8 +23,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M31.5 Generated Image Output Handling / Git Safety DONE
 - M31.6 ComfyUI Workflow Inventory DONE
 - M31.7 Gateway Real Image Run Drill DONE
-- M31.8 Prompt Variants / Batch Image Plan PLANNED
+- M31.8 Prompt Variants / Batch Image Plan DONE
 - M31.9 Media Dashboard Output Review PLANNED
+- M32.0 Controlled Prompt Variant Generation PLANNED
 
 ## Working Directory
 
@@ -1240,13 +1241,14 @@ Expected boundaries:
 
 Add prompt variants / batch image plan.
 
-Status: PLANNED
+Status: DONE
 
 Expected boundaries:
 
 - Plan safe prompt variant and batch image experiments after the Gateway real image run drill.
 - Keep batch generation operator-reviewed and explicitly gated.
 - Do not add automatic image generation, Gateway shell execution, Docker control, or model switching.
+- Add prompt variant planning, small batch safety, image comparison notes, and output naming policy docs.
 
 ## Milestone 31.9 Prompt Placeholder
 
@@ -1259,6 +1261,18 @@ Expected boundaries:
 - Review how generated image outputs are surfaced in the media dashboard.
 - Keep dashboard output review read-only.
 - Do not add automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
+
+## Milestone 32.0 Prompt Placeholder
+
+Add controlled prompt variant generation.
+
+Status: PLANNED
+
+Expected boundaries:
+
+- Implement controlled prompt variant generation only after M31.8 planning and M31.9 dashboard review.
+- Keep generation explicitly operator-approved and guarded.
+- Do not add uncontrolled batch execution, Gateway shell execution, Docker control, model switching, or generated media commits.
 
 ## Future Automation Placeholder
 

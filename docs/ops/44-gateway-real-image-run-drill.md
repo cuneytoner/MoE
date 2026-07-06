@@ -207,3 +207,5 @@ When reporting a blocker, include:
 - Git status.
 
 Do not use destructive cleanup commands. Do not use `docker volume prune`. Do not delete generated outputs or model files as a default fix.
+
+For prompt variants and small batch planning, read [47-prompt-variants-plan.md](47-prompt-variants-plan.md), [48-small-batch-image-safety.md](48-small-batch-image-safety.md), [49-image-comparison-notes-template.md](49-image-comparison-notes-template.md), and [50-batch-output-naming-policy.md](50-batch-output-naming-policy.md) first.
