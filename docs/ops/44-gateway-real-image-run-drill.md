@@ -157,6 +157,8 @@ find /home/cuneyt/MoE/runtime/media/outputs/images \
 
 Expected good sign: any new PNG appears under `/home/cuneyt/MoE/runtime/media/outputs/images`, not inside the repo.
 
+After a real run, use [51-media-dashboard-output-review.md](51-media-dashboard-output-review.md), [52-media-dashboard-latest-images-schema.md](52-media-dashboard-latest-images-schema.md), and [53-media-dashboard-review-template.md](53-media-dashboard-review-template.md) for dashboard review.
+
 ## Step 9: Safe Shutdown / Return To Coding Mode
 
 ### Run on PC-1

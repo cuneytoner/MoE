@@ -109,6 +109,8 @@ Use [39-first-image-success-record.md](39-first-image-success-record.md) as the 
 
 After recording output metadata, update [43-comfyui-workflow-change-log.md](43-comfyui-workflow-change-log.md) if workflow parameters changed.
 
+After generation, use [51-media-dashboard-output-review.md](51-media-dashboard-output-review.md) to confirm the output is visible in dashboard status.
+
 ## Verify Coding Mode After Image Generation
 
 After image generation and safe shutdown, coding mode should be restored before normal development continues.

@@ -88,6 +88,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Small batch image safety | [48-small-batch-image-safety.md](48-small-batch-image-safety.md) |
 | Image comparison notes template | [49-image-comparison-notes-template.md](49-image-comparison-notes-template.md) |
 | Batch output naming policy | [50-batch-output-naming-policy.md](50-batch-output-naming-policy.md) |
+| Media dashboard output review | [51-media-dashboard-output-review.md](51-media-dashboard-output-review.md) |
+| Media dashboard latest images schema | [52-media-dashboard-latest-images-schema.md](52-media-dashboard-latest-images-schema.md) |
+| Media dashboard review template | [53-media-dashboard-review-template.md](53-media-dashboard-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -137,6 +140,9 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 42. [48 Small Batch Image Safety](48-small-batch-image-safety.md)
 43. [49 Image Comparison Notes Template](49-image-comparison-notes-template.md)
 44. [50 Batch Output Naming Policy](50-batch-output-naming-policy.md)
+45. [51 Media Dashboard Output Review](51-media-dashboard-output-review.md)
+46. [52 Media Dashboard Latest Images Schema](52-media-dashboard-latest-images-schema.md)
+47. [53 Media Dashboard Review Template](53-media-dashboard-review-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -153,3 +159,5 @@ Before changing workflow parameters, read 41 through 43 and record future edits 
 For the full Gateway/media real image path, read 44 through 46 before running any guarded real command.
 
 For prompt variants or small batch planning, read 47 through 50 before preparing a real run.
+
+For dashboard output review, read 51 through 53 before relying on `latest_images` for evidence.

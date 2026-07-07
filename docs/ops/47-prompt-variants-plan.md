@@ -101,6 +101,8 @@ For each future generated image, record:
 
 Use [49-image-comparison-notes-template.md](49-image-comparison-notes-template.md).
 
+For future variants, dashboard `latest_images` can help locate the newest output, but comparison notes should still record the path and prompt manually.
+
 ## Go / No-Go Before Batch Generation
 
 Go only if:
