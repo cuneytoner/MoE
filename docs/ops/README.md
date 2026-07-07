@@ -112,6 +112,10 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Technical detail image run result review | [72-technical-detail-image-run-result-review.md](72-technical-detail-image-run-result-review.md) |
 | Pergola image selection notes | [73-pergola-image-selection-notes.md](73-pergola-image-selection-notes.md) |
 | Next project-specific prompt improvements | [74-next-project-specific-prompt-improvements.md](74-next-project-specific-prompt-improvements.md) |
+| Pergola image reference board | [75-pergola-image-reference-board.md](75-pergola-image-reference-board.md) |
+| Pergola reference board review template | [76-pergola-reference-board-review-template.md](76-pergola-reference-board-review-template.md) |
+| Pergola usta briefing notes | [77-pergola-usta-briefing-notes.md](77-pergola-usta-briefing-notes.md) |
+| Pergola reference board file handling | [78-pergola-reference-board-file-handling.md](78-pergola-reference-board-file-handling.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -185,6 +189,10 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 66. [72 Technical Detail Image Run Result Review](72-technical-detail-image-run-result-review.md)
 67. [73 Pergola Image Selection Notes](73-pergola-image-selection-notes.md)
 68. [74 Next Project-Specific Prompt Improvements](74-next-project-specific-prompt-improvements.md)
+69. [75 Pergola Image Reference Board](75-pergola-image-reference-board.md)
+70. [76 Pergola Reference Board Review Template](76-pergola-reference-board-review-template.md)
+71. [77 Pergola Usta Briefing Notes](77-pergola-usta-briefing-notes.md)
+72. [78 Pergola Reference Board File Handling](78-pergola-reference-board-file-handling.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -209,3 +217,5 @@ For controlled prompt variant generation, read 54 through 57 before preparing im
 For project-specific pergola prompt planning, read 67 through 71 before preparing the next controlled run.
 
 After project-specific pergola image runs, read 72 through 74 before selecting references or preparing the next prompt iteration.
+
+For selected pergola visual references and usta briefing notes, read 75 through 78.

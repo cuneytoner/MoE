@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M32.6 Technical Detail Image Run Result Review.
-- Next planned: M32.7 Pergola Image Selection / Reference Board.
+- Latest completed: M32.7 Pergola Image Selection / Reference Board.
+- Next planned: M32.8 Real Pergola Technical Drawing Prompt Pack.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -19,8 +19,9 @@ Current media milestone status:
 - M32.4 Improved Prompt Controlled Run Result Review DONE
 - M32.5 Pergola Project-Specific Prompt Pack DONE
 - M32.6 Technical Detail Image Run Result Review DONE
-- M32.7 Pergola Image Selection / Reference Board PLANNED
+- M32.7 Pergola Image Selection / Reference Board DONE
 - M32.8 Real Pergola Technical Drawing Prompt Pack PLANNED
+- M32.9 Pergola Usta Package Plan PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1304,7 +1305,7 @@ Goals:
 
 ## Milestone 32.7: Pergola Image Selection / Reference Board
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Review generated pergola images and select reference candidates.
@@ -1320,7 +1321,16 @@ Goals:
 - Keep generated-image references separate from validated engineering drawings.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 32.9: Video Generation Service
+## Milestone 32.9: Pergola Usta Package Plan
+
+Status: PLANNED
+
+Goals:
+- Prepare a carpenter/usta-friendly package using measurements, materials, and selected visual references.
+- Keep AI-generated images as visual intent only, not build plans.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 32.10: Video Generation Service
 
 Status: PLANNED
 

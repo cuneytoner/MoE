@@ -4,6 +4,8 @@ This note prepares for selecting useful generated images as references.
 
 Generated outputs are visual references only. They are not engineering drawings, static calculations, construction plans, or validated joinery details.
 
+The first reference board is documented in [75-pergola-image-reference-board.md](75-pergola-image-reference-board.md).
+
 ## Useful References From The First Project-Specific Run
 
 - P1 is useful as a project overview reference.

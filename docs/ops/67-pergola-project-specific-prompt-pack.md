@@ -4,6 +4,8 @@ This prompt pack turns the successful generic pergola prompts into prompts close
 
 The first project-specific image run results are reviewed in [72-technical-detail-image-run-result-review.md](72-technical-detail-image-run-result-review.md).
 
+Selected visual references are tracked in [75-pergola-image-reference-board.md](75-pergola-image-reference-board.md).
+
 ## What This Prompt Pack Is For
 
 - Capture the real pergola constraints in reusable prompt language.

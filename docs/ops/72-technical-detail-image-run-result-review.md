@@ -4,6 +4,8 @@ This review records the first project-specific pergola image run results.
 
 The run was performed manually by the operator. This document records outputs, lessons, and the next direction without committing generated image binaries.
 
+Reference-board selection is handled in [75-pergola-image-reference-board.md](75-pergola-image-reference-board.md).
+
 ## What This Review Is For
 
 - Record the results for P1 Project overview, P4 Rain protection, and T1 Beam-post joint.
