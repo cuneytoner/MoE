@@ -116,6 +116,12 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Pergola reference board review template | [76-pergola-reference-board-review-template.md](76-pergola-reference-board-review-template.md) |
 | Pergola usta briefing notes | [77-pergola-usta-briefing-notes.md](77-pergola-usta-briefing-notes.md) |
 | Pergola reference board file handling | [78-pergola-reference-board-file-handling.md](78-pergola-reference-board-file-handling.md) |
+| Real pergola technical drawing prompt pack | [79-real-pergola-technical-drawing-prompt-pack.md](79-real-pergola-technical-drawing-prompt-pack.md) |
+| Pergola measured view prompts | [80-pergola-measured-view-prompts.md](80-pergola-measured-view-prompts.md) |
+| Pergola connection detail prompts | [81-pergola-connection-detail-prompts.md](81-pergola-connection-detail-prompts.md) |
+| Pergola fastener and drilling prompt pack | [82-pergola-fastener-and-drilling-prompt-pack.md](82-pergola-fastener-and-drilling-prompt-pack.md) |
+| Pergola technical drawing review template | [83-pergola-technical-drawing-review-template.md](83-pergola-technical-drawing-review-template.md) |
+| Technical drawing safety notes | [84-technical-drawing-safety-notes.md](84-technical-drawing-safety-notes.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -193,6 +199,12 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 70. [76 Pergola Reference Board Review Template](76-pergola-reference-board-review-template.md)
 71. [77 Pergola Usta Briefing Notes](77-pergola-usta-briefing-notes.md)
 72. [78 Pergola Reference Board File Handling](78-pergola-reference-board-file-handling.md)
+73. [79 Real Pergola Technical Drawing Prompt Pack](79-real-pergola-technical-drawing-prompt-pack.md)
+74. [80 Pergola Measured View Prompts](80-pergola-measured-view-prompts.md)
+75. [81 Pergola Connection Detail Prompts](81-pergola-connection-detail-prompts.md)
+76. [82 Pergola Fastener And Drilling Prompt Pack](82-pergola-fastener-and-drilling-prompt-pack.md)
+77. [83 Pergola Technical Drawing Review Template](83-pergola-technical-drawing-review-template.md)
+78. [84 Technical Drawing Safety Notes](84-technical-drawing-safety-notes.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -219,3 +231,5 @@ For project-specific pergola prompt planning, read 67 through 71 before preparin
 After project-specific pergola image runs, read 72 through 74 before selecting references or preparing the next prompt iteration.
 
 For selected pergola visual references and usta briefing notes, read 75 through 78.
+
+For real pergola technical drawing prompts and safety notes, read 79 through 84 before preparing a controlled drawing run.

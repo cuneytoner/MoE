@@ -4,6 +4,8 @@ This reference board classifies useful generated pergola images as visual refere
 
 Generated images are visual references only. They are not engineering drawings, static calculations, or safe construction details.
 
+Reference images can support technical drawing prompt generation, but generated drawings still require review.
+
 ## What This Reference Board Is For
 
 - Select useful generated pergola images for visual discussion.

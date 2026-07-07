@@ -2,6 +2,8 @@
 
 These notes explain how to use selected generated images when discussing the pergola project with a carpenter/usta.
 
+Technical drawing prompts are in [79-real-pergola-technical-drawing-prompt-pack.md](79-real-pergola-technical-drawing-prompt-pack.md) through [84-technical-drawing-safety-notes.md](84-technical-drawing-safety-notes.md) and should be used only as visual support.
+
 ## Main Rule
 
 Images are visual intent references.

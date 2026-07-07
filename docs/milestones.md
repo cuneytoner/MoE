@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M32.7 Pergola Image Selection / Reference Board.
-- Next planned: M32.8 Real Pergola Technical Drawing Prompt Pack.
+- Latest completed: M32.8 Real Pergola Technical Drawing Prompt Pack.
+- Next planned: M32.9 Pergola Usta Package Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -20,8 +20,9 @@ Current media milestone status:
 - M32.5 Pergola Project-Specific Prompt Pack DONE
 - M32.6 Technical Detail Image Run Result Review DONE
 - M32.7 Pergola Image Selection / Reference Board DONE
-- M32.8 Real Pergola Technical Drawing Prompt Pack PLANNED
+- M32.8 Real Pergola Technical Drawing Prompt Pack DONE
 - M32.9 Pergola Usta Package Plan PLANNED
+- M33.0 Technical Drawing Controlled Run PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1314,7 +1315,7 @@ Goals:
 
 ## Milestone 32.8: Real Pergola Technical Drawing Prompt Pack
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Prepare prompts for more drawing-like pergola technical references.
@@ -1339,7 +1340,16 @@ Goals:
 - Use queued jobs.
 - Store outputs under the runtime media directory.
 
-## Milestone 33.0: 3D Model Generation Pipeline
+## Milestone 33.0: Technical Drawing Controlled Run
+
+Status: PLANNED
+
+Goals:
+- Run selected technical drawing prompts through the guarded operator-controlled path.
+- Review drawing-like outputs as visual communication only.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 33.1: 3D Model Generation Pipeline
 
 Status: PLANNED
 
