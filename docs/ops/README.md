@@ -144,6 +144,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Generic media generation roadmap | [106-generic-media-generation-roadmap.md](106-generic-media-generation-roadmap.md) |
 | Generic drawing engine roadmap | [107-generic-drawing-engine-roadmap.md](107-generic-drawing-engine-roadmap.md) |
 | Roadmap reset decision log | [108-roadmap-reset-decision-log.md](108-roadmap-reset-decision-log.md) |
+| Generic prompt pack structure | [109-generic-prompt-pack-structure.md](109-generic-prompt-pack-structure.md) |
+| Prompt pack review template | [110-prompt-pack-review-template.md](110-prompt-pack-review-template.md) |
+| Generic image generation safety | [111-generic-image-generation-safety.md](111-generic-image-generation-safety.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -249,6 +252,9 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 98. [106 Generic Media Generation Roadmap](106-generic-media-generation-roadmap.md)
 99. [107 Generic Drawing Engine Roadmap](107-generic-drawing-engine-roadmap.md)
 100. [108 Roadmap Reset Decision Log](108-roadmap-reset-decision-log.md)
+101. [109 Generic Prompt Pack Structure](109-generic-prompt-pack-structure.md)
+102. [110 Prompt Pack Review Template](110-prompt-pack-review-template.md)
+103. [111 Generic Image Generation Safety](111-generic-image-generation-safety.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -289,3 +295,5 @@ For the first SVG skeleton tool and output review, read 98 and 99.
 For side elevation and top plan SVG outputs, read 100 and 101.
 
 For the generic image, architecture, and drawing roadmap, read 104 through 108.
+
+For generic prompt pack structure and safe prompt reuse, read 109 through 111.

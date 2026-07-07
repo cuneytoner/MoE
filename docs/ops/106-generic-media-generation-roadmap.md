@@ -15,6 +15,8 @@ This roadmap defines planned generic image capabilities beyond the pergola case 
 - dashboard cards
 - prompt metadata capture
 
+Generic prompt packs are now introduced in M34.1.
+
 ## Planned Categories
 
 - architecture exterior

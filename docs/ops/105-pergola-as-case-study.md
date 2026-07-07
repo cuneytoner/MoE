@@ -36,6 +36,8 @@ The platform goal is broader than pergola:
 - deterministic drawing generation
 - reusable media pipeline
 
+Pergola prompts should later be migrated or referenced as a case-study prompt pack, but not during M34.1.
+
 ## Warning
 
 Do not overfit the whole project to pergola.

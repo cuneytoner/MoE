@@ -110,6 +110,8 @@ Reference boards should record paths, prompts, categories, and notes without com
 - SVG/PDF/DXF generation patterns
 - review templates for image and drawing outputs
 
+M34.1 creates the generic prompt pack structure under `tools/prompt-packs`.
+
 ## Next Milestone Sequence
 
 - M34.1 Generic Prompt Pack Structure

@@ -45,9 +45,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M33.7 Beam-post + Roof Sheet SVG Details PLANNED
 - M33.8 PDF Export Plan PLANNED
 - M34.0 Generic Image + Architecture Drawing Roadmap DONE
-- M34.1 Generic Prompt Pack Structure PLANNED
+- M34.1 Generic Prompt Pack Structure DONE
 - M34.2 Generic Drawing Engine Skeleton PLANNED
 - M34.3 Media Dashboard Output Cards PLANNED
+- M34.4 Prompt Metadata Capture PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 
