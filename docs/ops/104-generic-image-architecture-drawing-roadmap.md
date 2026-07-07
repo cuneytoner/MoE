@@ -114,6 +114,8 @@ M34.1 creates the generic prompt pack structure under `tools/prompt-packs`.
 
 Generic drawing engine skeleton is introduced in M34.2.
 
+M34.3 plans dashboard output cards for images and drawings.
+
 ## Next Milestone Sequence
 
 - M34.1 Generic Prompt Pack Structure

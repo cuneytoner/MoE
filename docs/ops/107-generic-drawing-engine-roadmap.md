@@ -24,6 +24,8 @@ tools/drawing-engine
 /home/cuneyt/MoE/runtime/drawings
 ```
 
+Drawing outputs should appear as output cards once implemented.
+
 ## Why Not Move Immediately
 
 - The pergola tool is working as a focused prototype.

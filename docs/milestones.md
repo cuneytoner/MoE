@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.2 Generic Drawing Engine Skeleton.
-- Next planned: M34.3 Media Dashboard Output Cards.
+- Latest completed: M34.3 Media Dashboard Output Cards Plan.
+- Next planned: M34.4 Prompt Metadata Capture.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -36,9 +36,10 @@ Current media milestone status:
 - M34.0 Generic Image + Architecture Drawing Roadmap DONE
 - M34.1 Generic Prompt Pack Structure DONE
 - M34.2 Generic Drawing Engine Skeleton DONE
-- M34.3 Media Dashboard Output Cards PLANNED
+- M34.3 Media Dashboard Output Cards Plan DONE
 - M34.4 Prompt Metadata Capture PLANNED
-- M34.5 Drawing Engine Pergola Adapter PLANNED
+- M34.5 Output Cards API Implementation PLANNED
+- M34.6 Dashboard Output Cards UI PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1474,13 +1475,39 @@ Goals:
 - Create reusable SVG primitive helpers without moving the pergola prototype.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 34.3: Media Dashboard Output Cards
+## Milestone 34.3: Media Dashboard Output Cards Plan
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Plan dashboard output cards for generated images, prompts, metadata, paths, and reference-board selection.
 - Keep dashboard behavior read-only unless explicitly changed.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.4: Prompt Metadata Capture
+
+Status: PLANNED
+
+Goals:
+- Plan safe prompt and output metadata capture.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.5: Output Cards API Implementation
+
+Status: PLANNED
+
+Goals:
+- Implement a read-only output cards API for allowlisted runtime folders.
+- Do not trigger generation or expose arbitrary filesystem browsing.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.6: Dashboard Output Cards UI
+
+Status: PLANNED
+
+Goals:
+- Implement read-only dashboard output cards.
+- Avoid destructive actions, generation buttons, and shell controls.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 35.0: Rigging Pipeline

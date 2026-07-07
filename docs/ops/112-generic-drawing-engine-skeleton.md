@@ -43,6 +43,8 @@ Default output directory:
 
 Generated SVG files should not be written under the repo by default.
 
+Generated demo SVGs are intended to be surfaced later through output cards.
+
 ## How To Run
 
 ### Run on PC-1

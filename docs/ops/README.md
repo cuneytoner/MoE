@@ -149,6 +149,11 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Generic image generation safety | [111-generic-image-generation-safety.md](111-generic-image-generation-safety.md) |
 | Generic drawing engine skeleton | [112-generic-drawing-engine-skeleton.md](112-generic-drawing-engine-skeleton.md) |
 | Drawing engine demo review template | [113-drawing-engine-demo-review-template.md](113-drawing-engine-demo-review-template.md) |
+| Media dashboard output cards plan | [114-media-dashboard-output-cards-plan.md](114-media-dashboard-output-cards-plan.md) |
+| Output card API contract | [115-output-card-api-contract.md](115-output-card-api-contract.md) |
+| Output card UI plan | [116-output-card-ui-plan.md](116-output-card-ui-plan.md) |
+| Output card source scanning policy | [117-output-card-source-scanning-policy.md](117-output-card-source-scanning-policy.md) |
+| Output card review template | [118-output-card-review-template.md](118-output-card-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -259,6 +264,11 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 103. [111 Generic Image Generation Safety](111-generic-image-generation-safety.md)
 104. [112 Generic Drawing Engine Skeleton](112-generic-drawing-engine-skeleton.md)
 105. [113 Drawing Engine Demo Review Template](113-drawing-engine-demo-review-template.md)
+106. [114 Media Dashboard Output Cards Plan](114-media-dashboard-output-cards-plan.md)
+107. [115 Output Card API Contract](115-output-card-api-contract.md)
+108. [116 Output Card UI Plan](116-output-card-ui-plan.md)
+109. [117 Output Card Source Scanning Policy](117-output-card-source-scanning-policy.md)
+110. [118 Output Card Review Template](118-output-card-review-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -303,3 +313,5 @@ For the generic image, architecture, and drawing roadmap, read 104 through 108.
 For generic prompt pack structure and safe prompt reuse, read 109 through 111.
 
 For the generic drawing engine demo skeleton, read 112 and 113.
+
+For media dashboard output cards planning, read 114 through 118.

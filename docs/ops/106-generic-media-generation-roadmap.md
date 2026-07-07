@@ -41,6 +41,8 @@ Each generated output should keep:
 - review notes
 - reference-board decision
 
+Output cards are the first step toward reference-board and output compare workflows.
+
 ## Safety
 
 - real generation remains operator-controlled
