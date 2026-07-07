@@ -2,6 +2,8 @@
 
 This note summarizes lessons from the improved pergola prompt run.
 
+The project-specific prompt pack is in [67-pergola-project-specific-prompt-pack.md](67-pergola-project-specific-prompt-pack.md) through [71-pergola-project-prompt-run-plan.md](71-pergola-project-prompt-run-plan.md).
+
 ## Project-Like Prompt Worked Best
 
 The project-like covered pergola prompt was the strongest direction.

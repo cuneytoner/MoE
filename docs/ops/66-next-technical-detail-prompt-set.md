@@ -4,6 +4,8 @@ This page defines next prompt candidates for technical/detail-focused generation
 
 It does not run generation.
 
+Project-specific technical details are expanded in [69-pergola-technical-detail-prompts.md](69-pergola-technical-detail-prompts.md).
+
 ## A. Beam-Post Close-Up
 
 ```text

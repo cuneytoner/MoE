@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M32.4 Improved Prompt Controlled Run Result Review.
-- Next planned: M32.5 Pergola Project-Specific Prompt Pack.
+- Latest completed: M32.5 Pergola Project-Specific Prompt Pack.
+- Next planned: M32.6 Technical Detail Image Run.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -17,8 +17,9 @@ Current media milestone status:
 - M32.2 Prompt Variant Result Review DONE
 - M32.3 Prompt Quality Improvement Plan DONE
 - M32.4 Improved Prompt Controlled Run Result Review DONE
-- M32.5 Pergola Project-Specific Prompt Pack PLANNED
+- M32.5 Pergola Project-Specific Prompt Pack DONE
 - M32.6 Technical Detail Image Run PLANNED
+- M32.7 Pergola Image Selection / Reference Board PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1283,7 +1284,7 @@ Goals:
 
 ## Milestone 32.5: Pergola Project-Specific Prompt Pack
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Build a project-specific pergola prompt pack after improved prompt review.
@@ -1299,7 +1300,16 @@ Goals:
 - Keep generation one variant at a time.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 32.7: Video Generation Service
+## Milestone 32.7: Pergola Image Selection / Reference Board
+
+Status: PLANNED
+
+Goals:
+- Review generated pergola images and select reference candidates.
+- Keep selected evidence as notes and external paths, not committed binaries.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 32.8: Video Generation Service
 
 Status: PLANNED
 

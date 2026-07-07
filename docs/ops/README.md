@@ -104,6 +104,11 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Improved prompt run result review | [64-improved-prompt-run-result-review.md](64-improved-prompt-run-result-review.md) |
 | Pergola prompt lessons learned | [65-pergola-prompt-lessons-learned.md](65-pergola-prompt-lessons-learned.md) |
 | Next technical detail prompt set | [66-next-technical-detail-prompt-set.md](66-next-technical-detail-prompt-set.md) |
+| Pergola project-specific prompt pack | [67-pergola-project-specific-prompt-pack.md](67-pergola-project-specific-prompt-pack.md) |
+| Pergola project overview prompts | [68-pergola-project-overview-prompts.md](68-pergola-project-overview-prompts.md) |
+| Pergola technical detail prompts | [69-pergola-technical-detail-prompts.md](69-pergola-technical-detail-prompts.md) |
+| Pergola prompt negative pack | [70-pergola-prompt-negative-pack.md](70-pergola-prompt-negative-pack.md) |
+| Pergola project prompt run plan | [71-pergola-project-prompt-run-plan.md](71-pergola-project-prompt-run-plan.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -169,6 +174,11 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 58. [64 Improved Prompt Run Result Review](64-improved-prompt-run-result-review.md)
 59. [65 Pergola Prompt Lessons Learned](65-pergola-prompt-lessons-learned.md)
 60. [66 Next Technical Detail Prompt Set](66-next-technical-detail-prompt-set.md)
+61. [67 Pergola Project-Specific Prompt Pack](67-pergola-project-specific-prompt-pack.md)
+62. [68 Pergola Project Overview Prompts](68-pergola-project-overview-prompts.md)
+63. [69 Pergola Technical Detail Prompts](69-pergola-technical-detail-prompts.md)
+64. [70 Pergola Prompt Negative Pack](70-pergola-prompt-negative-pack.md)
+65. [71 Pergola Project Prompt Run Plan](71-pergola-project-prompt-run-plan.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -189,3 +199,5 @@ For prompt variants or small batch planning, read 47 through 50 before preparing
 For dashboard output review, read 51 through 53 before relying on `latest_images` for evidence.
 
 For controlled prompt variant generation, read 54 through 57 before preparing image mode.
+
+For project-specific pergola prompt planning, read 67 through 71 before preparing the next controlled run.
