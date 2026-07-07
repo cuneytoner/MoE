@@ -17,6 +17,12 @@ This page lists common stop conditions and safe next steps.
 | Repeated failed generations | Stop the session and record blockers in [56-controlled-variant-evidence-template.md](56-controlled-variant-evidence-template.md). |
 | Operator is unsure what command will do | Stop and read [54-controlled-prompt-variant-generation.md](54-controlled-prompt-variant-generation.md) before continuing. |
 
+If the Git safety command shows many unrelated prompt files, verify that the grep pattern is extension-anchored:
+
+```bash
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
+```
+
 ## Safe Checks
 
 ### Run on PC-1

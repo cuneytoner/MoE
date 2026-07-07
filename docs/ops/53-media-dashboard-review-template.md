@@ -49,7 +49,7 @@ find /home/cuneyt/MoE/runtime/media/outputs/images \
 
 ```bash
 git status --short
-git ls-files | grep -Ei 'png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth' || true
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
 ```
 
 ## Review Notes

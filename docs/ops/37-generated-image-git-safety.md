@@ -19,10 +19,12 @@ Do not commit:
 cd ~/DiskD/Projects/MoE/codebase
 git status --short
 git diff --cached --stat
-git ls-files | grep -Ei 'png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth' || true
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
 ```
 
 Expected good sign: generated media/model extensions do not appear as tracked or staged repo files.
+
+Use [59-git-binary-safety-check.md](59-git-binary-safety-check.md) for details on why the check is extension-anchored.
 
 ## Unstage Generated Files
 

@@ -175,7 +175,7 @@ Expected good sign: image mode shuts down safely and the coding model is restore
 
 ```bash
 git status --short
-git ls-files | grep -Ei 'png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth' || true
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
 ```
 
 Expected good sign: generated media and model files do not appear as tracked or staged repo files.
@@ -200,3 +200,5 @@ Record:
 - Errors/blockers
 
 Use [56-controlled-variant-evidence-template.md](56-controlled-variant-evidence-template.md).
+
+After the first controlled variant run, record results in [58-prompt-variant-result-review.md](58-prompt-variant-result-review.md).

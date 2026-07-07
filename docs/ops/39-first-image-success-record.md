@@ -53,7 +53,7 @@ Before committing source changes, verify that only docs, scripts, configs, and s
 ```bash
 cd ~/DiskD/Projects/MoE/codebase
 git status --short
-git ls-files | grep -Ei 'png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth' || true
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
 ```
 
 Expected good sign: no generated image binaries or model files are tracked.

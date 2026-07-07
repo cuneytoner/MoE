@@ -53,3 +53,15 @@ Record:
 - Git safety result
 
 If anything is unclear, stop before starting another variant.
+
+## Git Binary Safety Check
+
+### Run on PC-1
+
+```bash
+cd ~/DiskD/Projects/MoE/codebase
+git status --short
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
+```
+
+Expected good sign: no generated images or model files are tracked by Git.

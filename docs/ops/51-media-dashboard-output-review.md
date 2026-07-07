@@ -115,7 +115,7 @@ Dashboard paths should not point inside:
 
 ```bash
 git status --short
-git ls-files | grep -Ei 'png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth' || true
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
 ```
 
 Expected good sign: generated images, model files, and checkpoints do not appear as tracked or staged repo files.

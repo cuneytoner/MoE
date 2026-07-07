@@ -27,7 +27,8 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M31.9 Media Dashboard Output Review DONE
 - M32.0 Controlled Prompt Variant Generation DONE
 - M32.1 Media Dashboard UI Output Cards PLANNED
-- M32.2 Prompt Variant Result Review PLANNED
+- M32.2 Prompt Variant Result Review DONE
+- M32.3 Prompt Quality Improvement Plan PLANNED
 
 ## Working Directory
 
@@ -1294,13 +1295,26 @@ Expected boundaries:
 
 Add prompt variant result review.
 
-Status: PLANNED
+Status: DONE
 
 Expected boundaries:
 
 - Review controlled prompt variant results after operator-run generation.
 - Keep review documentation and dashboard references read-only.
 - Do not add dashboard write actions, automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
+- Record the first controlled 3-variant result set and fix Git binary safety checks to be extension-anchored.
+
+## Milestone 32.3 Prompt Placeholder
+
+Add prompt quality improvement plan.
+
+Status: PLANNED
+
+Expected boundaries:
+
+- Plan prompt quality improvements from reviewed controlled variant results.
+- Keep improvement planning documentation-only until a separate guarded generation milestone.
+- Do not add automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
 
 ## Future Automation Placeholder
 

@@ -57,7 +57,7 @@ make media-dashboard-status
 
 ```bash
 git status --short
-git ls-files | grep -Ei 'png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth' || true
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
 ```
 
 Expected good sign: generated image binaries and model files do not appear as tracked or staged repo files.

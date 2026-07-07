@@ -2,7 +2,7 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Completed through M32.0 Controlled Prompt Variant Generation.
+- Latest completed: M32.2 Prompt Variant Result Review.
 - Next planned: M32.1 Media Dashboard UI Output Cards.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
@@ -14,7 +14,8 @@ Current media milestone status:
 - M31.9 Media Dashboard Output Review DONE
 - M32.0 Controlled Prompt Variant Generation DONE
 - M32.1 Media Dashboard UI Output Cards PLANNED
-- M32.2 Prompt Variant Result Review PLANNED
+- M32.2 Prompt Variant Result Review DONE
+- M32.3 Prompt Quality Improvement Plan PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1250,14 +1251,24 @@ Goals:
 
 ## Milestone 32.2: Prompt Variant Result Review
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Review controlled prompt variant results after operator-run generation.
 - Keep review documentation and dashboard references read-only.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+- Record the first controlled 3-variant result set and fix Git binary safety checks to be extension-anchored.
 
-## Milestone 32.3: Video Generation Service
+## Milestone 32.3: Prompt Quality Improvement Plan
+
+Status: PLANNED
+
+Goals:
+- Plan prompt quality improvements from reviewed controlled variant results.
+- Keep improvement planning documentation-only until a separate guarded generation milestone.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 32.4: Video Generation Service
 
 Status: PLANNED
 

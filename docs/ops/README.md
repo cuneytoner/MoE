@@ -95,6 +95,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Prompt variant run template | [55-prompt-variant-run-template.md](55-prompt-variant-run-template.md) |
 | Controlled variant evidence template | [56-controlled-variant-evidence-template.md](56-controlled-variant-evidence-template.md) |
 | Prompt variant stop conditions | [57-prompt-variant-stop-conditions.md](57-prompt-variant-stop-conditions.md) |
+| Prompt variant result review | [58-prompt-variant-result-review.md](58-prompt-variant-result-review.md) |
+| Git binary safety check | [59-git-binary-safety-check.md](59-git-binary-safety-check.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -151,6 +153,8 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 49. [55 Prompt Variant Run Template](55-prompt-variant-run-template.md)
 50. [56 Controlled Variant Evidence Template](56-controlled-variant-evidence-template.md)
 51. [57 Prompt Variant Stop Conditions](57-prompt-variant-stop-conditions.md)
+52. [58 Prompt Variant Result Review](58-prompt-variant-result-review.md)
+53. [59 Git Binary Safety Check](59-git-binary-safety-check.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 

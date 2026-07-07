@@ -218,7 +218,7 @@ Check command:
 
 ```bash
 git status --short
-git ls-files | grep -Ei 'png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth' || true
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
 ```
 
 Safe next step: Stop before committing. Use [37-generated-image-git-safety.md](37-generated-image-git-safety.md) to inspect and unstage if needed.

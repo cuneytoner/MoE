@@ -329,6 +329,8 @@ required_paths=(
   "docs/ops/55-prompt-variant-run-template.md"
   "docs/ops/56-controlled-variant-evidence-template.md"
   "docs/ops/57-prompt-variant-stop-conditions.md"
+  "docs/ops/58-prompt-variant-result-review.md"
+  "docs/ops/59-git-binary-safety-check.md"
   "scripts/image/controlled-variant-plan.sh"
   "scripts/runtime-prepare.sh"
   "scripts/runtime/pc1-sleep-prepare.sh"

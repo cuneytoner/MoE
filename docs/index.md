@@ -58,6 +58,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Prompt Variant Run Template](ops/55-prompt-variant-run-template.md)
 - [Controlled Variant Evidence Template](ops/56-controlled-variant-evidence-template.md)
 - [Prompt Variant Stop Conditions](ops/57-prompt-variant-stop-conditions.md)
+- [Prompt Variant Result Review](ops/58-prompt-variant-result-review.md)
+- [Git Binary Safety Check](ops/59-git-binary-safety-check.md)
 - [Restore New Machine](ops/06-restore-new-machine.md)
 - [Troubleshooting](ops/07-troubleshooting.md)
 - [Command Cheatsheet](ops/08-command-cheatsheet.md)

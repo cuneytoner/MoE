@@ -76,7 +76,7 @@ Cleanup should not affect Git because generated outputs are outside the repo. St
 ```bash
 cd ~/DiskD/Projects/MoE/codebase
 git status --short
-git ls-files | grep -Ei 'png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth' || true
+git ls-files | grep -Ei '\.(png|jpg|jpeg|webp|safetensors|gguf|ckpt|pt|pth)$' || true
 ```
 
 Expected good sign: Git does not show generated media or model files.
