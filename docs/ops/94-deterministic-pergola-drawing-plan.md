@@ -8,6 +8,8 @@ M33.5 creates the first SVG drawing tool skeleton.
 
 M33.6 creates separate side elevation and top plan SVG outputs.
 
+This plan is now considered the first case study for the future generic drawing engine. See [107-generic-drawing-engine-roadmap.md](107-generic-drawing-engine-roadmap.md).
+
 ## Why Deterministic Drawing Is Needed
 
 Flux image generation is useful for visual intent, but it is not reliable for:

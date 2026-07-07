@@ -2,9 +2,11 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M33.6 Side Elevation + Top Plan SVG.
-- Next planned: M33.7 Beam-post + Roof Sheet SVG Details.
+- Latest completed: M34.0 Generic Image + Architecture Drawing Roadmap.
+- Next planned: M34.1 Generic Prompt Pack Structure.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
+
+Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 
 Current media milestone status:
 - M31.5 Generated Image Output Handling / Git Safety DONE
@@ -31,6 +33,10 @@ Current media milestone status:
 - M33.6 Side Elevation + Top Plan SVG DONE
 - M33.7 Beam-post + Roof Sheet SVG Details PLANNED
 - M33.8 PDF Export Plan PLANNED
+- M34.0 Generic Image + Architecture Drawing Roadmap DONE
+- M34.1 Generic Prompt Pack Structure PLANNED
+- M34.2 Generic Drawing Engine Skeleton PLANNED
+- M34.3 Media Dashboard Output Cards PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1439,7 +1445,43 @@ Goals:
 - Export `.blend`, `.glb`, and `.obj`.
 - Support technical structures such as pergola.
 
-## Milestone 34.0: Rigging Pipeline
+## Milestone 34.0: Generic Image + Architecture Drawing Roadmap
+
+Status: DONE
+
+Goals:
+- Reframe pergola as the first media/drawing case study.
+- Define generic image, architecture concept, deterministic drawing, dashboard, and reference-board tracks.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.1: Generic Prompt Pack Structure
+
+Status: PLANNED
+
+Goals:
+- Define reusable generic prompt pack folders and templates.
+- Support architecture, product, outdoor, technical reference, and marketing visual categories.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.2: Generic Drawing Engine Skeleton
+
+Status: PLANNED
+
+Goals:
+- Plan or create the first generic drawing-engine structure.
+- Extract reusable SVG primitives from the pergola prototype when safe.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.3: Media Dashboard Output Cards
+
+Status: PLANNED
+
+Goals:
+- Plan dashboard output cards for generated images, prompts, metadata, paths, and reference-board selection.
+- Keep dashboard behavior read-only unless explicitly changed.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 35.0: Rigging Pipeline
 
 Status: PLANNED
 
@@ -1447,7 +1489,7 @@ Goals:
 - Add basic Blender rig and armature pipeline.
 - Start with mechanical and object rigs before character rigs.
 
-## Milestone 35.0: Animation Pipeline
+## Milestone 36.0: Animation Pipeline
 
 Status: PLANNED
 
@@ -1456,7 +1498,7 @@ Goals:
 - Support Blender camera and object animation.
 - Render preview outputs.
 
-## Milestone 36.0: Media Workflow Orchestrator
+## Milestone 37.0: Media Workflow Orchestrator
 
 Status: PLANNED
 

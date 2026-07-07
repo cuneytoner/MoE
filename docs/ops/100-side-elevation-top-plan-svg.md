@@ -2,6 +2,8 @@
 
 M33.6 extends the deterministic pergola SVG tool with separate side elevation and top plan drawings.
 
+These outputs are pergola case-study outputs and should inform the generic deterministic drawing engine.
+
 ## What This Milestone Adds
 
 - `side_elevation.svg`

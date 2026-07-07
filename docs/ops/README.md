@@ -139,6 +139,11 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Pergola SVG output review template | [99-pergola-svg-output-review-template.md](99-pergola-svg-output-review-template.md) |
 | Side elevation + top plan SVG | [100-side-elevation-top-plan-svg.md](100-side-elevation-top-plan-svg.md) |
 | Side/top SVG review template | [101-side-top-svg-review-template.md](101-side-top-svg-review-template.md) |
+| Generic image + architecture drawing roadmap | [104-generic-image-architecture-drawing-roadmap.md](104-generic-image-architecture-drawing-roadmap.md) |
+| Pergola as case study | [105-pergola-as-case-study.md](105-pergola-as-case-study.md) |
+| Generic media generation roadmap | [106-generic-media-generation-roadmap.md](106-generic-media-generation-roadmap.md) |
+| Generic drawing engine roadmap | [107-generic-drawing-engine-roadmap.md](107-generic-drawing-engine-roadmap.md) |
+| Roadmap reset decision log | [108-roadmap-reset-decision-log.md](108-roadmap-reset-decision-log.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -239,6 +244,11 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 93. [99 Pergola SVG Output Review Template](99-pergola-svg-output-review-template.md)
 94. [100 Side Elevation + Top Plan SVG](100-side-elevation-top-plan-svg.md)
 95. [101 Side/Top SVG Review Template](101-side-top-svg-review-template.md)
+96. [104 Generic Image + Architecture Drawing Roadmap](104-generic-image-architecture-drawing-roadmap.md)
+97. [105 Pergola As Case Study](105-pergola-as-case-study.md)
+98. [106 Generic Media Generation Roadmap](106-generic-media-generation-roadmap.md)
+99. [107 Generic Drawing Engine Roadmap](107-generic-drawing-engine-roadmap.md)
+100. [108 Roadmap Reset Decision Log](108-roadmap-reset-decision-log.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -277,3 +287,5 @@ For deterministic pergola drawing planning, read 93 through 97 before creating a
 For the first SVG skeleton tool and output review, read 98 and 99.
 
 For side elevation and top plan SVG outputs, read 100 and 101.
+
+For the generic image, architecture, and drawing roadmap, read 104 through 108.
