@@ -4,6 +4,8 @@ This review records the simplified technical drawing controlled run results.
 
 The run was performed manually by the operator. This document records outputs and lessons without running generation or committing generated image binaries.
 
+Geometry-only CAD-style run results are reviewed in [93-geometry-only-cad-run-review.md](93-geometry-only-cad-run-review.md).
+
 ## What This Review Is For
 
 - Record the simplified technical drawing run outputs.

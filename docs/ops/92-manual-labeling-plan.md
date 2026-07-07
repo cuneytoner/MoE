@@ -2,6 +2,8 @@
 
 Labels should be added manually after image generation.
 
+Manual labeling may still be useful for image references, but real measured labels should come from deterministic SVG drawing.
+
 ## Why Manual Labels Are Better
 
 - AI-generated text is often garbled.

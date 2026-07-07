@@ -2,6 +2,8 @@
 
 This note summarizes the prompt strategy after the simplified technical drawing run.
 
+M33.3 confirmed that Flux is not reliable enough for real technical drawings. Use the deterministic drawing plan in [94-deterministic-pergola-drawing-plan.md](94-deterministic-pergola-drawing-plan.md).
+
 ## Lessons
 
 - Flux often ignores exact technical drawing intent.

@@ -38,8 +38,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M33.0 Technical Drawing Controlled Run DONE
 - M33.1 Technical Drawing Controlled Run Result Review DONE
 - M33.2 Simplified Technical Drawing Controlled Run Result Review DONE
-- M33.3 Geometry-only CAD-style Drawing Run PLANNED
-- M33.4 Manual Labeling / Usta Sheet Plan PLANNED
+- M33.3 Geometry-only CAD-style Drawing Run DONE
+- M33.4 Deterministic Pergola Drawing Plan DONE
+- M33.5 SVG Drawing Tool Skeleton PLANNED
+- M33.6 Side Elevation + Top Plan SVG PLANNED
 
 ## Working Directory
 

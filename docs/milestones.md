@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M33.2 Simplified Technical Drawing Controlled Run Result Review.
-- Next planned: M33.3 Geometry-only CAD-style Drawing Run.
+- Latest completed: M33.4 Deterministic Pergola Drawing Plan.
+- Next planned: M33.5 SVG Drawing Tool Skeleton.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -25,8 +25,10 @@ Current media milestone status:
 - M33.0 Technical Drawing Controlled Run DONE
 - M33.1 Technical Drawing Controlled Run Result Review DONE
 - M33.2 Simplified Technical Drawing Controlled Run Result Review DONE
-- M33.3 Geometry-only CAD-style Drawing Run PLANNED
-- M33.4 Manual Labeling / Usta Sheet Plan PLANNED
+- M33.3 Geometry-only CAD-style Drawing Run DONE
+- M33.4 Deterministic Pergola Drawing Plan DONE
+- M33.5 SVG Drawing Tool Skeleton PLANNED
+- M33.6 Side Elevation + Top Plan SVG PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1374,23 +1376,41 @@ Goals:
 
 ## Milestone 33.3: Geometry-only CAD-style Drawing Run
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Run geometry-only CAD-style drawing prompts through the guarded operator-controlled path.
 - Avoid labels, dimensions, perspective, 3D, shading, and texture during generation.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 33.4: Manual Labeling / Usta Sheet Plan
+## Milestone 33.4: Deterministic Pergola Drawing Plan
+
+Status: DONE
+
+Goals:
+- Review geometry-only CAD-style image results.
+- Decide to move measured technical drawings to deterministic code-generated SVG/DXF-style geometry.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 33.5: SVG Drawing Tool Skeleton
 
 Status: PLANNED
 
 Goals:
-- Plan manual labels and usta-sheet assembly after geometry-only outputs.
-- Keep generated geometry as visual support and add verified labels manually.
+- Create the first source-only SVG drawing generator skeleton.
+- Default generated drawing outputs to runtime.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 33.5: 3D Model Generation Pipeline
+## Milestone 33.6: Side Elevation + Top Plan SVG
+
+Status: PLANNED
+
+Goals:
+- Generate deterministic side elevation and top plan SVG drawings.
+- Use millimeter-based geometry and reviewed labels.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 33.7: 3D Model Generation Pipeline
 
 Status: PLANNED
 

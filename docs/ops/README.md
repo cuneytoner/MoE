@@ -130,6 +130,11 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | CAD-like prompt lessons | [90-cad-like-prompt-lessons.md](90-cad-like-prompt-lessons.md) |
 | Next CAD-like geometry-only prompts | [91-next-cad-like-geometry-only-prompts.md](91-next-cad-like-geometry-only-prompts.md) |
 | Manual labeling plan | [92-manual-labeling-plan.md](92-manual-labeling-plan.md) |
+| Geometry-only CAD run review | [93-geometry-only-cad-run-review.md](93-geometry-only-cad-run-review.md) |
+| Deterministic pergola drawing plan | [94-deterministic-pergola-drawing-plan.md](94-deterministic-pergola-drawing-plan.md) |
+| Pergola drawing geometry spec | [95-pergola-drawing-geometry-spec.md](95-pergola-drawing-geometry-spec.md) |
+| SVG drawing safety and Git policy | [96-svg-drawing-safety-and-git-policy.md](96-svg-drawing-safety-and-git-policy.md) |
+| Pergola drawing implementation roadmap | [97-pergola-drawing-implementation-roadmap.md](97-pergola-drawing-implementation-roadmap.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -221,6 +226,11 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 84. [90 CAD-like Prompt Lessons](90-cad-like-prompt-lessons.md)
 85. [91 Next CAD-like Geometry-only Prompts](91-next-cad-like-geometry-only-prompts.md)
 86. [92 Manual Labeling Plan](92-manual-labeling-plan.md)
+87. [93 Geometry-only CAD Run Review](93-geometry-only-cad-run-review.md)
+88. [94 Deterministic Pergola Drawing Plan](94-deterministic-pergola-drawing-plan.md)
+89. [95 Pergola Drawing Geometry Spec](95-pergola-drawing-geometry-spec.md)
+90. [96 SVG Drawing Safety And Git Policy](96-svg-drawing-safety-and-git-policy.md)
+91. [97 Pergola Drawing Implementation Roadmap](97-pergola-drawing-implementation-roadmap.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -253,3 +263,5 @@ For real pergola technical drawing prompts and safety notes, read 79 through 84 
 After technical drawing runs, read 85 through 88 before selecting outputs or preparing simplified prompts.
 
 After simplified drawing runs, read 89 through 92 before preparing geometry-only CAD-style prompts or manual labels.
+
+For deterministic pergola drawing planning, read 93 through 97 before creating any SVG/PDF/DXF files.

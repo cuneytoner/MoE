@@ -4,6 +4,8 @@ This page defines the next generation prompts for more CAD-like diagrams.
 
 They do not run generation.
 
+After testing geometry-only prompts, deterministic SVG drawing is now the preferred direction.
+
 ## G1 Side Elevation Geometry Only
 
 ```text
