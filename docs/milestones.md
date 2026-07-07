@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M32.2 Prompt Variant Result Review.
-- Next planned: M32.1 Media Dashboard UI Output Cards.
+- Latest completed: M32.3 Prompt Quality Improvement Plan.
+- Next planned: M32.4 Improved Prompt Controlled Run.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -15,7 +15,9 @@ Current media milestone status:
 - M32.0 Controlled Prompt Variant Generation DONE
 - M32.1 Media Dashboard UI Output Cards PLANNED
 - M32.2 Prompt Variant Result Review DONE
-- M32.3 Prompt Quality Improvement Plan PLANNED
+- M32.3 Prompt Quality Improvement Plan DONE
+- M32.4 Improved Prompt Controlled Run PLANNED
+- M32.5 Pergola Project-Specific Prompt Pack PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1261,14 +1263,33 @@ Goals:
 
 ## Milestone 32.3: Prompt Quality Improvement Plan
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Plan prompt quality improvements from reviewed controlled variant results.
 - Keep improvement planning documentation-only until a separate guarded generation milestone.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+- Add next pergola prompt set, negative prompt notes, and prompt quality review template.
 
-## Milestone 32.4: Video Generation Service
+## Milestone 32.4: Improved Prompt Controlled Run
+
+Status: PLANNED
+
+Goals:
+- Run the improved prompt set through the controlled, operator-approved generation path.
+- Keep generation guarded and one variant at a time.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 32.5: Pergola Project-Specific Prompt Pack
+
+Status: PLANNED
+
+Goals:
+- Build a project-specific pergola prompt pack after improved prompt review.
+- Keep prompt pack documentation-only until a separate guarded generation milestone.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 32.6: Video Generation Service
 
 Status: PLANNED
 

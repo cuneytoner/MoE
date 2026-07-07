@@ -105,6 +105,8 @@ Use [49-image-comparison-notes-template.md](49-image-comparison-notes-template.m
 
 For future variants, dashboard `latest_images` can help locate the newest output, but comparison notes should still record the path and prompt manually.
 
+After the first variant run, prompt improvements are tracked in [60-prompt-quality-improvement-plan.md](60-prompt-quality-improvement-plan.md), [61-next-pergola-prompt-set.md](61-next-pergola-prompt-set.md), [62-negative-prompt-notes.md](62-negative-prompt-notes.md), and [63-prompt-quality-review-template.md](63-prompt-quality-review-template.md).
+
 ## Go / No-Go Before Batch Generation
 
 Go only if:

@@ -151,3 +151,10 @@ Expected good sign: no tracked generated images or model files are listed.
 - Compare `evening warm light` against the base prompt.
 - Try a construction-focused prompt with clearer material and joinery details.
 - Keep `512x512`, `4` steps, and one variant at a time until review habits are stable.
+
+For the next improvement round, use:
+
+- [60-prompt-quality-improvement-plan.md](60-prompt-quality-improvement-plan.md)
+- [61-next-pergola-prompt-set.md](61-next-pergola-prompt-set.md)
+- [62-negative-prompt-notes.md](62-negative-prompt-notes.md)
+- [63-prompt-quality-review-template.md](63-prompt-quality-review-template.md)

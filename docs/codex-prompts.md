@@ -28,7 +28,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M32.0 Controlled Prompt Variant Generation DONE
 - M32.1 Media Dashboard UI Output Cards PLANNED
 - M32.2 Prompt Variant Result Review DONE
-- M32.3 Prompt Quality Improvement Plan PLANNED
+- M32.3 Prompt Quality Improvement Plan DONE
+- M32.4 Improved Prompt Controlled Run PLANNED
+- M32.5 Pergola Project-Specific Prompt Pack PLANNED
 
 ## Working Directory
 
@@ -1308,12 +1310,37 @@ Expected boundaries:
 
 Add prompt quality improvement plan.
 
-Status: PLANNED
+Status: DONE
 
 Expected boundaries:
 
 - Plan prompt quality improvements from reviewed controlled variant results.
 - Keep improvement planning documentation-only until a separate guarded generation milestone.
+- Do not add automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
+- Add next pergola prompt set, negative prompt notes, and prompt quality review template.
+
+## Milestone 32.4 Prompt Placeholder
+
+Add improved prompt controlled run.
+
+Status: PLANNED
+
+Expected boundaries:
+
+- Run the improved prompt set through the controlled, operator-approved generation path.
+- Keep generation guarded and one variant at a time.
+- Do not add automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
+
+## Milestone 32.5 Prompt Placeholder
+
+Add pergola project-specific prompt pack.
+
+Status: PLANNED
+
+Expected boundaries:
+
+- Build a project-specific pergola prompt pack after improved prompt review.
+- Keep prompt pack documentation-only until a separate guarded generation milestone.
 - Do not add automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
 
 ## Future Automation Placeholder

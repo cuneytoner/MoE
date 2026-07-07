@@ -149,3 +149,15 @@ For first prompt variants:
 - Later, change seed for exploration after prompt effects are understood.
 
 For planned prompt variants and small batch comparisons, use [47-prompt-variants-plan.md](47-prompt-variants-plan.md), [48-small-batch-image-safety.md](48-small-batch-image-safety.md), [49-image-comparison-notes-template.md](49-image-comparison-notes-template.md), and [50-batch-output-naming-policy.md](50-batch-output-naming-policy.md).
+
+## Quality Tuning Order
+
+Use this order when improving output quality:
+
+1. Prompt wording
+2. Negative prompt support, if workflow supports it
+3. Seed
+4. Steps
+5. Size
+
+Do not change all variables at once.
