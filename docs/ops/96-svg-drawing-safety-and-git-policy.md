@@ -2,6 +2,8 @@
 
 This policy covers deterministic pergola drawing outputs.
 
+Generated SVGs are written to runtime by default, not repo.
+
 ## Deterministic SVG
 
 SVG generated from code is deterministic.

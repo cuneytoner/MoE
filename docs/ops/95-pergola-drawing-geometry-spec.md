@@ -4,6 +4,8 @@ This spec defines the first deterministic geometry assumptions for pergola drawi
 
 It does not create drawing files yet.
 
+The first implementation uses this geometry spec in `tools/pergola-drawings/generate_pergola_svg.py`.
+
 ## Coordinate / Drawing Assumptions
 
 - use millimeters internally

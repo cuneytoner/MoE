@@ -135,6 +135,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Pergola drawing geometry spec | [95-pergola-drawing-geometry-spec.md](95-pergola-drawing-geometry-spec.md) |
 | SVG drawing safety and Git policy | [96-svg-drawing-safety-and-git-policy.md](96-svg-drawing-safety-and-git-policy.md) |
 | Pergola drawing implementation roadmap | [97-pergola-drawing-implementation-roadmap.md](97-pergola-drawing-implementation-roadmap.md) |
+| SVG drawing tool skeleton | [98-svg-drawing-tool-skeleton.md](98-svg-drawing-tool-skeleton.md) |
+| Pergola SVG output review template | [99-pergola-svg-output-review-template.md](99-pergola-svg-output-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -231,6 +233,8 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 89. [95 Pergola Drawing Geometry Spec](95-pergola-drawing-geometry-spec.md)
 90. [96 SVG Drawing Safety And Git Policy](96-svg-drawing-safety-and-git-policy.md)
 91. [97 Pergola Drawing Implementation Roadmap](97-pergola-drawing-implementation-roadmap.md)
+92. [98 SVG Drawing Tool Skeleton](98-svg-drawing-tool-skeleton.md)
+93. [99 Pergola SVG Output Review Template](99-pergola-svg-output-review-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -265,3 +269,5 @@ After technical drawing runs, read 85 through 88 before selecting outputs or pre
 After simplified drawing runs, read 89 through 92 before preparing geometry-only CAD-style prompts or manual labels.
 
 For deterministic pergola drawing planning, read 93 through 97 before creating any SVG/PDF/DXF files.
+
+For the first SVG skeleton tool and output review, read 98 and 99.

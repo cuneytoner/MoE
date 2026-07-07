@@ -4,6 +4,8 @@ This plan documents the decision to move real pergola technical drawings to dete
 
 It does not create drawing files yet.
 
+M33.5 creates the first SVG drawing tool skeleton.
+
 ## Why Deterministic Drawing Is Needed
 
 Flux image generation is useful for visual intent, but it is not reliable for:

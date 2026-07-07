@@ -6,6 +6,8 @@ It does not create drawing files yet.
 
 ## M33.5 SVG Drawing Tool Skeleton
 
+Status: DONE
+
 - Create the source folder `tools/pergola-drawings`.
 - Add the first Python SVG generator script.
 - Default output to `/home/cuneyt/MoE/runtime/pergola/drawings`.
@@ -13,12 +15,16 @@ It does not create drawing files yet.
 
 ## M33.6 Side Elevation + Top Plan SVG
 
+Status: PLANNED
+
 - Generate `side_elevation.svg`.
 - Generate `top_plan.svg`.
 - Use millimeter-based geometry.
 - Add deterministic labels and dimension lines.
 
 ## M33.7 Beam-post + Roof Sheet SVG Details
+
+Status: PLANNED
 
 - Generate `beam_post_detail.svg`.
 - Generate `roof_sheet_layout.svg`.

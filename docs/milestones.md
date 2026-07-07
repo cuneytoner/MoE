@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M33.4 Deterministic Pergola Drawing Plan.
-- Next planned: M33.5 SVG Drawing Tool Skeleton.
+- Latest completed: M33.5 SVG Drawing Tool Skeleton.
+- Next planned: M33.6 Side Elevation + Top Plan SVG.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -27,8 +27,9 @@ Current media milestone status:
 - M33.2 Simplified Technical Drawing Controlled Run Result Review DONE
 - M33.3 Geometry-only CAD-style Drawing Run DONE
 - M33.4 Deterministic Pergola Drawing Plan DONE
-- M33.5 SVG Drawing Tool Skeleton PLANNED
+- M33.5 SVG Drawing Tool Skeleton DONE
 - M33.6 Side Elevation + Top Plan SVG PLANNED
+- M33.7 Beam-post + Roof Sheet SVG Details PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1394,7 +1395,7 @@ Goals:
 
 ## Milestone 33.5: SVG Drawing Tool Skeleton
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Create the first source-only SVG drawing generator skeleton.
@@ -1410,7 +1411,16 @@ Goals:
 - Use millimeter-based geometry and reviewed labels.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 33.7: 3D Model Generation Pipeline
+## Milestone 33.7: Beam-post + Roof Sheet SVG Details
+
+Status: PLANNED
+
+Goals:
+- Generate deterministic beam-post and roof sheet SVG detail drawings.
+- Keep structural details marked as placeholders pending manual review.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 33.8: 3D Model Generation Pipeline
 
 Status: PLANNED
 
