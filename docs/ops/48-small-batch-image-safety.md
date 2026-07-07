@@ -4,6 +4,8 @@ A batch means more than one image request.
 
 Small controlled batches can be useful, but they can also create unexpected GPU load, output clutter, and Git risk. Start small and stop early when anything looks wrong.
 
+Before any controlled variant run, review [57-prompt-variant-stop-conditions.md](57-prompt-variant-stop-conditions.md).
+
 ## Batch Size
 
 Start with 3 to 5 images only.

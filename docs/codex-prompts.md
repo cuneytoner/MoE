@@ -25,8 +25,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M31.7 Gateway Real Image Run Drill DONE
 - M31.8 Prompt Variants / Batch Image Plan DONE
 - M31.9 Media Dashboard Output Review DONE
-- M32.0 Controlled Prompt Variant Generation PLANNED
+- M32.0 Controlled Prompt Variant Generation DONE
 - M32.1 Media Dashboard UI Output Cards PLANNED
+- M32.2 Prompt Variant Result Review PLANNED
 
 ## Working Directory
 
@@ -1268,13 +1269,14 @@ Expected boundaries:
 
 Add controlled prompt variant generation.
 
-Status: PLANNED
+Status: DONE
 
 Expected boundaries:
 
 - Implement controlled prompt variant generation only after M31.8 planning and M31.9 dashboard review.
 - Keep generation explicitly operator-approved and guarded.
 - Do not add uncontrolled batch execution, Gateway shell execution, Docker control, model switching, or generated media commits.
+- Add a dry-run helper plan, run templates, session evidence template, and stop conditions.
 
 ## Milestone 32.1 Prompt Placeholder
 
@@ -1286,6 +1288,18 @@ Expected boundaries:
 
 - Plan dashboard UI output cards for generated media review.
 - Keep dashboard output cards read-only.
+- Do not add dashboard write actions, automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
+
+## Milestone 32.2 Prompt Placeholder
+
+Add prompt variant result review.
+
+Status: PLANNED
+
+Expected boundaries:
+
+- Review controlled prompt variant results after operator-run generation.
+- Keep review documentation and dashboard references read-only.
 - Do not add dashboard write actions, automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
 
 ## Future Automation Placeholder

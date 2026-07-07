@@ -4,6 +4,8 @@ This guide explains how to inspect generated image outputs through the media das
 
 It covers both the direct ComfyUI first-image path and the Gateway/media image path.
 
+After controlled variant generation, use dashboard `latest_images` to confirm the newest outputs.
+
 ## What This Guide Is For
 
 - Confirm generated images are visible through dashboard status.

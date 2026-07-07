@@ -242,6 +242,9 @@ image-readiness:
 image-dry-run:
 > @./scripts/image/image-dry-run.sh
 
+image-controlled-variant-plan:
+> @./scripts/image/controlled-variant-plan.sh
+
 image-mode-prepare:
 > @./scripts/image/image-mode-prepare.sh
 

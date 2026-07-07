@@ -4,6 +4,8 @@ This guide explains how to plan prompt variants before generating multiple image
 
 It prepares small, controlled future tests without enabling uncontrolled generation.
 
+For the operator-controlled execution guide, use [54-controlled-prompt-variant-generation.md](54-controlled-prompt-variant-generation.md).
+
 ## What This Guide Is For
 
 - Plan prompt variants before running image generation.
