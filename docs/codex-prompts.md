@@ -35,7 +35,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M32.7 Pergola Image Selection / Reference Board DONE
 - M32.8 Real Pergola Technical Drawing Prompt Pack DONE
 - M32.9 Pergola Usta Package Plan PLANNED
-- M33.0 Technical Drawing Controlled Run PLANNED
+- M33.0 Technical Drawing Controlled Run DONE
+- M33.1 Technical Drawing Controlled Run Result Review DONE
+- M33.2 Simplified Technical Drawing Prompt Pack PLANNED
+- M33.3 Usta Package Assembly PLANNED
 
 ## Working Directory
 

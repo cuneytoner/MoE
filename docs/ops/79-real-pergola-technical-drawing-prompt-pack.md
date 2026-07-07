@@ -4,6 +4,8 @@ This prompt pack prepares technical drawing-style prompts for the real pergola p
 
 AI-generated drawings are visual communication and planning support only. They are not engineering drawings, static calculations, or validated construction plans.
 
+The first technical drawing run was reviewed in [85-technical-drawing-run-result-review.md](85-technical-drawing-run-result-review.md) and showed that simpler single-topic 2D prompts are needed.
+
 ## What This Prompt Pack Is For
 
 - Prepare measured carpenter-style drawing prompts.

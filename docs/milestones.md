@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M32.8 Real Pergola Technical Drawing Prompt Pack.
-- Next planned: M32.9 Pergola Usta Package Plan.
+- Latest completed: M33.1 Technical Drawing Controlled Run Result Review.
+- Next planned: M33.2 Simplified Technical Drawing Prompt Pack.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -22,7 +22,10 @@ Current media milestone status:
 - M32.7 Pergola Image Selection / Reference Board DONE
 - M32.8 Real Pergola Technical Drawing Prompt Pack DONE
 - M32.9 Pergola Usta Package Plan PLANNED
-- M33.0 Technical Drawing Controlled Run PLANNED
+- M33.0 Technical Drawing Controlled Run DONE
+- M33.1 Technical Drawing Controlled Run Result Review DONE
+- M33.2 Simplified Technical Drawing Prompt Pack PLANNED
+- M33.3 Usta Package Assembly PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1342,14 +1345,41 @@ Goals:
 
 ## Milestone 33.0: Technical Drawing Controlled Run
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Run selected technical drawing prompts through the guarded operator-controlled path.
 - Review drawing-like outputs as visual communication only.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 33.1: 3D Model Generation Pipeline
+## Milestone 33.1: Technical Drawing Controlled Run Result Review
+
+Status: DONE
+
+Goals:
+- Review the manually executed first technical drawing controlled run.
+- Record drawing-like outputs, limitations, and prompt lessons.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 33.2: Simplified Technical Drawing Prompt Pack
+
+Status: PLANNED
+
+Goals:
+- Prepare simplified single-topic 2D technical drawing prompts.
+- Reduce label and dimension hallucination risk.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 33.3: Usta Package Assembly
+
+Status: PLANNED
+
+Goals:
+- Assemble selected visual references, measurements, material notes, and safety warnings for usta discussion.
+- Keep AI-generated media as visual intent only.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 33.4: 3D Model Generation Pipeline
 
 Status: PLANNED
 

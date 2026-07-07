@@ -4,6 +4,8 @@ These prompts target drawing-like connection and component details.
 
 They do not run generation.
 
+Connection prompts need simplified schematic framing. Review [85-technical-drawing-run-result-review.md](85-technical-drawing-run-result-review.md) through [87-next-simplified-technical-drawing-prompts.md](87-next-simplified-technical-drawing-prompts.md).
+
 ## C1 Beam-Post Connection
 
 ```text

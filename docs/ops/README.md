@@ -122,6 +122,10 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Pergola fastener and drilling prompt pack | [82-pergola-fastener-and-drilling-prompt-pack.md](82-pergola-fastener-and-drilling-prompt-pack.md) |
 | Pergola technical drawing review template | [83-pergola-technical-drawing-review-template.md](83-pergola-technical-drawing-review-template.md) |
 | Technical drawing safety notes | [84-technical-drawing-safety-notes.md](84-technical-drawing-safety-notes.md) |
+| Technical drawing run result review | [85-technical-drawing-run-result-review.md](85-technical-drawing-run-result-review.md) |
+| Technical drawing prompt lessons | [86-technical-drawing-prompt-lessons.md](86-technical-drawing-prompt-lessons.md) |
+| Next simplified technical drawing prompts | [87-next-simplified-technical-drawing-prompts.md](87-next-simplified-technical-drawing-prompts.md) |
+| Technical drawing selection notes | [88-technical-drawing-selection-notes.md](88-technical-drawing-selection-notes.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -205,6 +209,10 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 76. [82 Pergola Fastener And Drilling Prompt Pack](82-pergola-fastener-and-drilling-prompt-pack.md)
 77. [83 Pergola Technical Drawing Review Template](83-pergola-technical-drawing-review-template.md)
 78. [84 Technical Drawing Safety Notes](84-technical-drawing-safety-notes.md)
+79. [85 Technical Drawing Run Result Review](85-technical-drawing-run-result-review.md)
+80. [86 Technical Drawing Prompt Lessons](86-technical-drawing-prompt-lessons.md)
+81. [87 Next Simplified Technical Drawing Prompts](87-next-simplified-technical-drawing-prompts.md)
+82. [88 Technical Drawing Selection Notes](88-technical-drawing-selection-notes.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -233,3 +241,5 @@ After project-specific pergola image runs, read 72 through 74 before selecting r
 For selected pergola visual references and usta briefing notes, read 75 through 78.
 
 For real pergola technical drawing prompts and safety notes, read 79 through 84 before preparing a controlled drawing run.
+
+After technical drawing runs, read 85 through 88 before selecting outputs or preparing simplified prompts.

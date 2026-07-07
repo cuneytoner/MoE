@@ -4,6 +4,8 @@ These prompts target measured drawing-like views for the real pergola project.
 
 They do not run generation.
 
+Combined sheets are difficult at `512x512`. Prefer simplified single-view prompts from [87-next-simplified-technical-drawing-prompts.md](87-next-simplified-technical-drawing-prompts.md).
+
 ## V1 Front Elevation
 
 ```text

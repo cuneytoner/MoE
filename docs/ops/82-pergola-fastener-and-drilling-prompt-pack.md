@@ -4,6 +4,8 @@ These prompts target fastener and drilling layout references.
 
 They do not run generation.
 
+Roof screw and fastener prompts need simplified 2D schematic framing.
+
 AI-generated fastener layouts are visual communication only. Real screw, bolt, washer, and anchor choices must be checked before building.
 
 ## Prompt Coverage
