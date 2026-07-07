@@ -109,6 +109,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Pergola technical detail prompts | [69-pergola-technical-detail-prompts.md](69-pergola-technical-detail-prompts.md) |
 | Pergola prompt negative pack | [70-pergola-prompt-negative-pack.md](70-pergola-prompt-negative-pack.md) |
 | Pergola project prompt run plan | [71-pergola-project-prompt-run-plan.md](71-pergola-project-prompt-run-plan.md) |
+| Technical detail image run result review | [72-technical-detail-image-run-result-review.md](72-technical-detail-image-run-result-review.md) |
+| Pergola image selection notes | [73-pergola-image-selection-notes.md](73-pergola-image-selection-notes.md) |
+| Next project-specific prompt improvements | [74-next-project-specific-prompt-improvements.md](74-next-project-specific-prompt-improvements.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -179,6 +182,9 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 63. [69 Pergola Technical Detail Prompts](69-pergola-technical-detail-prompts.md)
 64. [70 Pergola Prompt Negative Pack](70-pergola-prompt-negative-pack.md)
 65. [71 Pergola Project Prompt Run Plan](71-pergola-project-prompt-run-plan.md)
+66. [72 Technical Detail Image Run Result Review](72-technical-detail-image-run-result-review.md)
+67. [73 Pergola Image Selection Notes](73-pergola-image-selection-notes.md)
+68. [74 Next Project-Specific Prompt Improvements](74-next-project-specific-prompt-improvements.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -201,3 +207,5 @@ For dashboard output review, read 51 through 53 before relying on `latest_images
 For controlled prompt variant generation, read 54 through 57 before preparing image mode.
 
 For project-specific pergola prompt planning, read 67 through 71 before preparing the next controlled run.
+
+After project-specific pergola image runs, read 72 through 74 before selecting references or preparing the next prompt iteration.

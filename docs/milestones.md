@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M32.5 Pergola Project-Specific Prompt Pack.
-- Next planned: M32.6 Technical Detail Image Run.
+- Latest completed: M32.6 Technical Detail Image Run Result Review.
+- Next planned: M32.7 Pergola Image Selection / Reference Board.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -18,8 +18,9 @@ Current media milestone status:
 - M32.3 Prompt Quality Improvement Plan DONE
 - M32.4 Improved Prompt Controlled Run Result Review DONE
 - M32.5 Pergola Project-Specific Prompt Pack DONE
-- M32.6 Technical Detail Image Run PLANNED
+- M32.6 Technical Detail Image Run Result Review DONE
 - M32.7 Pergola Image Selection / Reference Board PLANNED
+- M32.8 Real Pergola Technical Drawing Prompt Pack PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1291,13 +1292,14 @@ Goals:
 - Keep prompt pack documentation-only until a separate guarded generation milestone.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 32.6: Technical Detail Image Run
+## Milestone 32.6: Technical Detail Image Run Result Review
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Run the next technical/detail prompt set through the guarded operator-controlled path.
-- Keep generation one variant at a time.
+- Review the manually executed project-specific pergola image run.
+- Record project overview, rain protection, and technical close-up outputs.
+- Capture lessons for image selection and future technical drawing prompts.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 32.7: Pergola Image Selection / Reference Board
@@ -1309,7 +1311,16 @@ Goals:
 - Keep selected evidence as notes and external paths, not committed binaries.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 32.8: Video Generation Service
+## Milestone 32.8: Real Pergola Technical Drawing Prompt Pack
+
+Status: PLANNED
+
+Goals:
+- Prepare prompts for more drawing-like pergola technical references.
+- Keep generated-image references separate from validated engineering drawings.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 32.9: Video Generation Service
 
 Status: PLANNED
 

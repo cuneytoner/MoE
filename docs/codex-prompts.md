@@ -31,8 +31,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M32.3 Prompt Quality Improvement Plan DONE
 - M32.4 Improved Prompt Controlled Run Result Review DONE
 - M32.5 Pergola Project-Specific Prompt Pack DONE
-- M32.6 Technical Detail Image Run PLANNED
+- M32.6 Technical Detail Image Run Result Review DONE
 - M32.7 Pergola Image Selection / Reference Board PLANNED
+- M32.8 Real Pergola Technical Drawing Prompt Pack PLANNED
 
 ## Working Directory
 

@@ -4,6 +4,8 @@ These prompts describe the real pergola project at overview level.
 
 They do not run generation.
 
+P1 Project overview generated the best project overview so far. Review the result in [72-technical-detail-image-run-result-review.md](72-technical-detail-image-run-result-review.md).
+
 ## P1 Project Overview
 
 ```text

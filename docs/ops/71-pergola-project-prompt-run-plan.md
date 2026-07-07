@@ -4,6 +4,8 @@ This plan prepares the next controlled run using project-specific pergola prompt
 
 It does not include real generation commands yet.
 
+The first planned run has been completed and reviewed in [72-technical-detail-image-run-result-review.md](72-technical-detail-image-run-result-review.md).
+
 Use [54-controlled-prompt-variant-generation.md](54-controlled-prompt-variant-generation.md) for the existing controlled generation guide when execution is intentionally started by the operator.
 
 ## Recommended First 3 Prompts

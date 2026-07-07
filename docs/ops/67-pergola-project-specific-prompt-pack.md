@@ -2,6 +2,8 @@
 
 This prompt pack turns the successful generic pergola prompts into prompts closer to the real planned DIY structure.
 
+The first project-specific image run results are reviewed in [72-technical-detail-image-run-result-review.md](72-technical-detail-image-run-result-review.md).
+
 ## What This Prompt Pack Is For
 
 - Capture the real pergola constraints in reusable prompt language.

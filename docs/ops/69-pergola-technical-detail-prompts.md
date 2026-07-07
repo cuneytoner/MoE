@@ -4,6 +4,8 @@ These prompts focus on construction details for the project-specific pergola.
 
 They do not run generation.
 
+T1 Beam-post joint produced the best technical close-up so far, but bracket geometry needs more real-world specificity.
+
 ## T1 Beam-Post Joint
 
 ```text
