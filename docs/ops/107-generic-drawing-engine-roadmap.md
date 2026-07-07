@@ -10,6 +10,8 @@ tools/pergola-drawings
 
 The current tool is intentionally pergola-specific.
 
+M34.2 creates `tools/drawing-engine` as the generic drawing engine skeleton.
+
 ## Future Generic Folder
 
 ```text

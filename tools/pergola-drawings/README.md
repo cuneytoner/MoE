@@ -4,6 +4,8 @@ This tool generates deterministic draft SVG drawings for the pergola project.
 
 This is currently a pergola-specific prototype. Do not treat it as the final generic drawing engine. Future generic extraction is planned.
 
+Generic drawing engine skeleton now exists under `tools/drawing-engine`. Pergola-specific code remains here until explicit migration.
+
 ## What This Tool Does
 
 - Uses Python standard library only.

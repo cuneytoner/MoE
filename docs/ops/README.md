@@ -147,6 +147,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Generic prompt pack structure | [109-generic-prompt-pack-structure.md](109-generic-prompt-pack-structure.md) |
 | Prompt pack review template | [110-prompt-pack-review-template.md](110-prompt-pack-review-template.md) |
 | Generic image generation safety | [111-generic-image-generation-safety.md](111-generic-image-generation-safety.md) |
+| Generic drawing engine skeleton | [112-generic-drawing-engine-skeleton.md](112-generic-drawing-engine-skeleton.md) |
+| Drawing engine demo review template | [113-drawing-engine-demo-review-template.md](113-drawing-engine-demo-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -255,6 +257,8 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 101. [109 Generic Prompt Pack Structure](109-generic-prompt-pack-structure.md)
 102. [110 Prompt Pack Review Template](110-prompt-pack-review-template.md)
 103. [111 Generic Image Generation Safety](111-generic-image-generation-safety.md)
+104. [112 Generic Drawing Engine Skeleton](112-generic-drawing-engine-skeleton.md)
+105. [113 Drawing Engine Demo Review Template](113-drawing-engine-demo-review-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -297,3 +301,5 @@ For side elevation and top plan SVG outputs, read 100 and 101.
 For the generic image, architecture, and drawing roadmap, read 104 through 108.
 
 For generic prompt pack structure and safe prompt reuse, read 109 through 111.
+
+For the generic drawing engine demo skeleton, read 112 and 113.

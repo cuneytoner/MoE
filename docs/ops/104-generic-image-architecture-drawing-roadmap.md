@@ -112,6 +112,8 @@ Reference boards should record paths, prompts, categories, and notes without com
 
 M34.1 creates the generic prompt pack structure under `tools/prompt-packs`.
 
+Generic drawing engine skeleton is introduced in M34.2.
+
 ## Next Milestone Sequence
 
 - M34.1 Generic Prompt Pack Structure

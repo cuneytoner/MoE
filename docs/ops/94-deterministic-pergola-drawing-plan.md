@@ -10,6 +10,8 @@ M33.6 creates separate side elevation and top plan SVG outputs.
 
 This plan is now considered the first case study for the future generic drawing engine. See [107-generic-drawing-engine-roadmap.md](107-generic-drawing-engine-roadmap.md).
 
+Pergola drawing remains a case-study prototype; generic extraction begins under `tools/drawing-engine` in M34.2.
+
 ## Why Deterministic Drawing Is Needed
 
 Flux image generation is useful for visual intent, but it is not reliable for:
