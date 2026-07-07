@@ -126,6 +126,10 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Technical drawing prompt lessons | [86-technical-drawing-prompt-lessons.md](86-technical-drawing-prompt-lessons.md) |
 | Next simplified technical drawing prompts | [87-next-simplified-technical-drawing-prompts.md](87-next-simplified-technical-drawing-prompts.md) |
 | Technical drawing selection notes | [88-technical-drawing-selection-notes.md](88-technical-drawing-selection-notes.md) |
+| Simplified technical drawing run review | [89-simplified-technical-drawing-run-review.md](89-simplified-technical-drawing-run-review.md) |
+| CAD-like prompt lessons | [90-cad-like-prompt-lessons.md](90-cad-like-prompt-lessons.md) |
+| Next CAD-like geometry-only prompts | [91-next-cad-like-geometry-only-prompts.md](91-next-cad-like-geometry-only-prompts.md) |
+| Manual labeling plan | [92-manual-labeling-plan.md](92-manual-labeling-plan.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -213,6 +217,10 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 80. [86 Technical Drawing Prompt Lessons](86-technical-drawing-prompt-lessons.md)
 81. [87 Next Simplified Technical Drawing Prompts](87-next-simplified-technical-drawing-prompts.md)
 82. [88 Technical Drawing Selection Notes](88-technical-drawing-selection-notes.md)
+83. [89 Simplified Technical Drawing Run Review](89-simplified-technical-drawing-run-review.md)
+84. [90 CAD-like Prompt Lessons](90-cad-like-prompt-lessons.md)
+85. [91 Next CAD-like Geometry-only Prompts](91-next-cad-like-geometry-only-prompts.md)
+86. [92 Manual Labeling Plan](92-manual-labeling-plan.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -243,3 +251,5 @@ For selected pergola visual references and usta briefing notes, read 75 through 
 For real pergola technical drawing prompts and safety notes, read 79 through 84 before preparing a controlled drawing run.
 
 After technical drawing runs, read 85 through 88 before selecting outputs or preparing simplified prompts.
+
+After simplified drawing runs, read 89 through 92 before preparing geometry-only CAD-style prompts or manual labels.

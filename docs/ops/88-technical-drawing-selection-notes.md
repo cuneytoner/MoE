@@ -2,6 +2,8 @@
 
 This note classifies the first technical drawing outputs for future use.
 
+S3 can be kept as a connection-intent reference, but not as a build detail.
+
 ## Selection Notes
 
 - V4 should not be used as technical plan.

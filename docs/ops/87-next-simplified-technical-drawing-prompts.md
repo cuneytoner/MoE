@@ -4,6 +4,8 @@ This page defines better next prompts for technical drawing generation.
 
 They do not run generation.
 
+The first simplified run was completed; next prompts should use geometry-only CAD-style language from [91-next-cad-like-geometry-only-prompts.md](91-next-cad-like-geometry-only-prompts.md).
+
 ## S1 Simple Side Elevation
 
 ```text

@@ -37,8 +37,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M32.9 Pergola Usta Package Plan PLANNED
 - M33.0 Technical Drawing Controlled Run DONE
 - M33.1 Technical Drawing Controlled Run Result Review DONE
-- M33.2 Simplified Technical Drawing Prompt Pack PLANNED
-- M33.3 Usta Package Assembly PLANNED
+- M33.2 Simplified Technical Drawing Controlled Run Result Review DONE
+- M33.3 Geometry-only CAD-style Drawing Run PLANNED
+- M33.4 Manual Labeling / Usta Sheet Plan PLANNED
 
 ## Working Directory
 

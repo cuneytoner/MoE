@@ -4,6 +4,8 @@ This review records the first technical drawing controlled run results.
 
 The run was performed manually by the operator. This document records outputs and lessons without running generation or committing generated image binaries.
 
+The simplified technical run was reviewed in [89-simplified-technical-drawing-run-review.md](89-simplified-technical-drawing-run-review.md) and confirmed that geometry-only CAD-like prompts are the next direction.
+
 ## What This Review Is For
 
 - Record the first technical drawing-style outputs.

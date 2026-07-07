@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M33.1 Technical Drawing Controlled Run Result Review.
-- Next planned: M33.2 Simplified Technical Drawing Prompt Pack.
+- Latest completed: M33.2 Simplified Technical Drawing Controlled Run Result Review.
+- Next planned: M33.3 Geometry-only CAD-style Drawing Run.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -24,8 +24,9 @@ Current media milestone status:
 - M32.9 Pergola Usta Package Plan PLANNED
 - M33.0 Technical Drawing Controlled Run DONE
 - M33.1 Technical Drawing Controlled Run Result Review DONE
-- M33.2 Simplified Technical Drawing Prompt Pack PLANNED
-- M33.3 Usta Package Assembly PLANNED
+- M33.2 Simplified Technical Drawing Controlled Run Result Review DONE
+- M33.3 Geometry-only CAD-style Drawing Run PLANNED
+- M33.4 Manual Labeling / Usta Sheet Plan PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1361,25 +1362,35 @@ Goals:
 - Record drawing-like outputs, limitations, and prompt lessons.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 33.2: Simplified Technical Drawing Prompt Pack
+## Milestone 33.2: Simplified Technical Drawing Controlled Run Result Review
+
+Status: DONE
+
+Goals:
+- Review the manually executed simplified technical drawing controlled run.
+- Record side elevation, top plan, and beam-post schematic outputs.
+- Capture the geometry-only CAD-style prompt strategy.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 33.3: Geometry-only CAD-style Drawing Run
 
 Status: PLANNED
 
 Goals:
-- Prepare simplified single-topic 2D technical drawing prompts.
-- Reduce label and dimension hallucination risk.
+- Run geometry-only CAD-style drawing prompts through the guarded operator-controlled path.
+- Avoid labels, dimensions, perspective, 3D, shading, and texture during generation.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 33.3: Usta Package Assembly
+## Milestone 33.4: Manual Labeling / Usta Sheet Plan
 
 Status: PLANNED
 
 Goals:
-- Assemble selected visual references, measurements, material notes, and safety warnings for usta discussion.
-- Keep AI-generated media as visual intent only.
+- Plan manual labels and usta-sheet assembly after geometry-only outputs.
+- Keep generated geometry as visual support and add verified labels manually.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 33.4: 3D Model Generation Pipeline
+## Milestone 33.5: 3D Model Generation Pipeline
 
 Status: PLANNED
 

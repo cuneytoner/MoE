@@ -2,6 +2,8 @@
 
 This note summarizes lessons from the first technical drawing controlled run.
 
+A stronger CAD-like geometry-only prompt strategy is documented in [90-cad-like-prompt-lessons.md](90-cad-like-prompt-lessons.md) and [91-next-cad-like-geometry-only-prompts.md](91-next-cad-like-geometry-only-prompts.md).
+
 ## Lessons
 
 - Flux can produce technical-looking drawings.
