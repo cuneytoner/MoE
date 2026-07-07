@@ -6,6 +6,8 @@ It does not create drawing files yet.
 
 The first implementation uses this geometry spec in `tools/pergola-drawings/generate_pergola_svg.py`.
 
+Side elevation and top plan are now implemented in M33.6.
+
 ## Coordinate / Drawing Assumptions
 
 - use millimeters internally

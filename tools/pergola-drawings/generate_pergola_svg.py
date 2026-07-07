@@ -13,7 +13,11 @@ DEFAULT_OUTPUT_DIR = Path("/home/cuneyt/MoE/runtime/pergola/drawings")
 WALL_WIDTH_MM = 5100
 DEPTH_MM = 1900
 ROOF_OVERHANG_MM = 300
-POST_SIZE_MM = 100
+POST_MM = 100
+BEAM_WIDTH_MM = 50
+BEAM_HEIGHT_MM = 100
+REAR_HEIGHT_MM = 3000
+FRONT_HEIGHT_MM = 2500
 RAFTER_SPACING_MM = 600
 
 PAGE_WIDTH = 1000
@@ -88,7 +92,7 @@ def build_overview_skeleton() -> str:
     roof_h = scale_mm(total_depth_mm, scale)
     plan_w = scale_mm(WALL_WIDTH_MM, scale)
     plan_h = scale_mm(DEPTH_MM, scale)
-    post = scale_mm(POST_SIZE_MM, scale)
+    post = scale_mm(POST_MM, scale)
 
     parts = [
         svg_header(PAGE_WIDTH, PAGE_HEIGHT),
@@ -125,6 +129,111 @@ def build_overview_skeleton() -> str:
     return "".join(parts)
 
 
+def build_side_elevation() -> str:
+    total_width_mm = DEPTH_MM + ROOF_OVERHANG_MM
+    total_height_mm = REAR_HEIGHT_MM
+    drawing_width = PAGE_WIDTH - (MARGIN * 2)
+    drawing_height = PAGE_HEIGHT - 190
+    scale = min(drawing_width / total_width_mm, drawing_height / total_height_mm)
+
+    ground_y = PAGE_HEIGHT - 110
+    rear_x = MARGIN + 80
+    front_x = rear_x + scale_mm(DEPTH_MM, scale)
+    overhang_x = front_x + scale_mm(ROOF_OVERHANG_MM, scale)
+    rear_top_y = ground_y - scale_mm(REAR_HEIGHT_MM, scale)
+    front_top_y = ground_y - scale_mm(FRONT_HEIGHT_MM, scale)
+    overhang_drop = scale_mm(ROOF_OVERHANG_MM, scale) * (
+        (REAR_HEIGHT_MM - FRONT_HEIGHT_MM) / DEPTH_MM
+    )
+    overhang_y = front_top_y + overhang_drop
+    post_w = max(scale_mm(POST_MM, scale), 8)
+    rafter_h = max(scale_mm(BEAM_WIDTH_MM, scale), 4)
+
+    parts = [
+        svg_header(PAGE_WIDTH, PAGE_HEIGHT),
+        rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, stroke="none", fill="#fff", stroke_width=0),
+        text(PAGE_WIDTH / 2, 44, "Pergola Side Elevation", size=28, anchor="middle"),
+        text(PAGE_WIDTH / 2, 74, "Draft side elevation. Verify dimensions before build.", size=16, anchor="middle"),
+        line(rear_x - 36, ground_y, overhang_x + 60, ground_y, stroke="#111", width=2),
+        text(rear_x - 36, ground_y + 28, "ground line", size=14),
+        line(rear_x, ground_y, rear_x, rear_top_y - 28, stroke="#333", width=3),
+        text(rear_x - 12, rear_top_y - 42, "house wall / rear high side", size=14),
+        rect(rear_x - (post_w / 2), rear_top_y, post_w, ground_y - rear_top_y, stroke="#111", fill="#ddd", stroke_width=1.5),
+        rect(front_x - (post_w / 2), front_top_y, post_w, ground_y - front_top_y, stroke="#111", fill="#ddd", stroke_width=1.5),
+        line(rear_x, rear_top_y, overhang_x, overhang_y, stroke="#111", width=4),
+        line(rear_x, rear_top_y + rafter_h, overhang_x, overhang_y + rafter_h, stroke="#777", width=1.5),
+        text((rear_x + front_x) / 2, ground_y + 52, "1900 mm depth", size=16, anchor="middle"),
+        line(rear_x, ground_y + 34, front_x, ground_y + 34, stroke="#555", width=1.2),
+        text((front_x + overhang_x) / 2, overhang_y - 22, "300 mm front roof overhang", size=14, anchor="middle"),
+        line(front_x, overhang_y - 10, overhang_x, overhang_y - 10, stroke="#555", width=1.2),
+        text(front_x + 18, (front_top_y + ground_y) / 2, "10x10 post", size=15),
+        text((rear_x + overhang_x) / 2, rear_top_y - 10, "5x10 rafter placeholder", size=15, anchor="middle"),
+        text(MARGIN, PAGE_HEIGHT - 34, "Draft side elevation. Verify dimensions before build.", size=14),
+        svg_footer(),
+    ]
+    return "".join(parts)
+
+
+def build_top_plan() -> str:
+    total_width_mm = WALL_WIDTH_MM + (ROOF_OVERHANG_MM * 2)
+    total_depth_mm = DEPTH_MM + (ROOF_OVERHANG_MM * 2)
+    drawing_width = PAGE_WIDTH - (MARGIN * 2)
+    drawing_height = PAGE_HEIGHT - 230
+    scale = min(drawing_width / total_width_mm, drawing_height / total_depth_mm)
+
+    roof_x = MARGIN
+    roof_y = 150
+    plan_x = roof_x + scale_mm(ROOF_OVERHANG_MM, scale)
+    plan_y = roof_y + scale_mm(ROOF_OVERHANG_MM, scale)
+    roof_w = scale_mm(total_width_mm, scale)
+    roof_h = scale_mm(total_depth_mm, scale)
+    plan_w = scale_mm(WALL_WIDTH_MM, scale)
+    plan_h = scale_mm(DEPTH_MM, scale)
+    post = scale_mm(POST_MM, scale)
+    canopy_w = scale_mm(700, scale)
+    canopy_h = scale_mm(700, scale)
+
+    parts = [
+        svg_header(PAGE_WIDTH, PAGE_HEIGHT),
+        rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, stroke="none", fill="#fff", stroke_width=0),
+        text(PAGE_WIDTH / 2, 44, "Pergola Top Plan", size=28, anchor="middle"),
+        text(PAGE_WIDTH / 2, 74, "Draft top plan. Verify post placement before build.", size=16, anchor="middle"),
+        rect(roof_x, roof_y, roof_w, roof_h, stroke="#666", fill="none", stroke_width=1.5),
+        rect(plan_x, plan_y, plan_w, plan_h, stroke="#111", fill="none", stroke_width=2.5),
+        text(plan_x + (plan_w / 2), plan_y - 18, "5100 mm wall line", size=16, anchor="middle"),
+        text(plan_x + plan_w + 18, plan_y + (plan_h / 2), "1900 mm depth", size=16),
+        text(roof_x + roof_w + 16, roof_y + 18, "300 mm roof overhang", size=14),
+    ]
+
+    post_positions = [
+        (plan_x, plan_y),
+        (plan_x + plan_w - post, plan_y),
+        (plan_x, plan_y + plan_h - post),
+        (plan_x + plan_w - post, plan_y + plan_h - post),
+    ]
+    for x, y in post_positions:
+        parts.append(rect(x, y, post, post, stroke="#111", fill="#ddd", stroke_width=1.5))
+
+    rafter_x = plan_x + scale_mm(RAFTER_SPACING_MM, scale)
+    while rafter_x < plan_x + plan_w:
+        parts.append(line(rafter_x, plan_y, rafter_x, plan_y + plan_h, stroke="#777", width=1.2))
+        rafter_x += scale_mm(RAFTER_SPACING_MM, scale)
+
+    canopy_x = plan_x + plan_w - canopy_w
+    canopy_y = plan_y + plan_h + scale_mm(120, scale)
+    parts.extend(
+        [
+            rect(canopy_x, canopy_y, canopy_w, canopy_h, stroke="#444", fill="none", stroke_width=1.5),
+            text(canopy_x + (canopy_w / 2), canopy_y + canopy_h + 24, "right-side door canopy placeholder", size=14, anchor="middle"),
+            text(plan_x, plan_y + plan_h + 34, "100x100 posts", size=15),
+            text(plan_x + plan_w, plan_y + plan_h + 34, "5x10 rafters placeholder", size=15, anchor="end"),
+            text(MARGIN, PAGE_HEIGHT - 34, "Draft top plan. Verify post placement before build.", size=14),
+            svg_footer(),
+        ]
+    )
+    return "".join(parts)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate deterministic pergola SVG skeleton drawings.")
     parser.add_argument(
@@ -138,8 +247,16 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    output_path = save_svg(args.output_dir, "overview_skeleton.svg", build_overview_skeleton())
-    print(f"Wrote {output_path}")
+    generated = [
+        ("overview_skeleton.svg", build_overview_skeleton()),
+        ("side_elevation.svg", build_side_elevation()),
+        ("top_plan.svg", build_top_plan()),
+    ]
+    output_paths = [save_svg(args.output_dir, filename, content) for filename, content in generated]
+
+    print("Generated:")
+    for output_path in output_paths:
+        print(f"- {output_path.name} -> {output_path}")
     return 0
 
 

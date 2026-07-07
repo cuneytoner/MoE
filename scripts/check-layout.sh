@@ -371,6 +371,8 @@ required_paths=(
   "docs/ops/97-pergola-drawing-implementation-roadmap.md"
   "docs/ops/98-svg-drawing-tool-skeleton.md"
   "docs/ops/99-pergola-svg-output-review-template.md"
+  "docs/ops/100-side-elevation-top-plan-svg.md"
+  "docs/ops/101-side-top-svg-review-template.md"
   "tools/pergola-drawings/generate_pergola_svg.py"
   "tools/pergola-drawings/README.md"
   "scripts/image/controlled-variant-plan.sh"

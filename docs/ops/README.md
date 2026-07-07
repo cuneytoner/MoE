@@ -137,6 +137,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Pergola drawing implementation roadmap | [97-pergola-drawing-implementation-roadmap.md](97-pergola-drawing-implementation-roadmap.md) |
 | SVG drawing tool skeleton | [98-svg-drawing-tool-skeleton.md](98-svg-drawing-tool-skeleton.md) |
 | Pergola SVG output review template | [99-pergola-svg-output-review-template.md](99-pergola-svg-output-review-template.md) |
+| Side elevation + top plan SVG | [100-side-elevation-top-plan-svg.md](100-side-elevation-top-plan-svg.md) |
+| Side/top SVG review template | [101-side-top-svg-review-template.md](101-side-top-svg-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -235,6 +237,8 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 91. [97 Pergola Drawing Implementation Roadmap](97-pergola-drawing-implementation-roadmap.md)
 92. [98 SVG Drawing Tool Skeleton](98-svg-drawing-tool-skeleton.md)
 93. [99 Pergola SVG Output Review Template](99-pergola-svg-output-review-template.md)
+94. [100 Side Elevation + Top Plan SVG](100-side-elevation-top-plan-svg.md)
+95. [101 Side/Top SVG Review Template](101-side-top-svg-review-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -271,3 +275,5 @@ After simplified drawing runs, read 89 through 92 before preparing geometry-only
 For deterministic pergola drawing planning, read 93 through 97 before creating any SVG/PDF/DXF files.
 
 For the first SVG skeleton tool and output review, read 98 and 99.
+
+For side elevation and top plan SVG outputs, read 100 and 101.

@@ -6,6 +6,8 @@ It does not create drawing files yet.
 
 M33.5 creates the first SVG drawing tool skeleton.
 
+M33.6 creates separate side elevation and top plan SVG outputs.
+
 ## Why Deterministic Drawing Is Needed
 
 Flux image generation is useful for visual intent, but it is not reliable for:

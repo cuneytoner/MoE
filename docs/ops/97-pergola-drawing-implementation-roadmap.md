@@ -15,7 +15,7 @@ Status: DONE
 
 ## M33.6 Side Elevation + Top Plan SVG
 
-Status: PLANNED
+Status: DONE
 
 - Generate `side_elevation.svg`.
 - Generate `top_plan.svg`.
@@ -32,6 +32,8 @@ Status: PLANNED
 - Keep structural details marked for manual review.
 
 ## M33.8 PDF Export Plan
+
+Status: PLANNED
 
 - Decide whether SVG-to-PDF export is needed.
 - Define page size, margins, title block, and print scale.

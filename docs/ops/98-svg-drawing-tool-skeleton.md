@@ -2,6 +2,8 @@
 
 M33.5 adds the first deterministic pergola SVG drawing tool skeleton.
 
+M33.6 extends the skeleton with `side_elevation.svg` and `top_plan.svg`.
+
 ## What Was Added
 
 - `tools/pergola-drawings/generate_pergola_svg.py`

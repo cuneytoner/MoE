@@ -41,8 +41,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M33.3 Geometry-only CAD-style Drawing Run DONE
 - M33.4 Deterministic Pergola Drawing Plan DONE
 - M33.5 SVG Drawing Tool Skeleton DONE
-- M33.6 Side Elevation + Top Plan SVG PLANNED
+- M33.6 Side Elevation + Top Plan SVG DONE
 - M33.7 Beam-post + Roof Sheet SVG Details PLANNED
+- M33.8 PDF Export Plan PLANNED
 
 ## Working Directory
 

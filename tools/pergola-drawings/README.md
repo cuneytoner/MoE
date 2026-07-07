@@ -6,7 +6,7 @@ This tool generates deterministic draft SVG drawings for the pergola project.
 
 - Uses Python standard library only.
 - Uses millimeter-based project geometry.
-- Generates `overview_skeleton.svg`.
+- Generates `overview_skeleton.svg`, `side_elevation.svg`, and `top_plan.svg`.
 - Writes generated SVG files to runtime by default.
 - Provides a source-code foundation for later side elevation, top plan, and detail drawings.
 
@@ -23,6 +23,12 @@ This tool generates deterministic draft SVG drawings for the pergola project.
 /home/cuneyt/MoE/runtime/pergola/drawings
 ```
 
+## Generated Files
+
+- `overview_skeleton.svg`
+- `side_elevation.svg`
+- `top_plan.svg`
+
 ## How To Run
 
 ```bash
@@ -33,6 +39,14 @@ python3 tools/pergola-drawings/generate_pergola_svg.py
 
 ```bash
 python3 tools/pergola-drawings/generate_pergola_svg.py --output-dir /home/cuneyt/MoE/runtime/pergola/drawings-test
+```
+
+## Inspect Runtime Outputs
+
+```bash
+find /home/cuneyt/MoE/runtime/pergola/drawings \
+  -maxdepth 1 -type f -name '*.svg' \
+  -printf '%TY-%Tm-%Td %TH:%TM %s %p\n' | sort
 ```
 
 ## Safety Warning

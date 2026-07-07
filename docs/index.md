@@ -101,6 +101,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [SVG Drawing Tool Skeleton](ops/98-svg-drawing-tool-skeleton.md)
 - [Pergola SVG Output Review Template](ops/99-pergola-svg-output-review-template.md)
 - [Pergola Drawings Tool](../tools/pergola-drawings/README.md)
+- [Side Elevation + Top Plan SVG](ops/100-side-elevation-top-plan-svg.md)
+- [Side/Top SVG Review Template](ops/101-side-top-svg-review-template.md)
 - [Restore New Machine](ops/06-restore-new-machine.md)
 - [Troubleshooting](ops/07-troubleshooting.md)
 - [Command Cheatsheet](ops/08-command-cheatsheet.md)
