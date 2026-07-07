@@ -101,6 +101,9 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Next pergola prompt set | [61-next-pergola-prompt-set.md](61-next-pergola-prompt-set.md) |
 | Negative prompt notes | [62-negative-prompt-notes.md](62-negative-prompt-notes.md) |
 | Prompt quality review template | [63-prompt-quality-review-template.md](63-prompt-quality-review-template.md) |
+| Improved prompt run result review | [64-improved-prompt-run-result-review.md](64-improved-prompt-run-result-review.md) |
+| Pergola prompt lessons learned | [65-pergola-prompt-lessons-learned.md](65-pergola-prompt-lessons-learned.md) |
+| Next technical detail prompt set | [66-next-technical-detail-prompt-set.md](66-next-technical-detail-prompt-set.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -163,6 +166,9 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 55. [61 Next Pergola Prompt Set](61-next-pergola-prompt-set.md)
 56. [62 Negative Prompt Notes](62-negative-prompt-notes.md)
 57. [63 Prompt Quality Review Template](63-prompt-quality-review-template.md)
+58. [64 Improved Prompt Run Result Review](64-improved-prompt-run-result-review.md)
+59. [65 Pergola Prompt Lessons Learned](65-pergola-prompt-lessons-learned.md)
+60. [66 Next Technical Detail Prompt Set](66-next-technical-detail-prompt-set.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 

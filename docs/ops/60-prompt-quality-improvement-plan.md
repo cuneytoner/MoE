@@ -6,6 +6,8 @@ It is documentation-only. It does not run image generation.
 
 Source review context: M32.2 was recorded at commit `05b56d4` (`docs: add prompt variant result review`).
 
+The improved prompt run results are recorded in [64-improved-prompt-run-result-review.md](64-improved-prompt-run-result-review.md), and lessons learned are summarized in [65-pergola-prompt-lessons-learned.md](65-pergola-prompt-lessons-learned.md).
+
 ## What This Plan Is For
 
 - Turn the first controlled results into better next prompts.

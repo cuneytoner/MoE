@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M32.3 Prompt Quality Improvement Plan.
-- Next planned: M32.4 Improved Prompt Controlled Run.
+- Latest completed: M32.4 Improved Prompt Controlled Run Result Review.
+- Next planned: M32.5 Pergola Project-Specific Prompt Pack.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Current media milestone status:
@@ -16,8 +16,9 @@ Current media milestone status:
 - M32.1 Media Dashboard UI Output Cards PLANNED
 - M32.2 Prompt Variant Result Review DONE
 - M32.3 Prompt Quality Improvement Plan DONE
-- M32.4 Improved Prompt Controlled Run PLANNED
+- M32.4 Improved Prompt Controlled Run Result Review DONE
 - M32.5 Pergola Project-Specific Prompt Pack PLANNED
+- M32.6 Technical Detail Image Run PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1271,13 +1272,13 @@ Goals:
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 - Add next pergola prompt set, negative prompt notes, and prompt quality review template.
 
-## Milestone 32.4: Improved Prompt Controlled Run
+## Milestone 32.4: Improved Prompt Controlled Run Result Review
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Run the improved prompt set through the controlled, operator-approved generation path.
-- Keep generation guarded and one variant at a time.
+- Review the manually executed improved prompt controlled run.
+- Record result notes, VRAM observations, dashboard visibility, shutdown, and coding restore.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 32.5: Pergola Project-Specific Prompt Pack
@@ -1289,7 +1290,16 @@ Goals:
 - Keep prompt pack documentation-only until a separate guarded generation milestone.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 32.6: Video Generation Service
+## Milestone 32.6: Technical Detail Image Run
+
+Status: PLANNED
+
+Goals:
+- Run the next technical/detail prompt set through the guarded operator-controlled path.
+- Keep generation one variant at a time.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 32.7: Video Generation Service
 
 Status: PLANNED
 

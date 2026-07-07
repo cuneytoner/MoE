@@ -29,8 +29,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M32.1 Media Dashboard UI Output Cards PLANNED
 - M32.2 Prompt Variant Result Review DONE
 - M32.3 Prompt Quality Improvement Plan DONE
-- M32.4 Improved Prompt Controlled Run PLANNED
+- M32.4 Improved Prompt Controlled Run Result Review DONE
 - M32.5 Pergola Project-Specific Prompt Pack PLANNED
+- M32.6 Technical Detail Image Run PLANNED
 
 ## Working Directory
 
@@ -1321,14 +1322,14 @@ Expected boundaries:
 
 ## Milestone 32.4 Prompt Placeholder
 
-Add improved prompt controlled run.
+Add improved prompt controlled run result review.
 
-Status: PLANNED
+Status: DONE
 
 Expected boundaries:
 
-- Run the improved prompt set through the controlled, operator-approved generation path.
-- Keep generation guarded and one variant at a time.
+- Review the manually executed improved prompt controlled run.
+- Record result notes, VRAM observations, dashboard visibility, shutdown, and coding restore.
 - Do not add automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
 
 ## Milestone 32.5 Prompt Placeholder
@@ -1341,6 +1342,18 @@ Expected boundaries:
 
 - Build a project-specific pergola prompt pack after improved prompt review.
 - Keep prompt pack documentation-only until a separate guarded generation milestone.
+- Do not add automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
+
+## Milestone 32.6 Prompt Placeholder
+
+Add technical detail image run.
+
+Status: PLANNED
+
+Expected boundaries:
+
+- Run the next technical/detail prompt set through the guarded operator-controlled path.
+- Keep generation one variant at a time.
 - Do not add automatic generation, Gateway shell execution, Docker control, model switching, or generated media commits.
 
 ## Future Automation Placeholder

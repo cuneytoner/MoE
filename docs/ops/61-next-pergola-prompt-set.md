@@ -4,6 +4,8 @@ This page defines the next prompt candidates. It does not run them.
 
 Use these prompts after reviewing [60-prompt-quality-improvement-plan.md](60-prompt-quality-improvement-plan.md).
 
+The first improved prompt run has been completed and reviewed in [64-improved-prompt-run-result-review.md](64-improved-prompt-run-result-review.md).
+
 ## A. Project-Like Covered Pergola
 
 ```text

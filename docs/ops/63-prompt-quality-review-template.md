@@ -4,6 +4,8 @@ Use this template to review future improved prompt outputs.
 
 Do not commit generated image binaries. Record paths and notes only.
 
+See [64-improved-prompt-run-result-review.md](64-improved-prompt-run-result-review.md) for an example completed review.
+
 ## Review Template
 
 ```text
