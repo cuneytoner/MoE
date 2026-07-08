@@ -24,6 +24,8 @@ DELETE /gateway/media/reference-boards/{board_id}/items/{item_id}
 
 Future API implementation should validate board IDs, item IDs, asset types, safety labels, and selected reasons. It should reject paths outside runtime and reject items that do not match known output cards.
 
+Future reference board API endpoints should use the M34.16 safe runtime store helpers.
+
 ## Non-goals
 
 - No asset copying by default.

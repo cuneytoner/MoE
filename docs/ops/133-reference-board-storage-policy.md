@@ -10,6 +10,8 @@
 
 Boards are JSON files. They should remain runtime output by default.
 
+M34.16 implements the first safe runtime storage helper for board JSON files.
+
 ## Asset References
 
 Boards reference assets by `relative_runtime_path`.

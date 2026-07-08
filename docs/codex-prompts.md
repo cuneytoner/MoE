@@ -61,7 +61,8 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.13 Output Preview API Implementation DONE
 - M34.14 Dashboard Preview UI Implementation DONE
 - M34.15 Output Card Metadata Detail Drawer DONE
-- M34.16 Reference Board Safe Runtime Store PLANNED
+- M34.16 Reference Board Safe Runtime Store DONE
+- M34.17 Reference Board Item Selection API PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

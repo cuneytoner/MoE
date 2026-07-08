@@ -25,6 +25,8 @@ Future reference boards should let an operator select output cards into named bo
 
 Reference boards will benefit from safe output previews so operators can select images and drawings without opening runtime folders directly.
 
+Reference board selection will build on the safe runtime store introduced in M34.16.
+
 ## Reference Board Use Cases
 
 - choose best generated concept images

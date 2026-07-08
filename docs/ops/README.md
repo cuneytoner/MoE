@@ -186,6 +186,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Output card metadata detail API | [148-output-card-metadata-detail-api.md](148-output-card-metadata-detail-api.md) |
 | Dashboard metadata detail drawer | [149-dashboard-metadata-detail-drawer.md](149-dashboard-metadata-detail-drawer.md) |
 | Output card metadata detail review template | [150-output-card-metadata-detail-review-template.md](150-output-card-metadata-detail-review-template.md) |
+| Reference board safe runtime store | [151-reference-board-safe-runtime-store.md](151-reference-board-safe-runtime-store.md) |
+| Reference board store review template | [152-reference-board-store-review-template.md](152-reference-board-store-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

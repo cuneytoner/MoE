@@ -2,7 +2,7 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.15 Output Card Metadata Detail Drawer.
+- Latest completed: M34.16 Reference Board Safe Runtime Store.
 - Next planned: M34.11 Reference Board API Implementation.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
@@ -50,7 +50,8 @@ Current media milestone status:
 - M34.13 Output Preview API Implementation DONE
 - M34.14 Dashboard Preview UI Implementation DONE
 - M34.15 Output Card Metadata Detail Drawer DONE
-- M34.16 Reference Board Safe Runtime Store PLANNED
+- M34.16 Reference Board Safe Runtime Store DONE
+- M34.17 Reference Board Item Selection API PLANNED
 
 ## Milestone 0: Clean Codebase
 
