@@ -580,6 +580,24 @@ class ReferenceBoardCreateRequest(BaseModel):
     description: str | None = Field(default=None, max_length=1000)
 
 
+class ReferenceBoardAddItemRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    card_id: str = Field(min_length=1, max_length=240)
+    selected_reason: str | None = Field(default=None, max_length=500)
+    tags: list[str] | None = Field(default=None, max_length=10)
+
+    @field_validator("tags")
+    @classmethod
+    def validate_tags(cls, value: list[str] | None) -> list[str] | None:
+        if value is None:
+            return None
+        for tag in value:
+            if not tag or len(tag) > 60:
+                raise ValueError("tags must be non-empty strings up to 60 characters")
+        return value
+
+
 class GatewayMediaPlanResponse(BaseModel):
     status: str
     mode: str

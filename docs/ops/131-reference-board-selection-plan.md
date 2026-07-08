@@ -29,6 +29,8 @@ Reference board selection will build on the safe runtime store introduced in M34
 
 M34.11 provides the initial API foundation before item selection.
 
+Output cards can now be selected into boards through safe API.
+
 ## Reference Board Use Cases
 
 - choose best generated concept images
@@ -63,7 +65,7 @@ The first design should treat output cards as source items and board JSON as the
 
 ## What This Milestone Does NOT Implement
 
-- No API changes.
+- No dashboard selection UI.
 - No UI changes.
 - No runtime reference board files.
 - No copy, move, delete, or rename behavior.

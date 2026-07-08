@@ -154,6 +154,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Store Review Template](ops/152-reference-board-store-review-template.md)
 - [Reference Board API Implementation](ops/153-reference-board-api-implementation.md)
 - [Reference Board API Review Template](ops/154-reference-board-api-review-template.md)
+- [Reference Board Item Selection API](ops/155-reference-board-item-selection-api.md)
+- [Reference Board Item Selection Review Template](ops/156-reference-board-item-selection-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

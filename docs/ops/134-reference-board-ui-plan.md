@@ -6,6 +6,8 @@ The dashboard should eventually let operators build reference boards from output
 
 Reference board UI should reuse the same safe preview endpoint planned for output cards.
 
+Dashboard UI should use M34.17 item selection endpoints later.
+
 ## Planned Actions
 
 - Select card for board.

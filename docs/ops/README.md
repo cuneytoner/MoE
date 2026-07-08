@@ -190,6 +190,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board store review template | [152-reference-board-store-review-template.md](152-reference-board-store-review-template.md) |
 | Reference board API implementation | [153-reference-board-api-implementation.md](153-reference-board-api-implementation.md) |
 | Reference board API review template | [154-reference-board-api-review-template.md](154-reference-board-api-review-template.md) |
+| Reference board item selection API | [155-reference-board-item-selection-api.md](155-reference-board-item-selection-api.md) |
+| Reference board item selection review template | [156-reference-board-item-selection-review-template.md](156-reference-board-item-selection-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -6,6 +6,8 @@ M34.11 adds safe Gateway API endpoints to list, read, and create reference board
 
 The endpoints use the M34.16 safe runtime store helpers.
 
+M34.17 extends reference boards with item selection endpoints.
+
 ## Endpoints
 
 ```text

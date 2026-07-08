@@ -28,6 +28,8 @@ Future reference board API endpoints should use the M34.16 safe runtime store he
 
 M34.11 implements list, read, and create reference board endpoints.
 
+M34.17 implements add/remove item endpoints.
+
 ## Non-goals
 
 - No asset copying by default.

@@ -24,11 +24,15 @@ from app.output_cards import (
 )
 from app.reference_boards import (
     REFERENCE_BOARDS_ROOT,
+    add_item_to_reference_board,
     board_path_for_id,
     build_empty_reference_board,
+    item_id_for_card_id,
     list_reference_boards,
     load_reference_board,
+    remove_item_from_reference_board,
     sanitize_board_id,
+    utc_now_iso,
     write_reference_board,
 )
 from app.models.gateway import (
@@ -81,6 +85,7 @@ from app.models.gateway import (
     OpenAIChatCompletionResponse,
     OpenAIChatCompletionUsage,
     OpenAIChatMessage,
+    ReferenceBoardAddItemRequest,
     ReferenceBoardCreateRequest,
 )
 from app.services.media_planner import local_media_plan
@@ -479,6 +484,117 @@ async def media_reference_board_create(request: ReferenceBoardCreateRequest) -> 
         "status": "ok",
         "service": "gateway-reference-boards",
         "board": created,
+    }
+
+
+@app.post("/gateway/media/reference-boards/{board_id}/items", response_model=None)
+async def media_reference_board_add_item(
+    board_id: str,
+    request: ReferenceBoardAddItemRequest,
+) -> dict[str, Any] | JSONResponse:
+    try:
+        safe_board_id = sanitize_board_id(board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    try:
+        load_reference_board(safe_board_id)
+    except FileNotFoundError:
+        return _reference_board_error(
+            404,
+            "reference_board_not_found",
+            "Reference board not found.",
+        )
+    except ValueError:
+        return _reference_board_error(
+            403,
+            "reference_board_blocked",
+            "Reference board access blocked by safety policy.",
+        )
+
+    card = find_output_card_by_id(request.card_id)
+    if card is None:
+        return _reference_board_error(
+            404,
+            "output_card_not_found",
+            "Output card not found.",
+        )
+
+    item = _reference_board_item_from_card(
+        card=card,
+        selected_reason=request.selected_reason,
+        request_tags=request.tags,
+    )
+    try:
+        board = add_item_to_reference_board(safe_board_id, item)
+    except ValueError as exc:
+        if str(exc) == "reference_board_item_exists":
+            return _reference_board_error(
+                409,
+                "reference_board_item_exists",
+                "Output card is already selected in this board.",
+            )
+        return _reference_board_error(
+            403,
+            "reference_board_blocked",
+            "Reference board access blocked by safety policy.",
+        )
+
+    return {
+        "status": "ok",
+        "service": "gateway-reference-boards",
+        "board": board,
+        "item": item,
+    }
+
+
+@app.delete("/gateway/media/reference-boards/{board_id}/items/{item_id}", response_model=None)
+async def media_reference_board_remove_item(board_id: str, item_id: str) -> dict[str, Any] | JSONResponse:
+    try:
+        safe_board_id = sanitize_board_id(board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    try:
+        board = remove_item_from_reference_board(safe_board_id, item_id)
+    except FileNotFoundError:
+        return _reference_board_error(
+            404,
+            "reference_board_not_found",
+            "Reference board not found.",
+        )
+    except ValueError as exc:
+        if str(exc) == "reference_board_item_not_found":
+            return _reference_board_error(
+                404,
+                "reference_board_item_not_found",
+                "Reference board item not found.",
+            )
+        if str(exc) == "invalid_item_id":
+            return _reference_board_error(
+                400,
+                "invalid_item_id",
+                "Invalid reference board item id.",
+            )
+        return _reference_board_error(
+            403,
+            "reference_board_blocked",
+            "Reference board access blocked by safety policy.",
+        )
+
+    return {
+        "status": "ok",
+        "service": "gateway-reference-boards",
+        "board": board,
+        "removed_item_id": item_id,
     }
 
 
@@ -1249,6 +1365,41 @@ def _reference_board_error(status_code: int, error: str, detail: str) -> JSONRes
             "detail": detail,
         },
     )
+
+
+def _reference_board_item_from_card(
+    card: dict[str, Any],
+    selected_reason: str | None,
+    request_tags: list[str] | None,
+) -> dict[str, Any]:
+    card_tags = card.get("tags") if isinstance(card.get("tags"), list) else []
+    tags = _dedupe_strings([*card_tags, *(request_tags or [])])
+    return {
+        "item_id": item_id_for_card_id(str(card["id"])),
+        "card_id": card["id"],
+        "asset_type": card.get("type") or "unknown",
+        "name": card.get("name") or str(card["id"]),
+        "relative_runtime_path": card.get("relative_runtime_path"),
+        "metadata_path": card.get("metadata_path"),
+        "selected_reason": selected_reason.strip() if isinstance(selected_reason, str) and selected_reason.strip() else None,
+        "tags": tags,
+        "safety_label": card.get("safety_label") or "visual_reference_only",
+        "added_at": utc_now_iso(),
+    }
+
+
+def _dedupe_strings(values: list[Any]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for value in values:
+        if not isinstance(value, str):
+            continue
+        normalized = value.strip()
+        if not normalized or normalized in seen:
+            continue
+        seen.add(normalized)
+        result.append(normalized)
+    return result
 
 
 def _reference_board_safety() -> dict[str, bool]:

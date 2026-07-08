@@ -10,6 +10,7 @@ from typing import Any
 REFERENCE_BOARDS_ROOT = Path("/home/cuneyt/MoE/runtime/reference-boards")
 MAX_REFERENCE_BOARD_BYTES = 256 * 1024
 BOARD_ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
+ITEM_ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
 
 
 def ensure_reference_boards_root() -> Path:
@@ -83,6 +84,50 @@ def list_reference_boards() -> list[dict[str, Any]]:
             }
         )
     return sorted(boards, key=lambda board: str(board.get("updated_at") or ""), reverse=True)
+
+
+def item_id_for_card_id(card_id: str) -> str:
+    if ":" in card_id:
+        prefix, suffix = card_id.split(":", 1)
+        item_id = f"{prefix.lower()}-{re.sub(r'[^a-z0-9]+', '_', suffix.lower()).strip('_')}"
+    else:
+        item_id = re.sub(r"[^a-z0-9]+", "_", card_id.lower()).strip("_")
+    if not item_id:
+        raise ValueError("card_id cannot produce item_id")
+    return item_id[:120]
+
+
+def add_item_to_reference_board(board_id: str, item: dict[str, Any]) -> dict[str, Any]:
+    board = load_reference_board(board_id)
+    errors = validate_reference_board_item_shape(item)
+    if errors:
+        raise ValueError("; ".join(errors))
+
+    items = board.setdefault("items", [])
+    if not isinstance(items, list):
+        raise ValueError("items must be a list")
+    if any(existing.get("card_id") == item.get("card_id") for existing in items if isinstance(existing, dict)):
+        raise ValueError("reference_board_item_exists")
+
+    items.append(item)
+    write_reference_board(board)
+    return load_reference_board(board_id)
+
+
+def remove_item_from_reference_board(board_id: str, item_id: str) -> dict[str, Any]:
+    if not ITEM_ID_PATTERN.fullmatch(item_id):
+        raise ValueError("invalid_item_id")
+    board = load_reference_board(board_id)
+    items = board.get("items")
+    if not isinstance(items, list):
+        raise ValueError("items must be a list")
+
+    next_items = [item for item in items if not (isinstance(item, dict) and item.get("item_id") == item_id)]
+    if len(next_items) == len(items):
+        raise ValueError("reference_board_item_not_found")
+    board["items"] = next_items
+    write_reference_board(board)
+    return load_reference_board(board_id)
 
 
 def load_reference_board(board_id: str) -> dict[str, Any]:
@@ -168,14 +213,48 @@ def validate_reference_board_shape(board: dict[str, Any]) -> list[str]:
         if not isinstance(item, dict):
             errors.append(f"items[{index}] must be an object")
             continue
-        relative_runtime_path = item.get("relative_runtime_path")
-        if relative_runtime_path is None:
-            continue
+        errors.extend(f"items[{index}].{error}" for error in validate_reference_board_item_shape(item))
+    return errors
+
+
+def validate_reference_board_item_shape(item: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(item, dict):
+        return ["item must be an object"]
+
+    for field in ("item_id", "card_id", "asset_type", "name", "relative_runtime_path", "safety_label", "added_at"):
+        if not item.get(field):
+            errors.append(f"{field} is required")
+
+    item_id = item.get("item_id")
+    if isinstance(item_id, str) and not ITEM_ID_PATTERN.fullmatch(item_id):
+        errors.append("item_id contains unsupported characters")
+
+    selected_reason = item.get("selected_reason")
+    if selected_reason is not None and not isinstance(selected_reason, str):
+        errors.append("selected_reason must be a string")
+    if isinstance(selected_reason, str) and len(selected_reason) > 500:
+        errors.append("selected_reason is too long")
+
+    tags = item.get("tags")
+    if not isinstance(tags, list):
+        errors.append("tags must be a list")
+    elif len(tags) > 20:
+        errors.append("tags has too many values")
+    else:
+        for index, tag in enumerate(tags):
+            if not isinstance(tag, str) or not tag:
+                errors.append(f"tags[{index}] must be a non-empty string")
+            elif len(tag) > 60:
+                errors.append(f"tags[{index}] is too long")
+
+    relative_runtime_path = item.get("relative_runtime_path")
+    if relative_runtime_path is not None:
         if not isinstance(relative_runtime_path, str):
-            errors.append(f"items[{index}].relative_runtime_path must be a string")
-            continue
-        if relative_runtime_path.startswith("/"):
-            errors.append(f"items[{index}].relative_runtime_path must not be absolute")
-        if ".." in Path(relative_runtime_path).parts:
-            errors.append(f"items[{index}].relative_runtime_path must not contain traversal")
+            errors.append("relative_runtime_path must be a string")
+        else:
+            if relative_runtime_path.startswith("/"):
+                errors.append("relative_runtime_path must not be absolute")
+            if ".." in Path(relative_runtime_path).parts:
+                errors.append("relative_runtime_path must not contain traversal")
     return errors

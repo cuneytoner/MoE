@@ -2,6 +2,8 @@
 
 Use this template when reviewing a future reference board.
 
+Review selected board items after M34.17.
+
 ```text
 Date/time:
 Board title:
