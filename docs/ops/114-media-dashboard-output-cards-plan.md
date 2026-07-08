@@ -20,6 +20,8 @@ The dashboard should eventually show generated media and drawings as read-only o
 
 Output cards should use sidecar metadata when available.
 
+M34.5 implements the first read-only output cards API.
+
 ## Output Types
 
 - `image`

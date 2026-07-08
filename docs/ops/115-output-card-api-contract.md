@@ -4,6 +4,8 @@
 
 This document defines a future read-only API contract for generic media dashboard output cards.
 
+M34.5 implements the initial version of this contract.
+
 Proposed endpoint:
 
 ```text

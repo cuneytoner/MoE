@@ -160,6 +160,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Metadata sidecar policy | [122-metadata-sidecar-policy.md](122-metadata-sidecar-policy.md) |
 | Output card metadata integration | [123-output-card-metadata-integration.md](123-output-card-metadata-integration.md) |
 | Metadata review template | [124-metadata-review-template.md](124-metadata-review-template.md) |
+| Output cards API implementation | [125-output-cards-api-implementation.md](125-output-cards-api-implementation.md) |
+| Output cards API review template | [126-output-cards-api-review-template.md](126-output-cards-api-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -281,6 +283,8 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 114. [122 Metadata Sidecar Policy](122-metadata-sidecar-policy.md)
 115. [123 Output Card Metadata Integration](123-output-card-metadata-integration.md)
 116. [124 Metadata Review Template](124-metadata-review-template.md)
+117. [125 Output Cards API Implementation](125-output-cards-api-implementation.md)
+118. [126 Output Cards API Review Template](126-output-cards-api-review-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -329,3 +333,5 @@ For the generic drawing engine demo skeleton, read 112 and 113.
 For media dashboard output cards planning, read 114 through 118.
 
 For prompt metadata capture planning, read 119 through 124.
+
+For the read-only output cards API, read 125 and 126.

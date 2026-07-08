@@ -19,6 +19,8 @@ File metadata should provide name, path, modified time, and size. Sidecar metada
 
 The card API should expose this as `metadata_available` so the UI can distinguish full metadata cards from basic file cards.
 
+M34.5 exposes `metadata_available` and `metadata_path`, but full metadata parsing/display remains planned.
+
 ## Metadata Fields Shown In Detail Drawer
 
 - prompt

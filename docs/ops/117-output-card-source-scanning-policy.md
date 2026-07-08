@@ -12,6 +12,8 @@ This policy defines where a future output card API may look for files. The goal 
 
 Future implementation must scan only these allowlisted runtime folders unless a later milestone explicitly expands the list.
 
+M34.5 implements allowlisted scanning for images and SVG drawings.
+
 ## Supported Extensions
 
 - `.png`
