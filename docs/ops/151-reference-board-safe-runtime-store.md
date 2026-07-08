@@ -22,6 +22,8 @@ apps/gateway-api/app/reference_boards.py
 
 The helper provides board id validation, safe runtime path construction, JSON read/write helpers, empty board construction, and basic schema validation.
 
+M34.11 exposes the safe runtime store through Gateway API.
+
 ## JSON-only Policy
 
 Boards are JSON files only.

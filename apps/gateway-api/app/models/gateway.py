@@ -1,6 +1,6 @@
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class GatewayHealthResponse(BaseModel):
@@ -570,6 +570,14 @@ class GatewayMediaRealJobRequest(BaseModel):
     target_mode: Literal["image"] = "image"
     style: Literal["auto", "realistic", "technical", "cinematic", "product", "concept"] = "auto"
     confirm_real_generation: bool = False
+
+
+class ReferenceBoardCreateRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    board_id: str = Field(min_length=1, max_length=80)
+    title: str = Field(min_length=1, max_length=120)
+    description: str | None = Field(default=None, max_length=1000)
 
 
 class GatewayMediaPlanResponse(BaseModel):

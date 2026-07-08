@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.16 Reference Board Safe Runtime Store.
-- Next planned: M34.11 Reference Board API Implementation.
+- Latest completed: M34.11 Reference Board API Implementation.
+- Next planned: M34.17 Reference Board Item Selection API.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -45,13 +45,14 @@ Current media milestone status:
 - M34.8 Reference Board Selection Plan DONE
 - M34.9 Output Card Preview Serving Plan DONE
 - M34.10 Image Generation Metadata Sidecars DONE
-- M34.11 Reference Board API Implementation PLANNED
+- M34.11 Reference Board API Implementation DONE
 - M34.12 Reference Board UI Implementation PLANNED
 - M34.13 Output Preview API Implementation DONE
 - M34.14 Dashboard Preview UI Implementation DONE
 - M34.15 Output Card Metadata Detail Drawer DONE
 - M34.16 Reference Board Safe Runtime Store DONE
 - M34.17 Reference Board Item Selection API PLANNED
+- M34.18 Reference Board Output Card Integration PLANNED
 
 ## Milestone 0: Clean Codebase
 

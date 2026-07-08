@@ -152,6 +152,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Output Card Metadata Detail Review Template](ops/150-output-card-metadata-detail-review-template.md)
 - [Reference Board Safe Runtime Store](ops/151-reference-board-safe-runtime-store.md)
 - [Reference Board Store Review Template](ops/152-reference-board-store-review-template.md)
+- [Reference Board API Implementation](ops/153-reference-board-api-implementation.md)
+- [Reference Board API Review Template](ops/154-reference-board-api-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

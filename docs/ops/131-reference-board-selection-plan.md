@@ -27,6 +27,8 @@ Reference boards will benefit from safe output previews so operators can select 
 
 Reference board selection will build on the safe runtime store introduced in M34.16.
 
+M34.11 provides the initial API foundation before item selection.
+
 ## Reference Board Use Cases
 
 - choose best generated concept images

@@ -12,6 +12,8 @@ Boards are JSON files. They should remain runtime output by default.
 
 M34.16 implements the first safe runtime storage helper for board JSON files.
 
+Reference board API writes only board JSON files under the runtime reference board folder.
+
 ## Asset References
 
 Boards reference assets by `relative_runtime_path`.

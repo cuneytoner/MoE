@@ -26,6 +26,8 @@ Future API implementation should validate board IDs, item IDs, asset types, safe
 
 Future reference board API endpoints should use the M34.16 safe runtime store helpers.
 
+M34.11 implements list, read, and create reference board endpoints.
+
 ## Non-goals
 
 - No asset copying by default.

@@ -425,6 +425,8 @@ required_paths=(
   "docs/ops/150-output-card-metadata-detail-review-template.md"
   "docs/ops/151-reference-board-safe-runtime-store.md"
   "docs/ops/152-reference-board-store-review-template.md"
+  "docs/ops/153-reference-board-api-implementation.md"
+  "docs/ops/154-reference-board-api-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

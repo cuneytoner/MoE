@@ -62,6 +62,29 @@ def list_reference_board_files() -> list[Path]:
     return sorted(files)
 
 
+def list_reference_boards() -> list[dict[str, Any]]:
+    boards: list[dict[str, Any]] = []
+    for path in list_reference_board_files():
+        try:
+            board = load_reference_board(path.stem)
+        except (FileNotFoundError, ValueError, json.JSONDecodeError, OSError):
+            continue
+        items = board.get("items")
+        boards.append(
+            {
+                "board_id": board.get("board_id"),
+                "title": board.get("title"),
+                "description": board.get("description"),
+                "created_at": board.get("created_at"),
+                "updated_at": board.get("updated_at"),
+                "safety_label": board.get("safety_label"),
+                "item_count": len(items) if isinstance(items, list) else 0,
+                "path": str(path),
+            }
+        )
+    return sorted(boards, key=lambda board: str(board.get("updated_at") or ""), reverse=True)
+
+
 def load_reference_board(board_id: str) -> dict[str, Any]:
     path = board_path_for_id(board_id)
     if not is_safe_board_path(path):

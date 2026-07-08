@@ -22,6 +22,15 @@ from app.output_cards import (
     preview_media_type_for_path,
     safe_preview_path_for_card,
 )
+from app.reference_boards import (
+    REFERENCE_BOARDS_ROOT,
+    board_path_for_id,
+    build_empty_reference_board,
+    list_reference_boards,
+    load_reference_board,
+    sanitize_board_id,
+    write_reference_board,
+)
 from app.models.gateway import (
     GatewayChatRequest,
     GatewayChatProxyRequest,
@@ -72,6 +81,7 @@ from app.models.gateway import (
     OpenAIChatCompletionResponse,
     OpenAIChatCompletionUsage,
     OpenAIChatMessage,
+    ReferenceBoardCreateRequest,
 )
 from app.services.media_planner import local_media_plan
 from app.services.model_mapping import ModelMapping, get_model_mapping
@@ -375,6 +385,100 @@ async def media_output_card_metadata(card_id: str) -> dict[str, Any] | JSONRespo
         "card_id": card_id,
         "metadata_available": True,
         "metadata": metadata,
+    }
+
+
+@app.get("/gateway/media/reference-boards")
+async def media_reference_boards() -> dict[str, Any]:
+    return {
+        "status": "ok",
+        "service": "gateway-reference-boards",
+        "safety": _reference_board_safety(),
+        "root": str(REFERENCE_BOARDS_ROOT),
+        "boards": list_reference_boards(),
+    }
+
+
+@app.get("/gateway/media/reference-boards/{board_id}", response_model=None)
+async def media_reference_board(board_id: str) -> dict[str, Any] | JSONResponse:
+    try:
+        safe_board_id = sanitize_board_id(board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    try:
+        board = load_reference_board(safe_board_id)
+    except FileNotFoundError:
+        return _reference_board_error(
+            404,
+            "reference_board_not_found",
+            "Reference board not found.",
+        )
+    except ValueError:
+        return _reference_board_error(
+            403,
+            "reference_board_blocked",
+            "Reference board access blocked by safety policy.",
+        )
+
+    return {
+        "status": "ok",
+        "service": "gateway-reference-boards",
+        "board": board,
+    }
+
+
+@app.post("/gateway/media/reference-boards", status_code=201, response_model=None)
+async def media_reference_board_create(request: ReferenceBoardCreateRequest) -> dict[str, Any] | JSONResponse:
+    try:
+        safe_board_id = sanitize_board_id(request.board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    title = request.title.strip()
+    description = request.description.strip() if request.description is not None else None
+    if not title:
+        return _reference_board_error(
+            400,
+            "invalid_reference_board",
+            "Reference board title is required.",
+        )
+
+    path = board_path_for_id(safe_board_id)
+    if path.exists():
+        return _reference_board_error(
+            409,
+            "reference_board_conflict",
+            "Reference board already exists.",
+        )
+
+    board = build_empty_reference_board(
+        board_id=safe_board_id,
+        title=title,
+        description=description,
+    )
+    try:
+        write_reference_board(board)
+        created = load_reference_board(safe_board_id)
+    except ValueError:
+        return _reference_board_error(
+            403,
+            "reference_board_blocked",
+            "Reference board access blocked by safety policy.",
+        )
+
+    return {
+        "status": "ok",
+        "service": "gateway-reference-boards",
+        "board": created,
     }
 
 
@@ -1134,6 +1238,27 @@ def _metadata_error(status_code: int, error: str, detail: str) -> JSONResponse:
             "detail": detail,
         },
     )
+
+
+def _reference_board_error(status_code: int, error: str, detail: str) -> JSONResponse:
+    return JSONResponse(
+        status_code=status_code,
+        content={
+            "status": "error",
+            "error": error,
+            "detail": detail,
+        },
+    )
+
+
+def _reference_board_safety() -> dict[str, bool]:
+    return {
+        "read_only_assets": True,
+        "starts_services": False,
+        "stops_services": False,
+        "real_generation_trigger": False,
+        "arbitrary_shell": False,
+    }
 
 
 def _media_safety() -> GatewayMediaSafety:
