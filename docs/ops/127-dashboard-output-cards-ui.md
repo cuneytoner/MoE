@@ -12,6 +12,8 @@ GET /gateway/media/output-cards
 
 and displays generated image and SVG drawing cards in the main dashboard.
 
+After M34.7, drawing cards may show metadata instead of no metadata when matching sidecar JSON exists.
+
 ## API Used
 
 ```text

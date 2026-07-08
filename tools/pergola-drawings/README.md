@@ -11,6 +11,7 @@ Generic drawing engine skeleton now exists under `tools/drawing-engine`. Pergola
 - Uses Python standard library only.
 - Uses millimeter-based project geometry.
 - Generates `overview_skeleton.svg`, `side_elevation.svg`, and `top_plan.svg`.
+- Generates matching JSON sidecar metadata files for each SVG.
 - Writes generated SVG files to runtime by default.
 - Provides a source-code foundation for later side elevation, top plan, and detail drawings.
 
@@ -30,8 +31,13 @@ Generic drawing engine skeleton now exists under `tools/drawing-engine`. Pergola
 ## Generated Files
 
 - `overview_skeleton.svg`
+- `overview_skeleton.json`
 - `side_elevation.svg`
+- `side_elevation.json`
 - `top_plan.svg`
+- `top_plan.json`
+
+SVG outputs now get matching JSON sidecar metadata files. Metadata is runtime output and is not committed by default.
 
 ## How To Run
 
@@ -49,7 +55,7 @@ python3 tools/pergola-drawings/generate_pergola_svg.py --output-dir /home/cuneyt
 
 ```bash
 find /home/cuneyt/MoE/runtime/pergola/drawings \
-  -maxdepth 1 -type f -name '*.svg' \
+  -maxdepth 1 -type f \( -name '*.svg' -o -name '*.json' \) \
   -printf '%TY-%Tm-%Td %TH:%TM %s %p\n' | sort
 ```
 
@@ -63,4 +69,5 @@ Verify dimensions, materials, load paths, fasteners, anchors, drainage, and weat
 
 - Track source scripts and docs in Git.
 - Keep generated SVG/PDF/DXF outputs under runtime by default.
+- Keep generated JSON sidecar metadata under runtime by default.
 - Do not commit generated drawing outputs unless explicitly reviewed and intentionally added as small documentation assets.

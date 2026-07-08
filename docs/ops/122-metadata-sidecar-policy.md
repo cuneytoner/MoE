@@ -4,6 +4,8 @@
 
 Use the same basename as the generated asset and replace the extension with `.json`.
 
+M34.7 implements runtime sidecars for deterministic SVG drawing outputs.
+
 Examples:
 
 ```text

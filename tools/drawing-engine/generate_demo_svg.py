@@ -5,11 +5,14 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 
 PAGE_WIDTH = 1000
 PAGE_HEIGHT = 700
+RUNTIME_ROOT = Path("/home/cuneyt/MoE/runtime")
 DEFAULT_OUTPUT_DIR = "/home/cuneyt/MoE/runtime/drawings/demo"
 
 
@@ -83,6 +86,49 @@ def save_svg(output_dir: Path, filename: str, content: str) -> Path:
     return output_path
 
 
+def utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def relative_runtime_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(RUNTIME_ROOT.resolve()))
+    except (OSError, ValueError):
+        return path.name
+
+
+def drawing_kind_from_filename(filename: str) -> str:
+    return Path(filename).stem
+
+
+def write_json_metadata(svg_path: Path) -> Path:
+    metadata_path = svg_path.with_suffix(".json")
+    metadata = {
+        "schema_version": "1.0",
+        "asset_type": "drawing_svg",
+        "asset_name": svg_path.name,
+        "asset_path": str(svg_path),
+        "relative_runtime_path": relative_runtime_path(svg_path),
+        "created_at": utc_now_iso(),
+        "source": "deterministic-svg",
+        "script": "tools/drawing-engine/generate_demo_svg.py",
+        "project": "generic-drawing-engine-demo",
+        "drawing_kind": drawing_kind_from_filename(svg_path.name),
+        "units": "px",
+        "geometry": {
+            "page_width": PAGE_WIDTH,
+            "page_height": PAGE_HEIGHT,
+        },
+        "safety_label": "draft_drawing",
+        "notes": "Demo deterministic SVG. Not a construction document.",
+    }
+    metadata_path.write_text(
+        json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return metadata_path
+
+
 def build_demo_svg() -> str:
     parts = [
         svg_header(PAGE_WIDTH, PAGE_HEIGHT),
@@ -126,7 +172,10 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     output_path = save_svg(Path(args.output_dir), "demo_sheet.svg", build_demo_svg())
-    print(f"Wrote {output_path}")
+    metadata_path = write_json_metadata(output_path)
+    print("Generated:")
+    print(f"- {output_path.name} -> {output_path}")
+    print(f"- {metadata_path.name} -> {metadata_path}")
     return 0
 
 

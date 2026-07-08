@@ -43,6 +43,14 @@ The demo generator writes to:
 /home/cuneyt/MoE/runtime/drawings/demo/demo_sheet.svg
 ```
 
+It also writes matching sidecar metadata:
+
+```text
+/home/cuneyt/MoE/runtime/drawings/demo/demo_sheet.json
+```
+
+Metadata is runtime output.
+
 Use `--output-dir` for test output under `/tmp`.
 
 ## Git Policy

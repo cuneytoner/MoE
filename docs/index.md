@@ -128,6 +128,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Output Cards API Review Template](ops/126-output-cards-api-review-template.md)
 - [Dashboard Output Cards UI](ops/127-dashboard-output-cards-ui.md)
 - [Dashboard Output Cards UI Review Template](ops/128-dashboard-output-cards-ui-review-template.md)
+- [Drawing Metadata Sidecar Implementation](ops/129-drawing-metadata-sidecar-implementation.md)
+- [Drawing Metadata Sidecar Review Template](ops/130-drawing-metadata-sidecar-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

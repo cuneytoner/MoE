@@ -2,6 +2,8 @@
 
 This document defines the proposed sidecar JSON schema for deterministic drawing outputs.
 
+M34.7 implements the first drawing sidecar metadata generation for pergola drawings and generic drawing demo.
+
 ## JSON Example
 
 ```json

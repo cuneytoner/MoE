@@ -5,9 +5,12 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 
+RUNTIME_ROOT = Path("/home/cuneyt/MoE/runtime")
 DEFAULT_OUTPUT_DIR = Path("/home/cuneyt/MoE/runtime/pergola/drawings")
 
 WALL_WIDTH_MM = 5100
@@ -71,6 +74,57 @@ def save_svg(output_dir: Path, filename: str, content: str) -> Path:
     output_path = output_dir / filename
     output_path.write_text(content, encoding="utf-8")
     return output_path
+
+
+def utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def relative_runtime_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(RUNTIME_ROOT.resolve()))
+    except (OSError, ValueError):
+        return path.name
+
+
+def drawing_kind_from_filename(filename: str) -> str:
+    return Path(filename).stem
+
+
+def pergola_geometry() -> dict[str, int]:
+    return {
+        "wall_width_mm": WALL_WIDTH_MM,
+        "depth_mm": DEPTH_MM,
+        "roof_overhang_mm": ROOF_OVERHANG_MM,
+        "post_mm": POST_MM,
+        "beam_width_mm": BEAM_WIDTH_MM,
+        "beam_height_mm": BEAM_HEIGHT_MM,
+    }
+
+
+def write_json_metadata(svg_path: Path) -> Path:
+    metadata_path = svg_path.with_suffix(".json")
+    metadata = {
+        "schema_version": "1.0",
+        "asset_type": "drawing_svg",
+        "asset_name": svg_path.name,
+        "asset_path": str(svg_path),
+        "relative_runtime_path": relative_runtime_path(svg_path),
+        "created_at": utc_now_iso(),
+        "source": "deterministic-svg",
+        "script": "tools/pergola-drawings/generate_pergola_svg.py",
+        "project": "pergola-case-study",
+        "drawing_kind": drawing_kind_from_filename(svg_path.name),
+        "units": "mm",
+        "geometry": pergola_geometry(),
+        "safety_label": "draft_drawing",
+        "notes": "Draft deterministic SVG. Verify dimensions before build.",
+    }
+    metadata_path.write_text(
+        json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return metadata_path
 
 
 def scale_mm(value_mm: float, scale: float) -> float:
@@ -252,11 +306,16 @@ def main() -> int:
         ("side_elevation.svg", build_side_elevation()),
         ("top_plan.svg", build_top_plan()),
     ]
-    output_paths = [save_svg(args.output_dir, filename, content) for filename, content in generated]
+    output_pairs = []
+    for filename, content in generated:
+        svg_path = save_svg(args.output_dir, filename, content)
+        metadata_path = write_json_metadata(svg_path)
+        output_pairs.append((svg_path, metadata_path))
 
     print("Generated:")
-    for output_path in output_paths:
-        print(f"- {output_path.name} -> {output_path}")
+    for svg_path, metadata_path in output_pairs:
+        print(f"- {svg_path.name} -> {svg_path}")
+        print(f"- {metadata_path.name} -> {metadata_path}")
     return 0
 
 

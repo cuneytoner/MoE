@@ -21,6 +21,8 @@ The card API should expose this as `metadata_available` so the UI can distinguis
 
 M34.5 exposes `metadata_available` and `metadata_path`, but full metadata parsing/display remains planned.
 
+Output cards can now detect `metadata_available=true` for deterministic SVG drawings after the generators are run.
+
 ## Metadata Fields Shown In Detail Drawer
 
 - prompt

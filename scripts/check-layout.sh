@@ -400,6 +400,8 @@ required_paths=(
   "docs/ops/126-output-cards-api-review-template.md"
   "docs/ops/127-dashboard-output-cards-ui.md"
   "docs/ops/128-dashboard-output-cards-ui-review-template.md"
+  "docs/ops/129-drawing-metadata-sidecar-implementation.md"
+  "docs/ops/130-drawing-metadata-sidecar-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"
