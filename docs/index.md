@@ -145,6 +145,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Preview Serving Review Template](ops/143-preview-serving-review-template.md)
 - [Output Preview API Implementation](ops/144-output-preview-api-implementation.md)
 - [Output Preview API Review Template](ops/145-output-preview-api-review-template.md)
+- [Dashboard Preview UI Implementation](ops/146-dashboard-preview-ui-implementation.md)
+- [Dashboard Preview UI Review Template](ops/147-dashboard-preview-ui-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

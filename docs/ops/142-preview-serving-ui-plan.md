@@ -14,6 +14,8 @@ The UI should request previews by `card_id`, not by arbitrary path.
 
 Dashboard UI can use the image preview endpoint after M34.13.
 
+M34.14 implements dashboard image previews using the `card_id`-based preview endpoint.
+
 ## SVG Placeholder Behavior
 
 SVG cards should continue to show a placeholder until SVG preview serving has a safe sanitization policy.

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import { Alert, Box, Card, CardContent, CardHeader, Chip, Stack, Typography } from "@mui/material";
+import { gatewayBaseUrl } from "../api";
 import type { OutputCard } from "../types";
 import { StatusChip } from "./StatusChip";
 
@@ -73,6 +75,10 @@ export function OutputCards({ cards, error, loading }: Props) {
 }
 
 function OutputCardTile({ card }: { card: OutputCard }) {
+  const [previewFailed, setPreviewFailed] = useState(false);
+  const shouldShowImagePreview = card.type === "image" && card.preview_available === true && !previewFailed;
+  const previewUrl = `${gatewayBaseUrl()}/gateway/media/output-preview/${encodeURIComponent(card.id)}`;
+
   return (
     <Card variant="outlined">
       <CardContent>
@@ -101,12 +107,35 @@ function OutputCardTile({ card }: { card: OutputCard }) {
               border: "1px solid rgba(145, 158, 171, 0.24)",
               borderRadius: 1,
               display: "flex",
-              height: 72,
+              height: 120,
               justifyContent: "center",
+              overflow: "hidden",
+              position: "relative",
             }}
           >
-            {card.preview_available ? (
-              <ImageOutlinedIcon color="primary" fontSize="large" />
+            {shouldShowImagePreview ? (
+              <Box
+                alt=""
+                component="img"
+                loading="lazy"
+                onError={() => setPreviewFailed(true)}
+                src={previewUrl}
+                sx={{
+                  display: "block",
+                  height: "100%",
+                  objectFit: "cover",
+                  width: "100%",
+                }}
+              />
+            ) : card.type === "image" ? (
+              <Stack alignItems="center" spacing={0.5}>
+                <ImageOutlinedIcon color={previewFailed ? "disabled" : "primary"} fontSize="large" />
+                {previewFailed ? (
+                  <Typography color="text.secondary" variant="caption">
+                    preview unavailable
+                  </Typography>
+                ) : null}
+              </Stack>
             ) : (
               <InsertDriveFileOutlinedIcon color="disabled" fontSize="large" />
             )}

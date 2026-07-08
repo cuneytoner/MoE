@@ -417,6 +417,8 @@ required_paths=(
   "docs/ops/143-preview-serving-review-template.md"
   "docs/ops/144-output-preview-api-implementation.md"
   "docs/ops/145-output-preview-api-review-template.md"
+  "docs/ops/146-dashboard-preview-ui-implementation.md"
+  "docs/ops/147-dashboard-preview-ui-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

@@ -6,6 +6,8 @@ M34.13 adds the first safe read-only output preview endpoint for image output ca
 
 The endpoint resolves a `card_id` through the existing output-cards allowlisted scan before serving any bytes.
 
+M34.14 consumes this endpoint in the dashboard UI for image cards.
+
 ## Endpoint
 
 ```text
@@ -96,7 +98,6 @@ curl -i "http://127.0.0.1:8100/gateway/media/output-preview/${SVG_CARD_ID}"
 - No SVG preview serving.
 - No PDF preview serving.
 - No thumbnail generation.
-- No dashboard preview UI.
 - No download action.
 - No preview modal.
 
