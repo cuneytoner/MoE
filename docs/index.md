@@ -136,6 +136,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board UI Plan](ops/134-reference-board-ui-plan.md)
 - [Reference Board API Plan](ops/135-reference-board-api-plan.md)
 - [Reference Board Review Template](ops/136-reference-board-review-template.md)
+- [Image Metadata Sidecar Implementation](ops/137-image-metadata-sidecar-implementation.md)
+- [Image Metadata Sidecar Review Template](ops/138-image-metadata-sidecar-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

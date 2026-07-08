@@ -19,6 +19,11 @@ RUN_ID="$(date +%Y%m%d_%H%M%S)"
 FILENAME_PREFIX="${FILENAME_PREFIX:-moe_flux_first_${RUN_ID}}"
 SEED="${SEED:-$(date +%s)}"
 STRICT_NEW_OUTPUT="${STRICT_NEW_OUTPUT:-0}"
+SCRIPT_NAME="scripts/comfyui-first-image.sh"
+WORKFLOW_NAME="flux-schnell-first-image"
+MODEL_FAMILY="flux"
+MODEL_NAME="flux1-schnell"
+SAFETY_LABEL="visual_reference_only"
 
 echo "ComfyUI first Flux Schnell image"
 echo "  apply: $APPLY"
@@ -33,6 +38,75 @@ echo "  steps: $STEPS"
 echo "  seed: $SEED"
 echo "  filename prefix: $FILENAME_PREFIX"
 echo "  strict new output: $STRICT_NEW_OUTPUT"
+
+write_image_metadata() {
+  local image_path="$1"
+  local metadata_path="${image_path%.*}.json"
+
+  if [ ! -f "$image_path" ]; then
+    echo "WARN: cannot write metadata, output image missing: $image_path"
+    return 0
+  fi
+
+  python3 - "$image_path" "$metadata_path" "$RUNTIME_ROOT" "$PROMPT" "$WIDTH" "$HEIGHT" "$STEPS" "$SEED" "$FILENAME_PREFIX" "$SCRIPT_NAME" "$WORKFLOW_NAME" "$MODEL_FAMILY" "$MODEL_NAME" "$SAFETY_LABEL" <<'PY'
+import json
+import pathlib
+import sys
+from datetime import datetime, timezone
+
+(
+    image_path,
+    metadata_path,
+    runtime_root,
+    prompt,
+    width,
+    height,
+    steps,
+    seed,
+    filename_prefix,
+    script_name,
+    workflow_name,
+    model_family,
+    model_name,
+    safety_label,
+) = sys.argv[1:]
+
+image = pathlib.Path(image_path)
+metadata = pathlib.Path(metadata_path)
+runtime = pathlib.Path(runtime_root)
+
+try:
+    relative_runtime_path = image.relative_to(runtime).as_posix()
+except ValueError:
+    relative_runtime_path = ""
+
+payload = {
+    "schema_version": "1.0",
+    "asset_type": "image",
+    "asset_name": image.name,
+    "asset_path": str(image),
+    "relative_runtime_path": relative_runtime_path,
+    "created_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+    "source": "comfyui",
+    "script": script_name,
+    "workflow": workflow_name,
+    "model_family": model_family,
+    "model_name": model_name,
+    "prompt": prompt,
+    "negative_prompt": None,
+    "width": int(width),
+    "height": int(height),
+    "steps": int(steps),
+    "seed": int(seed),
+    "filename_prefix": filename_prefix,
+    "safety_label": safety_label,
+    "notes": "Generated visual reference. Not a construction document.",
+}
+
+metadata.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+PY
+  echo "METADATA: $metadata_path"
+}
 
 if [ "$APPLY" != "1" ]; then
   echo ""
@@ -145,6 +219,7 @@ for attempt in $(seq 1 120); do
         cp "$image_path" "$target"
         echo "COPIED: $target"
       fi
+      write_image_metadata "$target"
       copied=1
     done <"$found_list"
     if [ "$copied" = "1" ]; then

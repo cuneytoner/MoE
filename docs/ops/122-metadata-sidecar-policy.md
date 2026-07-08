@@ -6,6 +6,8 @@ Use the same basename as the generated asset and replace the extension with `.js
 
 M34.7 implements runtime sidecars for deterministic SVG drawing outputs.
 
+M34.10 writes image sidecars next to generated runtime images produced by `scripts/comfyui-first-image.sh`.
+
 Examples:
 
 ```text
@@ -21,6 +23,8 @@ side_elevation.json
 Place the sidecar JSON next to the generated output file in runtime.
 
 Metadata should stay close to the asset so future output cards can match the file and metadata without a central database.
+
+Image sidecars are written next to generated runtime images under `/home/cuneyt/MoE/runtime/media/outputs/images`.
 
 ## Runtime-only Default
 

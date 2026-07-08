@@ -2,6 +2,8 @@
 
 This document defines the proposed sidecar JSON schema for generated image outputs.
 
+M34.10 implements the first image sidecar metadata generation for `scripts/comfyui-first-image.sh`.
+
 ## JSON Example
 
 ```json

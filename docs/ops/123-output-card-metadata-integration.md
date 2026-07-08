@@ -23,6 +23,8 @@ M34.5 exposes `metadata_available` and `metadata_path`, but full metadata parsin
 
 Output cards can now detect `metadata_available=true` for deterministic SVG drawings after the generators are run.
 
+After M34.10, newly generated image cards can also show `metadata_available=true` when `scripts/comfyui-first-image.sh` creates a matching JSON sidecar.
+
 Reference boards should use output card metadata when available.
 
 ## Metadata Fields Shown In Detail Drawer

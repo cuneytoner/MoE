@@ -172,6 +172,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board UI plan | [134-reference-board-ui-plan.md](134-reference-board-ui-plan.md) |
 | Reference board API plan | [135-reference-board-api-plan.md](135-reference-board-api-plan.md) |
 | Reference board review template | [136-reference-board-review-template.md](136-reference-board-review-template.md) |
+| Image metadata sidecar implementation | [137-image-metadata-sidecar-implementation.md](137-image-metadata-sidecar-implementation.md) |
+| Image metadata sidecar review template | [138-image-metadata-sidecar-review-template.md](138-image-metadata-sidecar-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

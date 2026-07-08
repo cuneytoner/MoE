@@ -408,6 +408,8 @@ required_paths=(
   "docs/ops/134-reference-board-ui-plan.md"
   "docs/ops/135-reference-board-api-plan.md"
   "docs/ops/136-reference-board-review-template.md"
+  "docs/ops/137-image-metadata-sidecar-implementation.md"
+  "docs/ops/138-image-metadata-sidecar-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"
