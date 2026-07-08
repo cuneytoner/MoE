@@ -20,6 +20,8 @@ M34.6 implements the first read-only dashboard output cards UI.
 
 Cards should show metadata badges and a future metadata detail drawer.
 
+Dashboard card thumbnails should use a safe preview endpoint when implemented. Until then, placeholders remain expected.
+
 ## Filters
 
 - images
@@ -54,3 +56,4 @@ The error state should not suggest destructive cleanup or runtime mutation.
 - reference board selection
 - prompt metadata drawer
 - metadata detail drawer
+- safe output preview thumbnails

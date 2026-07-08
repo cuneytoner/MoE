@@ -4,6 +4,8 @@
 
 The dashboard should eventually let operators build reference boards from output cards while keeping generated assets untouched.
 
+Reference board UI should reuse the same safe preview endpoint planned for output cards.
+
 ## Planned Actions
 
 - Select card for board.

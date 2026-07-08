@@ -24,6 +24,8 @@ M34.5 implements the first read-only output cards API.
 
 Output cards are intended to feed future reference boards.
 
+Preview serving is planned in M34.9 and must remain allowlist-based. Previews should resolve through output cards rather than arbitrary filesystem paths.
+
 ## Output Types
 
 - `image`
@@ -109,3 +111,4 @@ Allowlisted runtime output roots for future cards:
 - Implement a read-only output cards API.
 - Implement dashboard output cards UI.
 - Add reference-board and compare workflows after card behavior is stable.
+- Implement safe output-card preview serving after the preview security policy is reviewed.

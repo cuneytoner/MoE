@@ -23,6 +23,8 @@ The dashboard can display output cards, but there is no selection workflow yet.
 
 Future reference boards should let an operator select output cards into named boards, add selection reasons, preserve safety labels, and prepare review sets for later UI workflows.
 
+Reference boards will benefit from safe output previews so operators can select images and drawings without opening runtime folders directly.
+
 ## Reference Board Use Cases
 
 - choose best generated concept images

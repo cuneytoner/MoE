@@ -16,6 +16,8 @@ M34.5 implements allowlisted scanning for images and SVG drawings.
 
 Gateway scans allowlisted runtime folders only after those folders are mounted read-only into the container.
 
+Preview serving must reuse output-card allowlist validation. A preview request should resolve to a known card before any file bytes are served.
+
 ## Supported Extensions
 
 - `.png`
@@ -43,4 +45,4 @@ Sidecar `.json` files are allowed only when matched to supported media/drawing a
 
 ## Result Boundaries
 
-The future scanner should limit result count, sort newest first, and report metadata only. It should not open files for arbitrary content inspection except for safe preview behavior planned in a later milestone.
+The future scanner should limit result count, sort newest first, and report metadata only. It should not open files for arbitrary content inspection except for safe preview behavior planned in M34.9 and implemented later.

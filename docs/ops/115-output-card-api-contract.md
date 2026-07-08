@@ -85,3 +85,5 @@ GET /gateway/media/output-cards
 ## Future Notes
 
 The API should use structured filesystem APIs and explicit allowlists. It should never accept arbitrary user-provided paths for browsing.
+
+Output cards may later expose `preview_url` only after safe preview-serving implementation. Preview serving should resolve by card id through the output-card allowlisted scan.

@@ -174,6 +174,11 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board review template | [136-reference-board-review-template.md](136-reference-board-review-template.md) |
 | Image metadata sidecar implementation | [137-image-metadata-sidecar-implementation.md](137-image-metadata-sidecar-implementation.md) |
 | Image metadata sidecar review template | [138-image-metadata-sidecar-review-template.md](138-image-metadata-sidecar-review-template.md) |
+| Output card preview serving plan | [139-output-card-preview-serving-plan.md](139-output-card-preview-serving-plan.md) |
+| Preview serving API contract | [140-preview-serving-api-contract.md](140-preview-serving-api-contract.md) |
+| Preview serving security policy | [141-preview-serving-security-policy.md](141-preview-serving-security-policy.md) |
+| Preview serving UI plan | [142-preview-serving-ui-plan.md](142-preview-serving-ui-plan.md) |
+| Preview serving review template | [143-preview-serving-review-template.md](143-preview-serving-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
