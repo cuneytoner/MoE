@@ -6,6 +6,8 @@ M34.15 adds a read-only Gateway endpoint for output card metadata sidecars.
 
 The endpoint returns safe JSON metadata only for cards resolved through the existing output-cards allowlisted scan.
 
+M34.12.1 changes output card ids to `{type}:{relative_runtime_path}`. The metadata endpoint continues to resolve by `card_id` through the output-card scan.
+
 ## Endpoint
 
 ```text
@@ -32,6 +34,8 @@ GET /gateway/media/output-cards
 ```
 
 It then reads only the matching card sidecar from `metadata_path`.
+
+Card ids may include relative runtime path separators after M34.12.1. The endpoint still treats the value as an opaque card id and does not use it as a filesystem path.
 
 The metadata sidecar must be the same-basename `.json` file next to the known asset.
 

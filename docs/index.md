@@ -158,6 +158,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Item Selection Review Template](ops/156-reference-board-item-selection-review-template.md)
 - [Reference Board UI Implementation](ops/157-reference-board-ui-implementation.md)
 - [Reference Board UI Review Template](ops/158-reference-board-ui-review-template.md)
+- [Reference Board UI CORS + Card ID Fix](ops/159-reference-board-ui-cors-card-id-fix.md)
+- [Reference Board UI CORS + Card ID Review Template](ops/160-reference-board-ui-cors-card-id-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

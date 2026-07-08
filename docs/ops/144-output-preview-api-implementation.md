@@ -8,6 +8,8 @@ The endpoint resolves a `card_id` through the existing output-cards allowlisted 
 
 M34.14 consumes this endpoint in the dashboard UI for image cards.
 
+M34.12.1 changes output card ids to `{type}:{relative_runtime_path}`. The preview endpoint continues to resolve by `card_id` through the output-card scan.
+
 ## Endpoint
 
 ```text
@@ -52,6 +54,8 @@ Initial support is image-only:
 ## How card_id Resolution Works
 
 The preview endpoint accepts only `card_id`.
+
+Card ids may include relative runtime path separators after M34.12.1. The endpoint still treats the value as an opaque card id and does not use it as a filesystem path.
 
 The server scans the same allowlisted runtime folders used by:
 

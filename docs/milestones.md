@@ -2,7 +2,7 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.12 Reference Board UI Implementation.
+- Latest completed: M34.12.1 Reference Board UI CORS + Unique Card Keys Fix.
 - Next planned: M34.18 Reference Board Output Card Integration.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
@@ -47,6 +47,7 @@ Current media milestone status:
 - M34.10 Image Generation Metadata Sidecars DONE
 - M34.11 Reference Board API Implementation DONE
 - M34.12 Reference Board UI Implementation DONE
+- M34.12.1 Reference Board UI CORS + Unique Card Keys Fix DONE
 - M34.13 Output Preview API Implementation DONE
 - M34.14 Dashboard Preview UI Implementation DONE
 - M34.15 Output Card Metadata Detail Drawer DONE

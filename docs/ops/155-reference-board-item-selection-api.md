@@ -8,6 +8,8 @@ The API validates each selected item by resolving `card_id` through the existing
 
 M34.12 uses these endpoints from the dashboard `Reference Boards` and `Media Output Cards` sections.
 
+M34.12.1 updates output cards to use relative-runtime-path based card ids, avoiding duplicate item references when files share the same basename in different folders.
+
 ## Endpoints
 
 ```text

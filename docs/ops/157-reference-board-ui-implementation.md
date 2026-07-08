@@ -6,6 +6,8 @@ M34.12 adds dashboard UI support for reference boards.
 
 The dashboard can list boards, create a board, select an active board, add output cards to the active board, show board items, and remove item references from a board.
 
+M34.12.1 fixes dashboard-to-Gateway CORS for reference-board writes and stabilizes output card ids so duplicate filenames do not create duplicate React keys.
+
 ## API Endpoints Used
 
 ```text

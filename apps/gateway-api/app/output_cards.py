@@ -223,12 +223,13 @@ def _build_card(path: Path) -> dict[str, Any] | None:
     card_type = _card_type(path)
     metadata_path = path.with_suffix(".json")
     metadata_available = metadata_path.is_file() and not _has_hidden_part(metadata_path)
+    relative_runtime_path = _relative_runtime_path(path)
     card = {
-        "id": f"{card_type}:{path.name}",
+        "id": f"{card_type}:{relative_runtime_path}",
         "type": card_type,
         "name": path.name,
         "path": str(path),
-        "relative_runtime_path": _relative_runtime_path(path),
+        "relative_runtime_path": relative_runtime_path,
         "modified": datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat(),
         "size_bytes": stat.st_size,
         "preview_available": card_type == "image",

@@ -58,6 +58,7 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.10 Image Generation Metadata Sidecars DONE
 - M34.11 Reference Board API Implementation DONE
 - M34.12 Reference Board UI Implementation DONE
+- M34.12.1 Reference Board UI CORS + Unique Card Keys Fix DONE
 - M34.13 Output Preview API Implementation DONE
 - M34.14 Dashboard Preview UI Implementation DONE
 - M34.15 Output Card Metadata Detail Drawer DONE

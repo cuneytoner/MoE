@@ -194,6 +194,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board item selection review template | [156-reference-board-item-selection-review-template.md](156-reference-board-item-selection-review-template.md) |
 | Reference board UI implementation | [157-reference-board-ui-implementation.md](157-reference-board-ui-implementation.md) |
 | Reference board UI review template | [158-reference-board-ui-review-template.md](158-reference-board-ui-review-template.md) |
+| Reference board UI CORS + card ID fix | [159-reference-board-ui-cors-card-id-fix.md](159-reference-board-ui-cors-card-id-fix.md) |
+| Reference board UI CORS + card ID review template | [160-reference-board-ui-cors-card-id-review-template.md](160-reference-board-ui-cors-card-id-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

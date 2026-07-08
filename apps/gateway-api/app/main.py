@@ -130,8 +130,8 @@ app = FastAPI(title="MoE Gateway API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://127.0.0.1:8500", "http://localhost:8500"],
-    allow_methods=["GET"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Accept", "Origin", "Authorization"],
 )
 
 
@@ -315,7 +315,7 @@ async def media_output_cards() -> dict[str, Any]:
     return build_output_cards()
 
 
-@app.get("/gateway/media/output-preview/{card_id}", response_model=None)
+@app.get("/gateway/media/output-preview/{card_id:path}", response_model=None)
 async def media_output_preview(card_id: str) -> FileResponse | JSONResponse:
     card = find_output_card_by_id(card_id)
     if card is None:
@@ -354,7 +354,7 @@ async def media_output_preview(card_id: str) -> FileResponse | JSONResponse:
     )
 
 
-@app.get("/gateway/media/output-card-metadata/{card_id}", response_model=None)
+@app.get("/gateway/media/output-card-metadata/{card_id:path}", response_model=None)
 async def media_output_card_metadata(card_id: str) -> dict[str, Any] | JSONResponse:
     card = find_output_card_by_id(card_id)
     if card is None:
