@@ -15,6 +15,12 @@ IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 DRAWING_EXTENSIONS = {".svg"}
 SUPPORTED_EXTENSIONS = IMAGE_EXTENSIONS | DRAWING_EXTENSIONS
 DENIED_EXTENSIONS = {".gguf", ".safetensors", ".pt", ".pth", ".ckpt"}
+PREVIEW_MEDIA_TYPES = {
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".webp": "image/webp",
+}
 MAX_OUTPUT_CARDS = 100
 
 
@@ -34,6 +40,54 @@ def build_output_cards(max_cards: int = MAX_OUTPUT_CARDS) -> dict[str, Any]:
         "max_cards": MAX_OUTPUT_CARDS,
         "cards": cards,
     }
+
+
+def find_output_card_by_id(card_id: str, max_cards: int = MAX_OUTPUT_CARDS) -> dict[str, Any] | None:
+    for card in _scan_cards(max(0, int(max_cards))):
+        if card.get("id") == card_id:
+            return card
+    return None
+
+
+def is_preview_extension_allowed(path: Path) -> bool:
+    return path.suffix.lower() in PREVIEW_MEDIA_TYPES
+
+
+def preview_media_type_for_path(path: Path) -> str | None:
+    return PREVIEW_MEDIA_TYPES.get(path.suffix.lower())
+
+
+def safe_preview_path_for_card(card: dict[str, Any]) -> tuple[Path | None, str | None]:
+    if card.get("type") != "image" or card.get("preview_available") is not True:
+        return None, "preview_unavailable"
+
+    raw_path = card.get("path")
+    if not isinstance(raw_path, str) or not raw_path:
+        return None, "preview_blocked"
+
+    path = Path(raw_path)
+    if _has_hidden_part(path):
+        return None, "preview_blocked"
+    if not is_preview_extension_allowed(path):
+        return None, "preview_blocked"
+    if not _is_under_allowlisted_root(path):
+        return None, "preview_blocked"
+
+    try:
+        resolved = path.resolve(strict=True)
+    except OSError:
+        return None, "preview_blocked"
+
+    if _has_hidden_part(resolved):
+        return None, "preview_blocked"
+    if not resolved.is_file():
+        return None, "preview_blocked"
+    if not _is_under_allowlisted_root(resolved):
+        return None, "preview_blocked"
+    if not is_preview_extension_allowed(resolved):
+        return None, "preview_blocked"
+
+    return resolved, None
 
 
 def _scan_cards(max_cards: int) -> list[dict[str, Any]]:

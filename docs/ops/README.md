@@ -179,6 +179,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Preview serving security policy | [141-preview-serving-security-policy.md](141-preview-serving-security-policy.md) |
 | Preview serving UI plan | [142-preview-serving-ui-plan.md](142-preview-serving-ui-plan.md) |
 | Preview serving review template | [143-preview-serving-review-template.md](143-preview-serving-review-template.md) |
+| Output preview API implementation | [144-output-preview-api-implementation.md](144-output-preview-api-implementation.md) |
+| Output preview API review template | [145-output-preview-api-review-template.md](145-output-preview-api-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

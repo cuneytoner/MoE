@@ -12,6 +12,8 @@ Image cards should use the future `output-preview` endpoint after it is implemen
 
 The UI should request previews by `card_id`, not by arbitrary path.
 
+Dashboard UI can use the image preview endpoint after M34.13.
+
 ## SVG Placeholder Behavior
 
 SVG cards should continue to show a placeholder until SVG preview serving has a safe sanitization policy.

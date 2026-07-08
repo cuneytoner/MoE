@@ -19,6 +19,8 @@ Future output cards should support a safe preview URL for supported assets.
 
 The preview service should resolve a preview request through the output-card allowlisted scan, not through arbitrary user-provided filesystem paths.
 
+M34.13 implements initial image-only preview serving for known output cards.
+
 ## Supported Preview Types
 
 - image thumbnail or direct safe image preview

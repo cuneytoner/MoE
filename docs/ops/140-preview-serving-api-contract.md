@@ -10,6 +10,8 @@ Recommended endpoint:
 GET /gateway/media/output-preview/{card_id}
 ```
 
+M34.13 implements `GET /gateway/media/output-preview/{card_id}` for image cards only.
+
 Alternative considered:
 
 ```text

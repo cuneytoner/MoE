@@ -30,6 +30,8 @@ Only these preview extensions should be allowed at first:
 - `.jpeg`
 - `.webp`
 
+The initial M34.13 implementation serves only raster image formats and blocks SVG.
+
 Maybe later, after sanitization policy:
 
 - `.svg`

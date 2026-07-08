@@ -5,7 +5,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import ValidationError
 
 from app.clients.embed_worker import EmbedWorkerClient
@@ -15,7 +15,12 @@ from app.clients.model_runtime import ModelRuntimeClient, ModelRuntimeUnavailabl
 from app.clients.prompt_interpreter import PromptInterpreterClient
 from app.config import get_settings
 from app.media_dashboard import build_media_dashboard
-from app.output_cards import build_output_cards
+from app.output_cards import (
+    build_output_cards,
+    find_output_card_by_id,
+    preview_media_type_for_path,
+    safe_preview_path_for_card,
+)
 from app.models.gateway import (
     GatewayChatRequest,
     GatewayChatProxyRequest,
@@ -292,6 +297,45 @@ async def media_dashboard() -> dict[str, Any]:
 @app.get("/gateway/media/output-cards")
 async def media_output_cards() -> dict[str, Any]:
     return build_output_cards()
+
+
+@app.get("/gateway/media/output-preview/{card_id}", response_model=None)
+async def media_output_preview(card_id: str) -> FileResponse | JSONResponse:
+    card = find_output_card_by_id(card_id)
+    if card is None:
+        return _preview_error(
+            404,
+            "preview_unavailable",
+            "No allowlisted output card matched the requested card_id.",
+        )
+
+    preview_path, error = safe_preview_path_for_card(card)
+    if error == "preview_unavailable":
+        return _preview_error(
+            404,
+            "preview_unavailable",
+            "Preview is not available for this card type.",
+        )
+    if error is not None or preview_path is None:
+        return _preview_error(
+            403,
+            "preview_blocked",
+            "Preview blocked by safety policy.",
+        )
+
+    media_type = preview_media_type_for_path(preview_path)
+    if media_type is None:
+        return _preview_error(
+            403,
+            "preview_blocked",
+            "Preview blocked by safety policy.",
+        )
+
+    return FileResponse(
+        path=preview_path,
+        media_type=media_type,
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/gateway/runtime/dashboard")
@@ -1028,6 +1072,17 @@ async def _build_media_plan(prompt: str, target_mode: str, style: str) -> dict[s
         warnings.insert(0, warning)
         fallback["warnings"] = warnings
     return fallback
+
+
+def _preview_error(status_code: int, error: str, detail: str) -> JSONResponse:
+    return JSONResponse(
+        status_code=status_code,
+        content={
+            "status": "error",
+            "error": error,
+            "detail": detail,
+        },
+    )
 
 
 def _media_safety() -> GatewayMediaSafety:
