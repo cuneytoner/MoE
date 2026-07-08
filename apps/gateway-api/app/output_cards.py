@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -22,6 +23,7 @@ PREVIEW_MEDIA_TYPES = {
     ".webp": "image/webp",
 }
 MAX_OUTPUT_CARDS = 100
+MAX_METADATA_BYTES = 128 * 1024
 
 
 def build_output_cards(max_cards: int = MAX_OUTPUT_CARDS) -> dict[str, Any]:
@@ -88,6 +90,68 @@ def safe_preview_path_for_card(card: dict[str, Any]) -> tuple[Path | None, str |
         return None, "preview_blocked"
 
     return resolved, None
+
+
+def is_metadata_json_allowed(path: Path) -> bool:
+    return path.suffix.lower() == ".json" and not _has_hidden_part(path) and _is_under_allowlisted_root(path)
+
+
+def safe_metadata_path_for_card(card: dict[str, Any]) -> tuple[Path | None, str | None]:
+    if card.get("metadata_available") is not True:
+        return None, "metadata_unavailable"
+
+    raw_asset_path = card.get("path")
+    raw_metadata_path = card.get("metadata_path")
+    if not isinstance(raw_asset_path, str) or not isinstance(raw_metadata_path, str):
+        return None, "metadata_blocked"
+
+    asset_path = Path(raw_asset_path)
+    metadata_path = Path(raw_metadata_path)
+    if not is_metadata_json_allowed(metadata_path):
+        return None, "metadata_blocked"
+    if not _is_under_allowlisted_root(asset_path):
+        return None, "metadata_blocked"
+
+    try:
+        resolved_asset = asset_path.resolve(strict=True)
+        resolved_metadata = metadata_path.resolve(strict=True)
+    except OSError:
+        return None, "metadata_unavailable"
+
+    if _has_hidden_part(resolved_asset) or _has_hidden_part(resolved_metadata):
+        return None, "metadata_blocked"
+    if not resolved_asset.is_file() or not resolved_metadata.is_file():
+        return None, "metadata_unavailable"
+    if not _is_under_allowlisted_root(resolved_asset) or not _is_under_allowlisted_root(resolved_metadata):
+        return None, "metadata_blocked"
+    if resolved_metadata != resolved_asset.with_suffix(".json"):
+        return None, "metadata_blocked"
+
+    try:
+        if resolved_metadata.stat().st_size > MAX_METADATA_BYTES:
+            return None, "metadata_blocked"
+    except OSError:
+        return None, "metadata_unavailable"
+
+    return resolved_metadata, None
+
+
+def load_output_card_metadata(card: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
+    metadata_path, error = safe_metadata_path_for_card(card)
+    if error is not None or metadata_path is None:
+        return None, error
+
+    try:
+        raw_metadata = metadata_path.read_text(encoding="utf-8")
+        metadata = json.loads(raw_metadata)
+    except json.JSONDecodeError:
+        return None, "metadata_invalid"
+    except OSError:
+        return None, "metadata_unavailable"
+
+    if not isinstance(metadata, dict):
+        return None, "metadata_invalid"
+    return metadata, None
 
 
 def _scan_cards(max_cards: int) -> list[dict[str, Any]]:

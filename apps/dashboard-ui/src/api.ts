@@ -1,4 +1,10 @@
-import type { DashboardModel, MemoryApprovalDashboardModel, OutputCardsResponse, RuntimeDashboardModel } from "./types";
+import type {
+  DashboardModel,
+  MemoryApprovalDashboardModel,
+  OutputCardMetadataResponse,
+  OutputCardsResponse,
+  RuntimeDashboardModel,
+} from "./types";
 
 const gatewayUrl = import.meta.env.VITE_GATEWAY_API_URL ?? "http://127.0.0.1:8100";
 
@@ -30,6 +36,14 @@ export async function fetchOutputCards(): Promise<OutputCardsResponse> {
   const response = await fetch(`${gatewayUrl}/gateway/media/output-cards`);
   if (!response.ok) {
     throw new Error(`Gateway output cards returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchOutputCardMetadata(cardId: string): Promise<OutputCardMetadataResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/output-card-metadata/${encodeURIComponent(cardId)}`);
+  if (!response.ok) {
+    throw new Error(`Gateway output card metadata returned HTTP ${response.status}`);
   }
   return response.json();
 }

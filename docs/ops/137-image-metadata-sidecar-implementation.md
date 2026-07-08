@@ -74,6 +74,8 @@ metadata_available=true
 
 when the image has a matching sidecar JSON file.
 
+M34.15 can display image metadata in the dashboard.
+
 ## Safety Rules
 
 - Do not store secrets.

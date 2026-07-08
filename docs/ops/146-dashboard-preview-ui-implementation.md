@@ -6,6 +6,8 @@ M34.14 updates the dashboard output cards UI so image cards can display real pre
 
 Drawing and SVG cards keep the placeholder UI.
 
+Metadata detail view is added after preview UI in M34.15.
+
 ## Endpoint Used
 
 ```text

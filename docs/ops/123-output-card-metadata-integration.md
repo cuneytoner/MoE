@@ -25,6 +25,8 @@ Output cards can now detect `metadata_available=true` for deterministic SVG draw
 
 After M34.10, newly generated image cards can also show `metadata_available=true` when `scripts/comfyui-first-image.sh` creates a matching JSON sidecar.
 
+M34.15 implements read-only metadata detail viewing through a `card_id`-based metadata endpoint.
+
 Reference boards should use output card metadata when available.
 
 ## Metadata Fields Shown In Detail Drawer

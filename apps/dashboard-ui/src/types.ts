@@ -316,3 +316,11 @@ export type OutputCardsResponse = {
   max_cards: number;
   cards: OutputCard[];
 };
+
+export type OutputCardMetadataResponse = {
+  status: string;
+  service: string;
+  card_id: string;
+  metadata_available: boolean;
+  metadata: Record<string, unknown>;
+};

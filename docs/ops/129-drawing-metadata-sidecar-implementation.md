@@ -50,6 +50,8 @@ Metadata sidecars are runtime output. They are written next to generated SVG fil
 
 The output card API already looks for sidecar JSON files with the same basename. After these generators run, deterministic SVG drawing cards can show `metadata_available: true`.
 
+M34.15 can display drawing geometry metadata in the dashboard.
+
 Troubleshooting: if sidecar files exist on the host but `/gateway/media/output-cards` returns no `drawing_svg` cards, verify `gateway-api` has read-only runtime volume access to `/home/cuneyt/MoE/runtime/pergola/drawings` and `/home/cuneyt/MoE/runtime/drawings`.
 
 Drawing metadata sidecars help reference boards explain selected draft drawings.

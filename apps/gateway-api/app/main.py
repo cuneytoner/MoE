@@ -18,6 +18,7 @@ from app.media_dashboard import build_media_dashboard
 from app.output_cards import (
     build_output_cards,
     find_output_card_by_id,
+    load_output_card_metadata,
     preview_media_type_for_path,
     safe_preview_path_for_card,
 )
@@ -336,6 +337,45 @@ async def media_output_preview(card_id: str) -> FileResponse | JSONResponse:
         media_type=media_type,
         headers={"Cache-Control": "no-store"},
     )
+
+
+@app.get("/gateway/media/output-card-metadata/{card_id}", response_model=None)
+async def media_output_card_metadata(card_id: str) -> dict[str, Any] | JSONResponse:
+    card = find_output_card_by_id(card_id)
+    if card is None:
+        return _metadata_error(
+            404,
+            "metadata_unavailable",
+            "No metadata sidecar is available for this card.",
+        )
+
+    metadata, error = load_output_card_metadata(card)
+    if error == "metadata_unavailable":
+        return _metadata_error(
+            404,
+            "metadata_unavailable",
+            "No metadata sidecar is available for this card.",
+        )
+    if error == "metadata_invalid":
+        return _metadata_error(
+            422,
+            "metadata_invalid",
+            "Metadata sidecar is not valid JSON.",
+        )
+    if error is not None or metadata is None:
+        return _metadata_error(
+            403,
+            "metadata_blocked",
+            "Metadata access blocked by safety policy.",
+        )
+
+    return {
+        "status": "ok",
+        "service": "gateway-output-card-metadata",
+        "card_id": card_id,
+        "metadata_available": True,
+        "metadata": metadata,
+    }
 
 
 @app.get("/gateway/runtime/dashboard")
@@ -1075,6 +1115,17 @@ async def _build_media_plan(prompt: str, target_mode: str, style: str) -> dict[s
 
 
 def _preview_error(status_code: int, error: str, detail: str) -> JSONResponse:
+    return JSONResponse(
+        status_code=status_code,
+        content={
+            "status": "error",
+            "error": error,
+            "detail": detail,
+        },
+    )
+
+
+def _metadata_error(status_code: int, error: str, detail: str) -> JSONResponse:
     return JSONResponse(
         status_code=status_code,
         content={

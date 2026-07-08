@@ -20,6 +20,8 @@ M34.8 plans future reference-board selection from output cards.
 
 M34.9 plans future preview serving; the current UI placeholder remains expected until a safe preview endpoint and UI integration are implemented.
 
+Cards with metadata can now open a read-only metadata detail view.
+
 ## API Used
 
 ```text
