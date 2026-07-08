@@ -166,6 +166,12 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Dashboard output cards UI review template | [128-dashboard-output-cards-ui-review-template.md](128-dashboard-output-cards-ui-review-template.md) |
 | Drawing metadata sidecar implementation | [129-drawing-metadata-sidecar-implementation.md](129-drawing-metadata-sidecar-implementation.md) |
 | Drawing metadata sidecar review template | [130-drawing-metadata-sidecar-review-template.md](130-drawing-metadata-sidecar-review-template.md) |
+| Reference board selection plan | [131-reference-board-selection-plan.md](131-reference-board-selection-plan.md) |
+| Reference board schema | [132-reference-board-schema.md](132-reference-board-schema.md) |
+| Reference board storage policy | [133-reference-board-storage-policy.md](133-reference-board-storage-policy.md) |
+| Reference board UI plan | [134-reference-board-ui-plan.md](134-reference-board-ui-plan.md) |
+| Reference board API plan | [135-reference-board-api-plan.md](135-reference-board-api-plan.md) |
+| Reference board review template | [136-reference-board-review-template.md](136-reference-board-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -293,6 +299,12 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 120. [128 Dashboard Output Cards UI Review Template](128-dashboard-output-cards-ui-review-template.md)
 121. [129 Drawing Metadata Sidecar Implementation](129-drawing-metadata-sidecar-implementation.md)
 122. [130 Drawing Metadata Sidecar Review Template](130-drawing-metadata-sidecar-review-template.md)
+123. [131 Reference Board Selection Plan](131-reference-board-selection-plan.md)
+124. [132 Reference Board Schema](132-reference-board-schema.md)
+125. [133 Reference Board Storage Policy](133-reference-board-storage-policy.md)
+126. [134 Reference Board UI Plan](134-reference-board-ui-plan.md)
+127. [135 Reference Board API Plan](135-reference-board-api-plan.md)
+128. [136 Reference Board Review Template](136-reference-board-review-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -347,3 +359,5 @@ For the read-only output cards API, read 125 and 126.
 For dashboard output cards UI review, read 127 and 128.
 
 For deterministic drawing metadata sidecars, read 129 and 130.
+
+For reference-board selection planning, read 131 through 136.

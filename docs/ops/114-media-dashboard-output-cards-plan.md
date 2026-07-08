@@ -22,6 +22,8 @@ Output cards should use sidecar metadata when available.
 
 M34.5 implements the first read-only output cards API.
 
+Output cards are intended to feed future reference boards.
+
 ## Output Types
 
 - `image`

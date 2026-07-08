@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.7.1 Drawing Runtime Volumes Fix.
-- Next planned: M34.8 Reference Board Selection Plan.
+- Latest completed: M34.8 Reference Board Selection Plan.
+- Next planned: M34.9 Output Card Preview Serving Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -42,9 +42,11 @@ Current media milestone status:
 - M34.6 Dashboard Output Cards UI DONE
 - M34.7 Metadata Sidecar Implementation DONE
 - M34.7.1 Drawing Runtime Volumes Fix DONE
-- M34.8 Reference Board Selection Plan PLANNED
+- M34.8 Reference Board Selection Plan DONE
 - M34.9 Output Card Preview Serving Plan PLANNED
 - M34.10 Image Generation Metadata Sidecars PLANNED
+- M34.11 Reference Board API Implementation PLANNED
+- M34.12 Reference Board UI Implementation PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1536,7 +1538,7 @@ Goals:
 
 ## Milestone 34.8: Reference Board Selection Plan
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Plan safe reference-board selection on top of output cards.
@@ -1559,6 +1561,24 @@ Status: PLANNED
 Goals:
 - Plan and implement image generation metadata sidecars after drawing sidecars are stable.
 - Do not alter generation safety gates.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.11: Reference Board API Implementation
+
+Status: PLANNED
+
+Goals:
+- Implement safe reference-board JSON API under runtime.
+- Validate selected assets against output cards.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.12: Reference Board UI Implementation
+
+Status: PLANNED
+
+Goals:
+- Implement dashboard reference-board selection UI.
+- Avoid generation buttons, arbitrary file pickers, shell actions, and asset mutation.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 35.0: Rigging Pipeline

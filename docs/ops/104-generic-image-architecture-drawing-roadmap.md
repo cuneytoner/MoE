@@ -116,6 +116,8 @@ Generic drawing engine skeleton is introduced in M34.2.
 
 M34.3 plans dashboard output cards for images and drawings.
 
+Reference boards are planned as the curation layer for generated images and drawings.
+
 ## Next Milestone Sequence
 
 - M34.1 Generic Prompt Pack Structure

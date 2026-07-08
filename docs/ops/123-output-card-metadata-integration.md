@@ -23,6 +23,8 @@ M34.5 exposes `metadata_available` and `metadata_path`, but full metadata parsin
 
 Output cards can now detect `metadata_available=true` for deterministic SVG drawings after the generators are run.
 
+Reference boards should use output card metadata when available.
+
 ## Metadata Fields Shown In Detail Drawer
 
 - prompt

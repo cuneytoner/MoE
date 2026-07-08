@@ -45,6 +45,8 @@ Output cards are the first step toward reference-board and output compare workfl
 
 Prompt metadata capture is planned in M34.4 and needed for reference boards.
 
+M34.8 plans reference board selection for prompt variant comparison and visual curation.
+
 ## Safety
 
 - real generation remains operator-controlled

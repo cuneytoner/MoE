@@ -52,6 +52,8 @@ The output card API already looks for sidecar JSON files with the same basename.
 
 Troubleshooting: if sidecar files exist on the host but `/gateway/media/output-cards` returns no `drawing_svg` cards, verify `gateway-api` has read-only runtime volume access to `/home/cuneyt/MoE/runtime/pergola/drawings` and `/home/cuneyt/MoE/runtime/drawings`.
 
+Drawing metadata sidecars help reference boards explain selected draft drawings.
+
 ## How To Run
 
 ### Run on PC-1
