@@ -14,6 +14,8 @@ The endpoint scans only allowlisted runtime output folders and returns safe card
 
 M34.6 consumes this endpoint in dashboard UI.
 
+M34.7.1 mounts drawing runtime folders read-only so `drawing_svg` cards can be discovered from the Gateway container.
+
 ## Response Fields
 
 Top-level response fields:

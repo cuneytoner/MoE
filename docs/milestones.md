@@ -2,7 +2,7 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.7 Metadata Sidecar Implementation.
+- Latest completed: M34.7.1 Drawing Runtime Volumes Fix.
 - Next planned: M34.8 Reference Board Selection Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
@@ -41,6 +41,7 @@ Current media milestone status:
 - M34.5 Output Cards API Implementation DONE
 - M34.6 Dashboard Output Cards UI DONE
 - M34.7 Metadata Sidecar Implementation DONE
+- M34.7.1 Drawing Runtime Volumes Fix DONE
 - M34.8 Reference Board Selection Plan PLANNED
 - M34.9 Output Card Preview Serving Plan PLANNED
 - M34.10 Image Generation Metadata Sidecars PLANNED
@@ -1522,6 +1523,15 @@ Status: DONE
 Goals:
 - Implement runtime sidecar metadata writing for deterministic SVG drawing outputs.
 - Do not store secrets, API keys, or arbitrary shell history.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.7.1: Drawing Runtime Volumes Fix
+
+Status: DONE
+
+Goals:
+- Mount deterministic drawing runtime folders read-only into Gateway.
+- Let output cards discover `drawing_svg` cards and metadata sidecars inside the container.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 34.8: Reference Board Selection Plan

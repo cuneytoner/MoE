@@ -14,6 +14,8 @@ Future implementation must scan only these allowlisted runtime folders unless a 
 
 M34.5 implements allowlisted scanning for images and SVG drawings.
 
+Gateway scans allowlisted runtime folders only after those folders are mounted read-only into the container.
+
 ## Supported Extensions
 
 - `.png`
