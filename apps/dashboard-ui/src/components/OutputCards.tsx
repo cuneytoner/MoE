@@ -2,6 +2,7 @@ import { useState } from "react";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
+import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import {
   Alert,
   Box,
@@ -23,14 +24,26 @@ import type { OutputCard, OutputCardMetadataResponse } from "../types";
 import { StatusChip } from "./StatusChip";
 
 type Props = {
+  activeBoardId?: string;
+  addingCardId?: string;
+  boardActionMessage?: string;
   cards: OutputCard[];
   error: string;
   loading: boolean;
+  onAddToBoard?: (card: OutputCard) => void;
 };
 
 const MAX_VISIBLE_CARDS = 12;
 
-export function OutputCards({ cards, error, loading }: Props) {
+export function OutputCards({
+  activeBoardId = "",
+  addingCardId = "",
+  boardActionMessage = "",
+  cards,
+  error,
+  loading,
+  onAddToBoard,
+}: Props) {
   const visibleCards = cards.slice(0, MAX_VISIBLE_CARDS);
   const [metadataCard, setMetadataCard] = useState<OutputCard | null>(null);
   const [metadataResponse, setMetadataResponse] = useState<OutputCardMetadataResponse | null>(null);
@@ -77,6 +90,15 @@ export function OutputCards({ cards, error, loading }: Props) {
             </Alert>
           ) : null}
 
+          {boardActionMessage ? (
+            <Alert
+              severity={boardActionMessage.toLowerCase().includes("already") ? "info" : "success"}
+              variant="outlined"
+            >
+              {boardActionMessage}
+            </Alert>
+          ) : null}
+
           {!error && loading && cards.length === 0 ? (
             <Typography color="text.secondary" variant="body2">
               Loading output cards.
@@ -98,7 +120,14 @@ export function OutputCards({ cards, error, loading }: Props) {
               }}
             >
               {visibleCards.map((card) => (
-                <OutputCardTile card={card} key={card.id} onViewMetadata={openMetadata} />
+                <OutputCardTile
+                  activeBoardId={activeBoardId}
+                  adding={addingCardId === card.id}
+                  card={card}
+                  key={card.id}
+                  onAddToBoard={onAddToBoard}
+                  onViewMetadata={openMetadata}
+                />
               ))}
             </Box>
           ) : null}
@@ -119,7 +148,19 @@ export function OutputCards({ cards, error, loading }: Props) {
   );
 }
 
-function OutputCardTile({ card, onViewMetadata }: { card: OutputCard; onViewMetadata: (card: OutputCard) => void }) {
+function OutputCardTile({
+  activeBoardId,
+  adding,
+  card,
+  onAddToBoard,
+  onViewMetadata,
+}: {
+  activeBoardId: string;
+  adding: boolean;
+  card: OutputCard;
+  onAddToBoard?: (card: OutputCard) => void;
+  onViewMetadata: (card: OutputCard) => void;
+}) {
   const [previewFailed, setPreviewFailed] = useState(false);
   const shouldShowImagePreview = card.type === "image" && card.preview_available === true && !previewFailed;
   const previewUrl = `${gatewayBaseUrl()}/gateway/media/output-preview/${encodeURIComponent(card.id)}`;
@@ -193,12 +234,25 @@ function OutputCardTile({ card, onViewMetadata }: { card: OutputCard; onViewMeta
             <Chip label={formatBytes(card.size_bytes)} size="small" variant="outlined" />
           </Stack>
 
-          {card.metadata_available ? (
-            <Box>
-              <Button onClick={() => onViewMetadata(card)} size="small" variant="outlined">
-                View metadata
-              </Button>
-            </Box>
+          {card.metadata_available || activeBoardId ? (
+            <Stack direction="row" flexWrap="wrap" gap={1}>
+              {card.metadata_available ? (
+                <Button onClick={() => onViewMetadata(card)} size="small" variant="outlined">
+                  View metadata
+                </Button>
+              ) : null}
+              {activeBoardId ? (
+                <Button
+                  disabled={adding || !onAddToBoard}
+                  onClick={() => onAddToBoard?.(card)}
+                  size="small"
+                  startIcon={<PlaylistAddOutlinedIcon />}
+                  variant="outlined"
+                >
+                  Add to board
+                </Button>
+              ) : null}
+            </Stack>
           ) : null}
 
           {card.tags.length > 0 ? (

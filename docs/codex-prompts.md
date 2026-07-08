@@ -57,7 +57,7 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.9 Output Card Preview Serving Plan DONE
 - M34.10 Image Generation Metadata Sidecars DONE
 - M34.11 Reference Board API Implementation DONE
-- M34.12 Reference Board UI Implementation PLANNED
+- M34.12 Reference Board UI Implementation DONE
 - M34.13 Output Preview API Implementation DONE
 - M34.14 Dashboard Preview UI Implementation DONE
 - M34.15 Output Card Metadata Detail Drawer DONE
@@ -65,6 +65,7 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.17 Reference Board Item Selection API DONE
 - M34.18 Reference Board Output Card Integration PLANNED
 - M34.19 Reference Board Detail View PLANNED
+- M34.20 Reference Board Export Plan PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

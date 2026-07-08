@@ -6,6 +6,8 @@ M34.17 adds safe API endpoints to add and remove output cards as reference board
 
 The API validates each selected item by resolving `card_id` through the existing output cards endpoint behavior.
 
+M34.12 uses these endpoints from the dashboard `Reference Boards` and `Media Output Cards` sections.
+
 ## Endpoints
 
 ```text
@@ -71,13 +73,16 @@ It does not delete image files, SVG files, metadata sidecars, or any generated a
 - no shell execution
 - board JSON is the only runtime file updated
 
+The dashboard UI must keep using `card_id`, `board_id`, and `item_id`; it must not construct item requests from source asset paths.
+
 ## What Is Not Implemented Yet
 
-- dashboard UI
 - drag/drop board UI
 - asset copy/move/delete
 - generation
 - reference board detail view
+
+Dashboard create/select/add/remove UI is implemented in M34.12.
 
 ## How To Test
 

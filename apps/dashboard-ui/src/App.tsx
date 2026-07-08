@@ -2,12 +2,24 @@ import { useEffect, useMemo, useState } from "react";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import { Alert, Box, Card, CardContent, Stack, Typography } from "@mui/material";
-import { fetchDashboard, fetchMemoryApprovalDashboard, fetchOutputCards, fetchRuntimeDashboard, gatewayBaseUrl } from "./api";
+import {
+  addReferenceBoardItem,
+  createReferenceBoard,
+  fetchDashboard,
+  fetchMemoryApprovalDashboard,
+  fetchOutputCards,
+  fetchReferenceBoard,
+  fetchReferenceBoards,
+  fetchRuntimeDashboard,
+  gatewayBaseUrl,
+  removeReferenceBoardItem,
+} from "./api";
 import { GatesPanel } from "./components/GatesPanel";
 import { LatestImagesPanel } from "./components/LatestImagesPanel";
 import { ModeHintsPanel } from "./components/ModeHintsPanel";
 import { MemoryApprovalPanel } from "./components/MemoryApprovalPanel";
 import { OutputCards } from "./components/OutputCards";
+import { ReferenceBoards } from "./components/ReferenceBoards";
 import { RuntimeCards } from "./components/RuntimeCards";
 import { SafeCommandsPanel } from "./components/SafeCommandsPanel";
 import { ServicesPanel } from "./components/ServicesPanel";
@@ -15,18 +27,34 @@ import { SummaryCards } from "./components/SummaryCards";
 import { SystemResourceCards } from "./components/SystemResourceCards";
 import { WarningsPanel } from "./components/WarningsPanel";
 import { DashboardLayout } from "./layout/DashboardLayout";
-import type { DashboardModel, MemoryApprovalDashboardModel, OutputCardsResponse, RuntimeDashboardModel } from "./types";
+import type {
+  DashboardModel,
+  MemoryApprovalDashboardModel,
+  OutputCard,
+  OutputCardsResponse,
+  ReferenceBoard,
+  ReferenceBoardCreateRequest,
+  ReferenceBoardsResponse,
+  RuntimeDashboardModel,
+} from "./types";
 
 export function App() {
   const [dashboard, setDashboard] = useState<DashboardModel | null>(null);
   const [runtimeDashboard, setRuntimeDashboard] = useState<RuntimeDashboardModel | null>(null);
   const [memoryApprovalDashboard, setMemoryApprovalDashboard] = useState<MemoryApprovalDashboardModel | null>(null);
   const [outputCards, setOutputCards] = useState<OutputCardsResponse | null>(null);
+  const [referenceBoards, setReferenceBoards] = useState<ReferenceBoardsResponse | null>(null);
+  const [activeReferenceBoard, setActiveReferenceBoard] = useState<ReferenceBoard | null>(null);
+  const [activeReferenceBoardId, setActiveReferenceBoardId] = useState("");
   const [error, setError] = useState("");
   const [runtimeError, setRuntimeError] = useState("");
   const [memoryApprovalError, setMemoryApprovalError] = useState("");
   const [outputCardsError, setOutputCardsError] = useState("");
+  const [referenceBoardError, setReferenceBoardError] = useState("");
+  const [referenceBoardActionMessage, setReferenceBoardActionMessage] = useState("");
+  const [addingBoardCardId, setAddingBoardCardId] = useState("");
   const [loading, setLoading] = useState(false);
+  const [referenceBoardLoading, setReferenceBoardLoading] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<string>("never");
 
   async function refresh() {
@@ -35,6 +63,7 @@ export function App() {
     setRuntimeError("");
     setMemoryApprovalError("");
     setOutputCardsError("");
+    setReferenceBoardError("");
     try {
       const next = await fetchDashboard();
       setDashboard(next);
@@ -59,6 +88,16 @@ export function App() {
       setOutputCards(nextOutputCards);
     } catch (err) {
       setOutputCardsError(err instanceof Error ? err.message : "unknown output cards error");
+    }
+    try {
+      const nextReferenceBoards = await fetchReferenceBoards();
+      setReferenceBoards(nextReferenceBoards);
+      if (activeReferenceBoardId) {
+        const nextActiveBoard = await fetchReferenceBoard(activeReferenceBoardId);
+        setActiveReferenceBoard(nextActiveBoard.board);
+      }
+    } catch (err) {
+      setReferenceBoardError(err instanceof Error ? err.message : "unknown reference board error");
     } finally {
       setLoading(false);
     }
@@ -80,6 +119,103 @@ export function App() {
       dashboard.safety.arbitrary_shell !== false
     );
   }, [dashboard]);
+
+  async function refreshReferenceBoards(boardId = activeReferenceBoardId) {
+    setReferenceBoardLoading(true);
+    setReferenceBoardError("");
+    try {
+      const nextReferenceBoards = await fetchReferenceBoards();
+      setReferenceBoards(nextReferenceBoards);
+      if (boardId) {
+        const nextActiveBoard = await fetchReferenceBoard(boardId);
+        setActiveReferenceBoard(nextActiveBoard.board);
+      }
+    } catch (err) {
+      setReferenceBoardError(err instanceof Error ? err.message : "unknown reference board error");
+    } finally {
+      setReferenceBoardLoading(false);
+    }
+  }
+
+  async function handleCreateReferenceBoard(request: ReferenceBoardCreateRequest) {
+    setReferenceBoardActionMessage("");
+    setReferenceBoardLoading(true);
+    setReferenceBoardError("");
+    try {
+      const created = await createReferenceBoard(request);
+      setActiveReferenceBoardId(created.board.board_id);
+      setActiveReferenceBoard(created.board);
+      const nextReferenceBoards = await fetchReferenceBoards();
+      setReferenceBoards(nextReferenceBoards);
+      setReferenceBoardActionMessage("Reference board created.");
+    } catch (err) {
+      setReferenceBoardError(err instanceof Error ? err.message : "unknown reference board create error");
+    } finally {
+      setReferenceBoardLoading(false);
+    }
+  }
+
+  async function handleSelectReferenceBoard(boardId: string) {
+    setReferenceBoardActionMessage("");
+    setReferenceBoardLoading(true);
+    setReferenceBoardError("");
+    try {
+      const nextActiveBoard = await fetchReferenceBoard(boardId);
+      setActiveReferenceBoardId(boardId);
+      setActiveReferenceBoard(nextActiveBoard.board);
+    } catch (err) {
+      setReferenceBoardError(err instanceof Error ? err.message : "unknown reference board select error");
+    } finally {
+      setReferenceBoardLoading(false);
+    }
+  }
+
+  async function handleAddCardToBoard(card: OutputCard) {
+    if (!activeReferenceBoardId) {
+      return;
+    }
+    setAddingBoardCardId(card.id);
+    setReferenceBoardActionMessage("");
+    setReferenceBoardError("");
+    try {
+      const updated = await addReferenceBoardItem(activeReferenceBoardId, {
+        card_id: card.id,
+        selected_reason: "Selected from dashboard output cards.",
+        tags: card.tags,
+      });
+      setActiveReferenceBoard(updated.board);
+      await refreshReferenceBoards(activeReferenceBoardId);
+      setReferenceBoardActionMessage("Added to board.");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "unknown reference board item add error";
+      if (message.includes("HTTP 409")) {
+        setReferenceBoardActionMessage("Already in board.");
+      } else {
+        setReferenceBoardError(message);
+      }
+    } finally {
+      setAddingBoardCardId("");
+    }
+  }
+
+  async function handleRemoveBoardItem(itemId: string) {
+    if (!activeReferenceBoardId) {
+      return;
+    }
+    setReferenceBoardActionMessage("");
+    setReferenceBoardError("");
+    setReferenceBoardLoading(true);
+    try {
+      const updated = await removeReferenceBoardItem(activeReferenceBoardId, itemId);
+      setActiveReferenceBoard(updated.board);
+      await refreshReferenceBoards(activeReferenceBoardId);
+      setReferenceBoardActionMessage("Removed from board.");
+    } catch (err) {
+      setReferenceBoardError(err instanceof Error ? err.message : "unknown reference board item remove error");
+    } finally {
+      setReferenceBoardLoading(false);
+    }
+  }
 
   return (
     <DashboardLayout loading={loading} lastRefresh={lastRefresh} onRefresh={() => void refresh()}>
@@ -119,7 +255,25 @@ export function App() {
           <ServicesPanel services={dashboard.services} />
           <GatesPanel gates={dashboard.gates} />
           <LatestImagesPanel images={dashboard.latest_images} />
-          <OutputCards cards={outputCards?.cards ?? []} error={outputCardsError} loading={loading} />
+          <ReferenceBoards
+            actionMessage={referenceBoardActionMessage}
+            activeBoard={activeReferenceBoard}
+            boards={referenceBoards?.boards ?? []}
+            error={referenceBoardError}
+            loading={loading || referenceBoardLoading}
+            onCreateBoard={handleCreateReferenceBoard}
+            onRemoveBoardItem={handleRemoveBoardItem}
+            onSelectBoard={handleSelectReferenceBoard}
+          />
+          <OutputCards
+            activeBoardId={activeReferenceBoardId}
+            addingCardId={addingBoardCardId}
+            boardActionMessage={referenceBoardActionMessage}
+            cards={outputCards?.cards ?? []}
+            error={outputCardsError}
+            loading={loading}
+            onAddToBoard={(card) => void handleAddCardToBoard(card)}
+          />
           <Box sx={{ display: "grid", gap: 3, gridTemplateColumns: { xs: "1fr", xl: "1.1fr 0.9fr" } }}>
             <SafeCommandsPanel commands={dashboard.safe_commands} />
             <ModeHintsPanel hints={dashboard.mode_hints} />

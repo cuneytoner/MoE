@@ -8,6 +8,8 @@ Reference board UI should reuse the same safe preview endpoint planned for outpu
 
 Dashboard UI should use M34.17 item selection endpoints later.
 
+M34.12 implements the first dashboard reference-board UI using the M34.11 and M34.17 APIs.
+
 ## Planned Actions
 
 - Select card for board.
@@ -19,6 +21,8 @@ Dashboard UI should use M34.17 item selection endpoints later.
 - Show board item count.
 - Show visual-only warning.
 
+M34.12 covers create, select, item count, add-to-board, remove-from-board, and safety note behavior. Rename, filtering, richer reason editing, and export remain future work.
+
 ## Safety Constraints
 
 - no generation button
@@ -28,6 +32,8 @@ Dashboard UI should use M34.17 item selection endpoints later.
 - no service start/stop controls
 
 Initial implementation should probably be read-only plus selection JSON generation through an explicit safe endpoint later.
+
+M34.12 keeps source assets untouched and writes only through the safe reference-board API.
 
 ## Warning Copy
 

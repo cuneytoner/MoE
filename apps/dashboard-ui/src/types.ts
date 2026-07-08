@@ -324,3 +324,63 @@ export type OutputCardMetadataResponse = {
   metadata_available: boolean;
   metadata: Record<string, unknown>;
 };
+
+export type ReferenceBoardSummary = {
+  board_id: string;
+  title: string;
+  description: string | null;
+  created_at: string;
+  updated_at: string;
+  safety_label: string;
+  item_count: number;
+};
+
+export type ReferenceBoardItem = {
+  item_id: string;
+  card_id: string;
+  asset_type: string;
+  name: string;
+  relative_runtime_path: string;
+  metadata_path: string | null;
+  selected_reason: string | null;
+  tags: string[];
+  safety_label: string;
+  added_at: string;
+};
+
+export type ReferenceBoard = {
+  schema_version: string;
+  board_id: string;
+  title: string;
+  description: string | null;
+  created_at: string;
+  updated_at: string;
+  safety_label: string;
+  items: ReferenceBoardItem[];
+};
+
+export type ReferenceBoardsResponse = {
+  status: string;
+  service: string;
+  safety: SafetyModel;
+  root: string;
+  boards: ReferenceBoardSummary[];
+};
+
+export type ReferenceBoardResponse = {
+  status: string;
+  service: string;
+  board: ReferenceBoard;
+};
+
+export type ReferenceBoardCreateRequest = {
+  board_id: string;
+  title: string;
+  description?: string | null;
+};
+
+export type ReferenceBoardAddItemRequest = {
+  card_id: string;
+  selected_reason?: string | null;
+  tags?: string[] | null;
+};

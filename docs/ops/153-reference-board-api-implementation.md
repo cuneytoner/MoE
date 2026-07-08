@@ -8,6 +8,8 @@ The endpoints use the M34.16 safe runtime store helpers.
 
 M34.17 extends reference boards with item selection endpoints.
 
+M34.12 consumes these endpoints in the dashboard reference-board UI.
+
 ## Endpoints
 
 ```text
@@ -77,11 +79,11 @@ Gateway mounts only this reference-board runtime folder as writable for the new 
 
 ## What Is Not Implemented Yet
 
-- item selection
-- dashboard UI
 - asset copy/move/delete
 - generation
 - reference-board export
+
+Item selection is implemented in M34.17. Dashboard UI is implemented in M34.12. Export remains planned.
 
 ## How To Test
 

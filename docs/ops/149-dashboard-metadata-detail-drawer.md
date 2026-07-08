@@ -6,6 +6,8 @@ M34.15 adds a read-only metadata detail view to dashboard output cards.
 
 Cards with `metadata_available=true` show a `View metadata` control.
 
+M34.12 adds reference-board selection controls beside metadata viewing. Metadata remains read-only and is not used as an executable action source.
+
 ## UI Behavior
 
 When selected, the dashboard fetches metadata through:
@@ -58,6 +60,7 @@ Unknown metadata fields remain visible in a raw JSON fallback block.
 - Do not add rerun or generate buttons.
 - Do not add delete, move, or rename buttons.
 - Do not expose arbitrary filesystem browsing.
+- Do not build reference-board item requests from metadata paths.
 
 ## Browser Inspection Steps
 
@@ -74,4 +77,4 @@ Unknown metadata fields remain visible in a raw JSON fallback block.
 - No rerun from metadata.
 - No metadata search.
 - No metadata diff view.
-- No reference-board selection.
+- No metadata editing from reference-board selection.

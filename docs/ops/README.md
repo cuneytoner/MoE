@@ -192,6 +192,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board API review template | [154-reference-board-api-review-template.md](154-reference-board-api-review-template.md) |
 | Reference board item selection API | [155-reference-board-item-selection-api.md](155-reference-board-item-selection-api.md) |
 | Reference board item selection review template | [156-reference-board-item-selection-review-template.md](156-reference-board-item-selection-review-template.md) |
+| Reference board UI implementation | [157-reference-board-ui-implementation.md](157-reference-board-ui-implementation.md) |
+| Reference board UI review template | [158-reference-board-ui-review-template.md](158-reference-board-ui-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -363,6 +365,8 @@ For deterministic pergola drawing planning, read 93 through 97 before creating a
 For the first SVG skeleton tool and output review, read 98 and 99.
 
 For side elevation and top plan SVG outputs, read 100 and 101.
+
+For dashboard reference-board UI review, read 157 and 158.
 
 For the generic image, architecture, and drawing roadmap, read 104 through 108.
 

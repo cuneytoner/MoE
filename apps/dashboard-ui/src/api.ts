@@ -3,6 +3,10 @@ import type {
   MemoryApprovalDashboardModel,
   OutputCardMetadataResponse,
   OutputCardsResponse,
+  ReferenceBoardAddItemRequest,
+  ReferenceBoardCreateRequest,
+  ReferenceBoardResponse,
+  ReferenceBoardsResponse,
   RuntimeDashboardModel,
 } from "./types";
 
@@ -44,6 +48,60 @@ export async function fetchOutputCardMetadata(cardId: string): Promise<OutputCar
   const response = await fetch(`${gatewayUrl}/gateway/media/output-card-metadata/${encodeURIComponent(cardId)}`);
   if (!response.ok) {
     throw new Error(`Gateway output card metadata returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchReferenceBoards(): Promise<ReferenceBoardsResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards`);
+  if (!response.ok) {
+    throw new Error(`Gateway reference boards returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchReferenceBoard(boardId: string): Promise<ReferenceBoardResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}`);
+  if (!response.ok) {
+    throw new Error(`Gateway reference board returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function createReferenceBoard(request: ReferenceBoardCreateRequest): Promise<ReferenceBoardResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards`, {
+    body: JSON.stringify(request),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  });
+  if (!response.ok) {
+    throw new Error(`Gateway reference board create returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function addReferenceBoardItem(
+  boardId: string,
+  request: ReferenceBoardAddItemRequest,
+): Promise<ReferenceBoardResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/items`, {
+    body: JSON.stringify(request),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  });
+  if (!response.ok) {
+    throw new Error(`Gateway reference board item add returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function removeReferenceBoardItem(boardId: string, itemId: string): Promise<ReferenceBoardResponse> {
+  const response = await fetch(
+    `${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/items/${encodeURIComponent(itemId)}`,
+    { method: "DELETE" },
+  );
+  if (!response.ok) {
+    throw new Error(`Gateway reference board item remove returned HTTP ${response.status}`);
   }
   return response.json();
 }

@@ -8,6 +8,8 @@ Drawing and SVG cards keep the placeholder UI.
 
 Metadata detail view is added after preview UI in M34.15.
 
+M34.12 adds reference-board controls around output cards, while preview image URLs continue to use only `card_id`.
+
 ## Endpoint Used
 
 ```text
@@ -58,6 +60,7 @@ The dashboard should keep rendering the card metadata even when preview loading 
 - no generation button
 - no shell action
 - no service controls
+- no reference-board request built from asset paths
 
 ## How To Run
 
