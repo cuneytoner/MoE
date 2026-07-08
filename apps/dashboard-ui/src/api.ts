@@ -1,4 +1,4 @@
-import type { DashboardModel, MemoryApprovalDashboardModel, RuntimeDashboardModel } from "./types";
+import type { DashboardModel, MemoryApprovalDashboardModel, OutputCardsResponse, RuntimeDashboardModel } from "./types";
 
 const gatewayUrl = import.meta.env.VITE_GATEWAY_API_URL ?? "http://127.0.0.1:8100";
 
@@ -22,6 +22,14 @@ export async function fetchMemoryApprovalDashboard(): Promise<MemoryApprovalDash
   const response = await fetch(`${gatewayUrl}/gateway/memory-approval/dashboard`);
   if (!response.ok) {
     throw new Error(`Gateway memory approval dashboard returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchOutputCards(): Promise<OutputCardsResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/output-cards`);
+  if (!response.ok) {
+    throw new Error(`Gateway output cards returned HTTP ${response.status}`);
   }
   return response.json();
 }

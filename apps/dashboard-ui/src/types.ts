@@ -290,3 +290,29 @@ export type MemoryApprovalDashboardModel = {
   warnings: string[];
   safety_boundaries: string[];
 };
+
+export type OutputCard = {
+  id: string;
+  type: string;
+  name: string;
+  path: string;
+  relative_runtime_path: string;
+  modified: string;
+  size_bytes: number;
+  preview_available: boolean;
+  source: string;
+  tags: string[];
+  safety_label: string;
+  metadata_available: boolean;
+  metadata_path: string | null;
+  notes: string | null;
+};
+
+export type OutputCardsResponse = {
+  status: string;
+  service: string;
+  safety: SafetyModel;
+  allowlisted_roots: string[];
+  max_cards: number;
+  cards: OutputCard[];
+};

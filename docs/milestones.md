@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.5 Output Cards API Implementation.
-- Next planned: M34.6 Dashboard Output Cards UI.
+- Latest completed: M34.6 Dashboard Output Cards UI.
+- Next planned: M34.7 Metadata Sidecar Implementation.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -39,9 +39,10 @@ Current media milestone status:
 - M34.3 Media Dashboard Output Cards Plan DONE
 - M34.4 Prompt Metadata Capture Plan DONE
 - M34.5 Output Cards API Implementation DONE
-- M34.6 Dashboard Output Cards UI PLANNED
+- M34.6 Dashboard Output Cards UI DONE
 - M34.7 Metadata Sidecar Implementation PLANNED
 - M34.8 Reference Board Selection Plan PLANNED
+- M34.9 Output Card Preview Serving Plan PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1506,7 +1507,7 @@ Goals:
 
 ## Milestone 34.6: Dashboard Output Cards UI
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Implement read-only dashboard output cards.
@@ -1529,6 +1530,15 @@ Status: PLANNED
 Goals:
 - Plan safe reference-board selection on top of output cards.
 - Keep selection metadata read-only until a later explicit implementation milestone.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.9: Output Card Preview Serving Plan
+
+Status: PLANNED
+
+Goals:
+- Plan safe preview serving for output cards.
+- Avoid arbitrary filesystem browsing and runtime mutation.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 35.0: Rigging Pipeline

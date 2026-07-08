@@ -147,7 +147,18 @@ def _tags(path: Path, card_type: str) -> list[str]:
         tags.extend(["drawing", "svg"])
     if "/pergola/" in str(path):
         tags.append("pergola")
-    return tags
+    return _dedupe_tags(tags)
+
+
+def _dedupe_tags(tags: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for tag in tags:
+        if tag in seen:
+            continue
+        seen.add(tag)
+        result.append(tag)
+    return result
 
 
 def _safety_label(card_type: str) -> str:

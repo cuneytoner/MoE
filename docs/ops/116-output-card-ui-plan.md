@@ -4,6 +4,8 @@
 
 Future output cards should present generated outputs as compact, scan-friendly cards in the media dashboard.
 
+M34.6 implements the first read-only dashboard output cards UI.
+
 ## Card Sections
 
 - thumbnail/icon

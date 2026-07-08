@@ -2,6 +2,8 @@
 
 Use this template when reviewing the read-only output cards API.
 
+After M34.6, also verify dashboard rendering.
+
 ```text
 Date/time:
 Endpoint tested:

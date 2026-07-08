@@ -162,6 +162,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Metadata review template | [124-metadata-review-template.md](124-metadata-review-template.md) |
 | Output cards API implementation | [125-output-cards-api-implementation.md](125-output-cards-api-implementation.md) |
 | Output cards API review template | [126-output-cards-api-review-template.md](126-output-cards-api-review-template.md) |
+| Dashboard output cards UI | [127-dashboard-output-cards-ui.md](127-dashboard-output-cards-ui.md) |
+| Dashboard output cards UI review template | [128-dashboard-output-cards-ui-review-template.md](128-dashboard-output-cards-ui-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -285,6 +287,8 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 116. [124 Metadata Review Template](124-metadata-review-template.md)
 117. [125 Output Cards API Implementation](125-output-cards-api-implementation.md)
 118. [126 Output Cards API Review Template](126-output-cards-api-review-template.md)
+119. [127 Dashboard Output Cards UI](127-dashboard-output-cards-ui.md)
+120. [128 Dashboard Output Cards UI Review Template](128-dashboard-output-cards-ui-review-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -335,3 +339,5 @@ For media dashboard output cards planning, read 114 through 118.
 For prompt metadata capture planning, read 119 through 124.
 
 For the read-only output cards API, read 125 and 126.
+
+For dashboard output cards UI review, read 127 and 128.

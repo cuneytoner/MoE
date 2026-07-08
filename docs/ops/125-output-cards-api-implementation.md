@@ -12,6 +12,8 @@ GET /gateway/media/output-cards
 
 The endpoint scans only allowlisted runtime output folders and returns safe card metadata for generated images and SVG drawings.
 
+M34.6 consumes this endpoint in dashboard UI.
+
 ## Response Fields
 
 Top-level response fields:

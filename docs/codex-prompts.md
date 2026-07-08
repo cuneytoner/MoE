@@ -50,9 +50,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.3 Media Dashboard Output Cards Plan DONE
 - M34.4 Prompt Metadata Capture Plan DONE
 - M34.5 Output Cards API Implementation DONE
-- M34.6 Dashboard Output Cards UI PLANNED
+- M34.6 Dashboard Output Cards UI DONE
 - M34.7 Metadata Sidecar Implementation PLANNED
 - M34.8 Reference Board Selection Plan PLANNED
+- M34.9 Output Card Preview Serving Plan PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

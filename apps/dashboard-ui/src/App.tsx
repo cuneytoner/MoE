@@ -2,11 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import { Alert, Box, Card, CardContent, Stack, Typography } from "@mui/material";
-import { fetchDashboard, fetchMemoryApprovalDashboard, fetchRuntimeDashboard, gatewayBaseUrl } from "./api";
+import { fetchDashboard, fetchMemoryApprovalDashboard, fetchOutputCards, fetchRuntimeDashboard, gatewayBaseUrl } from "./api";
 import { GatesPanel } from "./components/GatesPanel";
 import { LatestImagesPanel } from "./components/LatestImagesPanel";
 import { ModeHintsPanel } from "./components/ModeHintsPanel";
 import { MemoryApprovalPanel } from "./components/MemoryApprovalPanel";
+import { OutputCards } from "./components/OutputCards";
 import { RuntimeCards } from "./components/RuntimeCards";
 import { SafeCommandsPanel } from "./components/SafeCommandsPanel";
 import { ServicesPanel } from "./components/ServicesPanel";
@@ -14,15 +15,17 @@ import { SummaryCards } from "./components/SummaryCards";
 import { SystemResourceCards } from "./components/SystemResourceCards";
 import { WarningsPanel } from "./components/WarningsPanel";
 import { DashboardLayout } from "./layout/DashboardLayout";
-import type { DashboardModel, MemoryApprovalDashboardModel, RuntimeDashboardModel } from "./types";
+import type { DashboardModel, MemoryApprovalDashboardModel, OutputCardsResponse, RuntimeDashboardModel } from "./types";
 
 export function App() {
   const [dashboard, setDashboard] = useState<DashboardModel | null>(null);
   const [runtimeDashboard, setRuntimeDashboard] = useState<RuntimeDashboardModel | null>(null);
   const [memoryApprovalDashboard, setMemoryApprovalDashboard] = useState<MemoryApprovalDashboardModel | null>(null);
+  const [outputCards, setOutputCards] = useState<OutputCardsResponse | null>(null);
   const [error, setError] = useState("");
   const [runtimeError, setRuntimeError] = useState("");
   const [memoryApprovalError, setMemoryApprovalError] = useState("");
+  const [outputCardsError, setOutputCardsError] = useState("");
   const [loading, setLoading] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<string>("never");
 
@@ -31,6 +34,7 @@ export function App() {
     setError("");
     setRuntimeError("");
     setMemoryApprovalError("");
+    setOutputCardsError("");
     try {
       const next = await fetchDashboard();
       setDashboard(next);
@@ -49,6 +53,12 @@ export function App() {
       setMemoryApprovalDashboard(nextMemoryApproval);
     } catch (err) {
       setMemoryApprovalError(err instanceof Error ? err.message : "unknown memory approval error");
+    }
+    try {
+      const nextOutputCards = await fetchOutputCards();
+      setOutputCards(nextOutputCards);
+    } catch (err) {
+      setOutputCardsError(err instanceof Error ? err.message : "unknown output cards error");
     } finally {
       setLoading(false);
     }
@@ -109,6 +119,7 @@ export function App() {
           <ServicesPanel services={dashboard.services} />
           <GatesPanel gates={dashboard.gates} />
           <LatestImagesPanel images={dashboard.latest_images} />
+          <OutputCards cards={outputCards?.cards ?? []} error={outputCardsError} loading={loading} />
           <Box sx={{ display: "grid", gap: 3, gridTemplateColumns: { xs: "1fr", xl: "1.1fr 0.9fr" } }}>
             <SafeCommandsPanel commands={dashboard.safe_commands} />
             <ModeHintsPanel hints={dashboard.mode_hints} />
