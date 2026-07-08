@@ -18,6 +18,8 @@ Output cards give operators a safe way to review outputs without opening arbitra
 
 The dashboard should eventually show generated media and drawings as read-only output cards. Cards should make it easy to inspect name, type, path, modified time, file size, source, tags, and safety label.
 
+Output cards should use sidecar metadata when available.
+
 ## Output Types
 
 - `image`
@@ -48,6 +50,8 @@ Output type examples:
 - `tags`
 - `notes`
 - `safety_label`
+- `metadata_available`
+- `metadata_path`
 
 ## Safety Labels
 

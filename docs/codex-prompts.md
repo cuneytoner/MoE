@@ -48,9 +48,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.1 Generic Prompt Pack Structure DONE
 - M34.2 Generic Drawing Engine Skeleton DONE
 - M34.3 Media Dashboard Output Cards Plan DONE
-- M34.4 Prompt Metadata Capture PLANNED
+- M34.4 Prompt Metadata Capture Plan DONE
 - M34.5 Output Cards API Implementation PLANNED
 - M34.6 Dashboard Output Cards UI PLANNED
+- M34.7 Metadata Sidecar Implementation PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

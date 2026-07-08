@@ -14,6 +14,9 @@ Future output cards should present generated outputs as compact, scan-friendly c
 - file size
 - source
 - path copy field
+- metadata badges
+
+Cards should show metadata badges and a future metadata detail drawer.
 
 ## Filters
 
@@ -48,3 +51,4 @@ The error state should not suggest destructive cleanup or runtime mutation.
 - compare view
 - reference board selection
 - prompt metadata drawer
+- metadata detail drawer

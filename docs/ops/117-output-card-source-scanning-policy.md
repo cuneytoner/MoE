@@ -21,6 +21,8 @@ Future implementation must scan only these allowlisted runtime folders unless a 
 - `.svg`
 - `.pdf` later
 
+Sidecar `.json` files are allowed only when matched to supported media/drawing assets.
+
 ## Explicit Deny
 
 - no model files

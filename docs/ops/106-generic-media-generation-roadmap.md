@@ -43,6 +43,8 @@ Each generated output should keep:
 
 Output cards are the first step toward reference-board and output compare workflows.
 
+Prompt metadata capture is planned in M34.4 and needed for reference boards.
+
 ## Safety
 
 - real generation remains operator-controlled

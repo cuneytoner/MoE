@@ -26,6 +26,8 @@ tools/drawing-engine
 
 Drawing outputs should appear as output cards once implemented.
 
+Drawing metadata sidecars should record geometry and units.
+
 ## Why Not Move Immediately
 
 - The pergola tool is working as a focused prototype.

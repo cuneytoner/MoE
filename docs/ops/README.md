@@ -154,6 +154,12 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Output card UI plan | [116-output-card-ui-plan.md](116-output-card-ui-plan.md) |
 | Output card source scanning policy | [117-output-card-source-scanning-policy.md](117-output-card-source-scanning-policy.md) |
 | Output card review template | [118-output-card-review-template.md](118-output-card-review-template.md) |
+| Prompt metadata capture plan | [119-prompt-metadata-capture-plan.md](119-prompt-metadata-capture-plan.md) |
+| Image metadata schema | [120-image-metadata-schema.md](120-image-metadata-schema.md) |
+| Drawing metadata schema | [121-drawing-metadata-schema.md](121-drawing-metadata-schema.md) |
+| Metadata sidecar policy | [122-metadata-sidecar-policy.md](122-metadata-sidecar-policy.md) |
+| Output card metadata integration | [123-output-card-metadata-integration.md](123-output-card-metadata-integration.md) |
+| Metadata review template | [124-metadata-review-template.md](124-metadata-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -269,6 +275,12 @@ If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md)
 108. [116 Output Card UI Plan](116-output-card-ui-plan.md)
 109. [117 Output Card Source Scanning Policy](117-output-card-source-scanning-policy.md)
 110. [118 Output Card Review Template](118-output-card-review-template.md)
+111. [119 Prompt Metadata Capture Plan](119-prompt-metadata-capture-plan.md)
+112. [120 Image Metadata Schema](120-image-metadata-schema.md)
+113. [121 Drawing Metadata Schema](121-drawing-metadata-schema.md)
+114. [122 Metadata Sidecar Policy](122-metadata-sidecar-policy.md)
+115. [123 Output Card Metadata Integration](123-output-card-metadata-integration.md)
+116. [124 Metadata Review Template](124-metadata-review-template.md)
 
 Run the backup drill after major milestones or before moving to a new machine.
 
@@ -315,3 +327,5 @@ For generic prompt pack structure and safe prompt reuse, read 109 through 111.
 For the generic drawing engine demo skeleton, read 112 and 113.
 
 For media dashboard output cards planning, read 114 through 118.
+
+For prompt metadata capture planning, read 119 through 124.

@@ -35,7 +35,15 @@ GET /gateway/media/output-cards
       "preview_available": true,
       "source": "comfyui",
       "tags": ["image", "pergola", "visual-reference"],
-      "safety_label": "visual_reference_only"
+      "safety_label": "visual_reference_only",
+      "metadata_available": true,
+      "metadata_path": "/home/cuneyt/MoE/runtime/media/outputs/images/flux-first/moe_pergola_project_20260707_131301_00001_.json",
+      "metadata": {
+        "prompt": "realistic ...",
+        "seed": 1783334081,
+        "workflow": "flux-schnell-first-image.json",
+        "model_name": "flux1-schnell"
+      }
     },
     {
       "id": "drawing_svg:side_elevation.svg",
@@ -48,7 +56,14 @@ GET /gateway/media/output-cards
       "preview_available": false,
       "source": "deterministic-svg",
       "tags": ["drawing", "svg", "pergola", "draft"],
-      "safety_label": "draft_drawing"
+      "safety_label": "draft_drawing",
+      "metadata_available": true,
+      "metadata_path": "/home/cuneyt/MoE/runtime/pergola/drawings/side_elevation.json",
+      "metadata": {
+        "drawing_kind": "side_elevation",
+        "units": "mm",
+        "geometry_summary": "5100 mm wall width, 1900 mm depth"
+      }
     }
   ]
 }
@@ -63,6 +78,7 @@ GET /gateway/media/output-cards
 - API must not expose arbitrary filesystem browsing.
 - API must limit result count.
 - API must sort newest first.
+- API may include optional `metadata_available`, `metadata_path`, and `metadata` summary fields.
 
 ## Future Notes
 

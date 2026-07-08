@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.3 Media Dashboard Output Cards Plan.
-- Next planned: M34.4 Prompt Metadata Capture.
+- Latest completed: M34.4 Prompt Metadata Capture Plan.
+- Next planned: M34.5 Output Cards API Implementation.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -37,9 +37,10 @@ Current media milestone status:
 - M34.1 Generic Prompt Pack Structure DONE
 - M34.2 Generic Drawing Engine Skeleton DONE
 - M34.3 Media Dashboard Output Cards Plan DONE
-- M34.4 Prompt Metadata Capture PLANNED
+- M34.4 Prompt Metadata Capture Plan DONE
 - M34.5 Output Cards API Implementation PLANNED
 - M34.6 Dashboard Output Cards UI PLANNED
+- M34.7 Metadata Sidecar Implementation PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1484,12 +1485,13 @@ Goals:
 - Keep dashboard behavior read-only unless explicitly changed.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 34.4: Prompt Metadata Capture
+## Milestone 34.4: Prompt Metadata Capture Plan
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Plan safe prompt and output metadata capture.
+- Define runtime sidecar metadata strategy for images and drawings.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 34.5: Output Cards API Implementation
@@ -1508,6 +1510,15 @@ Status: PLANNED
 Goals:
 - Implement read-only dashboard output cards.
 - Avoid destructive actions, generation buttons, and shell controls.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.7: Metadata Sidecar Implementation
+
+Status: PLANNED
+
+Goals:
+- Implement runtime sidecar metadata writing for controlled image and drawing outputs.
+- Do not store secrets, API keys, or arbitrary shell history.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 35.0: Rigging Pipeline
