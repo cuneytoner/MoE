@@ -8,6 +8,8 @@ The endpoint derives Markdown from the JSON review pack data. It does not create
 
 M34.25 exposes Markdown export through dashboard UI.
 
+Markdown download is planned as a future response-only attachment endpoint.
+
 ## Endpoint
 
 ```text
@@ -80,11 +82,10 @@ The endpoint does not include:
 - no generation trigger
 - no shell execution
 - no arbitrary filesystem browsing
-- no dashboard export UI yet
+- no download UI yet
 
 ## What Is Not Implemented Yet
 
-- no dashboard export UI
 - no export download flow
 - no ZIP export
 - no PDF export

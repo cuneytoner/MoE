@@ -72,8 +72,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.23 Reference Board JSON Export Implementation DONE
 - M34.24 Reference Board Markdown Export Implementation DONE
 - M34.25 Reference Board Export UI DONE
-- M34.26 Reference Board Export Download Plan PLANNED
+- M34.26 Reference Board Export Download Plan DONE
 - M34.27 Reference Board Markdown Download Implementation PLANNED
+- M34.28 Reference Board JSON Download Implementation PLANNED
+- M34.29 Reference Board Download UI PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

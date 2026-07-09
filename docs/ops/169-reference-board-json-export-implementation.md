@@ -10,6 +10,8 @@ M34.24 reuses the JSON review pack data for Markdown output.
 
 M34.25 exposes JSON export through dashboard UI.
 
+JSON download is planned as a future response-only attachment endpoint.
+
 ## Endpoint
 
 ```text
@@ -90,7 +92,6 @@ Metadata summaries filter path-like and secret-looking strings.
 ## What Is Not Implemented Yet
 
 - no ZIP export
-- no dashboard export UI
 - no download action
 - no controlled copy mode
 

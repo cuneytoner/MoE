@@ -48,6 +48,8 @@ M34.24 implements the Markdown review pack endpoint.
 
 M34.25 implements dashboard UI access to JSON and Markdown export endpoints.
 
+M34.26 plans response-only download behavior for JSON and Markdown exports.
+
 ## JSON Review Pack
 
 The JSON review pack should return a structured review artifact containing board metadata, selected item references, selected reasons, tags, and safe metadata summaries.
@@ -153,3 +155,6 @@ Missing metadata should be represented as unavailable, not treated as an error t
 - M34.24 Reference Board Markdown Export Implementation
 - M34.25 Reference Board Export UI
 - M34.26 Reference Board Export Download Plan
+- M34.27 Reference Board Markdown Download Implementation
+- M34.28 Reference Board JSON Download Implementation
+- M34.29 Reference Board Download UI

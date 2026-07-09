@@ -2,6 +2,8 @@
 
 Use this template when reviewing the M34.25 dashboard export UI.
 
+Export UI currently shows read-only panels; file download is deferred.
+
 ## Review Fields
 
 - Date/time:
