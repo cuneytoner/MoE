@@ -85,6 +85,8 @@ Gateway mounts only this reference-board runtime folder as writable for the new 
 
 Item selection is implemented in M34.17. Dashboard UI is implemented in M34.12. Export remains planned.
 
+Reference board export endpoints are deferred to a future implementation milestone.
+
 ## How To Test
 
 ### Run on PC-1

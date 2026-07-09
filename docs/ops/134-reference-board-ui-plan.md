@@ -14,6 +14,8 @@ M34.19 improves selected board detail and item card display.
 
 M34.21 adds selected_reason/tags editing for board item references only.
 
+M34.20 plans future export UI actions, but no export UI is implemented yet.
+
 ## Planned Actions
 
 - Select card for board.

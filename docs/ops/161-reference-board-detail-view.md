@@ -8,6 +8,8 @@ The detail view remains reference-only. It does not copy, move, delete, rename, 
 
 M34.21 adds selected_reason/tags editing for board item references only.
 
+The detail view prepares human-readable board state for future exports.
+
 ## UI Behavior
 
 When a board is active, the dashboard shows:

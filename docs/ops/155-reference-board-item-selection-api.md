@@ -14,6 +14,8 @@ M34.19 consumes item selection data in board detail cards, including item name, 
 
 M34.21 adds selected_reason/tags editing for board item references only.
 
+Selected items provide the source references for future board exports.
+
 ## Endpoints
 
 ```text

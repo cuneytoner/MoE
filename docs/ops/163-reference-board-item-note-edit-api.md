@@ -6,6 +6,8 @@ M34.21 adds a safe Gateway endpoint and dashboard UI for editing reference board
 
 The update changes only the board JSON file. It does not update source assets, generated images, SVG drawings, or metadata sidecars.
 
+Editable selected_reason and tags are intended to appear in future exports.
+
 ## Endpoint
 
 ```text
