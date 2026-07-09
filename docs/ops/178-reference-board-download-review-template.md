@@ -4,6 +4,8 @@ Use this template when reviewing future reference-board download endpoints.
 
 Use [180-reference-board-markdown-download-review-template.md](180-reference-board-markdown-download-review-template.md) for Markdown implementation-specific review.
 
+Use [182-reference-board-json-download-review-template.md](182-reference-board-json-download-review-template.md) for JSON implementation-specific review.
+
 ## Review Fields
 
 - Date/time:

@@ -454,6 +454,8 @@ required_paths=(
   "docs/ops/178-reference-board-download-review-template.md"
   "docs/ops/179-reference-board-markdown-download-implementation.md"
   "docs/ops/180-reference-board-markdown-download-review-template.md"
+  "docs/ops/181-reference-board-json-download-implementation.md"
+  "docs/ops/182-reference-board-json-download-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

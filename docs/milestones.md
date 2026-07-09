@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.27 Reference Board Markdown Download Implementation.
-- Next planned: M34.28 Reference Board JSON Download Implementation.
+- Latest completed: M34.28 Reference Board JSON Download Implementation.
+- Next planned: M34.29 Reference Board Download UI.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -63,8 +63,9 @@ Current media milestone status:
 - M34.25 Reference Board Export UI DONE
 - M34.26 Reference Board Export Download Plan DONE
 - M34.27 Reference Board Markdown Download Implementation DONE
-- M34.28 Reference Board JSON Download Implementation PLANNED
+- M34.28 Reference Board JSON Download Implementation DONE
 - M34.29 Reference Board Download UI PLANNED
+- M34.30 Reference Board Export Regression Review PLANNED
 
 ## Milestone 0: Clean Codebase
 

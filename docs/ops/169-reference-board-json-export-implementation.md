@@ -12,6 +12,8 @@ M34.25 exposes JSON export through dashboard UI.
 
 JSON download is planned as a future response-only attachment endpoint.
 
+M34.28 adds response-only JSON download attachment endpoint.
+
 ## Endpoint
 
 ```text

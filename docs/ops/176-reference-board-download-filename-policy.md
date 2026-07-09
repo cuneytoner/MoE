@@ -22,6 +22,8 @@ reference-board-api-test-board-20260709-150501.md
 
 M34.27 uses safe `board_id` + UTC timestamp + `.md` extension.
 
+M34.28 uses safe `board_id` + UTC timestamp + `.json` extension.
+
 ## Board ID Sanitization
 
 The filename must use sanitized `board_id` only.

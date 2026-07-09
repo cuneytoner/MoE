@@ -497,6 +497,40 @@ async def media_reference_board_export_markdown(board_id: str) -> Response | JSO
     return Response(content=markdown, media_type="text/markdown")
 
 
+@app.get("/gateway/media/reference-boards/{board_id}/download/json", response_model=None)
+async def media_reference_board_download_json(board_id: str) -> Response | JSONResponse:
+    try:
+        safe_board_id = sanitize_board_id(board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    try:
+        payload = build_reference_board_json_export(safe_board_id)
+        filename = build_reference_board_download_filename(safe_board_id, "json")
+    except FileNotFoundError:
+        return _reference_board_error(
+            404,
+            "reference_board_not_found",
+            "Reference board not found.",
+        )
+    except ValueError:
+        return _reference_board_error(
+            403,
+            "reference_board_blocked",
+            "Reference board access blocked by safety policy.",
+        )
+
+    return Response(
+        content=json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+        media_type="application/json",
+    )
+
+
 @app.get("/gateway/media/reference-boards/{board_id}/download/markdown", response_model=None)
 async def media_reference_board_download_markdown(board_id: str) -> Response | JSONResponse:
     try:

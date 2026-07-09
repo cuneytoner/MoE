@@ -180,6 +180,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Download Review Template](ops/178-reference-board-download-review-template.md)
 - [Reference Board Markdown Download Implementation](ops/179-reference-board-markdown-download-implementation.md)
 - [Reference Board Markdown Download Review Template](ops/180-reference-board-markdown-download-review-template.md)
+- [Reference Board JSON Download Implementation](ops/181-reference-board-json-download-implementation.md)
+- [Reference Board JSON Download Review Template](ops/182-reference-board-json-download-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

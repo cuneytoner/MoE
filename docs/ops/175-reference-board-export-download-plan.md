@@ -128,6 +128,8 @@ M34.26 defers runtime export files so the first download implementation can rema
 
 M34.27 implements Markdown download first.
 
+M34.28 implements JSON download after Markdown download.
+
 ## Why ZIP/PDF Are Deferred
 
 ZIP and PDF exports increase risk because they may imply asset bundling, rendering, embedded media, or larger temporary artifacts.
