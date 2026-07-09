@@ -85,6 +85,14 @@ export async function fetchReferenceBoardMarkdownExport(boardId: string): Promis
   return response.text();
 }
 
+export function referenceBoardJsonDownloadUrl(boardId: string): string {
+  return `${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/download/json`;
+}
+
+export function referenceBoardMarkdownDownloadUrl(boardId: string): string {
+  return `${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/download/markdown`;
+}
+
 export async function createReferenceBoard(request: ReferenceBoardCreateRequest): Promise<ReferenceBoardResponse> {
   const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards`, {
     body: JSON.stringify(request),

@@ -3,6 +3,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
@@ -29,6 +30,8 @@ import {
   fetchReferenceBoardJsonExport,
   fetchReferenceBoardMarkdownExport,
   gatewayBaseUrl,
+  referenceBoardJsonDownloadUrl,
+  referenceBoardMarkdownDownloadUrl,
 } from "../api";
 import type {
   OutputCardMetadataResponse,
@@ -307,6 +310,24 @@ export function ReferenceBoards({
                       >
                         Export Markdown
                       </Button>
+                      <Button
+                        component="a"
+                        disabled={loading}
+                        href={referenceBoardJsonDownloadUrl(activeBoard.board_id)}
+                        startIcon={<FileDownloadOutlinedIcon />}
+                        variant="outlined"
+                      >
+                        Download JSON
+                      </Button>
+                      <Button
+                        component="a"
+                        disabled={loading}
+                        href={referenceBoardMarkdownDownloadUrl(activeBoard.board_id)}
+                        startIcon={<FileDownloadOutlinedIcon />}
+                        variant="outlined"
+                      >
+                        Download Markdown
+                      </Button>
                       {exportLoading ? (
                         <Stack alignItems="center" direction="row" spacing={1}>
                           <CircularProgress size={18} />
@@ -317,7 +338,8 @@ export function ReferenceBoards({
                       ) : null}
                     </Stack>
                     <Typography color="text.secondary" variant="caption">
-                      Exports are review artifacts only. They do not copy, move, delete, or approve source assets.
+                      Downloads are response-only review artifacts. They do not copy, move, delete, or approve source
+                      assets.
                     </Typography>
                     {exportError ? (
                       <Alert severity="warning" variant="outlined">

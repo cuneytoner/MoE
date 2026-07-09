@@ -130,6 +130,8 @@ M34.27 implements Markdown download first.
 
 M34.28 implements JSON download after Markdown download.
 
+M34.29 implements dashboard access to response-only download endpoints.
+
 ## Why ZIP/PDF Are Deferred
 
 ZIP and PDF exports increase risk because they may imply asset bundling, rendering, embedded media, or larger temporary artifacts.

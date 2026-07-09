@@ -6,6 +6,8 @@ M34.28 adds a safe response-only JSON download endpoint for reference boards.
 
 The endpoint reuses the existing JSON export helper and returns the review pack as a browser attachment. It does not create runtime export files, ZIP files, PDF files, copied source assets, or generated media.
 
+M34.29 exposes JSON download through dashboard UI.
+
 ## Endpoint
 
 ```text

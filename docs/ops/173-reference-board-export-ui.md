@@ -53,7 +53,7 @@ If browser clipboard access is available, the panel shows a Copy button.
 
 Copy copies the currently displayed export text to the clipboard. It does not write a file or create a runtime export artifact.
 
-Download buttons are deferred until later milestones implement the M34.26 plan.
+M34.29 adds dashboard download actions for JSON and Markdown attachments.
 
 ## Safety Rules
 
@@ -72,9 +72,6 @@ Download buttons are deferred until later milestones implement the M34.26 plan.
 
 ## What Is Not Implemented Yet
 
-- no browser download action
-- no Markdown download implementation
-- no JSON download implementation
 - no ZIP export
 - no PDF export
 - no controlled asset copy mode

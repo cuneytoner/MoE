@@ -8,6 +8,8 @@ The endpoint reuses the existing Markdown export helper and returns the Markdown
 
 M34.28 mirrors the response-only attachment pattern for JSON.
 
+M34.29 exposes Markdown download through dashboard UI.
+
 ## Endpoint
 
 ```text

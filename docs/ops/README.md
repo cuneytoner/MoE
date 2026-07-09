@@ -218,6 +218,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board Markdown download review template | [180-reference-board-markdown-download-review-template.md](180-reference-board-markdown-download-review-template.md) |
 | Reference board JSON download implementation | [181-reference-board-json-download-implementation.md](181-reference-board-json-download-implementation.md) |
 | Reference board JSON download review template | [182-reference-board-json-download-review-template.md](182-reference-board-json-download-review-template.md) |
+| Reference board download UI | [183-reference-board-download-ui.md](183-reference-board-download-ui.md) |
+| Reference board download UI review template | [184-reference-board-download-ui-review-template.md](184-reference-board-download-ui-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
