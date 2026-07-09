@@ -4,6 +4,8 @@
 
 Reference board JSON export should use this planned shape:
 
+M34.23 implements the first schema version.
+
 ```json
 {
   "schema_version": "1.0",

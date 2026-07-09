@@ -204,6 +204,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board export schema | [166-reference-board-export-schema.md](166-reference-board-export-schema.md) |
 | Reference board export security policy | [167-reference-board-export-security-policy.md](167-reference-board-export-security-policy.md) |
 | Reference board export review template | [168-reference-board-export-review-template.md](168-reference-board-export-review-template.md) |
+| Reference board JSON export implementation | [169-reference-board-json-export-implementation.md](169-reference-board-json-export-implementation.md) |
+| Reference board JSON export review template | [170-reference-board-json-export-review-template.md](170-reference-board-json-export-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -42,6 +42,8 @@ GET /gateway/media/reference-boards/{board_id}/export/markdown
 
 Do not implement export endpoints in this planning milestone.
 
+M34.23 implements the JSON review pack endpoint.
+
 ## JSON Review Pack
 
 The JSON review pack should return a structured review artifact containing board metadata, selected item references, selected reasons, tags, and safe metadata summaries.

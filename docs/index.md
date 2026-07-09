@@ -168,6 +168,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Export Schema](ops/166-reference-board-export-schema.md)
 - [Reference Board Export Security Policy](ops/167-reference-board-export-security-policy.md)
 - [Reference Board Export Review Template](ops/168-reference-board-export-review-template.md)
+- [Reference Board JSON Export Implementation](ops/169-reference-board-json-export-implementation.md)
+- [Reference Board JSON Export Review Template](ops/170-reference-board-json-export-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

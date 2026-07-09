@@ -27,6 +27,7 @@ from app.reference_boards import (
     add_item_to_reference_board,
     board_path_for_id,
     build_empty_reference_board,
+    build_reference_board_json_export,
     item_id_for_card_id,
     list_reference_boards,
     load_reference_board,
@@ -437,6 +438,33 @@ async def media_reference_board(board_id: str) -> dict[str, Any] | JSONResponse:
         "service": "gateway-reference-boards",
         "board": board,
     }
+
+
+@app.get("/gateway/media/reference-boards/{board_id}/export/json", response_model=None)
+async def media_reference_board_export_json(board_id: str) -> dict[str, Any] | JSONResponse:
+    try:
+        safe_board_id = sanitize_board_id(board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    try:
+        return build_reference_board_json_export(safe_board_id)
+    except FileNotFoundError:
+        return _reference_board_error(
+            404,
+            "reference_board_not_found",
+            "Reference board not found.",
+        )
+    except ValueError:
+        return _reference_board_error(
+            403,
+            "reference_board_blocked",
+            "Reference board access blocked by safety policy.",
+        )
 
 
 @app.post("/gateway/media/reference-boards", status_code=201, response_model=None)

@@ -6,11 +6,31 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from app.output_cards import find_output_card_by_id, load_output_card_metadata
+
 
 REFERENCE_BOARDS_ROOT = Path("/home/cuneyt/MoE/runtime/reference-boards")
 MAX_REFERENCE_BOARD_BYTES = 256 * 1024
 BOARD_ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
 ITEM_ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
+METADATA_SUMMARY_FIELDS = (
+    "source",
+    "script",
+    "workflow",
+    "model_name",
+    "model_family",
+    "prompt",
+    "seed",
+    "width",
+    "height",
+    "steps",
+    "drawing_kind",
+    "geometry",
+    "units",
+    "project",
+    "notes",
+)
+HOST_PATH_MARKERS = ("/home/", "/mnt/", "/media/", "/workspace/", "/app/")
 
 
 def ensure_reference_boards_root() -> Path:
@@ -178,6 +198,61 @@ def update_reference_board_item(board_id: str, item_id: str, updates: dict[str, 
     raise ValueError("reference_board_item_not_found")
 
 
+def build_reference_board_json_export(board_id: str) -> dict[str, Any]:
+    board = load_reference_board(board_id)
+    items = board.get("items")
+    if not isinstance(items, list):
+        raise ValueError("items must be a list")
+
+    return {
+        "schema_version": "1.0",
+        "export_type": "reference_board_review_pack",
+        "exported_at": utc_now_iso(),
+        "board": {
+            "board_id": board.get("board_id"),
+            "title": board.get("title"),
+            "description": board.get("description"),
+            "created_at": board.get("created_at"),
+            "updated_at": board.get("updated_at"),
+            "safety_label": board.get("safety_label"),
+            "item_count": len(items),
+        },
+        "items": [_export_item(item) for item in items if isinstance(item, dict)],
+        "safety": {
+            "review_only": True,
+            "source_assets_copied": False,
+            "source_assets_deleted": False,
+            "generation_triggered": False,
+        },
+    }
+
+
+def summarize_item_metadata(item: dict[str, Any]) -> dict[str, Any] | None:
+    card_id = item.get("card_id")
+    if not isinstance(card_id, str) or not card_id:
+        return {"available": False, "reason": "metadata_unavailable"}
+
+    card = find_output_card_by_id(card_id)
+    if card is None:
+        return {"available": False, "reason": "output_card_not_found"}
+
+    metadata, error = load_output_card_metadata(card)
+    if error is not None or metadata is None:
+        return {"available": False, "reason": error or "metadata_unavailable"}
+
+    summary: dict[str, Any] = {}
+    for field in METADATA_SUMMARY_FIELDS:
+        if field not in metadata:
+            continue
+        value = _safe_metadata_summary_value(metadata[field])
+        if value is not None:
+            summary[field] = value
+
+    if not summary:
+        return {"available": False, "reason": "metadata_empty"}
+    return summary
+
+
 def load_reference_board(board_id: str) -> dict[str, Any]:
     path = board_path_for_id(board_id)
     if not is_safe_board_path(path):
@@ -263,6 +338,54 @@ def validate_reference_board_shape(board: dict[str, Any]) -> list[str]:
             continue
         errors.extend(f"items[{index}].{error}" for error in validate_reference_board_item_shape(item))
     return errors
+
+
+def _export_item(item: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "item_id": item.get("item_id"),
+        "card_id": item.get("card_id"),
+        "asset_type": item.get("asset_type"),
+        "name": item.get("name"),
+        "relative_runtime_path": item.get("relative_runtime_path"),
+        "selected_reason": item.get("selected_reason"),
+        "tags": item.get("tags") if isinstance(item.get("tags"), list) else [],
+        "safety_label": item.get("safety_label"),
+        "added_at": item.get("added_at"),
+        "metadata_summary": summarize_item_metadata(item),
+    }
+
+
+def _safe_metadata_summary_value(value: Any) -> Any:
+    if value is None or isinstance(value, (bool, int, float)):
+        return value
+    if isinstance(value, str):
+        if _looks_like_absolute_host_path(value) or _looks_like_secret(value):
+            return None
+        return value
+    if isinstance(value, list):
+        safe_items = [_safe_metadata_summary_value(item) for item in value]
+        return [item for item in safe_items if item is not None]
+    if isinstance(value, dict):
+        safe_dict: dict[str, Any] = {}
+        for key, child in value.items():
+            if not isinstance(key, str) or _looks_like_secret(key):
+                continue
+            safe_value = _safe_metadata_summary_value(child)
+            if safe_value is not None:
+                safe_dict[key] = safe_value
+        return safe_dict
+    return None
+
+
+def _looks_like_absolute_host_path(value: str) -> bool:
+    if value.startswith(("/", "~")):
+        return True
+    return any(marker in value for marker in HOST_PATH_MARKERS)
+
+
+def _looks_like_secret(value: str) -> bool:
+    lowered = value.lower()
+    return any(marker in lowered for marker in ("secret", "token", "api_key", "apikey", "password"))
 
 
 def validate_reference_board_item_shape(item: dict[str, Any]) -> list[str]:

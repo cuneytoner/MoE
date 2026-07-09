@@ -2,6 +2,8 @@
 
 Use this template when reviewing a future reference board export implementation.
 
+Use [170-reference-board-json-export-review-template.md](170-reference-board-json-export-review-template.md) for implementation-specific JSON export review.
+
 ## Review Fields
 
 - Date/time:
