@@ -188,6 +188,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Export Regression Template](ops/186-reference-board-export-regression-template.md)
 - [Reference Board Export Polish](ops/187-reference-board-export-polish.md)
 - [Reference Board Export Polish Review Template](ops/188-reference-board-export-polish-review-template.md)
+- [Reference Board Workflow Summary](ops/189-reference-board-workflow-summary.md)
+- [Reference Board Workflow Review Template](ops/190-reference-board-workflow-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)
