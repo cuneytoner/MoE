@@ -6,6 +6,8 @@ M34.23 adds the first safe response-only JSON export endpoint for reference boar
 
 The endpoint returns a review pack JSON response. It does not create runtime export files, ZIP files, PDF files, Markdown files, or copied media assets.
 
+M34.24 reuses the JSON review pack data for Markdown output.
+
 ## Endpoint
 
 ```text
@@ -85,7 +87,6 @@ Metadata summaries filter path-like and secret-looking strings.
 
 ## What Is Not Implemented Yet
 
-- no Markdown export endpoint
 - no ZIP export
 - no dashboard export UI
 - no download action

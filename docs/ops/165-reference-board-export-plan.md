@@ -44,6 +44,8 @@ Do not implement export endpoints in this planning milestone.
 
 M34.23 implements the JSON review pack endpoint.
 
+M34.24 implements the Markdown review pack endpoint.
+
 ## JSON Review Pack
 
 The JSON review pack should return a structured review artifact containing board metadata, selected item references, selected reasons, tags, and safe metadata summaries.
@@ -137,11 +139,9 @@ Missing metadata should be represented as unavailable, not treated as an error t
 
 ## What Is Not Implemented Yet
 
-- no export API
 - no dashboard export UI
 - no ZIP export
 - no PDF export
-- no Markdown export endpoint
 - no generated export files
 - no asset copy mode
 
@@ -150,3 +150,4 @@ Missing metadata should be represented as unavailable, not treated as an error t
 - M34.23 Reference Board JSON Export Implementation
 - M34.24 Reference Board Markdown Export Implementation
 - M34.25 Reference Board Export UI
+- M34.26 Reference Board Export Download Plan

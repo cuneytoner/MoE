@@ -98,6 +98,8 @@ If metadata is missing or a field is not relevant, use `null` or omit non-requir
 
 ## Markdown Export Plan
 
+Markdown export is derived from the JSON review pack shape.
+
 Markdown export should include:
 
 - title

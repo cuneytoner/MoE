@@ -444,6 +444,8 @@ required_paths=(
   "docs/ops/168-reference-board-export-review-template.md"
   "docs/ops/169-reference-board-json-export-implementation.md"
   "docs/ops/170-reference-board-json-export-review-template.md"
+  "docs/ops/171-reference-board-markdown-export-implementation.md"
+  "docs/ops/172-reference-board-markdown-export-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

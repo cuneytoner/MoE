@@ -5,7 +5,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, Response, StreamingResponse
 from pydantic import ValidationError
 
 from app.clients.embed_worker import EmbedWorkerClient
@@ -28,6 +28,7 @@ from app.reference_boards import (
     board_path_for_id,
     build_empty_reference_board,
     build_reference_board_json_export,
+    build_reference_board_markdown_export,
     item_id_for_card_id,
     list_reference_boards,
     load_reference_board,
@@ -465,6 +466,34 @@ async def media_reference_board_export_json(board_id: str) -> dict[str, Any] | J
             "reference_board_blocked",
             "Reference board access blocked by safety policy.",
         )
+
+
+@app.get("/gateway/media/reference-boards/{board_id}/export/markdown", response_model=None)
+async def media_reference_board_export_markdown(board_id: str) -> Response | JSONResponse:
+    try:
+        safe_board_id = sanitize_board_id(board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    try:
+        markdown = build_reference_board_markdown_export(safe_board_id)
+    except FileNotFoundError:
+        return _reference_board_error(
+            404,
+            "reference_board_not_found",
+            "Reference board not found.",
+        )
+    except ValueError:
+        return _reference_board_error(
+            403,
+            "reference_board_blocked",
+            "Reference board access blocked by safety policy.",
+        )
+    return Response(content=markdown, media_type="text/markdown")
 
 
 @app.post("/gateway/media/reference-boards", status_code=201, response_model=None)

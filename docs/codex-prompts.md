@@ -70,7 +70,7 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.21 Reference Board Selected Reason Edit DONE
 - M34.22 Reference Board Compare View PLANNED
 - M34.23 Reference Board JSON Export Implementation DONE
-- M34.24 Reference Board Markdown Export Implementation PLANNED
+- M34.24 Reference Board Markdown Export Implementation DONE
 - M34.25 Reference Board Export UI PLANNED
 - M34.26 Reference Board Export Download Plan PLANNED
 

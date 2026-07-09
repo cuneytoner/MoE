@@ -6,6 +6,8 @@ Reference board exports must produce review artifacts without weakening runtime,
 
 M34.23 returns response-only JSON and does not create export files.
 
+M34.24 returns response-only Markdown and does not create export files or embed assets.
+
 ## Explicit Deny
 
 Reference board export must not allow:

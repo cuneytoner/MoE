@@ -227,6 +227,47 @@ def build_reference_board_json_export(board_id: str) -> dict[str, Any]:
     }
 
 
+def build_reference_board_markdown_export(board_id: str) -> str:
+    review_pack = build_reference_board_json_export(board_id)
+    board = review_pack["board"]
+    safety = review_pack["safety"]
+    title = _markdown_text(board.get("title") or board.get("board_id") or "Reference Board")
+
+    lines = [
+        f"# Reference Board Review Pack: {title}",
+        "",
+        "## Board",
+        "",
+        f"- Board ID: {_markdown_text(board.get('board_id'))}",
+        f"- Description: {_markdown_text(board.get('description'))}",
+        f"- Created: {_markdown_text(board.get('created_at'))}",
+        f"- Updated: {_markdown_text(board.get('updated_at'))}",
+        f"- Safety label: {_markdown_text(board.get('safety_label'))}",
+        f"- Item count: {_markdown_text(board.get('item_count'))}",
+        "",
+        "## Safety",
+        "",
+        f"- Review only: {_markdown_bool(safety.get('review_only'))}",
+        f"- Source assets copied: {_markdown_bool(safety.get('source_assets_copied'))}",
+        f"- Source assets deleted: {_markdown_bool(safety.get('source_assets_deleted'))}",
+        f"- Generation triggered: {_markdown_bool(safety.get('generation_triggered'))}",
+        "",
+        "## Items",
+        "",
+    ]
+
+    items = review_pack.get("items")
+    if not isinstance(items, list) or not items:
+        lines.extend(["No items.", ""])
+    else:
+        for index, item in enumerate(items, start=1):
+            if not isinstance(item, dict):
+                continue
+            _append_markdown_item(lines, index, item)
+
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def summarize_item_metadata(item: dict[str, Any]) -> dict[str, Any] | None:
     card_id = item.get("card_id")
     if not isinstance(card_id, str) or not card_id:
@@ -386,6 +427,82 @@ def _looks_like_absolute_host_path(value: str) -> bool:
 def _looks_like_secret(value: str) -> bool:
     lowered = value.lower()
     return any(marker in lowered for marker in ("secret", "token", "api_key", "apikey", "password"))
+
+
+def _append_markdown_item(lines: list[str], index: int, item: dict[str, Any]) -> None:
+    lines.extend(
+        [
+            f"## Item {index}: {_markdown_text(item.get('name'))}",
+            "",
+            f"- Item ID: {_markdown_text(item.get('item_id'))}",
+            f"- Card ID: {_markdown_text(item.get('card_id'))}",
+            f"- Asset type: {_markdown_text(item.get('asset_type'))}",
+            f"- Relative runtime path: {_markdown_text(item.get('relative_runtime_path'))}",
+            f"- Safety label: {_markdown_text(item.get('safety_label'))}",
+            f"- Added at: {_markdown_text(item.get('added_at'))}",
+            f"- Selected reason: {_markdown_text(item.get('selected_reason'))}",
+            f"- Tags: {_markdown_tags(item.get('tags'))}",
+            "",
+            "### Metadata summary",
+            "",
+        ]
+    )
+    _append_markdown_metadata_summary(lines, item.get("metadata_summary"))
+    lines.append("")
+
+
+def _append_markdown_metadata_summary(lines: list[str], metadata_summary: Any) -> None:
+    if not isinstance(metadata_summary, dict) or metadata_summary.get("available") is False:
+        reason = metadata_summary.get("reason") if isinstance(metadata_summary, dict) else "metadata_unavailable"
+        lines.append(f"- available: false ({_markdown_text(reason)})")
+        return
+
+    for field in (
+        "source",
+        "script",
+        "workflow",
+        "model_name",
+        "model_family",
+        "prompt",
+        "seed",
+        "width",
+        "height",
+        "steps",
+        "drawing_kind",
+        "units",
+        "project",
+        "notes",
+    ):
+        if field in metadata_summary:
+            lines.append(f"- {field}: {_markdown_text(metadata_summary.get(field))}")
+
+    geometry = metadata_summary.get("geometry")
+    if geometry is not None:
+        lines.extend(["- geometry summary:", "", "```json", _markdown_text(json.dumps(geometry, indent=2, sort_keys=True)), "```"])
+
+
+def _markdown_text(value: Any) -> str:
+    if value is None or value == "":
+        return "not provided"
+    if isinstance(value, bool):
+        return _markdown_bool(value)
+    if isinstance(value, (int, float)):
+        return str(value)
+    if isinstance(value, (list, dict)):
+        text = json.dumps(value, sort_keys=True)
+    else:
+        text = str(value)
+    return text.replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _markdown_bool(value: Any) -> str:
+    return "true" if value is True else "false"
+
+
+def _markdown_tags(value: Any) -> str:
+    if not isinstance(value, list) or not value:
+        return "not provided"
+    return ", ".join(_markdown_text(tag) for tag in value)
 
 
 def validate_reference_board_item_shape(item: dict[str, Any]) -> list[str]:

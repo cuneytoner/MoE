@@ -206,6 +206,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board export review template | [168-reference-board-export-review-template.md](168-reference-board-export-review-template.md) |
 | Reference board JSON export implementation | [169-reference-board-json-export-implementation.md](169-reference-board-json-export-implementation.md) |
 | Reference board JSON export review template | [170-reference-board-json-export-review-template.md](170-reference-board-json-export-review-template.md) |
+| Reference board Markdown export implementation | [171-reference-board-markdown-export-implementation.md](171-reference-board-markdown-export-implementation.md) |
+| Reference board Markdown export review template | [172-reference-board-markdown-export-review-template.md](172-reference-board-markdown-export-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
