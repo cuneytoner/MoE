@@ -10,6 +10,8 @@ M34.12 uses these endpoints from the dashboard `Reference Boards` and `Media Out
 
 M34.12.1 updates output cards to use relative-runtime-path based card ids, avoiding duplicate item references when files share the same basename in different folders.
 
+M34.19 consumes item selection data in board detail cards, including item name, asset type, safety label, selected reason, tags, added timestamp, relative runtime path, and metadata availability.
+
 ## Endpoints
 
 ```text

@@ -8,6 +8,8 @@ The dashboard can list boards, create a board, select an active board, add outpu
 
 M34.12.1 fixes dashboard-to-Gateway CORS for reference-board writes and stabilizes output card ids so duplicate filenames do not create duplicate React keys.
 
+M34.19 adds a richer board detail view with item cards, card_id-based image previews, card_id-based metadata, and reference-only remove actions.
+
 ## API Endpoints Used
 
 ```text

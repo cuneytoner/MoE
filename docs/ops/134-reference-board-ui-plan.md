@@ -10,6 +10,8 @@ Dashboard UI should use M34.17 item selection endpoints later.
 
 M34.12 implements the first dashboard reference-board UI using the M34.11 and M34.17 APIs.
 
+M34.19 improves selected board detail and item card display.
+
 ## Planned Actions
 
 - Select card for board.

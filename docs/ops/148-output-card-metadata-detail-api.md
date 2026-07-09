@@ -8,6 +8,8 @@ The endpoint returns safe JSON metadata only for cards resolved through the exis
 
 M34.12.1 changes output card ids to `{type}:{relative_runtime_path}`. The metadata endpoint continues to resolve by `card_id` through the output-card scan.
 
+M34.19 reuses this card_id-based metadata endpoint from reference board item cards.
+
 ## Endpoint
 
 ```text

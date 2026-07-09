@@ -41,6 +41,8 @@ That was not unique when two generated outputs shared the same basename in diffe
 - Preview and metadata endpoints still resolve `card_id` through the output-card scan.
 - Preview and metadata routes accept slash-containing card ids without treating them as filesystem paths.
 
+M34.19 keeps unique item/card keys in board detail rendering by using `item.item_id` for board item cards and `card.id` for output cards.
+
 ## CORS Allowed Origins
 
 ```text

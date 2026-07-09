@@ -1,6 +1,9 @@
 import { useState, type FormEvent } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
+import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
+import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import {
   Alert,
@@ -10,12 +13,23 @@ import {
   CardContent,
   CardHeader,
   Chip,
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   Divider,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import type { ReferenceBoard, ReferenceBoardCreateRequest, ReferenceBoardSummary } from "../types";
+import { fetchOutputCardMetadata, gatewayBaseUrl } from "../api";
+import type {
+  OutputCardMetadataResponse,
+  ReferenceBoard,
+  ReferenceBoardCreateRequest,
+  ReferenceBoardItem,
+  ReferenceBoardSummary,
+} from "../types";
 import { StatusChip } from "./StatusChip";
 
 type Props = {
@@ -42,6 +56,10 @@ export function ReferenceBoards({
   const [boardId, setBoardId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [metadataItem, setMetadataItem] = useState<ReferenceBoardItem | null>(null);
+  const [metadataResponse, setMetadataResponse] = useState<OutputCardMetadataResponse | null>(null);
+  const [metadataLoading, setMetadataLoading] = useState(false);
+  const [metadataError, setMetadataError] = useState("");
 
   async function submitCreate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -53,6 +71,20 @@ export function ReferenceBoards({
     setBoardId("");
     setTitle("");
     setDescription("");
+  }
+
+  async function openMetadata(item: ReferenceBoardItem) {
+    setMetadataItem(item);
+    setMetadataResponse(null);
+    setMetadataError("");
+    setMetadataLoading(true);
+    try {
+      setMetadataResponse(await fetchOutputCardMetadata(item.card_id));
+    } catch (err) {
+      setMetadataError(err instanceof Error ? err.message : "unknown metadata error");
+    } finally {
+      setMetadataLoading(false);
+    }
   }
 
   return (
@@ -194,63 +226,35 @@ export function ReferenceBoards({
                     <Chip label={`updated ${new Date(activeBoard.updated_at).toLocaleString()}`} size="small" variant="outlined" />
                   </Stack>
 
+                  <Alert severity="info" variant="outlined">
+                    Reference boards store references only. Removing an item does not delete the source asset.
+                  </Alert>
+
                   <Divider />
 
                   {activeBoard.items.length === 0 ? (
                     <Typography color="text.secondary" variant="body2">
-                      Select output cards below to add references to this board.
+                      No items yet. Select an output card and use Add to board.
                     </Typography>
                   ) : null}
 
-                  <Stack spacing={1}>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gap: 1.5,
+                      gridTemplateColumns: { xs: "1fr", xl: "repeat(2, minmax(0, 1fr))" },
+                    }}
+                  >
                     {activeBoard.items.map((item) => (
-                      <Box
+                      <ReferenceBoardItemCard
+                        item={item}
                         key={item.item_id}
-                        sx={{
-                          border: "1px solid rgba(145, 158, 171, 0.18)",
-                          borderRadius: 1,
-                          p: 1.5,
-                        }}
-                      >
-                        <Stack spacing={1}>
-                          <Stack alignItems="flex-start" direction="row" justifyContent="space-between" spacing={2}>
-                            <Box sx={{ minWidth: 0 }}>
-                              <Typography fontWeight={800} sx={{ overflowWrap: "anywhere" }} variant="body2">
-                                {item.name}
-                              </Typography>
-                              <Typography color="text.secondary" sx={{ overflowWrap: "anywhere" }} variant="caption">
-                                {item.relative_runtime_path}
-                              </Typography>
-                            </Box>
-                            <StatusChip label={item.asset_type} tone="neutral" />
-                          </Stack>
-                          {item.selected_reason ? (
-                            <Typography color="text.secondary" variant="body2">
-                              {item.selected_reason}
-                            </Typography>
-                          ) : null}
-                          {item.tags.length > 0 ? (
-                            <Stack direction="row" flexWrap="wrap" gap={0.75}>
-                              {item.tags.map((tag) => (
-                                <Chip key={tag} label={tag} size="small" variant="outlined" />
-                              ))}
-                            </Stack>
-                          ) : null}
-                          <Box>
-                            <Button
-                              disabled={loading}
-                              onClick={() => void onRemoveBoardItem(item.item_id)}
-                              size="small"
-                              startIcon={<RemoveCircleOutlineIcon />}
-                              variant="outlined"
-                            >
-                              Remove from board
-                            </Button>
-                          </Box>
-                        </Stack>
-                      </Box>
+                        loading={loading}
+                        onRemoveBoardItem={onRemoveBoardItem}
+                        onViewMetadata={openMetadata}
+                      />
                     ))}
-                  </Stack>
+                  </Box>
                 </Stack>
               ) : (
                 <Stack alignItems="center" justifyContent="center" spacing={1} sx={{ minHeight: 220, textAlign: "center" }}>
@@ -264,6 +268,286 @@ export function ReferenceBoards({
           </Box>
         </Stack>
       </CardContent>
+      <ReferenceBoardMetadataDialog
+        error={metadataError}
+        item={metadataItem}
+        loading={metadataLoading}
+        metadata={metadataResponse?.metadata ?? null}
+        onClose={() => {
+          setMetadataItem(null);
+          setMetadataResponse(null);
+          setMetadataError("");
+        }}
+      />
     </Card>
   );
+}
+
+function ReferenceBoardItemCard({
+  item,
+  loading,
+  onRemoveBoardItem,
+  onViewMetadata,
+}: {
+  item: ReferenceBoardItem;
+  loading: boolean;
+  onRemoveBoardItem: (itemId: string) => Promise<void>;
+  onViewMetadata: (item: ReferenceBoardItem) => void;
+}) {
+  const [previewFailed, setPreviewFailed] = useState(false);
+  const shouldShowImagePreview = item.asset_type === "image" && !previewFailed;
+  const previewUrl = `${gatewayBaseUrl()}/gateway/media/output-preview/${encodeURIComponent(item.card_id)}`;
+
+  return (
+    <Box
+      sx={{
+        border: "1px solid rgba(145, 158, 171, 0.2)",
+        borderRadius: 1,
+        p: 1.5,
+      }}
+    >
+      <Stack spacing={1.25}>
+        <Stack alignItems="flex-start" direction="row" justifyContent="space-between" spacing={2}>
+          <Stack direction="row" spacing={1.25} sx={{ minWidth: 0 }}>
+            <Box sx={{ color: item.asset_type === "image" ? "primary.main" : "text.secondary", pt: 0.25 }}>
+              {item.asset_type === "image" ? <ImageOutlinedIcon /> : <ArticleOutlinedIcon />}
+            </Box>
+            <Box sx={{ minWidth: 0 }}>
+              <Typography fontWeight={900} sx={{ overflowWrap: "anywhere" }} variant="body2">
+                {item.name}
+              </Typography>
+              <Typography color="text.secondary" variant="caption">
+                added {new Date(item.added_at).toLocaleString()}
+              </Typography>
+            </Box>
+          </Stack>
+          <StatusChip label={item.asset_type} tone="neutral" />
+        </Stack>
+
+        <Box
+          sx={{
+            alignItems: "center",
+            bgcolor: "background.default",
+            border: "1px solid rgba(145, 158, 171, 0.24)",
+            borderRadius: 1,
+            display: "flex",
+            height: 132,
+            justifyContent: "center",
+            overflow: "hidden",
+          }}
+        >
+          {shouldShowImagePreview ? (
+            <Box
+              alt=""
+              component="img"
+              loading="lazy"
+              onError={() => setPreviewFailed(true)}
+              src={previewUrl}
+              sx={{
+                display: "block",
+                height: "100%",
+                objectFit: "cover",
+                width: "100%",
+              }}
+            />
+          ) : item.asset_type === "image" ? (
+            <Stack alignItems="center" spacing={0.5}>
+              <ImageOutlinedIcon color="disabled" fontSize="large" />
+              <Typography color="text.secondary" variant="caption">
+                preview unavailable
+              </Typography>
+            </Stack>
+          ) : (
+            <Stack alignItems="center" spacing={0.5}>
+              <InsertDriveFileOutlinedIcon color="disabled" fontSize="large" />
+              <Typography color="text.secondary" variant="caption">
+                SVG placeholder
+              </Typography>
+            </Stack>
+          )}
+        </Box>
+
+        <Stack direction="row" flexWrap="wrap" gap={0.75}>
+          <StatusChip label={item.safety_label} tone={safetyTone(item.safety_label)} />
+          {item.tags.map((tag) => (
+            <Chip key={tag} label={tag} size="small" variant="outlined" />
+          ))}
+        </Stack>
+
+        {item.selected_reason ? (
+          <Typography color="text.secondary" variant="body2">
+            {item.selected_reason}
+          </Typography>
+        ) : null}
+
+        <Typography color="text.secondary" sx={{ overflowWrap: "anywhere" }} variant="caption">
+          {item.relative_runtime_path}
+        </Typography>
+
+        <Stack direction="row" flexWrap="wrap" gap={1}>
+          {item.metadata_path ? (
+            <Button onClick={() => onViewMetadata(item)} size="small" variant="outlined">
+              View metadata
+            </Button>
+          ) : null}
+          <Button
+            disabled={loading}
+            onClick={() => void onRemoveBoardItem(item.item_id)}
+            size="small"
+            startIcon={<RemoveCircleOutlineIcon />}
+            variant="outlined"
+          >
+            Remove from board
+          </Button>
+        </Stack>
+      </Stack>
+    </Box>
+  );
+}
+
+function ReferenceBoardMetadataDialog({
+  error,
+  item,
+  loading,
+  metadata,
+  onClose,
+}: {
+  error: string;
+  item: ReferenceBoardItem | null;
+  loading: boolean;
+  metadata: Record<string, unknown> | null;
+  onClose: () => void;
+}) {
+  return (
+    <Dialog fullWidth maxWidth="md" onClose={onClose} open={item !== null}>
+      <DialogTitle>Reference item metadata</DialogTitle>
+      <DialogContent>
+        <Stack spacing={2} sx={{ pb: 1 }}>
+          {item ? (
+            <Box>
+              <Typography fontWeight={800} sx={{ overflowWrap: "anywhere" }} variant="body2">
+                {item.name}
+              </Typography>
+              <Typography color="text.secondary" sx={{ overflowWrap: "anywhere" }} variant="caption">
+                {item.card_id}
+              </Typography>
+            </Box>
+          ) : null}
+
+          {loading ? (
+            <Stack alignItems="center" direction="row" spacing={1}>
+              <CircularProgress size={18} />
+              <Typography color="text.secondary" variant="body2">
+                Loading metadata.
+              </Typography>
+            </Stack>
+          ) : null}
+
+          {error ? (
+            <Alert severity="warning" variant="outlined">
+              Metadata unavailable: {error}
+            </Alert>
+          ) : null}
+
+          {metadata ? <ReferenceMetadataDetails assetType={item?.asset_type ?? ""} metadata={metadata} /> : null}
+        </Stack>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function ReferenceMetadataDetails({ assetType, metadata }: { assetType: string; metadata: Record<string, unknown> }) {
+  const fields =
+    assetType === "image"
+      ? [
+          "prompt",
+          "seed",
+          "width",
+          "height",
+          "steps",
+          "workflow",
+          "model_name",
+          "model_family",
+          "script",
+          "safety_label",
+          "relative_runtime_path",
+          "notes",
+        ]
+      : [
+          "project",
+          "drawing_kind",
+          "units",
+          "geometry",
+          "geometry_summary",
+          "script",
+          "safety_label",
+          "relative_runtime_path",
+          "notes",
+        ];
+
+  return (
+    <Stack spacing={2}>
+      <Box sx={{ display: "grid", gap: 1, gridTemplateColumns: { xs: "1fr", sm: "160px minmax(0, 1fr)" } }}>
+        {fields.map((field) => (
+          <ReferenceMetadataField field={field} key={field} value={metadata[field]} />
+        ))}
+      </Box>
+      <Divider />
+      <Box>
+        <Typography gutterBottom fontWeight={800} variant="body2">
+          Raw JSON
+        </Typography>
+        <Box
+          component="pre"
+          sx={{
+            bgcolor: "background.default",
+            border: "1px solid rgba(145, 158, 171, 0.24)",
+            borderRadius: 1,
+            fontFamily: "monospace",
+            fontSize: 12,
+            maxHeight: 260,
+            overflow: "auto",
+            p: 1.5,
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-word",
+          }}
+        >
+          {JSON.stringify(metadata, null, 2)}
+        </Box>
+      </Box>
+    </Stack>
+  );
+}
+
+function ReferenceMetadataField({ field, value }: { field: string; value: unknown }) {
+  if (value === undefined || value === null || value === "") {
+    return null;
+  }
+  return (
+    <>
+      <Typography color="text.secondary" variant="caption">
+        {field}
+      </Typography>
+      <Typography sx={{ overflowWrap: "anywhere" }} variant="body2">
+        {formatMetadataValue(value)}
+      </Typography>
+    </>
+  );
+}
+
+function formatMetadataValue(value: unknown): string {
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+  return JSON.stringify(value);
+}
+
+function safetyTone(label: string): "ok" | "warning" | "error" | "neutral" {
+  if (label === "draft_drawing" || label === "visual_reference_only") {
+    return "warning";
+  }
+  if (label === "deterministic_drawing") {
+    return "ok";
+  }
+  return "neutral";
 }

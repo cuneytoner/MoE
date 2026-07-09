@@ -10,6 +10,8 @@ M34.14 consumes this endpoint in the dashboard UI for image cards.
 
 M34.12.1 changes output card ids to `{type}:{relative_runtime_path}`. The preview endpoint continues to resolve by `card_id` through the output-card scan.
 
+M34.19 reuses this card_id-based image preview endpoint from reference board item cards.
+
 ## Endpoint
 
 ```text
