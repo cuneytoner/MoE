@@ -55,6 +55,7 @@ Allowed methods:
 ```text
 GET
 POST
+PATCH
 DELETE
 OPTIONS
 ```

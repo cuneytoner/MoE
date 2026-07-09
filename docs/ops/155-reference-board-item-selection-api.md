@@ -12,6 +12,8 @@ M34.12.1 updates output cards to use relative-runtime-path based card ids, avoid
 
 M34.19 consumes item selection data in board detail cards, including item name, asset type, safety label, selected reason, tags, added timestamp, relative runtime path, and metadata availability.
 
+M34.21 adds selected_reason/tags editing for board item references only.
+
 ## Endpoints
 
 ```text

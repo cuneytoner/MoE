@@ -384,3 +384,8 @@ export type ReferenceBoardAddItemRequest = {
   selected_reason?: string | null;
   tags?: string[] | null;
 };
+
+export type ReferenceBoardUpdateItemRequest = {
+  selected_reason?: string | null;
+  tags?: string[] | null;
+};

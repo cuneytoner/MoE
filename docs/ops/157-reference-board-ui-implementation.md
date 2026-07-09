@@ -10,6 +10,8 @@ M34.12.1 fixes dashboard-to-Gateway CORS for reference-board writes and stabiliz
 
 M34.19 adds a richer board detail view with item cards, card_id-based image previews, card_id-based metadata, and reference-only remove actions.
 
+M34.21 adds selected_reason/tags editing for board item references only.
+
 ## API Endpoints Used
 
 ```text

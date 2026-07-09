@@ -6,6 +6,7 @@ import type {
   ReferenceBoardAddItemRequest,
   ReferenceBoardCreateRequest,
   ReferenceBoardResponse,
+  ReferenceBoardUpdateItemRequest,
   ReferenceBoardsResponse,
   RuntimeDashboardModel,
 } from "./types";
@@ -102,6 +103,25 @@ export async function removeReferenceBoardItem(boardId: string, itemId: string):
   );
   if (!response.ok) {
     throw new Error(`Gateway reference board item remove returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function updateReferenceBoardItem(
+  boardId: string,
+  itemId: string,
+  request: ReferenceBoardUpdateItemRequest,
+): Promise<ReferenceBoardResponse> {
+  const response = await fetch(
+    `${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/items/${encodeURIComponent(itemId)}`,
+    {
+      body: JSON.stringify(request),
+      headers: { "Content-Type": "application/json" },
+      method: "PATCH",
+    },
+  );
+  if (!response.ok) {
+    throw new Error(`Gateway reference board item update returned HTTP ${response.status}`);
   }
   return response.json();
 }

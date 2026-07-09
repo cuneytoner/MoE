@@ -2,7 +2,7 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.19 Reference Board Detail View.
+- Latest completed: M34.21 Reference Board Selected Reason Edit.
 - Next planned: M34.20 Reference Board Export Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
@@ -56,8 +56,9 @@ Current media milestone status:
 - M34.18 Reference Board Output Card Integration PLANNED
 - M34.19 Reference Board Detail View DONE
 - M34.20 Reference Board Export Plan PLANNED
-- M34.21 Reference Board Selected Reason Edit PLANNED
+- M34.21 Reference Board Selected Reason Edit DONE
 - M34.22 Reference Board Compare View PLANNED
+- M34.23 Reference Board Export Implementation PLANNED
 
 ## Milestone 0: Clean Codebase
 

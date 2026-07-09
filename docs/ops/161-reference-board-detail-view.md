@@ -6,6 +6,8 @@ M34.19 improves the dashboard `Reference Boards` section so selected board items
 
 The detail view remains reference-only. It does not copy, move, delete, rename, approve, or generate source assets.
 
+M34.21 adds selected_reason/tags editing for board item references only.
+
 ## UI Behavior
 
 When a board is active, the dashboard shows:

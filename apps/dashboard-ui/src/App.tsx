@@ -13,6 +13,7 @@ import {
   fetchRuntimeDashboard,
   gatewayBaseUrl,
   removeReferenceBoardItem,
+  updateReferenceBoardItem,
 } from "./api";
 import { GatesPanel } from "./components/GatesPanel";
 import { LatestImagesPanel } from "./components/LatestImagesPanel";
@@ -34,6 +35,7 @@ import type {
   OutputCardsResponse,
   ReferenceBoard,
   ReferenceBoardCreateRequest,
+  ReferenceBoardUpdateItemRequest,
   ReferenceBoardsResponse,
   RuntimeDashboardModel,
 } from "./types";
@@ -217,6 +219,27 @@ export function App() {
     }
   }
 
+  async function handleUpdateBoardItem(itemId: string, request: ReferenceBoardUpdateItemRequest) {
+    if (!activeReferenceBoardId) {
+      return;
+    }
+    setReferenceBoardActionMessage("");
+    setReferenceBoardError("");
+    setReferenceBoardLoading(true);
+    try {
+      const updated = await updateReferenceBoardItem(activeReferenceBoardId, itemId, request);
+      setActiveReferenceBoard(updated.board);
+      await refreshReferenceBoards(activeReferenceBoardId);
+      setReferenceBoardActionMessage("Board note updated.");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "unknown reference board item update error";
+      setReferenceBoardError(message);
+      throw new Error(message);
+    } finally {
+      setReferenceBoardLoading(false);
+    }
+  }
+
   return (
     <DashboardLayout loading={loading} lastRefresh={lastRefresh} onRefresh={() => void refresh()}>
       {error ? (
@@ -264,6 +287,7 @@ export function App() {
             onCreateBoard={handleCreateReferenceBoard}
             onRemoveBoardItem={handleRemoveBoardItem}
             onSelectBoard={handleSelectReferenceBoard}
+            onUpdateBoardItem={handleUpdateBoardItem}
           />
           <OutputCards
             activeBoardId={activeReferenceBoardId}

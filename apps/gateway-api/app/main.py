@@ -32,6 +32,7 @@ from app.reference_boards import (
     load_reference_board,
     remove_item_from_reference_board,
     sanitize_board_id,
+    update_reference_board_item,
     utc_now_iso,
     write_reference_board,
 )
@@ -87,6 +88,7 @@ from app.models.gateway import (
     OpenAIChatMessage,
     ReferenceBoardAddItemRequest,
     ReferenceBoardCreateRequest,
+    ReferenceBoardUpdateItemRequest,
 )
 from app.services.media_planner import local_media_plan
 from app.services.model_mapping import ModelMapping, get_model_mapping
@@ -130,7 +132,7 @@ app = FastAPI(title="MoE Gateway API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://127.0.0.1:8500", "http://localhost:8500"],
-    allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
+    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "Accept", "Origin", "Authorization"],
 )
 
@@ -595,6 +597,79 @@ async def media_reference_board_remove_item(board_id: str, item_id: str) -> dict
         "service": "gateway-reference-boards",
         "board": board,
         "removed_item_id": item_id,
+    }
+
+
+@app.patch("/gateway/media/reference-boards/{board_id}/items/{item_id}", response_model=None)
+async def media_reference_board_update_item(
+    board_id: str,
+    item_id: str,
+    request_data: dict[str, Any],
+) -> dict[str, Any] | JSONResponse:
+    try:
+        safe_board_id = sanitize_board_id(board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    try:
+        request = ReferenceBoardUpdateItemRequest.model_validate(request_data)
+    except ValidationError as exc:
+        error_text = str(exc)
+        if "No editable item fields were provided" in error_text:
+            return _reference_board_error(
+                400,
+                "invalid_item_update",
+                "No editable item fields were provided.",
+            )
+        return _reference_board_error(
+            400,
+            "invalid_item_update",
+            "Invalid reference board item update.",
+        )
+
+    updates = request.model_dump(exclude_unset=True)
+    try:
+        board, item = update_reference_board_item(safe_board_id, item_id, updates)
+    except FileNotFoundError:
+        return _reference_board_error(
+            404,
+            "reference_board_not_found",
+            "Reference board not found.",
+        )
+    except ValueError as exc:
+        if str(exc) == "reference_board_item_not_found":
+            return _reference_board_error(
+                404,
+                "reference_board_item_not_found",
+                "Reference board item not found.",
+            )
+        if str(exc) == "invalid_item_update":
+            return _reference_board_error(
+                400,
+                "invalid_item_update",
+                "No editable item fields were provided.",
+            )
+        if str(exc) == "invalid_item_id":
+            return _reference_board_error(
+                400,
+                "invalid_item_id",
+                "Invalid reference board item id.",
+            )
+        return _reference_board_error(
+            403,
+            "reference_board_blocked",
+            "Reference board access blocked by safety policy.",
+        )
+
+    return {
+        "status": "ok",
+        "service": "gateway-reference-boards",
+        "board": board,
+        "item": item,
     }
 
 

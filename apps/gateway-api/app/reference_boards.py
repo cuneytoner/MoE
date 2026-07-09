@@ -130,6 +130,54 @@ def remove_item_from_reference_board(board_id: str, item_id: str) -> dict[str, A
     return load_reference_board(board_id)
 
 
+def update_reference_board_item(board_id: str, item_id: str, updates: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    if not ITEM_ID_PATTERN.fullmatch(item_id):
+        raise ValueError("invalid_item_id")
+    allowed_fields = {"selected_reason", "tags"}
+    if not any(field in updates for field in allowed_fields):
+        raise ValueError("invalid_item_update")
+    blocked_fields = set(updates) - allowed_fields
+    if blocked_fields:
+        raise ValueError("invalid_item_update")
+
+    board = load_reference_board(board_id)
+    items = board.get("items")
+    if not isinstance(items, list):
+        raise ValueError("items must be a list")
+
+    updated_item: dict[str, Any] | None = None
+    for item in items:
+        if not isinstance(item, dict) or item.get("item_id") != item_id:
+            continue
+        next_item = dict(item)
+        if "selected_reason" in updates:
+            selected_reason = updates["selected_reason"]
+            next_item["selected_reason"] = selected_reason.strip() if isinstance(selected_reason, str) and selected_reason.strip() else None
+        if "tags" in updates:
+            tags = updates["tags"]
+            if tags is None:
+                next_item["tags"] = []
+            else:
+                next_item["tags"] = list(tags)
+        errors = validate_reference_board_item_shape(next_item)
+        if errors:
+            raise ValueError("; ".join(errors))
+        item.clear()
+        item.update(next_item)
+        updated_item = dict(next_item)
+        break
+
+    if updated_item is None:
+        raise ValueError("reference_board_item_not_found")
+
+    write_reference_board(board)
+    updated_board = load_reference_board(board_id)
+    for item in updated_board.get("items", []):
+        if isinstance(item, dict) and item.get("item_id") == item_id:
+            return updated_board, dict(item)
+    raise ValueError("reference_board_item_not_found")
+
+
 def load_reference_board(board_id: str) -> dict[str, Any]:
     path = board_path_for_id(board_id)
     if not is_safe_board_path(path):

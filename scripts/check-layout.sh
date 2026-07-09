@@ -436,6 +436,8 @@ required_paths=(
   "docs/ops/160-reference-board-ui-cors-card-id-review-template.md"
   "docs/ops/161-reference-board-detail-view.md"
   "docs/ops/162-reference-board-detail-view-review-template.md"
+  "docs/ops/163-reference-board-item-note-edit-api.md"
+  "docs/ops/164-reference-board-item-note-edit-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

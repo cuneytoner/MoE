@@ -29,6 +29,7 @@ import type {
   ReferenceBoardCreateRequest,
   ReferenceBoardItem,
   ReferenceBoardSummary,
+  ReferenceBoardUpdateItemRequest,
 } from "../types";
 import { StatusChip } from "./StatusChip";
 
@@ -41,6 +42,7 @@ type Props = {
   onCreateBoard: (request: ReferenceBoardCreateRequest) => Promise<void>;
   onRemoveBoardItem: (itemId: string) => Promise<void>;
   onSelectBoard: (boardId: string) => Promise<void>;
+  onUpdateBoardItem: (itemId: string, request: ReferenceBoardUpdateItemRequest) => Promise<void>;
 };
 
 export function ReferenceBoards({
@@ -52,6 +54,7 @@ export function ReferenceBoards({
   onCreateBoard,
   onRemoveBoardItem,
   onSelectBoard,
+  onUpdateBoardItem,
 }: Props) {
   const [boardId, setBoardId] = useState("");
   const [title, setTitle] = useState("");
@@ -251,6 +254,7 @@ export function ReferenceBoards({
                         key={item.item_id}
                         loading={loading}
                         onRemoveBoardItem={onRemoveBoardItem}
+                        onUpdateBoardItem={onUpdateBoardItem}
                         onViewMetadata={openMetadata}
                       />
                     ))}
@@ -287,16 +291,50 @@ function ReferenceBoardItemCard({
   item,
   loading,
   onRemoveBoardItem,
+  onUpdateBoardItem,
   onViewMetadata,
 }: {
   item: ReferenceBoardItem;
   loading: boolean;
   onRemoveBoardItem: (itemId: string) => Promise<void>;
+  onUpdateBoardItem: (itemId: string, request: ReferenceBoardUpdateItemRequest) => Promise<void>;
   onViewMetadata: (item: ReferenceBoardItem) => void;
 }) {
   const [previewFailed, setPreviewFailed] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [reasonDraft, setReasonDraft] = useState(item.selected_reason ?? "");
+  const [tagsDraft, setTagsDraft] = useState(item.tags.join(", "));
+  const [editError, setEditError] = useState("");
   const shouldShowImagePreview = item.asset_type === "image" && !previewFailed;
   const previewUrl = `${gatewayBaseUrl()}/gateway/media/output-preview/${encodeURIComponent(item.card_id)}`;
+
+  function startEditing() {
+    setReasonDraft(item.selected_reason ?? "");
+    setTagsDraft(item.tags.join(", "));
+    setEditError("");
+    setEditing(true);
+  }
+
+  async function saveNote() {
+    const tags = Array.from(
+      new Set(
+        tagsDraft
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean),
+      ),
+    );
+    setEditError("");
+    try {
+      await onUpdateBoardItem(item.item_id, {
+        selected_reason: reasonDraft.trim() || null,
+        tags,
+      });
+      setEditing(false);
+    } catch (err) {
+      setEditError(err instanceof Error ? err.message : "Unable to save board note.");
+    }
+  }
 
   return (
     <Box
@@ -369,22 +407,64 @@ function ReferenceBoardItemCard({
 
         <Stack direction="row" flexWrap="wrap" gap={0.75}>
           <StatusChip label={item.safety_label} tone={safetyTone(item.safety_label)} />
-          {item.tags.map((tag) => (
-            <Chip key={tag} label={tag} size="small" variant="outlined" />
+          {item.tags.map((tag, index) => (
+            <Chip key={`${tag}-${index}`} label={tag} size="small" variant="outlined" />
           ))}
         </Stack>
 
-        {item.selected_reason ? (
+        {editing ? (
+          <Stack spacing={1}>
+            {editError ? (
+              <Alert severity="warning" variant="outlined">
+                {editError}
+              </Alert>
+            ) : null}
+            <TextField
+              disabled={loading}
+              label="selected_reason"
+              minRows={2}
+              multiline
+              onChange={(event) => setReasonDraft(event.target.value)}
+              size="small"
+              value={reasonDraft}
+            />
+            <TextField
+              disabled={loading}
+              helperText="Comma-separated board tags."
+              label="tags"
+              onChange={(event) => setTagsDraft(event.target.value)}
+              size="small"
+              value={tagsDraft}
+            />
+            <Stack direction="row" flexWrap="wrap" gap={1}>
+              <Button disabled={loading} onClick={() => void saveNote()} size="small" variant="contained">
+                Save note
+              </Button>
+              <Button disabled={loading} onClick={() => setEditing(false)} size="small" variant="outlined">
+                Cancel
+              </Button>
+            </Stack>
+          </Stack>
+        ) : item.selected_reason ? (
           <Typography color="text.secondary" variant="body2">
             {item.selected_reason}
           </Typography>
-        ) : null}
+        ) : (
+          <Typography color="text.secondary" variant="body2">
+            No board note yet.
+          </Typography>
+        )}
 
         <Typography color="text.secondary" sx={{ overflowWrap: "anywhere" }} variant="caption">
           {item.relative_runtime_path}
         </Typography>
 
         <Stack direction="row" flexWrap="wrap" gap={1}>
+          {!editing ? (
+            <Button disabled={loading} onClick={startEditing} size="small" variant="outlined">
+              Edit board note
+            </Button>
+          ) : null}
           {item.metadata_path ? (
             <Button onClick={() => onViewMetadata(item)} size="small" variant="outlined">
               View metadata

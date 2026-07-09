@@ -1,6 +1,6 @@
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class GatewayHealthResponse(BaseModel):
@@ -596,6 +596,29 @@ class ReferenceBoardAddItemRequest(BaseModel):
             if not tag or len(tag) > 60:
                 raise ValueError("tags must be non-empty strings up to 60 characters")
         return value
+
+
+class ReferenceBoardUpdateItemRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    selected_reason: str | None = Field(default=None, max_length=500)
+    tags: list[str] | None = Field(default=None, max_length=10)
+
+    @field_validator("tags")
+    @classmethod
+    def validate_tags(cls, value: list[str] | None) -> list[str] | None:
+        if value is None:
+            return None
+        for tag in value:
+            if not tag or len(tag) > 60:
+                raise ValueError("tags must be non-empty strings up to 60 characters")
+        return value
+
+    @model_validator(mode="after")
+    def validate_editable_field_present(self) -> "ReferenceBoardUpdateItemRequest":
+        if self.selected_reason is None and self.tags is None:
+            raise ValueError("No editable item fields were provided.")
+        return self
 
 
 class GatewayMediaPlanResponse(BaseModel):

@@ -12,6 +12,8 @@ M34.12 implements the first dashboard reference-board UI using the M34.11 and M3
 
 M34.19 improves selected board detail and item card display.
 
+M34.21 adds selected_reason/tags editing for board item references only.
+
 ## Planned Actions
 
 - Select card for board.
