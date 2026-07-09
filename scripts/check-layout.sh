@@ -464,6 +464,8 @@ required_paths=(
   "docs/ops/188-reference-board-export-polish-review-template.md"
   "docs/ops/189-reference-board-workflow-summary.md"
   "docs/ops/190-reference-board-workflow-review-template.md"
+  "docs/ops/191-reference-board-hardening-plan.md"
+  "docs/ops/192-reference-board-hardening-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

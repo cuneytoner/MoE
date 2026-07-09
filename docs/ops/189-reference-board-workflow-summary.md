@@ -6,6 +6,8 @@ Reference boards curate selected output card references for review without copyi
 
 They are for operator review and future workflow planning. A board records references, selected reasons, tags, and review metadata while leaving the original media or drawing files in place.
 
+M34.33 introduces a hardening plan for validation, runtime-store resilience, export/download safety, and dashboard failure states.
+
 ## Runtime Locations
 
 - Reference board JSON files live under runtime reference board storage.

@@ -6,6 +6,8 @@ M34.30 adds `scripts/reference-board-export-regression.sh`, a safe smoke-test sc
 
 M34.31 is UI polish only; backend regression remains covered by the script.
 
+M34.33 identifies future regression expansion cases.
+
 The script checks:
 
 - JSON export works

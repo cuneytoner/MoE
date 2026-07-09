@@ -79,8 +79,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.30 Reference Board Export Regression Review DONE
 - M34.31 Reference Board Export Polish DONE
 - M34.32 Reference Board Workflow Summary DONE
-- M34.33 Reference Board Hardening Plan PLANNED
+- M34.33 Reference Board Hardening Plan DONE
 - M34.34 Reference Board Error Handling Polish PLANNED
+- M34.35 Reference Board Validation Limits PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

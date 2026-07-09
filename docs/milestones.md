@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.32 Reference Board Workflow Summary.
-- Next planned: M34.33 Reference Board Hardening Plan.
+- Latest completed: M34.33 Reference Board Hardening Plan.
+- Next planned: M34.34 Reference Board Error Handling Polish.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -68,8 +68,9 @@ Current media milestone status:
 - M34.30 Reference Board Export Regression Review DONE
 - M34.31 Reference Board Export Polish DONE
 - M34.32 Reference Board Workflow Summary DONE
-- M34.33 Reference Board Hardening Plan PLANNED
+- M34.33 Reference Board Hardening Plan DONE
 - M34.34 Reference Board Error Handling Polish PLANNED
+- M34.35 Reference Board Validation Limits PLANNED
 
 ## Milestone 0: Clean Codebase
 
