@@ -10,6 +10,8 @@ M34.28 mirrors the response-only attachment pattern for JSON.
 
 M34.29 exposes Markdown download through dashboard UI.
 
+M34.30 adds regression coverage for Markdown download.
+
 ## Endpoint
 
 ```text

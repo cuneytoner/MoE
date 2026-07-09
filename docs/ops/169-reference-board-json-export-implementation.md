@@ -14,6 +14,8 @@ JSON download is planned as a future response-only attachment endpoint.
 
 M34.28 adds response-only JSON download attachment endpoint.
 
+M34.30 adds regression coverage for JSON export.
+
 ## Endpoint
 
 ```text

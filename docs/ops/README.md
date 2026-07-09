@@ -220,6 +220,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board JSON download review template | [182-reference-board-json-download-review-template.md](182-reference-board-json-download-review-template.md) |
 | Reference board download UI | [183-reference-board-download-ui.md](183-reference-board-download-ui.md) |
 | Reference board download UI review template | [184-reference-board-download-ui-review-template.md](184-reference-board-download-ui-review-template.md) |
+| Reference board export regression review | [185-reference-board-export-regression-review.md](185-reference-board-export-regression-review.md) |
+| Reference board export regression template | [186-reference-board-export-regression-template.md](186-reference-board-export-regression-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -12,6 +12,8 @@ Markdown download is planned as a future response-only attachment endpoint.
 
 M34.27 adds response-only Markdown download attachment endpoint.
 
+M34.30 adds regression coverage for Markdown export.
+
 ## Endpoint
 
 ```text

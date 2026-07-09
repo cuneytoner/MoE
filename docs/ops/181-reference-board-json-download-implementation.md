@@ -8,6 +8,8 @@ The endpoint reuses the existing JSON export helper and returns the review pack 
 
 M34.29 exposes JSON download through dashboard UI.
 
+M34.30 adds regression coverage for JSON download.
+
 ## Endpoint
 
 ```text

@@ -6,6 +6,8 @@ M34.29 adds dashboard download actions for active reference board exports.
 
 The dashboard now exposes response-only attachment downloads for JSON and Markdown reference board review artifacts. It does not create runtime export files, ZIP files, PDF files, copied source assets, or generated media.
 
+M34.30 validates backend export/download endpoints used by the UI.
+
 ## UI Behavior
 
 When a reference board is selected in the dashboard, the board detail area shows:

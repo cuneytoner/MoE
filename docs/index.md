@@ -184,6 +184,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board JSON Download Review Template](ops/182-reference-board-json-download-review-template.md)
 - [Reference Board Download UI](ops/183-reference-board-download-ui.md)
 - [Reference Board Download UI Review Template](ops/184-reference-board-download-ui-review-template.md)
+- [Reference Board Export Regression Review](ops/185-reference-board-export-regression-review.md)
+- [Reference Board Export Regression Template](ops/186-reference-board-export-regression-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)
