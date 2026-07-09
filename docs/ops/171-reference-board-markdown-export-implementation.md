@@ -10,6 +10,8 @@ M34.25 exposes Markdown export through dashboard UI.
 
 Markdown download is planned as a future response-only attachment endpoint.
 
+M34.27 adds response-only Markdown download attachment endpoint.
+
 ## Endpoint
 
 ```text

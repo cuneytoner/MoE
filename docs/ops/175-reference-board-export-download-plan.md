@@ -126,6 +126,8 @@ Runtime export files create lifecycle questions:
 
 M34.26 defers runtime export files so the first download implementation can remain response-only.
 
+M34.27 implements Markdown download first.
+
 ## Why ZIP/PDF Are Deferred
 
 ZIP and PDF exports increase risk because they may imply asset bundling, rendering, embedded media, or larger temporary artifacts.

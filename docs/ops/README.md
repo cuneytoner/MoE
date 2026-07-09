@@ -214,6 +214,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board download filename policy | [176-reference-board-download-filename-policy.md](176-reference-board-download-filename-policy.md) |
 | Reference board download security policy | [177-reference-board-download-security-policy.md](177-reference-board-download-security-policy.md) |
 | Reference board download review template | [178-reference-board-download-review-template.md](178-reference-board-download-review-template.md) |
+| Reference board Markdown download implementation | [179-reference-board-markdown-download-implementation.md](179-reference-board-markdown-download-implementation.md) |
+| Reference board Markdown download review template | [180-reference-board-markdown-download-review-template.md](180-reference-board-markdown-download-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

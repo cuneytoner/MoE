@@ -268,6 +268,14 @@ def build_reference_board_markdown_export(board_id: str) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def build_reference_board_download_filename(board_id: str, extension: str) -> str:
+    safe_board_id = sanitize_board_id(board_id)
+    if extension not in {"json", "md"}:
+        raise ValueError("unsupported reference board download extension")
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    return f"reference-board-{safe_board_id}-{timestamp}.{extension}"
+
+
 def summarize_item_metadata(item: dict[str, Any]) -> dict[str, Any] | None:
     card_id = item.get("card_id")
     if not isinstance(card_id, str) or not card_id:

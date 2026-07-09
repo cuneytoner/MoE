@@ -178,6 +178,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Download Filename Policy](ops/176-reference-board-download-filename-policy.md)
 - [Reference Board Download Security Policy](ops/177-reference-board-download-security-policy.md)
 - [Reference Board Download Review Template](ops/178-reference-board-download-review-template.md)
+- [Reference Board Markdown Download Implementation](ops/179-reference-board-markdown-download-implementation.md)
+- [Reference Board Markdown Download Review Template](ops/180-reference-board-markdown-download-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

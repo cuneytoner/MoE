@@ -59,6 +59,8 @@ Do not create:
 
 Runtime export archival must be a separate explicit milestone if needed later.
 
+M34.27 does not create runtime export files and returns response-only Markdown attachment.
+
 ## Attachment Policy
 
 Use response headers only:
