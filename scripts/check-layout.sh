@@ -460,6 +460,8 @@ required_paths=(
   "docs/ops/184-reference-board-download-ui-review-template.md"
   "docs/ops/185-reference-board-export-regression-review.md"
   "docs/ops/186-reference-board-export-regression-template.md"
+  "docs/ops/187-reference-board-export-polish.md"
+  "docs/ops/188-reference-board-export-polish-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

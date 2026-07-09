@@ -55,6 +55,8 @@ Copy copies the currently displayed export text to the clipboard. It does not wr
 
 M34.29 adds dashboard download actions for JSON and Markdown attachments.
 
+M34.31 polishes export/download action grouping and copy feedback.
+
 ## Safety Rules
 
 - export actions are review artifacts only

@@ -143,7 +143,7 @@ export function ReferenceBoards({
     }
     try {
       await navigator.clipboard.writeText(content);
-      setCopyMessage("Copied to clipboard.");
+      setCopyMessage("Copied");
     } catch (err) {
       setCopyMessage(err instanceof Error ? err.message : "Unable to copy export.");
     }
@@ -154,11 +154,6 @@ export function ReferenceBoards({
       <CardHeader subheader="Curate output card references without copying source assets." title="Reference Boards" />
       <CardContent>
         <Stack spacing={2}>
-          <Alert severity="info" variant="outlined">
-            Reference boards store selected asset references only. They do not copy, move, delete, or approve source
-            assets.
-          </Alert>
-
           {error ? (
             <Alert severity="warning" variant="outlined">
               Reference boards unavailable: {error}
@@ -288,59 +283,74 @@ export function ReferenceBoards({
                     <Chip label={`updated ${new Date(activeBoard.updated_at).toLocaleString()}`} size="small" variant="outlined" />
                   </Stack>
 
-                  <Alert severity="info" variant="outlined">
-                    Reference boards store references only. Removing an item does not delete the source asset.
-                  </Alert>
+                  <Stack spacing={1.5}>
+                    <Box>
+                      <Typography color="text.secondary" variant="body2">
+                        Exports open read-only review panels. Downloads save response-only review artifacts.
+                      </Typography>
+                      <Typography color="text.secondary" variant="caption">
+                        These actions do not copy, move, delete, approve, or generate source assets.
+                      </Typography>
+                    </Box>
 
-                  <Stack spacing={1}>
-                    <Stack direction="row" flexWrap="wrap" gap={1}>
-                      <Button
-                        disabled={loading || exportLoading}
-                        onClick={() => void openExport("json")}
-                        startIcon={<ArticleOutlinedIcon />}
-                        variant="outlined"
-                      >
-                        Export JSON
-                      </Button>
-                      <Button
-                        disabled={loading || exportLoading}
-                        onClick={() => void openExport("markdown")}
-                        startIcon={<ArticleOutlinedIcon />}
-                        variant="outlined"
-                      >
-                        Export Markdown
-                      </Button>
-                      <Button
-                        component="a"
-                        disabled={loading}
-                        href={referenceBoardJsonDownloadUrl(activeBoard.board_id)}
-                        startIcon={<FileDownloadOutlinedIcon />}
-                        variant="outlined"
-                      >
-                        Download JSON
-                      </Button>
-                      <Button
-                        component="a"
-                        disabled={loading}
-                        href={referenceBoardMarkdownDownloadUrl(activeBoard.board_id)}
-                        startIcon={<FileDownloadOutlinedIcon />}
-                        variant="outlined"
-                      >
-                        Download Markdown
-                      </Button>
-                      {exportLoading ? (
-                        <Stack alignItems="center" direction="row" spacing={1}>
-                          <CircularProgress size={18} />
-                          <Typography color="text.secondary" variant="body2">
-                            Loading export.
-                          </Typography>
-                        </Stack>
-                      ) : null}
+                    <Stack spacing={1}>
+                      <Typography fontWeight={800} variant="body2">
+                        Review exports
+                      </Typography>
+                      <Stack direction="row" flexWrap="wrap" gap={1}>
+                        <Button
+                          disabled={loading || exportLoading}
+                          onClick={() => void openExport("json")}
+                          startIcon={<ArticleOutlinedIcon />}
+                          variant="outlined"
+                        >
+                          Export JSON
+                        </Button>
+                        <Button
+                          disabled={loading || exportLoading}
+                          onClick={() => void openExport("markdown")}
+                          startIcon={<ArticleOutlinedIcon />}
+                          variant="outlined"
+                        >
+                          Export Markdown
+                        </Button>
+                        {exportLoading ? (
+                          <Stack alignItems="center" direction="row" spacing={1}>
+                            <CircularProgress size={18} />
+                            <Typography color="text.secondary" variant="body2">
+                              Loading export.
+                            </Typography>
+                          </Stack>
+                        ) : null}
+                      </Stack>
                     </Stack>
-                    <Typography color="text.secondary" variant="caption">
-                      Downloads are response-only review artifacts. They do not copy, move, delete, or approve source
-                      assets.
-                    </Typography>
+
+                    <Stack spacing={1}>
+                      <Typography fontWeight={800} variant="body2">
+                        Downloads
+                      </Typography>
+                      <Stack direction="row" flexWrap="wrap" gap={1}>
+                        <Button
+                          component="a"
+                          disabled={loading}
+                          href={referenceBoardJsonDownloadUrl(activeBoard.board_id)}
+                          startIcon={<FileDownloadOutlinedIcon />}
+                          variant="outlined"
+                        >
+                          Download JSON
+                        </Button>
+                        <Button
+                          component="a"
+                          disabled={loading}
+                          href={referenceBoardMarkdownDownloadUrl(activeBoard.board_id)}
+                          startIcon={<FileDownloadOutlinedIcon />}
+                          variant="outlined"
+                        >
+                          Download Markdown
+                        </Button>
+                      </Stack>
+                    </Stack>
+
                     {exportError ? (
                       <Alert severity="warning" variant="outlined">
                         Export unavailable: {exportError}
@@ -684,9 +694,6 @@ function ReferenceBoardExportDialog({
       <DialogTitle>{exportState?.title ?? "Reference board export"}</DialogTitle>
       <DialogContent>
         <Stack spacing={2} sx={{ pb: 1 }}>
-          <Alert severity="info" variant="outlined">
-            Exports are review artifacts only. They do not copy, move, delete, or approve source assets.
-          </Alert>
           <Box
             component="pre"
             sx={{

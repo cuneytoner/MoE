@@ -4,6 +4,8 @@
 
 M34.30 adds `scripts/reference-board-export-regression.sh`, a safe smoke-test script for the complete reference board export and download flow.
 
+M34.31 is UI polish only; backend regression remains covered by the script.
+
 The script checks:
 
 - JSON export works

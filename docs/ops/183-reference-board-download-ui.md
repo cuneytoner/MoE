@@ -8,6 +8,8 @@ The dashboard now exposes response-only attachment downloads for JSON and Markdo
 
 M34.30 validates backend export/download endpoints used by the UI.
 
+M34.31 separates downloads from read-only export panel actions.
+
 ## UI Behavior
 
 When a reference board is selected in the dashboard, the board detail area shows:
