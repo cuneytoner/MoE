@@ -14,7 +14,9 @@ M34.19 improves selected board detail and item card display.
 
 M34.21 adds selected_reason/tags editing for board item references only.
 
-M34.20 plans future export UI actions, but no export UI is implemented yet.
+M34.20 plans future export UI actions.
+
+M34.25 adds dashboard export actions for active reference board.
 
 ## Planned Actions
 
@@ -27,7 +29,7 @@ M34.20 plans future export UI actions, but no export UI is implemented yet.
 - Show board item count.
 - Show visual-only warning.
 
-M34.12 covers create, select, item count, add-to-board, remove-from-board, and safety note behavior. Rename, filtering, richer reason editing, and export remain future work.
+M34.12 covers create, select, item count, add-to-board, remove-from-board, and safety note behavior. M34.25 covers review-only JSON and Markdown export display. Rename, filtering, richer reason editing, and download flows remain future work.
 
 ## Safety Constraints
 

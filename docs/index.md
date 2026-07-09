@@ -172,6 +172,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board JSON Export Review Template](ops/170-reference-board-json-export-review-template.md)
 - [Reference Board Markdown Export Implementation](ops/171-reference-board-markdown-export-implementation.md)
 - [Reference Board Markdown Export Review Template](ops/172-reference-board-markdown-export-review-template.md)
+- [Reference Board Export UI](ops/173-reference-board-export-ui.md)
+- [Reference Board Export UI Review Template](ops/174-reference-board-export-ui-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

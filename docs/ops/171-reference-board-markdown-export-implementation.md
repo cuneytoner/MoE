@@ -4,7 +4,9 @@
 
 M34.24 adds a safe response-only Markdown export endpoint for reference boards.
 
-The endpoint derives Markdown from the JSON review pack data. It does not create runtime export files, ZIP files, PDF files, copied media assets, or dashboard export UI.
+The endpoint derives Markdown from the JSON review pack data. It does not create runtime export files, ZIP files, PDF files, copied media assets, or dashboard export UI by itself.
+
+M34.25 exposes Markdown export through dashboard UI.
 
 ## Endpoint
 

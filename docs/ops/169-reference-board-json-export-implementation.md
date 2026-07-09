@@ -8,6 +8,8 @@ The endpoint returns a review pack JSON response. It does not create runtime exp
 
 M34.24 reuses the JSON review pack data for Markdown output.
 
+M34.25 exposes JSON export through dashboard UI.
+
 ## Endpoint
 
 ```text

@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
@@ -15,6 +16,7 @@ import {
   Chip,
   CircularProgress,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
@@ -22,7 +24,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { fetchOutputCardMetadata, gatewayBaseUrl } from "../api";
+import {
+  fetchOutputCardMetadata,
+  fetchReferenceBoardJsonExport,
+  fetchReferenceBoardMarkdownExport,
+  gatewayBaseUrl,
+} from "../api";
 import type {
   OutputCardMetadataResponse,
   ReferenceBoard,
@@ -63,6 +70,10 @@ export function ReferenceBoards({
   const [metadataResponse, setMetadataResponse] = useState<OutputCardMetadataResponse | null>(null);
   const [metadataLoading, setMetadataLoading] = useState(false);
   const [metadataError, setMetadataError] = useState("");
+  const [exportDialog, setExportDialog] = useState<ReferenceBoardExportDialogState | null>(null);
+  const [exportLoading, setExportLoading] = useState(false);
+  const [exportError, setExportError] = useState("");
+  const [copyMessage, setCopyMessage] = useState("");
 
   async function submitCreate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -87,6 +98,51 @@ export function ReferenceBoards({
       setMetadataError(err instanceof Error ? err.message : "unknown metadata error");
     } finally {
       setMetadataLoading(false);
+    }
+  }
+
+  async function openExport(format: "json" | "markdown") {
+    if (!activeBoard) {
+      return;
+    }
+    setExportDialog(null);
+    setExportError("");
+    setCopyMessage("");
+    setExportLoading(true);
+    try {
+      if (format === "json") {
+        const data = await fetchReferenceBoardJsonExport(activeBoard.board_id);
+        setExportDialog({
+          content: JSON.stringify(data, null, 2),
+          format,
+          title: "JSON Export",
+        });
+      } else {
+        const content = await fetchReferenceBoardMarkdownExport(activeBoard.board_id);
+        setExportDialog({
+          content,
+          format,
+          title: "Markdown Export",
+        });
+      }
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : "unknown reference board export error");
+    } finally {
+      setExportLoading(false);
+    }
+  }
+
+  async function copyExportContent(content: string) {
+    setCopyMessage("");
+    if (typeof navigator === "undefined" || !navigator.clipboard) {
+      setCopyMessage("Clipboard unavailable.");
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopyMessage("Copied to clipboard.");
+    } catch (err) {
+      setCopyMessage(err instanceof Error ? err.message : "Unable to copy export.");
     }
   }
 
@@ -233,6 +289,43 @@ export function ReferenceBoards({
                     Reference boards store references only. Removing an item does not delete the source asset.
                   </Alert>
 
+                  <Stack spacing={1}>
+                    <Stack direction="row" flexWrap="wrap" gap={1}>
+                      <Button
+                        disabled={loading || exportLoading}
+                        onClick={() => void openExport("json")}
+                        startIcon={<ArticleOutlinedIcon />}
+                        variant="outlined"
+                      >
+                        Export JSON
+                      </Button>
+                      <Button
+                        disabled={loading || exportLoading}
+                        onClick={() => void openExport("markdown")}
+                        startIcon={<ArticleOutlinedIcon />}
+                        variant="outlined"
+                      >
+                        Export Markdown
+                      </Button>
+                      {exportLoading ? (
+                        <Stack alignItems="center" direction="row" spacing={1}>
+                          <CircularProgress size={18} />
+                          <Typography color="text.secondary" variant="body2">
+                            Loading export.
+                          </Typography>
+                        </Stack>
+                      ) : null}
+                    </Stack>
+                    <Typography color="text.secondary" variant="caption">
+                      Exports are review artifacts only. They do not copy, move, delete, or approve source assets.
+                    </Typography>
+                    {exportError ? (
+                      <Alert severity="warning" variant="outlined">
+                        Export unavailable: {exportError}
+                      </Alert>
+                    ) : null}
+                  </Stack>
+
                   <Divider />
 
                   {activeBoard.items.length === 0 ? (
@@ -283,9 +376,25 @@ export function ReferenceBoards({
           setMetadataError("");
         }}
       />
+      <ReferenceBoardExportDialog
+        copyMessage={copyMessage}
+        exportState={exportDialog}
+        onClose={() => {
+          setExportDialog(null);
+          setCopyMessage("");
+          setExportError("");
+        }}
+        onCopy={copyExportContent}
+      />
     </Card>
   );
 }
+
+type ReferenceBoardExportDialogState = {
+  content: string;
+  format: "json" | "markdown";
+  title: string;
+};
 
 function ReferenceBoardItemCard({
   item,
@@ -532,6 +641,71 @@ function ReferenceBoardMetadataDialog({
           {metadata ? <ReferenceMetadataDetails assetType={item?.asset_type ?? ""} metadata={metadata} /> : null}
         </Stack>
       </DialogContent>
+    </Dialog>
+  );
+}
+
+function ReferenceBoardExportDialog({
+  copyMessage,
+  exportState,
+  onClose,
+  onCopy,
+}: {
+  copyMessage: string;
+  exportState: ReferenceBoardExportDialogState | null;
+  onClose: () => void;
+  onCopy: (content: string) => Promise<void>;
+}) {
+  const canCopy = typeof navigator !== "undefined" && Boolean(navigator.clipboard);
+  return (
+    <Dialog fullWidth maxWidth="md" onClose={onClose} open={exportState !== null}>
+      <DialogTitle>{exportState?.title ?? "Reference board export"}</DialogTitle>
+      <DialogContent>
+        <Stack spacing={2} sx={{ pb: 1 }}>
+          <Alert severity="info" variant="outlined">
+            Exports are review artifacts only. They do not copy, move, delete, or approve source assets.
+          </Alert>
+          <Box
+            component="pre"
+            sx={{
+              bgcolor: "background.default",
+              border: "1px solid rgba(145, 158, 171, 0.24)",
+              borderRadius: 1,
+              fontFamily: "monospace",
+              fontSize: 12,
+              maxHeight: 420,
+              overflow: "auto",
+              p: 1.5,
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+            }}
+          >
+            {exportState?.content ?? ""}
+          </Box>
+          <Typography color="text.secondary" variant="caption">
+            {exportState?.format === "json" ? "Formatted JSON response." : "Raw Markdown text response."}
+          </Typography>
+          {copyMessage ? (
+            <Alert severity={copyMessage.toLowerCase().includes("copied") ? "success" : "warning"} variant="outlined">
+              {copyMessage}
+            </Alert>
+          ) : null}
+        </Stack>
+      </DialogContent>
+      <DialogActions>
+        {canCopy && exportState ? (
+          <Button
+            onClick={() => void onCopy(exportState.content)}
+            startIcon={<ContentCopyOutlinedIcon />}
+            variant="outlined"
+          >
+            Copy
+          </Button>
+        ) : null}
+        <Button onClick={onClose} variant="contained">
+          Close
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

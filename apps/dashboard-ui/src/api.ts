@@ -69,6 +69,22 @@ export async function fetchReferenceBoard(boardId: string): Promise<ReferenceBoa
   return response.json();
 }
 
+export async function fetchReferenceBoardJsonExport(boardId: string): Promise<unknown> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/export/json`);
+  if (!response.ok) {
+    throw new Error(`Gateway reference board JSON export returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchReferenceBoardMarkdownExport(boardId: string): Promise<string> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/export/markdown`);
+  if (!response.ok) {
+    throw new Error(`Gateway reference board Markdown export returned HTTP ${response.status}`);
+  }
+  return response.text();
+}
+
 export async function createReferenceBoard(request: ReferenceBoardCreateRequest): Promise<ReferenceBoardResponse> {
   const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards`, {
     body: JSON.stringify(request),

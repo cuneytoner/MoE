@@ -208,6 +208,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board JSON export review template | [170-reference-board-json-export-review-template.md](170-reference-board-json-export-review-template.md) |
 | Reference board Markdown export implementation | [171-reference-board-markdown-export-implementation.md](171-reference-board-markdown-export-implementation.md) |
 | Reference board Markdown export review template | [172-reference-board-markdown-export-review-template.md](172-reference-board-markdown-export-review-template.md) |
+| Reference board export UI | [173-reference-board-export-ui.md](173-reference-board-export-ui.md) |
+| Reference board export UI review template | [174-reference-board-export-ui-review-template.md](174-reference-board-export-ui-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
