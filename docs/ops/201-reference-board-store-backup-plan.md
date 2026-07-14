@@ -10,6 +10,8 @@ M34.39 references this backup policy as a prerequisite for repair CLI modes.
 
 Validation runs before any future backup or repair action.
 
+M34.41 implements the first backup CLI slice.
+
 ## Current Store Model
 
 - Reference boards are runtime JSON files.

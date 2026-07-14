@@ -6,6 +6,8 @@ M34.40 adds `scripts/reference-board-store-validate.sh`, a read-only CLI for val
 
 The script can validate one board with `BOARD_ID` or all direct `*.json` board files under the runtime reference board directory.
 
+Validation remains read-only; M34.41 adds separate backup CLI.
+
 ## Read-Only Behavior
 
 The validator:

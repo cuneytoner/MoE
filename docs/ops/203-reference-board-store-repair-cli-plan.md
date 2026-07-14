@@ -8,6 +8,8 @@ M34.39 defines the interface and safety contract only. It does not implement a r
 
 M34.40 implements the first read-only validate CLI slice.
 
+M34.41 implements backup mode as a separate safe CLI before repair modes.
+
 ## Proposed Script
 
 Future script:
