@@ -22,6 +22,8 @@ M34.40 adds a read-only validation CLI for board runtime store integrity.
 
 M34.41 adds a safe single-board backup CLI for runtime board JSON files.
 
+M34.42 introduces guarded `APPLY=1` repair behavior.
+
 ## Current Safety Baseline
 
 The current baseline includes:

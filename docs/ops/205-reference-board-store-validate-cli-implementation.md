@@ -8,6 +8,8 @@ The script can validate one board with `BOARD_ID` or all direct `*.json` board f
 
 Validation remains read-only; M34.41 adds separate backup CLI.
 
+Validation should be run before M34.42 repair-schema.
+
 ## Read-Only Behavior
 
 The validator:

@@ -12,6 +12,8 @@ M34.39 defines the future repair CLI contract.
 
 M34.40 adds read-only validation before repair tooling.
 
+M34.42 implements conservative repair-schema mode only.
+
 ## Current Store Model
 
 - Reference boards are runtime JSON files.

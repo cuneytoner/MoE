@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.41 Reference Board Store Backup CLI Implementation.
-- Next planned: M34.42 Reference Board Store Repair CLI Implementation.
+- Latest completed: M34.42 Reference Board Store Repair CLI Implementation.
+- Next planned: M34.43 Reference Board Store Repair Regression.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -77,8 +77,9 @@ Current media milestone status:
 - M34.39 Reference Board Store Repair CLI Plan DONE
 - M34.40 Reference Board Store Validate CLI Implementation DONE
 - M34.41 Reference Board Store Backup CLI Implementation DONE
-- M34.42 Reference Board Store Repair CLI Implementation PLANNED
+- M34.42 Reference Board Store Repair CLI Implementation DONE
 - M34.43 Reference Board Store Repair Regression PLANNED
+- M34.44 Reference Board Duplicate Item Repair Plan PLANNED
 
 ## Milestone 0: Clean Codebase
 

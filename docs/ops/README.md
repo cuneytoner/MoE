@@ -244,6 +244,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board store validate CLI review template | [206-reference-board-store-validate-cli-review-template.md](206-reference-board-store-validate-cli-review-template.md) |
 | Reference board store backup CLI implementation | [207-reference-board-store-backup-cli-implementation.md](207-reference-board-store-backup-cli-implementation.md) |
 | Reference board store backup CLI review template | [208-reference-board-store-backup-cli-review-template.md](208-reference-board-store-backup-cli-review-template.md) |
+| Reference board store repair CLI implementation | [209-reference-board-store-repair-cli-implementation.md](209-reference-board-store-repair-cli-implementation.md) |
+| Reference board store repair CLI review template | [210-reference-board-store-repair-cli-review-template.md](210-reference-board-store-repair-cli-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -208,6 +208,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Store Validate CLI Review Template](ops/206-reference-board-store-validate-cli-review-template.md)
 - [Reference Board Store Backup CLI Implementation](ops/207-reference-board-store-backup-cli-implementation.md)
 - [Reference Board Store Backup CLI Review Template](ops/208-reference-board-store-backup-cli-review-template.md)
+- [Reference Board Store Repair CLI Implementation](ops/209-reference-board-store-repair-cli-implementation.md)
+- [Reference Board Store Repair CLI Review Template](ops/210-reference-board-store-repair-cli-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

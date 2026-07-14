@@ -6,6 +6,8 @@ M34.41 adds `scripts/reference-board-store-backup.sh`, a safe CLI that backs up 
 
 The backup script copies only the selected board JSON bytes. It does not modify the source board file, copy source assets, copy metadata sidecars, repair data, create ZIP/PDF files, or trigger generation.
 
+Backup should be run before `APPLY=1` repair-schema.
+
 ## Required BOARD_ID
 
 `BOARD_ID` is required.

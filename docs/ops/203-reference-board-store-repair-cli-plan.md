@@ -10,6 +10,8 @@ M34.40 implements the first read-only validate CLI slice.
 
 M34.41 implements backup mode as a separate safe CLI before repair modes.
 
+M34.42 implements the first repair-schema CLI slice.
+
 ## Proposed Script
 
 Future script:
