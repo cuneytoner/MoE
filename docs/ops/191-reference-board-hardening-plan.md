@@ -6,6 +6,8 @@ This document plans additional reliability and security hardening for reference 
 
 The completed workflow already supports board creation, item selection, note/tag edits, metadata review, JSON/Markdown export, JSON/Markdown download, and export regression coverage. M34.33 identifies the next failure cases and safety checks to tighten before the workflow becomes a broader media review foundation.
 
+M34.34 implements the first error-handling polish slice.
+
 ## Current Safety Baseline
 
 The current baseline includes:

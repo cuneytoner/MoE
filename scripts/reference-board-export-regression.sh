@@ -23,6 +23,10 @@ endpoint() {
   printf "%s/gateway/media/reference-boards/%s/%s" "$GATEWAY_API_URL" "$BOARD_ID" "$1"
 }
 
+board_endpoint() {
+  printf "%s/gateway/media/reference-boards/%s/%s" "$GATEWAY_API_URL" "$1" "$2"
+}
+
 assert_json_review_pack() {
   local file="$1"
   jq -e '.export_type == "reference_board_review_pack"' "$file" >/dev/null
@@ -45,6 +49,18 @@ assert_header_contains() {
   if ! grep -Ei "$pattern" "$headers" >/dev/null; then
     fail "missing header pattern '$pattern' in $headers"
   fi
+}
+
+assert_http_status() {
+  local expected="$1"
+  local url="$2"
+  local body="$TMP_DIR/http-${expected}.json"
+  local status
+  status="$(curl -sS -o "$body" -w '%{http_code}' "$url")"
+  if [ "$status" != "$expected" ]; then
+    fail "expected HTTP $expected for $url, got $status"
+  fi
+  jq -e '.status == "error"' "$body" >/dev/null
 }
 
 curl -fsS --retry 5 --retry-delay 1 --retry-connrefused --retry-all-errors "$(endpoint export/json)" -o "$json_export"
@@ -72,6 +88,10 @@ assert_no_host_paths "$json_export"
 assert_no_host_paths "$json_download"
 assert_no_host_paths "$markdown_export"
 assert_no_host_paths "$markdown_download"
+
+assert_http_status 400 "$(board_endpoint InvalidBoard export/json)"
+assert_http_status 404 "$(board_endpoint missing-reference-board export/json)"
+assert_http_status 400 "$(board_endpoint InvalidBoard download/markdown)"
 
 exports_dir="/home/cuneyt/MoE/runtime/reference-boards/exports"
 if [ -d "$exports_dir" ]; then

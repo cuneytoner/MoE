@@ -8,6 +8,8 @@ M34.31 is UI polish only; backend regression remains covered by the script.
 
 M34.33 identifies future regression expansion cases.
 
+M34.34 extends regression with selected negative error checks.
+
 The script checks:
 
 - JSON export works

@@ -8,6 +8,8 @@ They are for operator review and future workflow planning. A board records refer
 
 M34.33 introduces a hardening plan for validation, runtime-store resilience, export/download safety, and dashboard failure states.
 
+For failures, use the M34.34 error handling policy and review template.
+
 ## Runtime Locations
 
 - Reference board JSON files live under runtime reference board storage.

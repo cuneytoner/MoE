@@ -99,7 +99,7 @@ export function App() {
         setActiveReferenceBoard(nextActiveBoard.board);
       }
     } catch (err) {
-      setReferenceBoardError(err instanceof Error ? err.message : "unknown reference board error");
+      setReferenceBoardError(referenceBoardUiError("Board load failed.", err));
     } finally {
       setLoading(false);
     }
@@ -151,7 +151,7 @@ export function App() {
       setReferenceBoards(nextReferenceBoards);
       setReferenceBoardActionMessage("Reference board created.");
     } catch (err) {
-      setReferenceBoardError(err instanceof Error ? err.message : "unknown reference board create error");
+      setReferenceBoardError(referenceBoardUiError("Create board failed.", err));
     } finally {
       setReferenceBoardLoading(false);
     }
@@ -166,7 +166,7 @@ export function App() {
       setActiveReferenceBoardId(boardId);
       setActiveReferenceBoard(nextActiveBoard.board);
     } catch (err) {
-      setReferenceBoardError(err instanceof Error ? err.message : "unknown reference board select error");
+      setReferenceBoardError(referenceBoardUiError("Board load failed.", err));
     } finally {
       setReferenceBoardLoading(false);
     }
@@ -189,11 +189,11 @@ export function App() {
       await refreshReferenceBoards(activeReferenceBoardId);
       setReferenceBoardActionMessage("Added to board.");
     } catch (err) {
-      const message = err instanceof Error ? err.message : "unknown reference board item add error";
-      if (message.includes("HTTP 409")) {
+      const message = err instanceof Error ? err.message : "unknown error";
+      if (message.includes("already selected")) {
         setReferenceBoardActionMessage("Already in board.");
       } else {
-        setReferenceBoardError(message);
+        setReferenceBoardError(referenceBoardUiError("Add item failed.", err));
       }
     } finally {
       setAddingBoardCardId("");
@@ -213,7 +213,7 @@ export function App() {
       await refreshReferenceBoards(activeReferenceBoardId);
       setReferenceBoardActionMessage("Removed from board.");
     } catch (err) {
-      setReferenceBoardError(err instanceof Error ? err.message : "unknown reference board item remove error");
+      setReferenceBoardError(referenceBoardUiError("Remove item failed.", err));
     } finally {
       setReferenceBoardLoading(false);
     }
@@ -232,7 +232,7 @@ export function App() {
       await refreshReferenceBoards(activeReferenceBoardId);
       setReferenceBoardActionMessage("Board note updated.");
     } catch (err) {
-      const message = err instanceof Error ? err.message : "unknown reference board item update error";
+      const message = referenceBoardUiError("Save note failed.", err);
       setReferenceBoardError(message);
       throw new Error(message);
     } finally {
@@ -349,4 +349,9 @@ function RoleCard({ label, text }: { label: string; text: string }) {
       </CardContent>
     </Card>
   );
+}
+
+function referenceBoardUiError(prefix: string, err: unknown): string {
+  const detail = err instanceof Error ? err.message : "Unknown error.";
+  return `${prefix} ${detail}`;
 }

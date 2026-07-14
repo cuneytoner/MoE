@@ -13,6 +13,27 @@ import type {
 
 const gatewayUrl = import.meta.env.VITE_GATEWAY_API_URL ?? "http://127.0.0.1:8100";
 
+type GatewayErrorPayload = {
+  status?: string;
+  error?: string;
+  detail?: string;
+};
+
+async function gatewayErrorMessage(response: Response, fallback: string): Promise<string> {
+  try {
+    const payload = (await response.json()) as GatewayErrorPayload;
+    if (typeof payload.detail === "string" && payload.detail.trim() !== "") {
+      return payload.detail;
+    }
+    if (typeof payload.error === "string" && payload.error.trim() !== "") {
+      return payload.error;
+    }
+  } catch {
+    // Keep UI errors concise and safe when Gateway does not return JSON.
+  }
+  return `${fallback} returned HTTP ${response.status}`;
+}
+
 export async function fetchDashboard(): Promise<DashboardModel> {
   const response = await fetch(`${gatewayUrl}/gateway/media/dashboard`);
   if (!response.ok) {
@@ -56,7 +77,7 @@ export async function fetchOutputCardMetadata(cardId: string): Promise<OutputCar
 export async function fetchReferenceBoards(): Promise<ReferenceBoardsResponse> {
   const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards`);
   if (!response.ok) {
-    throw new Error(`Gateway reference boards returned HTTP ${response.status}`);
+    throw new Error(await gatewayErrorMessage(response, "Gateway reference boards"));
   }
   return response.json();
 }
@@ -64,7 +85,7 @@ export async function fetchReferenceBoards(): Promise<ReferenceBoardsResponse> {
 export async function fetchReferenceBoard(boardId: string): Promise<ReferenceBoardResponse> {
   const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}`);
   if (!response.ok) {
-    throw new Error(`Gateway reference board returned HTTP ${response.status}`);
+    throw new Error(await gatewayErrorMessage(response, "Gateway reference board"));
   }
   return response.json();
 }
@@ -72,7 +93,7 @@ export async function fetchReferenceBoard(boardId: string): Promise<ReferenceBoa
 export async function fetchReferenceBoardJsonExport(boardId: string): Promise<unknown> {
   const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/export/json`);
   if (!response.ok) {
-    throw new Error(`Gateway reference board JSON export returned HTTP ${response.status}`);
+    throw new Error(await gatewayErrorMessage(response, "Gateway reference board JSON export"));
   }
   return response.json();
 }
@@ -80,7 +101,7 @@ export async function fetchReferenceBoardJsonExport(boardId: string): Promise<un
 export async function fetchReferenceBoardMarkdownExport(boardId: string): Promise<string> {
   const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/export/markdown`);
   if (!response.ok) {
-    throw new Error(`Gateway reference board Markdown export returned HTTP ${response.status}`);
+    throw new Error(await gatewayErrorMessage(response, "Gateway reference board Markdown export"));
   }
   return response.text();
 }
@@ -100,7 +121,7 @@ export async function createReferenceBoard(request: ReferenceBoardCreateRequest)
     method: "POST",
   });
   if (!response.ok) {
-    throw new Error(`Gateway reference board create returned HTTP ${response.status}`);
+    throw new Error(await gatewayErrorMessage(response, "Gateway reference board create"));
   }
   return response.json();
 }
@@ -115,7 +136,7 @@ export async function addReferenceBoardItem(
     method: "POST",
   });
   if (!response.ok) {
-    throw new Error(`Gateway reference board item add returned HTTP ${response.status}`);
+    throw new Error(await gatewayErrorMessage(response, "Gateway reference board item add"));
   }
   return response.json();
 }
@@ -126,7 +147,7 @@ export async function removeReferenceBoardItem(boardId: string, itemId: string):
     { method: "DELETE" },
   );
   if (!response.ok) {
-    throw new Error(`Gateway reference board item remove returned HTTP ${response.status}`);
+    throw new Error(await gatewayErrorMessage(response, "Gateway reference board item remove"));
   }
   return response.json();
 }
@@ -145,7 +166,7 @@ export async function updateReferenceBoardItem(
     },
   );
   if (!response.ok) {
-    throw new Error(`Gateway reference board item update returned HTTP ${response.status}`);
+    throw new Error(await gatewayErrorMessage(response, "Gateway reference board item update"));
   }
   return response.json();
 }

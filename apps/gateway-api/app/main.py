@@ -24,6 +24,8 @@ from app.output_cards import (
 )
 from app.reference_boards import (
     REFERENCE_BOARDS_ROOT,
+    ReferenceBoardMalformedError,
+    ReferenceBoardStoreUnavailableError,
     add_item_to_reference_board,
     board_path_for_id,
     build_empty_reference_board,
@@ -398,14 +400,22 @@ async def media_output_card_metadata(card_id: str) -> dict[str, Any] | JSONRespo
     }
 
 
-@app.get("/gateway/media/reference-boards")
-async def media_reference_boards() -> dict[str, Any]:
+@app.get("/gateway/media/reference-boards", response_model=None)
+async def media_reference_boards() -> dict[str, Any] | JSONResponse:
+    try:
+        boards = list_reference_boards()
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     return {
         "status": "ok",
         "service": "gateway-reference-boards",
         "safety": _reference_board_safety(),
         "root": str(REFERENCE_BOARDS_ROOT),
-        "boards": list_reference_boards(),
+        "boards": boards,
     }
 
 
@@ -428,11 +438,23 @@ async def media_reference_board(board_id: str) -> dict[str, Any] | JSONResponse:
             "reference_board_not_found",
             "Reference board not found.",
         )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError:
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            400,
+            "invalid_reference_board_payload",
+            "Reference board data is invalid.",
         )
 
     return {
@@ -461,11 +483,23 @@ async def media_reference_board_export_json(board_id: str) -> dict[str, Any] | J
             "reference_board_not_found",
             "Reference board not found.",
         )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError:
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            500,
+            "export_unavailable",
+            "Reference board export is unavailable.",
         )
 
 
@@ -488,11 +522,23 @@ async def media_reference_board_export_markdown(board_id: str) -> Response | JSO
             "reference_board_not_found",
             "Reference board not found.",
         )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError:
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            500,
+            "export_unavailable",
+            "Reference board export is unavailable.",
         )
     return Response(content=markdown, media_type="text/markdown")
 
@@ -517,11 +563,23 @@ async def media_reference_board_download_json(board_id: str) -> Response | JSONR
             "reference_board_not_found",
             "Reference board not found.",
         )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError:
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            500,
+            "export_unavailable",
+            "Reference board download is unavailable.",
         )
 
     return Response(
@@ -551,11 +609,23 @@ async def media_reference_board_download_markdown(board_id: str) -> Response | J
             "reference_board_not_found",
             "Reference board not found.",
         )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError:
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            500,
+            "export_unavailable",
+            "Reference board download is unavailable.",
         )
 
     return Response(
@@ -581,7 +651,7 @@ async def media_reference_board_create(request: ReferenceBoardCreateRequest) -> 
     if not title:
         return _reference_board_error(
             400,
-            "invalid_reference_board",
+            "invalid_reference_board_payload",
             "Reference board title is required.",
         )
 
@@ -589,7 +659,7 @@ async def media_reference_board_create(request: ReferenceBoardCreateRequest) -> 
     if path.exists():
         return _reference_board_error(
             409,
-            "reference_board_conflict",
+            "reference_board_already_exists",
             "Reference board already exists.",
         )
 
@@ -601,11 +671,23 @@ async def media_reference_board_create(request: ReferenceBoardCreateRequest) -> 
     try:
         write_reference_board(board)
         created = load_reference_board(safe_board_id)
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError:
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            400,
+            "invalid_reference_board_payload",
+            "Reference board payload is invalid.",
         )
 
     return {
@@ -637,11 +719,23 @@ async def media_reference_board_add_item(
             "reference_board_not_found",
             "Reference board not found.",
         )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError:
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            400,
+            "invalid_reference_board_payload",
+            "Reference board data is invalid.",
         )
 
     card = find_output_card_by_id(request.card_id)
@@ -659,17 +753,29 @@ async def media_reference_board_add_item(
     )
     try:
         board = add_item_to_reference_board(safe_board_id, item)
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError as exc:
         if str(exc) == "reference_board_item_exists":
             return _reference_board_error(
                 409,
-                "reference_board_item_exists",
+                "invalid_reference_board_payload",
                 "Output card is already selected in this board.",
             )
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            400,
+            "invalid_reference_board_payload",
+            "Reference board item payload is invalid.",
         )
 
     return {
@@ -699,6 +805,18 @@ async def media_reference_board_remove_item(board_id: str, item_id: str) -> dict
             "reference_board_not_found",
             "Reference board not found.",
         )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError as exc:
         if str(exc) == "reference_board_item_not_found":
             return _reference_board_error(
@@ -713,9 +831,9 @@ async def media_reference_board_remove_item(board_id: str, item_id: str) -> dict
                 "Invalid reference board item id.",
             )
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            400,
+            "invalid_reference_board_payload",
+            "Reference board item payload is invalid.",
         )
 
     return {
@@ -748,12 +866,12 @@ async def media_reference_board_update_item(
         if "No editable item fields were provided" in error_text:
             return _reference_board_error(
                 400,
-                "invalid_item_update",
+                "invalid_reference_board_payload",
                 "No editable item fields were provided.",
             )
         return _reference_board_error(
             400,
-            "invalid_item_update",
+            "invalid_reference_board_payload",
             "Invalid reference board item update.",
         )
 
@@ -766,6 +884,18 @@ async def media_reference_board_update_item(
             "reference_board_not_found",
             "Reference board not found.",
         )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
     except ValueError as exc:
         if str(exc) == "reference_board_item_not_found":
             return _reference_board_error(
@@ -776,7 +906,7 @@ async def media_reference_board_update_item(
         if str(exc) == "invalid_item_update":
             return _reference_board_error(
                 400,
-                "invalid_item_update",
+                "invalid_reference_board_payload",
                 "No editable item fields were provided.",
             )
         if str(exc) == "invalid_item_id":
@@ -786,9 +916,9 @@ async def media_reference_board_update_item(
                 "Invalid reference board item id.",
             )
         return _reference_board_error(
-            403,
-            "reference_board_blocked",
-            "Reference board access blocked by safety policy.",
+            400,
+            "invalid_reference_board_payload",
+            "Reference board item update is invalid.",
         )
 
     return {

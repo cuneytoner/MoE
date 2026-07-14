@@ -228,6 +228,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board workflow review template | [190-reference-board-workflow-review-template.md](190-reference-board-workflow-review-template.md) |
 | Reference board hardening plan | [191-reference-board-hardening-plan.md](191-reference-board-hardening-plan.md) |
 | Reference board hardening review template | [192-reference-board-hardening-review-template.md](192-reference-board-hardening-review-template.md) |
+| Reference board error handling polish | [193-reference-board-error-handling-polish.md](193-reference-board-error-handling-polish.md) |
+| Reference board error handling review template | [194-reference-board-error-handling-review-template.md](194-reference-board-error-handling-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

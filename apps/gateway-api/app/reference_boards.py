@@ -33,8 +33,19 @@ METADATA_SUMMARY_FIELDS = (
 HOST_PATH_MARKERS = ("/home/", "/mnt/", "/media/", "/workspace/", "/app/")
 
 
+class ReferenceBoardMalformedError(ValueError):
+    """Raised when a board file exists but cannot be trusted as board JSON."""
+
+
+class ReferenceBoardStoreUnavailableError(RuntimeError):
+    """Raised when the runtime board store cannot be read or written."""
+
+
 def ensure_reference_boards_root() -> Path:
-    REFERENCE_BOARDS_ROOT.mkdir(parents=True, exist_ok=True)
+    try:
+        REFERENCE_BOARDS_ROOT.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        raise ReferenceBoardStoreUnavailableError("reference board store is unavailable") from exc
     return REFERENCE_BOARDS_ROOT
 
 
@@ -88,7 +99,7 @@ def list_reference_boards() -> list[dict[str, Any]]:
     for path in list_reference_board_files():
         try:
             board = load_reference_board(path.stem)
-        except (FileNotFoundError, ValueError, json.JSONDecodeError, OSError):
+        except (FileNotFoundError, ValueError, ReferenceBoardStoreUnavailableError, OSError):
             continue
         items = board.get("items")
         boards.append(
@@ -308,15 +319,24 @@ def load_reference_board(board_id: str) -> dict[str, Any]:
         raise ValueError("unsafe reference board path")
     if not path.is_file():
         raise FileNotFoundError(str(path))
-    if path.stat().st_size > MAX_REFERENCE_BOARD_BYTES:
-        raise ValueError("reference board file is too large")
+    try:
+        if path.stat().st_size > MAX_REFERENCE_BOARD_BYTES:
+            raise ReferenceBoardMalformedError("reference board file exceeds size limit")
+        raw_board = path.read_text(encoding="utf-8")
+    except ReferenceBoardMalformedError:
+        raise
+    except OSError as exc:
+        raise ReferenceBoardStoreUnavailableError("reference board store is unavailable") from exc
 
-    data = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        data = json.loads(raw_board)
+    except json.JSONDecodeError as exc:
+        raise ReferenceBoardMalformedError("reference board JSON is malformed") from exc
     if not isinstance(data, dict):
-        raise ValueError("reference board JSON must be an object")
+        raise ReferenceBoardMalformedError("reference board JSON must be an object")
     errors = validate_reference_board_shape(data)
     if errors:
-        raise ValueError("; ".join(errors))
+        raise ReferenceBoardMalformedError("reference board JSON failed validation")
     return data
 
 
@@ -340,7 +360,10 @@ def write_reference_board(board: dict[str, Any]) -> Path:
         raise ValueError("reference board JSON exceeds size limit")
 
     ensure_reference_boards_root()
-    path.write_bytes(encoded)
+    try:
+        path.write_bytes(encoded)
+    except OSError as exc:
+        raise ReferenceBoardStoreUnavailableError("reference board store is unavailable") from exc
     return path
 
 

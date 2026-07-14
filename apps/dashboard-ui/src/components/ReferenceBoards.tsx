@@ -98,7 +98,7 @@ export function ReferenceBoards({
     try {
       setMetadataResponse(await fetchOutputCardMetadata(item.card_id));
     } catch (err) {
-      setMetadataError(err instanceof Error ? err.message : "unknown metadata error");
+      setMetadataError(referenceBoardComponentError("Metadata unavailable.", err));
     } finally {
       setMetadataLoading(false);
     }
@@ -129,7 +129,8 @@ export function ReferenceBoards({
         });
       }
     } catch (err) {
-      setExportError(err instanceof Error ? err.message : "unknown reference board export error");
+      const label = format === "json" ? "Export JSON failed." : "Export Markdown failed.";
+      setExportError(referenceBoardComponentError(label, err));
     } finally {
       setExportLoading(false);
     }
@@ -144,8 +145,8 @@ export function ReferenceBoards({
     try {
       await navigator.clipboard.writeText(content);
       setCopyMessage("Copied");
-    } catch (err) {
-      setCopyMessage(err instanceof Error ? err.message : "Unable to copy export.");
+    } catch {
+      setCopyMessage("Copy failed. Browser clipboard access may be blocked.");
     }
   }
 
@@ -290,6 +291,9 @@ export function ReferenceBoards({
                       </Typography>
                       <Typography color="text.secondary" variant="caption">
                         These actions do not copy, move, delete, approve, or generate source assets.
+                      </Typography>
+                      <Typography color="text.secondary" variant="caption">
+                        If a download does not start, check browser download settings.
                       </Typography>
                     </Box>
 
@@ -473,7 +477,7 @@ function ReferenceBoardItemCard({
       });
       setEditing(false);
     } catch (err) {
-      setEditError(err instanceof Error ? err.message : "Unable to save board note.");
+      setEditError(referenceBoardComponentError("Save note failed.", err));
     }
   }
 
@@ -823,6 +827,11 @@ function formatMetadataValue(value: unknown): string {
     return String(value);
   }
   return JSON.stringify(value);
+}
+
+function referenceBoardComponentError(prefix: string, err: unknown): string {
+  const detail = err instanceof Error ? err.message : "Unknown error.";
+  return `${prefix} ${detail}`;
 }
 
 function safetyTone(label: string): "ok" | "warning" | "error" | "neutral" {
