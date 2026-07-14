@@ -6,6 +6,8 @@ M34.36 adds a safe regression script for malformed reference board runtime files
 
 The regression proves that a broken board JSON file does not crash Gateway reference board routes, does not expose Python tracebacks, and does not leak unsafe runtime paths through controlled error responses.
 
+M34.37 defines future repair planning after malformed store detection.
+
 ## What The Script Creates
 
 The script creates one intentionally malformed runtime test file:

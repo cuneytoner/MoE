@@ -198,6 +198,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Validation Limits Review Template](ops/196-reference-board-validation-limits-review-template.md)
 - [Reference Board Malformed Store Regression](ops/197-reference-board-malformed-store-regression.md)
 - [Reference Board Malformed Store Regression Review Template](ops/198-reference-board-malformed-store-regression-review-template.md)
+- [Reference Board Store Repair Plan](ops/199-reference-board-store-repair-plan.md)
+- [Reference Board Store Repair Review Template](ops/200-reference-board-store-repair-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

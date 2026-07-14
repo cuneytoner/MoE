@@ -12,6 +12,8 @@ M34.35 implements explicit validation limits.
 
 M34.36 adds regression coverage for malformed runtime board files.
 
+M34.37 plans safe operator repair workflows for runtime store issues.
+
 ## Current Safety Baseline
 
 The current baseline includes:
@@ -142,4 +144,5 @@ Recovery guidance should prefer inspection before mutation. Broken board data sh
 - M34.36 Reference Board Malformed Store Regression
 - M34.37 Reference Board Store Repair Plan
 - M34.38 Reference Board Store Backup Plan
+- M34.39 Reference Board Store Repair CLI Plan
 - M35 Media Review Workflow Phase

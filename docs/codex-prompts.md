@@ -83,8 +83,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.34 Reference Board Error Handling Polish DONE
 - M34.35 Reference Board Validation Limits DONE
 - M34.36 Reference Board Malformed Store Regression DONE
-- M34.37 Reference Board Store Repair Plan PLANNED
+- M34.37 Reference Board Store Repair Plan DONE
 - M34.38 Reference Board Store Backup Plan PLANNED
+- M34.39 Reference Board Store Repair CLI Plan PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 
