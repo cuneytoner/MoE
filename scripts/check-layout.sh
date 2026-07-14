@@ -468,6 +468,8 @@ required_paths=(
   "docs/ops/192-reference-board-hardening-review-template.md"
   "docs/ops/193-reference-board-error-handling-polish.md"
   "docs/ops/194-reference-board-error-handling-review-template.md"
+  "docs/ops/195-reference-board-validation-limits.md"
+  "docs/ops/196-reference-board-validation-limits-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

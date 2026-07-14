@@ -10,6 +10,8 @@ M34.33 introduces a hardening plan for validation, runtime-store resilience, exp
 
 For failures, use the M34.34 error handling policy and review template.
 
+Reference board inputs now have explicit validation limits.
+
 ## Runtime Locations
 
 - Reference board JSON files live under runtime reference board storage.

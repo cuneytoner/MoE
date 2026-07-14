@@ -35,6 +35,8 @@ from app.reference_boards import (
     item_id_for_card_id,
     list_reference_boards,
     load_reference_board,
+    normalize_selected_reason,
+    normalize_tags,
     remove_item_from_reference_board,
     sanitize_board_id,
     update_reference_board_item,
@@ -636,7 +638,16 @@ async def media_reference_board_download_markdown(board_id: str) -> Response | J
 
 
 @app.post("/gateway/media/reference-boards", status_code=201, response_model=None)
-async def media_reference_board_create(request: ReferenceBoardCreateRequest) -> dict[str, Any] | JSONResponse:
+async def media_reference_board_create(request_data: dict[str, Any]) -> dict[str, Any] | JSONResponse:
+    try:
+        request = ReferenceBoardCreateRequest.model_validate(request_data)
+    except ValidationError:
+        return _reference_board_error(
+            400,
+            "invalid_reference_board_payload",
+            "Reference board payload is invalid.",
+        )
+
     try:
         safe_board_id = sanitize_board_id(request.board_id)
     except ValueError:
@@ -663,12 +674,12 @@ async def media_reference_board_create(request: ReferenceBoardCreateRequest) -> 
             "Reference board already exists.",
         )
 
-    board = build_empty_reference_board(
-        board_id=safe_board_id,
-        title=title,
-        description=description,
-    )
     try:
+        board = build_empty_reference_board(
+            board_id=safe_board_id,
+            title=title,
+            description=description,
+        )
         write_reference_board(board)
         created = load_reference_board(safe_board_id)
     except ReferenceBoardMalformedError:
@@ -700,8 +711,17 @@ async def media_reference_board_create(request: ReferenceBoardCreateRequest) -> 
 @app.post("/gateway/media/reference-boards/{board_id}/items", response_model=None)
 async def media_reference_board_add_item(
     board_id: str,
-    request: ReferenceBoardAddItemRequest,
+    request_data: dict[str, Any],
 ) -> dict[str, Any] | JSONResponse:
+    try:
+        request = ReferenceBoardAddItemRequest.model_validate(request_data)
+    except ValidationError:
+        return _reference_board_error(
+            400,
+            "invalid_reference_board_payload",
+            "Reference board item payload is invalid.",
+        )
+
     try:
         safe_board_id = sanitize_board_id(board_id)
     except ValueError:
@@ -1704,7 +1724,7 @@ def _reference_board_item_from_card(
     request_tags: list[str] | None,
 ) -> dict[str, Any]:
     card_tags = card.get("tags") if isinstance(card.get("tags"), list) else []
-    tags = _dedupe_strings([*card_tags, *(request_tags or [])])
+    tags = normalize_tags(_dedupe_strings([*card_tags, *(request_tags or [])]))
     return {
         "item_id": item_id_for_card_id(str(card["id"])),
         "card_id": card["id"],
@@ -1712,7 +1732,7 @@ def _reference_board_item_from_card(
         "name": card.get("name") or str(card["id"]),
         "relative_runtime_path": card.get("relative_runtime_path"),
         "metadata_path": card.get("metadata_path"),
-        "selected_reason": selected_reason.strip() if isinstance(selected_reason, str) and selected_reason.strip() else None,
+        "selected_reason": normalize_selected_reason(selected_reason),
         "tags": tags,
         "safety_label": card.get("safety_label") or "visual_reference_only",
         "added_at": utc_now_iso(),

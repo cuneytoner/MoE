@@ -577,15 +577,15 @@ class ReferenceBoardCreateRequest(BaseModel):
 
     board_id: str = Field(min_length=1, max_length=80)
     title: str = Field(min_length=1, max_length=120)
-    description: str | None = Field(default=None, max_length=1000)
+    description: str | None = Field(default=None, max_length=500)
 
 
 class ReferenceBoardAddItemRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     card_id: str = Field(min_length=1, max_length=240)
-    selected_reason: str | None = Field(default=None, max_length=500)
-    tags: list[str] | None = Field(default=None, max_length=10)
+    selected_reason: str | None = Field(default=None, max_length=1000)
+    tags: list[str] | None = Field(default=None, max_length=12)
 
     @field_validator("tags")
     @classmethod
@@ -593,16 +593,16 @@ class ReferenceBoardAddItemRequest(BaseModel):
         if value is None:
             return None
         for tag in value:
-            if not tag or len(tag) > 60:
-                raise ValueError("tags must be non-empty strings up to 60 characters")
+            if not tag or len(tag.strip()) > 40:
+                raise ValueError("tags must be non-empty strings up to 40 characters")
         return value
 
 
 class ReferenceBoardUpdateItemRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    selected_reason: str | None = Field(default=None, max_length=500)
-    tags: list[str] | None = Field(default=None, max_length=10)
+    selected_reason: str | None = Field(default=None, max_length=1000)
+    tags: list[str] | None = Field(default=None, max_length=12)
 
     @field_validator("tags")
     @classmethod
@@ -610,8 +610,8 @@ class ReferenceBoardUpdateItemRequest(BaseModel):
         if value is None:
             return None
         for tag in value:
-            if not tag or len(tag) > 60:
-                raise ValueError("tags must be non-empty strings up to 60 characters")
+            if not tag or len(tag.strip()) > 40:
+                raise ValueError("tags must be non-empty strings up to 40 characters")
         return value
 
     @model_validator(mode="after")

@@ -10,6 +10,8 @@ M34.33 identifies future regression expansion cases.
 
 M34.34 extends regression with selected negative error checks.
 
+M34.35 extends regression with selected validation checks.
+
 The script checks:
 
 - JSON export works

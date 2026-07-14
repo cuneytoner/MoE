@@ -47,6 +47,8 @@ Malformed board JSON is converted to a controlled `reference_board_malformed` re
 
 Missing metadata remains non-fatal for export when the board item itself is valid. Export metadata summaries can report unavailable metadata.
 
+M34.35 uses `invalid_reference_board_payload` for validation failures.
+
 ## Dashboard Error Behavior
 
 The dashboard now prefers safe Gateway error `detail` text for reference board calls.

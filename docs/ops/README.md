@@ -230,6 +230,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board hardening review template | [192-reference-board-hardening-review-template.md](192-reference-board-hardening-review-template.md) |
 | Reference board error handling polish | [193-reference-board-error-handling-polish.md](193-reference-board-error-handling-polish.md) |
 | Reference board error handling review template | [194-reference-board-error-handling-review-template.md](194-reference-board-error-handling-review-template.md) |
+| Reference board validation limits | [195-reference-board-validation-limits.md](195-reference-board-validation-limits.md) |
+| Reference board validation limits review template | [196-reference-board-validation-limits-review-template.md](196-reference-board-validation-limits-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

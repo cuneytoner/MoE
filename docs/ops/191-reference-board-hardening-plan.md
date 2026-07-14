@@ -8,6 +8,8 @@ The completed workflow already supports board creation, item selection, note/tag
 
 M34.34 implements the first error-handling polish slice.
 
+M34.35 implements explicit validation limits.
+
 ## Current Safety Baseline
 
 The current baseline includes:

@@ -13,6 +13,9 @@ json_download="$TMP_DIR/download.json"
 markdown_download="$TMP_DIR/download.md"
 json_headers="$TMP_DIR/download-json.headers"
 markdown_headers="$TMP_DIR/download-markdown.headers"
+invalid_create_payload="$TMP_DIR/invalid-create.json"
+long_reason_payload="$TMP_DIR/long-reason.json"
+many_tags_payload="$TMP_DIR/many-tags.json"
 
 fail() {
   echo "Reference board export regression FAIL: $*" >&2
@@ -63,6 +66,32 @@ assert_http_status() {
   jq -e '.status == "error"' "$body" >/dev/null
 }
 
+assert_json_post_status() {
+  local expected="$1"
+  local url="$2"
+  local payload="$3"
+  local body="$TMP_DIR/post-${expected}.json"
+  local status
+  status="$(curl -sS -o "$body" -w '%{http_code}' -H 'Content-Type: application/json' -d "@$payload" "$url")"
+  if [ "$status" != "$expected" ]; then
+    fail "expected HTTP $expected for POST $url, got $status"
+  fi
+  jq -e '.status == "error"' "$body" >/dev/null
+}
+
+assert_json_patch_status() {
+  local expected="$1"
+  local url="$2"
+  local payload="$3"
+  local body="$TMP_DIR/patch-${expected}.json"
+  local status
+  status="$(curl -sS -o "$body" -w '%{http_code}' -X PATCH -H 'Content-Type: application/json' -d "@$payload" "$url")"
+  if [ "$status" != "$expected" ]; then
+    fail "expected HTTP $expected for PATCH $url, got $status"
+  fi
+  jq -e '.status == "error"' "$body" >/dev/null
+}
+
 curl -fsS --retry 5 --retry-delay 1 --retry-connrefused --retry-all-errors "$(endpoint export/json)" -o "$json_export"
 curl -fsS --retry 5 --retry-delay 1 --retry-connrefused --retry-all-errors "$(endpoint export/markdown)" -o "$markdown_export"
 curl -fsS --retry 5 --retry-delay 1 --retry-connrefused --retry-all-errors -D "$json_headers" "$(endpoint download/json)" -o "$json_download"
@@ -92,6 +121,18 @@ assert_no_host_paths "$markdown_download"
 assert_http_status 400 "$(board_endpoint InvalidBoard export/json)"
 assert_http_status 404 "$(board_endpoint missing-reference-board export/json)"
 assert_http_status 400 "$(board_endpoint InvalidBoard download/markdown)"
+
+printf '{"board_id":"InvalidBoard","title":"Invalid board"}\n' >"$invalid_create_payload"
+assert_json_post_status 400 "$GATEWAY_API_URL/gateway/media/reference-boards" "$invalid_create_payload"
+
+first_item_id="$(jq -r '.items[0].item_id // empty' "$json_export")"
+if [ -n "$first_item_id" ]; then
+  long_reason="$(printf 'x%.0s' {1..1001})"
+  jq -n --arg selected_reason "$long_reason" '{selected_reason: $selected_reason}' >"$long_reason_payload"
+  jq -n '{tags: ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen"]}' >"$many_tags_payload"
+  assert_json_patch_status 400 "$GATEWAY_API_URL/gateway/media/reference-boards/$BOARD_ID/items/$first_item_id" "$long_reason_payload"
+  assert_json_patch_status 400 "$GATEWAY_API_URL/gateway/media/reference-boards/$BOARD_ID/items/$first_item_id" "$many_tags_payload"
+fi
 
 exports_dir="/home/cuneyt/MoE/runtime/reference-boards/exports"
 if [ -d "$exports_dir" ]; then

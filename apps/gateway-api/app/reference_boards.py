@@ -11,8 +11,15 @@ from app.output_cards import find_output_card_by_id, load_output_card_metadata
 
 REFERENCE_BOARDS_ROOT = Path("/home/cuneyt/MoE/runtime/reference-boards")
 MAX_REFERENCE_BOARD_BYTES = 256 * 1024
+BOARD_ID_MAX_LENGTH = 80
+BOARD_TITLE_MAX_LENGTH = 120
+BOARD_DESCRIPTION_MAX_LENGTH = 500
+SELECTED_REASON_MAX_LENGTH = 1000
+TAG_MAX_COUNT = 12
+TAG_MAX_LENGTH = 40
 BOARD_ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
 ITEM_ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
+TAG_PATTERN = re.compile(r"^[A-Za-z0-9 _-]+$")
 METADATA_SUMMARY_FIELDS = (
     "source",
     "script",
@@ -53,6 +60,8 @@ def sanitize_board_id(board_id: str) -> str:
     candidate = board_id.strip()
     if not candidate:
         raise ValueError("board_id is required")
+    if len(candidate) > BOARD_ID_MAX_LENGTH:
+        raise ValueError("board_id is too long")
     if "/" in candidate or "\\" in candidate or ".." in candidate:
         raise ValueError("board_id must not contain path separators or traversal")
     if candidate.startswith("."):
@@ -182,14 +191,9 @@ def update_reference_board_item(board_id: str, item_id: str, updates: dict[str, 
             continue
         next_item = dict(item)
         if "selected_reason" in updates:
-            selected_reason = updates["selected_reason"]
-            next_item["selected_reason"] = selected_reason.strip() if isinstance(selected_reason, str) and selected_reason.strip() else None
+            next_item["selected_reason"] = normalize_selected_reason(updates["selected_reason"])
         if "tags" in updates:
-            tags = updates["tags"]
-            if tags is None:
-                next_item["tags"] = []
-            else:
-                next_item["tags"] = list(tags)
+            next_item["tags"] = normalize_tags(updates["tags"])
         errors = validate_reference_board_item_shape(next_item)
         if errors:
             raise ValueError("; ".join(errors))
@@ -369,12 +373,14 @@ def write_reference_board(board: dict[str, Any]) -> Path:
 
 def build_empty_reference_board(board_id: str, title: str, description: str | None = None) -> dict[str, Any]:
     safe_board_id = sanitize_board_id(board_id)
+    safe_title = normalize_board_title(title)
+    safe_description = normalize_board_description(description)
     now = utc_now_iso()
     return {
         "schema_version": "1.0",
         "board_id": safe_board_id,
-        "title": title,
-        "description": description,
+        "title": safe_title,
+        "description": safe_description,
         "created_at": now,
         "updated_at": now,
         "safety_label": "visual_reference_only",
@@ -396,8 +402,21 @@ def validate_reference_board_shape(board: dict[str, Any]) -> list[str]:
             sanitize_board_id(str(board["board_id"]))
         except ValueError as exc:
             errors.append(str(exc))
-    if not board.get("title"):
+    title = board.get("title")
+    if not title:
         errors.append("title is required")
+    else:
+        try:
+            normalize_board_title(title)
+        except ValueError as exc:
+            errors.append(str(exc))
+
+    description = board.get("description")
+    if description is not None:
+        try:
+            normalize_board_description(description)
+        except ValueError as exc:
+            errors.append(str(exc))
 
     items = board.get("items")
     if not isinstance(items, list):
@@ -550,22 +569,16 @@ def validate_reference_board_item_shape(item: dict[str, Any]) -> list[str]:
         errors.append("item_id contains unsupported characters")
 
     selected_reason = item.get("selected_reason")
-    if selected_reason is not None and not isinstance(selected_reason, str):
-        errors.append("selected_reason must be a string")
-    if isinstance(selected_reason, str) and len(selected_reason) > 500:
-        errors.append("selected_reason is too long")
+    try:
+        normalize_selected_reason(selected_reason)
+    except ValueError as exc:
+        errors.append(str(exc))
 
     tags = item.get("tags")
-    if not isinstance(tags, list):
-        errors.append("tags must be a list")
-    elif len(tags) > 20:
-        errors.append("tags has too many values")
-    else:
-        for index, tag in enumerate(tags):
-            if not isinstance(tag, str) or not tag:
-                errors.append(f"tags[{index}] must be a non-empty string")
-            elif len(tag) > 60:
-                errors.append(f"tags[{index}] is too long")
+    try:
+        normalize_tags(tags)
+    except ValueError as exc:
+        errors.append(str(exc))
 
     relative_runtime_path = item.get("relative_runtime_path")
     if relative_runtime_path is not None:
@@ -577,3 +590,67 @@ def validate_reference_board_item_shape(item: dict[str, Any]) -> list[str]:
             if ".." in Path(relative_runtime_path).parts:
                 errors.append("relative_runtime_path must not contain traversal")
     return errors
+
+
+def normalize_board_title(value: Any) -> str:
+    if not isinstance(value, str):
+        raise ValueError("title must be a string")
+    title = value.strip()
+    if not title:
+        raise ValueError("title is required")
+    if len(title) > BOARD_TITLE_MAX_LENGTH:
+        raise ValueError("title is too long")
+    return title
+
+
+def normalize_board_description(value: Any) -> str | None:
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise ValueError("description must be a string")
+    description = value.strip()
+    if not description:
+        return None
+    if len(description) > BOARD_DESCRIPTION_MAX_LENGTH:
+        raise ValueError("description is too long")
+    return description
+
+
+def normalize_selected_reason(value: Any) -> str | None:
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise ValueError("selected_reason must be a string")
+    selected_reason = value.strip()
+    if not selected_reason:
+        return None
+    if len(selected_reason) > SELECTED_REASON_MAX_LENGTH:
+        raise ValueError("selected_reason is too long")
+    return selected_reason
+
+
+def normalize_tags(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if not isinstance(value, list):
+        raise ValueError("tags must be a list")
+    if len(value) > TAG_MAX_COUNT:
+        raise ValueError("tags has too many values")
+
+    tags: list[str] = []
+    seen: set[str] = set()
+    for index, tag in enumerate(value):
+        if not isinstance(tag, str):
+            raise ValueError(f"tags[{index}] must be a string")
+        normalized = tag.strip()
+        if not normalized:
+            raise ValueError(f"tags[{index}] must be a non-empty string")
+        if len(normalized) > TAG_MAX_LENGTH:
+            raise ValueError(f"tags[{index}] is too long")
+        if TAG_PATTERN.fullmatch(normalized) is None:
+            raise ValueError(f"tags[{index}] contains unsupported characters")
+        if normalized in seen:
+            continue
+        seen.add(normalized)
+        tags.append(normalized)
+    return tags

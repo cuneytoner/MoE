@@ -182,6 +182,8 @@ export function ReferenceBoards({
                   </Typography>
                   <TextField
                     disabled={loading}
+                    helperText="Lowercase letters, numbers, dash, underscore. Max 80."
+                    inputProps={{ maxLength: 80 }}
                     label="board_id"
                     onChange={(event) => setBoardId(event.target.value)}
                     size="small"
@@ -189,6 +191,8 @@ export function ReferenceBoards({
                   />
                   <TextField
                     disabled={loading}
+                    helperText="Max 120 characters."
+                    inputProps={{ maxLength: 120 }}
                     label="title"
                     onChange={(event) => setTitle(event.target.value)}
                     size="small"
@@ -196,6 +200,8 @@ export function ReferenceBoards({
                   />
                   <TextField
                     disabled={loading}
+                    helperText="Optional. Max 500 characters."
+                    inputProps={{ maxLength: 500 }}
                     label="description"
                     minRows={2}
                     multiline
@@ -470,6 +476,14 @@ function ReferenceBoardItemCard({
       ),
     );
     setEditError("");
+    if (tags.length > 12) {
+      setEditError("Save note failed. Tags has too many values.");
+      return;
+    }
+    if (tags.some((tag) => tag.length > 40 || !/^[A-Za-z0-9 _-]+$/.test(tag))) {
+      setEditError("Save note failed. Tags may use letters, numbers, spaces, dash, and underscore only.");
+      return;
+    }
     try {
       await onUpdateBoardItem(item.item_id, {
         selected_reason: reasonDraft.trim() || null,
@@ -566,6 +580,8 @@ function ReferenceBoardItemCard({
             ) : null}
             <TextField
               disabled={loading}
+              helperText="Optional. Max 1000 characters."
+              inputProps={{ maxLength: 1000 }}
               label="selected_reason"
               minRows={2}
               multiline
@@ -575,7 +591,7 @@ function ReferenceBoardItemCard({
             />
             <TextField
               disabled={loading}
-              helperText="Comma-separated board tags."
+              helperText="Comma-separated tags. Max 12 tags, 40 characters each. Letters, numbers, spaces, dash, underscore."
               label="tags"
               onChange={(event) => setTagsDraft(event.target.value)}
               size="small"
