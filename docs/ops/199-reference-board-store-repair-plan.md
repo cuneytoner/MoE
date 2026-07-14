@@ -6,6 +6,8 @@ This document plans safe repair workflows for reference board runtime store issu
 
 M34.37 is planning only. It does not implement repair commands, backend endpoints, dashboard buttons, export files, ZIP/PDF artifacts, or source asset mutation.
 
+M34.38 defines backup behavior that must precede repair tooling.
+
 ## Current Store Model
 
 - Reference boards are runtime JSON files.
@@ -146,7 +148,7 @@ make reference-board-malformed-store-regression
 
 ## Proposed Future Milestones
 
-- M34.38 Reference Board Store Backup Plan
 - M34.39 Reference Board Store Repair CLI Plan
 - M34.40 Reference Board Store Validate CLI Implementation
-- M34.41 Reference Board Store Repair CLI Implementation
+- M34.41 Reference Board Store Backup CLI Implementation
+- M34.42 Reference Board Store Repair CLI Implementation

@@ -14,6 +14,8 @@ M34.36 adds regression coverage for malformed runtime board files.
 
 M34.37 plans safe operator repair workflows for runtime store issues.
 
+M34.38 defines backup strategy for runtime board files.
+
 ## Current Safety Baseline
 
 The current baseline includes:
@@ -145,4 +147,5 @@ Recovery guidance should prefer inspection before mutation. Broken board data sh
 - M34.37 Reference Board Store Repair Plan
 - M34.38 Reference Board Store Backup Plan
 - M34.39 Reference Board Store Repair CLI Plan
+- M34.40 Reference Board Store Validate CLI Implementation
 - M35 Media Review Workflow Phase

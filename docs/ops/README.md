@@ -236,6 +236,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board malformed store regression review template | [198-reference-board-malformed-store-regression-review-template.md](198-reference-board-malformed-store-regression-review-template.md) |
 | Reference board store repair plan | [199-reference-board-store-repair-plan.md](199-reference-board-store-repair-plan.md) |
 | Reference board store repair review template | [200-reference-board-store-repair-review-template.md](200-reference-board-store-repair-review-template.md) |
+| Reference board store backup plan | [201-reference-board-store-backup-plan.md](201-reference-board-store-backup-plan.md) |
+| Reference board store backup review template | [202-reference-board-store-backup-review-template.md](202-reference-board-store-backup-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

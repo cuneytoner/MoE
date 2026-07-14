@@ -474,6 +474,8 @@ required_paths=(
   "docs/ops/198-reference-board-malformed-store-regression-review-template.md"
   "docs/ops/199-reference-board-store-repair-plan.md"
   "docs/ops/200-reference-board-store-repair-review-template.md"
+  "docs/ops/201-reference-board-store-backup-plan.md"
+  "docs/ops/202-reference-board-store-backup-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

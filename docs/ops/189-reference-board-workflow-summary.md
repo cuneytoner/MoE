@@ -14,6 +14,8 @@ Reference board inputs now have explicit validation limits.
 
 Store repair is planned separately and must not mutate source assets or trigger generation.
 
+Backups are planned for board JSON files only and must not copy source assets.
+
 ## Runtime Locations
 
 - Reference board JSON files live under runtime reference board storage.
@@ -160,4 +162,5 @@ Run `git status --short`, inspect the file, and do not commit it unless it is in
 - M34.33 Reference Board Hardening Plan
 - M34.34 Reference Board Error Handling Polish
 - M34.37 Reference Board Store Repair Plan
+- M34.38 Reference Board Store Backup Plan
 - M35 Media Review Workflow Phase
