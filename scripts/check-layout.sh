@@ -476,6 +476,8 @@ required_paths=(
   "docs/ops/200-reference-board-store-repair-review-template.md"
   "docs/ops/201-reference-board-store-backup-plan.md"
   "docs/ops/202-reference-board-store-backup-review-template.md"
+  "docs/ops/203-reference-board-store-repair-cli-plan.md"
+  "docs/ops/204-reference-board-store-repair-cli-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

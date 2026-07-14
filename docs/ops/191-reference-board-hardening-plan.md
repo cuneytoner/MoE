@@ -16,6 +16,8 @@ M34.37 plans safe operator repair workflows for runtime store issues.
 
 M34.38 defines backup strategy for runtime board files.
 
+M34.39 plans the CLI used for future validate/backup/repair work.
+
 ## Current Safety Baseline
 
 The current baseline includes:

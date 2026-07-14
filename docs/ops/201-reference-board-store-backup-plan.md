@@ -6,6 +6,8 @@ Backups protect reference board JSON files before validation or repair operation
 
 M34.38 defines the backup strategy before any backup or repair CLI is implemented. It does not create runtime backup files, copy source assets, add dashboard buttons, or add backend endpoints.
 
+M34.39 references this backup policy as a prerequisite for repair CLI modes.
+
 ## Current Store Model
 
 - Reference boards are runtime JSON files.
