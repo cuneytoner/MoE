@@ -8,6 +8,8 @@ M34.38 defines the backup strategy before any backup or repair CLI is implemente
 
 M34.39 references this backup policy as a prerequisite for repair CLI modes.
 
+Validation runs before any future backup or repair action.
+
 ## Current Store Model
 
 - Reference boards are runtime JSON files.

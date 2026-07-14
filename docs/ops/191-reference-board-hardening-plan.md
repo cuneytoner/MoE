@@ -18,6 +18,8 @@ M34.38 defines backup strategy for runtime board files.
 
 M34.39 plans the CLI used for future validate/backup/repair work.
 
+M34.40 adds a read-only validation CLI for board runtime store integrity.
+
 ## Current Safety Baseline
 
 The current baseline includes:

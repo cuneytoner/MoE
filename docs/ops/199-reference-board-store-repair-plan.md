@@ -10,6 +10,8 @@ M34.38 defines backup behavior that must precede repair tooling.
 
 M34.39 defines the future repair CLI contract.
 
+M34.40 adds read-only validation before repair tooling.
+
 ## Current Store Model
 
 - Reference boards are runtime JSON files.

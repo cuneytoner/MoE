@@ -6,6 +6,8 @@ This document plans a future CLI for validating and repairing reference board ru
 
 M34.39 defines the interface and safety contract only. It does not implement a repair script, backup script, backend endpoint, dashboard button, runtime export file, ZIP/PDF artifact, or source asset mutation.
 
+M34.40 implements the first read-only validate CLI slice.
+
 ## Proposed Script
 
 Future script:
