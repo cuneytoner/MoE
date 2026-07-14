@@ -12,6 +12,8 @@ M34.34 extends regression with selected negative error checks.
 
 M34.35 extends regression with selected validation checks.
 
+M34.36 adds a separate malformed-store regression script for already-broken runtime board files.
+
 The script checks:
 
 - JSON export works

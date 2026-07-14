@@ -45,6 +45,8 @@ M34.34 standardizes these reference board error codes:
 
 Malformed board JSON is converted to a controlled `reference_board_malformed` response instead of crashing the route.
 
+M34.36 covers malformed board behavior with a dedicated runtime-store regression script.
+
 Missing metadata remains non-fatal for export when the board item itself is valid. Export metadata summaries can report unavailable metadata.
 
 M34.35 uses `invalid_reference_board_payload` for validation failures.
@@ -94,7 +96,7 @@ The script checks stable HTTP codes only for these narrow cases.
 ## What Is Not Implemented Yet
 
 - full validation limit enforcement
-- malformed store fixture regression
+- store repair workflow
 - dashboard end-to-end browser test
 - ZIP/PDF export
 - runtime export archive

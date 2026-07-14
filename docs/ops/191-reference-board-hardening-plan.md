@@ -10,6 +10,8 @@ M34.34 implements the first error-handling polish slice.
 
 M34.35 implements explicit validation limits.
 
+M34.36 adds regression coverage for malformed runtime board files.
+
 ## Current Safety Baseline
 
 The current baseline includes:
@@ -138,4 +140,6 @@ Recovery guidance should prefer inspection before mutation. Broken board data sh
 - M34.34 Reference Board Error Handling Polish
 - M34.35 Reference Board Validation Limits
 - M34.36 Reference Board Malformed Store Regression
+- M34.37 Reference Board Store Repair Plan
+- M34.38 Reference Board Store Backup Plan
 - M35 Media Review Workflow Phase

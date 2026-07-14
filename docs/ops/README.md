@@ -232,6 +232,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board error handling review template | [194-reference-board-error-handling-review-template.md](194-reference-board-error-handling-review-template.md) |
 | Reference board validation limits | [195-reference-board-validation-limits.md](195-reference-board-validation-limits.md) |
 | Reference board validation limits review template | [196-reference-board-validation-limits-review-template.md](196-reference-board-validation-limits-review-template.md) |
+| Reference board malformed store regression | [197-reference-board-malformed-store-regression.md](197-reference-board-malformed-store-regression.md) |
+| Reference board malformed store regression review template | [198-reference-board-malformed-store-regression-review-template.md](198-reference-board-malformed-store-regression-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -100,6 +100,8 @@ The dashboard also blocks obviously invalid tag edits before sending the request
 
 The checks use temporary files under `/tmp` and do not create persistent boards.
 
+Validation limits protect incoming payloads before they are stored. M34.36 separately tests already-malformed runtime board files so broken on-disk JSON still returns controlled errors.
+
 ## Safety Rules
 
 - no image generation
@@ -115,7 +117,6 @@ The checks use temporary files under `/tmp` and do not create persistent boards.
 
 ## What Is Not Implemented Yet
 
-- malformed store fixture regression
 - store repair workflow
 - dashboard end-to-end browser validation test
 - ZIP/PDF export
