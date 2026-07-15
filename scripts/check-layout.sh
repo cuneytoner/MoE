@@ -510,6 +510,8 @@ required_paths=(
   "docs/ops/234-reference-board-export-review-ui-polish-review-template.md"
   "docs/ops/235-reference-board-phase-closure-and-m35-roadmap.md"
   "docs/ops/236-reference-board-phase-closure-review-template.md"
+  "docs/ops/237-3d-blender-parametric-pipeline-foundation.md"
+  "docs/ops/238-3d-blender-parametric-pipeline-foundation-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

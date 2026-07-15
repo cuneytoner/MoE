@@ -272,6 +272,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board export review UI polish review template | [234-reference-board-export-review-ui-polish-review-template.md](234-reference-board-export-review-ui-polish-review-template.md) |
 | Reference board phase closure and M35 roadmap | [235-reference-board-phase-closure-and-m35-roadmap.md](235-reference-board-phase-closure-and-m35-roadmap.md) |
 | Reference board phase closure review template | [236-reference-board-phase-closure-review-template.md](236-reference-board-phase-closure-review-template.md) |
+| 3D Blender parametric pipeline foundation | [237-3d-blender-parametric-pipeline-foundation.md](237-3d-blender-parametric-pipeline-foundation.md) |
+| 3D Blender parametric pipeline foundation review template | [238-3d-blender-parametric-pipeline-foundation-review-template.md](238-3d-blender-parametric-pipeline-foundation-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.0 Reference Board Phase Closure and M35 Roadmap.
-- Next planned: M35.1 3D / Blender Parametric Pipeline Foundation.
+- Latest completed: M35.1 3D / Blender Parametric Pipeline Foundation.
+- Next planned: M35.2 Pergola Parametric Blender Prototype Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -91,8 +91,10 @@ Current media milestone status:
 - M34.53 Reference Board Backup Retention Plan DONE
 - M34.54 Reference Board Export Review UI Polish DONE
 - M35.0 Reference Board Phase Closure and M35 Roadmap DONE
-- M35.1 3D / Blender Parametric Pipeline Foundation PLANNED
+- M35.1 3D / Blender Parametric Pipeline Foundation DONE
 - M35.2 Pergola Parametric Blender Prototype Plan PLANNED
+- M35.3 Blender Runtime Output Safety Plan PLANNED
+- M35.4 First Parametric Blender Script Skeleton PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2036,14 +2038,24 @@ Goals:
 
 ## Milestone 35.1: 3D / Blender Parametric Pipeline Foundation
 
+Status: DONE
+
+Goals:
+- Define deterministic 3D / Blender parametric generation foundations.
+- Preserve source/runtime/model separation.
+- Keep generated 3D assets out of git.
+- Avoid Blender execution or 3D asset generation in this milestone.
+- Start future work with simple parametric structures such as pergola.
+
+## Milestone 35.2: Pergola Parametric Blender Prototype Plan
+
 Status: PLANNED
 
 Goals:
-- Plan deterministic 3D/Blender generation foundations.
-- Keep generated 3D assets under runtime.
-- Keep source-only repo separation.
-- Avoid automatic generation until an explicit guarded milestone.
-- Start with parametric structures such as pergola before complex rigging.
+- Plan the first pergola parametric Blender prototype.
+- Define dimensions, posts, beams, rafters, roof sheet placeholders, and side panel placeholders.
+- Keep output visual/reference-only.
+- Avoid real Blender generation until a later guarded milestone.
 
 ## Milestone 36.0: Animation Pipeline
 
