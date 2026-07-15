@@ -37,6 +37,10 @@ assert_json_review_pack() {
   jq -e '.safety.source_assets_copied == false' "$file" >/dev/null
   jq -e '.safety.source_assets_deleted == false' "$file" >/dev/null
   jq -e '.safety.generation_triggered == false' "$file" >/dev/null
+  jq -e 'all(.items[]?; (.review_status | type) == "object")' "$file" >/dev/null
+  jq -e 'all(.items[]?; (.review_status.needs_review | type) == "boolean")' "$file" >/dev/null
+  jq -e 'all(.items[]?; (.review_status.duplicate_hint | type) == "boolean")' "$file" >/dev/null
+  jq -e 'all(.items[]?; (.review_status.duplicate_keys | type) == "array")' "$file" >/dev/null
 }
 
 assert_no_host_paths() {
@@ -108,9 +112,11 @@ assert_header_contains "$json_headers" "filename=\"reference-board-${BOARD_ID}-[
 assert_header_contains "$markdown_headers" "filename=\"reference-board-${BOARD_ID}-[0-9]{8}-[0-9]{6}\\.md\""
 
 grep -F "Reference Board Review Pack" "$markdown_export" >/dev/null || fail "Markdown export missing title"
+grep -F "Review status" "$markdown_export" >/dev/null || fail "Markdown export missing Review status"
 grep -F "Reference Board Review Pack" "$markdown_download" >/dev/null || fail "Markdown download missing title"
 grep -F "Safety" "$markdown_download" >/dev/null || fail "Markdown download missing Safety section"
 grep -F "Items" "$markdown_download" >/dev/null || fail "Markdown download missing Items section"
+grep -F "Review status" "$markdown_download" >/dev/null || fail "Markdown download missing Review status"
 grep -F "Selected reason" "$markdown_download" >/dev/null || fail "Markdown download missing Selected reason"
 
 assert_no_host_paths "$json_export"

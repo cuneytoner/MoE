@@ -98,8 +98,9 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.49 Reference Board Stale Item Regression DONE
 - M34.50 Reference Board Repair CLI Operator Runbook DONE
 - M34.51 Reference Board Repair CLI Summary Review DONE
-- M34.52 Reference Board Export Stale/Duplicate Status Polish PLANNED
+- M34.52 Reference Board Export Stale/Duplicate Status Polish DONE
 - M34.53 Reference Board Backup Retention Plan PLANNED
+- M34.54 Reference Board Export Review UI Polish PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

@@ -16,6 +16,8 @@ M34.50 documents safe operator flow for stale item marking.
 
 M34.51 includes stale item marking in the full repair workflow summary.
 
+M34.52 displays stale markers in JSON/Markdown exports.
+
 ## Supported Mode
 
 Supported stale marking mode:

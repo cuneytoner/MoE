@@ -97,6 +97,8 @@ BOARD_ID=api-test-board MODE=mark-stale-items APPLY=1 make reference-board-store
 
 `mark-stale-items` does not delete stale items. Stale items remain visible in board JSON and exports. Stale markers are review hints for operators.
 
+After repair or stale marking, use JSON and Markdown exports to review item status.
+
 ## Regression Flow
 
 ```bash

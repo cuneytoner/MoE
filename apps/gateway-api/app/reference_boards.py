@@ -218,6 +218,8 @@ def build_reference_board_json_export(board_id: str) -> dict[str, Any]:
     items = board.get("items")
     if not isinstance(items, list):
         raise ValueError("items must be a list")
+    exportable_items = [item for item in items if isinstance(item, dict)]
+    duplicate_lookup = _duplicate_key_lookup(exportable_items)
 
     return {
         "schema_version": "1.0",
@@ -232,7 +234,7 @@ def build_reference_board_json_export(board_id: str) -> dict[str, Any]:
             "safety_label": board.get("safety_label"),
             "item_count": len(items),
         },
-        "items": [_export_item(item) for item in items if isinstance(item, dict)],
+        "items": [_export_item(item, duplicate_lookup) for item in exportable_items],
         "safety": {
             "review_only": True,
             "source_assets_copied": False,
@@ -431,7 +433,8 @@ def validate_reference_board_shape(board: dict[str, Any]) -> list[str]:
     return errors
 
 
-def _export_item(item: dict[str, Any]) -> dict[str, Any]:
+def _export_item(item: dict[str, Any], duplicate_lookup: dict[int, list[str]] | None = None) -> dict[str, Any]:
+    duplicate_keys = duplicate_lookup.get(id(item), []) if duplicate_lookup is not None else []
     return {
         "item_id": item.get("item_id"),
         "card_id": item.get("card_id"),
@@ -443,6 +446,41 @@ def _export_item(item: dict[str, Any]) -> dict[str, Any]:
         "safety_label": item.get("safety_label"),
         "added_at": item.get("added_at"),
         "metadata_summary": summarize_item_metadata(item),
+        "review_status": _item_review_status(item, duplicate_keys),
+    }
+
+
+def _duplicate_key_lookup(items: list[dict[str, Any]]) -> dict[int, list[str]]:
+    result: dict[int, list[str]] = {}
+    for field in ("item_id", "card_id", "relative_runtime_path"):
+        values: dict[str, list[dict[str, Any]]] = {}
+        for item in items:
+            value = item.get(field)
+            if not isinstance(value, str) or not value:
+                continue
+            values.setdefault(value, []).append(item)
+        for value, matching_items in values.items():
+            if len(matching_items) <= 1:
+                continue
+            duplicate_key = f"{field}:{value}"
+            for item in matching_items:
+                result.setdefault(id(item), []).append(duplicate_key)
+    return result
+
+
+def _item_review_status(item: dict[str, Any], duplicate_keys: list[str]) -> dict[str, Any]:
+    stale = item.get("stale") is True
+    stale_reason = item.get("stale_reason") if isinstance(item.get("stale_reason"), str) else None
+    stale_checked_at = item.get("stale_checked_at") if isinstance(item.get("stale_checked_at"), str) else None
+    duplicate_keys = sorted(dict.fromkeys(key for key in duplicate_keys if isinstance(key, str) and key))
+    duplicate_hint = bool(duplicate_keys)
+    return {
+        "stale": stale,
+        "stale_reason": stale_reason,
+        "stale_checked_at": stale_checked_at,
+        "duplicate_hint": duplicate_hint,
+        "duplicate_keys": duplicate_keys,
+        "needs_review": stale or duplicate_hint,
     }
 
 
@@ -493,12 +531,44 @@ def _append_markdown_item(lines: list[str], index: int, item: dict[str, Any]) ->
             f"- Selected reason: {_markdown_text(item.get('selected_reason'))}",
             f"- Tags: {_markdown_tags(item.get('tags'))}",
             "",
+            "### Review status",
+            "",
+        ]
+    )
+    _append_markdown_review_status(lines, item.get("review_status"))
+    lines.extend(
+        [
+            "",
             "### Metadata summary",
             "",
         ]
     )
     _append_markdown_metadata_summary(lines, item.get("metadata_summary"))
     lines.append("")
+
+
+def _append_markdown_review_status(lines: list[str], review_status: Any) -> None:
+    if not isinstance(review_status, dict):
+        lines.append("- Needs review: no")
+        return
+
+    needs_review = review_status.get("needs_review") is True
+    lines.append(f"- Needs review: {_markdown_yes_no(needs_review)}")
+    if not needs_review:
+        return
+
+    lines.append(f"- Stale: {_markdown_yes_no(review_status.get('stale') is True)}")
+    stale_reason = review_status.get("stale_reason")
+    if isinstance(stale_reason, str) and stale_reason:
+        lines.append(f"- Stale reason: {_markdown_text(stale_reason)}")
+    stale_checked_at = review_status.get("stale_checked_at")
+    if isinstance(stale_checked_at, str) and stale_checked_at:
+        lines.append(f"- Stale checked at: {_markdown_text(stale_checked_at)}")
+    duplicate_hint = review_status.get("duplicate_hint") is True
+    lines.append(f"- Duplicate hint: {_markdown_yes_no(duplicate_hint)}")
+    duplicate_keys = review_status.get("duplicate_keys")
+    if duplicate_hint and isinstance(duplicate_keys, list) and duplicate_keys:
+        lines.append(f"- Duplicate keys: {_markdown_tags(duplicate_keys)}")
 
 
 def _append_markdown_metadata_summary(lines: list[str], metadata_summary: Any) -> None:
@@ -547,6 +617,10 @@ def _markdown_text(value: Any) -> str:
 
 def _markdown_bool(value: Any) -> str:
     return "true" if value is True else "false"
+
+
+def _markdown_yes_no(value: bool) -> str:
+    return "yes" if value else "no"
 
 
 def _markdown_tags(value: Any) -> str:

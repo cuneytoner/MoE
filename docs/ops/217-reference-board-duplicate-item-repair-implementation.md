@@ -18,6 +18,8 @@ M34.50 documents safe operator flow for duplicate repair.
 
 M34.51 includes duplicate repair in the full repair workflow summary.
 
+M34.52 displays duplicate hints in JSON/Markdown exports.
+
 ## Supported Mode
 
 Supported duplicate repair mode:

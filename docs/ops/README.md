@@ -264,6 +264,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board repair CLI operator runbook review template | [226-reference-board-repair-cli-operator-runbook-review-template.md](226-reference-board-repair-cli-operator-runbook-review-template.md) |
 | Reference board repair CLI summary review | [227-reference-board-repair-cli-summary-review.md](227-reference-board-repair-cli-summary-review.md) |
 | Reference board repair CLI summary review template | [228-reference-board-repair-cli-summary-review-template.md](228-reference-board-repair-cli-summary-review-template.md) |
+| Reference board export stale duplicate status polish | [229-reference-board-export-stale-duplicate-status-polish.md](229-reference-board-export-stale-duplicate-status-polish.md) |
+| Reference board export stale duplicate status polish review template | [230-reference-board-export-stale-duplicate-status-polish-review-template.md](230-reference-board-export-stale-duplicate-status-polish-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -86,6 +86,8 @@ M34.52 Reference Board Export Stale/Duplicate Status Polish
 
 Exports should clearly surface duplicate/stale status before any dashboard polish or cleanup policy.
 
+M34.52 surfaces stale/duplicate status in exports for human review.
+
 ## Non-Goals
 
 - no code changes
