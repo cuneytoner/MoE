@@ -14,6 +14,8 @@ M34.49 adds dedicated regression coverage for `MODE=mark-stale-items`.
 
 M34.50 documents safe operator flow for stale item marking.
 
+M34.51 includes stale item marking in the full repair workflow summary.
+
 ## Supported Mode
 
 Supported stale marking mode:

@@ -500,6 +500,8 @@ required_paths=(
   "docs/ops/224-reference-board-stale-item-regression-review-template.md"
   "docs/ops/225-reference-board-repair-cli-operator-runbook.md"
   "docs/ops/226-reference-board-repair-cli-operator-runbook-review-template.md"
+  "docs/ops/227-reference-board-repair-cli-summary-review.md"
+  "docs/ops/228-reference-board-repair-cli-summary-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

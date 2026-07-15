@@ -226,6 +226,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Stale Item Regression Review Template](ops/224-reference-board-stale-item-regression-review-template.md)
 - [Reference Board Repair CLI Operator Runbook](ops/225-reference-board-repair-cli-operator-runbook.md)
 - [Reference Board Repair CLI Operator Runbook Review Template](ops/226-reference-board-repair-cli-operator-runbook-review-template.md)
+- [Reference Board Repair CLI Summary Review](ops/227-reference-board-repair-cli-summary-review.md)
+- [Reference Board Repair CLI Summary Review Template](ops/228-reference-board-repair-cli-summary-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

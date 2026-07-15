@@ -4,6 +4,8 @@
 
 Explain how to safely inspect, back up, and repair reference board runtime JSON files.
 
+M34.51 summarizes the completed repair CLI workflow and remaining gaps.
+
 ## Safety Model
 
 - validate first

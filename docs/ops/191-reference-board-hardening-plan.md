@@ -38,6 +38,8 @@ M34.49 adds regression coverage for guarded stale item marking.
 
 M34.50 adds an operator runbook tying together validation, backup, repair, and regressions.
 
+M34.51 confirms the repair CLI safety boundaries and remaining gaps.
+
 ## Current Safety Baseline
 
 The current baseline includes:

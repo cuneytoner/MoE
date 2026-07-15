@@ -16,6 +16,8 @@ M34.48 adds stale item marking as a separate repair mode. Duplicate repair remai
 
 M34.50 documents safe operator flow for duplicate repair.
 
+M34.51 includes duplicate repair in the full repair workflow summary.
+
 ## Supported Mode
 
 Supported duplicate repair mode:

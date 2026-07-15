@@ -20,6 +20,8 @@ M34.49 regression covers the stale marking mode added after duplicate repair.
 
 M34.50 adds an operator runbook for safe manual use of repair CLI modes.
 
+M34.51 provides a summary review of all repair CLI modes.
+
 ## Dry-Run Default
 
 Default behavior:
