@@ -43,6 +43,10 @@ board_file: Path | None = None
 backup_found = False
 board_file_modified = False
 repair_applied = False
+duplicate_groups: list[dict[str, Any]] = []
+proposed_removals: list[dict[str, Any]] = []
+applied_removals: list[dict[str, Any]] = []
+skipped_removals: list[dict[str, Any]] = []
 
 
 def add_finding(severity: str, code: str, detail: str) -> None:
@@ -69,6 +73,10 @@ def write_report(exit_code: int) -> None:
         "proposed_actions": proposed_actions,
         "applied_actions": applied_actions,
         "skipped_actions": skipped_actions,
+        "duplicate_groups": duplicate_groups,
+        "proposed_removals": proposed_removals,
+        "applied_removals": applied_removals,
+        "skipped_removals": skipped_removals,
         "safety_flags": {
             "source_assets_modified": False,
             "metadata_modified": False,
@@ -150,6 +158,98 @@ def normalize_item_tags(item: dict[str, Any], index: int) -> None:
         )
 
 
+def item_label(item: Any, index: int) -> str:
+    if not isinstance(item, dict):
+        return f"items[{index}]"
+    item_id = item.get("item_id")
+    card_id = item.get("card_id")
+    if isinstance(item_id, str) and item_id:
+        return item_id
+    if isinstance(card_id, str) and card_id:
+        return card_id
+    return f"items[{index}]"
+
+
+def conflict_reason(preserved: dict[str, Any], duplicate: dict[str, Any]) -> str:
+    fields = ("selected_reason", "tags", "name", "asset_type", "relative_runtime_path")
+    differences = [field for field in fields if preserved.get(field) != duplicate.get(field)]
+    if not differences:
+        return ""
+    return "different " + ", ".join(differences)
+
+
+def add_duplicate_group(key_type: str, key: str, indices: list[int], items: list[Any]) -> None:
+    preserved_index = indices[0]
+    preserved = items[preserved_index]
+    duplicate_indices = indices[1:]
+    duplicate_item_ids: list[str] = []
+    conflict_reasons: list[str] = []
+    for duplicate_index in duplicate_indices:
+        duplicate = items[duplicate_index]
+        duplicate_item_ids.append(item_label(duplicate, duplicate_index))
+        if isinstance(preserved, dict) and isinstance(duplicate, dict):
+            reason = conflict_reason(preserved, duplicate)
+            if reason:
+                conflict_reasons.append(reason)
+    duplicate_groups.append(
+        {
+            "duplicate_key_type": key_type,
+            "duplicate_key": key,
+            "preserved_item_id": item_label(preserved, preserved_index),
+            "duplicate_item_ids": duplicate_item_ids,
+            "conflict_reason": "; ".join(sorted(set(conflict_reasons))),
+        }
+    )
+
+
+def collect_duplicate_removals(items: list[Any]) -> set[int]:
+    removals: set[int] = set()
+    for key_type, field in (
+        ("item_id", "item_id"),
+        ("card_id", "card_id"),
+        ("relative_runtime_path", "relative_runtime_path"),
+    ):
+        seen: dict[str, list[int]] = {}
+        for index, item in enumerate(items):
+            if not isinstance(item, dict):
+                continue
+            value = item.get(field)
+            if not isinstance(value, str) or not value:
+                continue
+            seen.setdefault(value, []).append(index)
+        for key, indices in seen.items():
+            if len(indices) <= 1:
+                continue
+            add_duplicate_group(key_type, key, indices, items)
+            removals.update(indices[1:])
+    return removals
+
+
+def write_board(next_board: dict[str, Any], original_text: str) -> None:
+    global board_file_modified, repair_applied
+    if board_file is None:
+        add_finding("error", "repair_write_failed", "board file is unavailable")
+        print("Reference board store repair failed")
+        write_report(5)
+    next_text = json.dumps(next_board, indent=2, sort_keys=True) + "\n"
+    if next_text == original_text:
+        return
+    temp_file = board_file.with_name(f".{board_file.name}.repair.tmp")
+    try:
+        temp_file.write_text(next_text, encoding="utf-8")
+        temp_file.replace(board_file)
+        board_file_modified = True
+        repair_applied = True
+    except OSError:
+        try:
+            temp_file.unlink(missing_ok=True)
+        except OSError:
+            pass
+        add_finding("error", "repair_write_failed", "could not atomically write repaired board file")
+        print("Reference board store repair failed")
+        write_report(5)
+
+
 if not board_id:
     add_finding("error", "missing_board_id", "BOARD_ID is required")
     print("Reference board store repair failed")
@@ -160,8 +260,8 @@ if not is_safe_board_id(board_id):
     print("Reference board store repair failed")
     write_report(2)
 
-if mode != "repair-schema":
-    add_finding("error", "unsupported_mode", "MODE currently supports only repair-schema")
+if mode not in {"repair-schema", "remove-duplicate-items"}:
+    add_finding("error", "unsupported_mode", "MODE currently supports only repair-schema or remove-duplicate-items")
     print("Reference board store repair failed")
     write_report(2)
 
@@ -194,7 +294,7 @@ try:
     original_text = board_file.read_text(encoding="utf-8")
     board = json.loads(original_text)
 except json.JSONDecodeError:
-    add_finding("error", "json_malformed", "board JSON does not parse; repair-schema cannot safely repair it")
+    add_finding("error", "json_malformed", "board JSON does not parse; repair cannot safely continue")
     print("Reference board store repair failed")
     write_report(1)
 except OSError:
@@ -203,9 +303,58 @@ except OSError:
     write_report(5)
 
 if not isinstance(board, dict):
-    add_finding("error", "top_level_not_object", "top-level JSON must be an object; repair-schema cannot safely repair it")
+    add_finding("error", "top_level_not_object", "top-level JSON must be an object; repair cannot safely continue")
     print("Reference board store repair failed")
     write_report(1)
+
+if mode == "remove-duplicate-items":
+    items = board.get("items")
+    if not isinstance(items, list):
+        add_finding("error", "items_not_list", "items must be a list for remove-duplicate-items")
+        print("Reference board store repair failed")
+        write_report(1)
+
+    removal_indices = collect_duplicate_removals(items)
+    for index in sorted(removal_indices):
+        item = items[index]
+        removal = {
+            "item_index": index,
+            "item_id": item.get("item_id") if isinstance(item, dict) else None,
+            "card_id": item.get("card_id") if isinstance(item, dict) else None,
+            "relative_runtime_path": item.get("relative_runtime_path") if isinstance(item, dict) else None,
+        }
+        proposed_removals.append(removal)
+        add_action(
+            proposed_actions,
+            "remove_duplicate_item",
+            f"remove duplicate board item at index {index}: {item_label(item, index)}",
+        )
+        if apply_requested:
+            applied_removals.append(removal)
+            add_action(
+                applied_actions,
+                "remove_duplicate_item",
+                f"removed duplicate board item at index {index}: {item_label(item, index)}",
+            )
+        else:
+            skipped_removals.append(removal)
+            add_action(skipped_actions, "remove_duplicate_item", "dry-run only; set APPLY=1 after review and backup")
+
+    if apply_requested and removal_indices:
+        board["items"] = [item for index, item in enumerate(items) if index not in removal_indices]
+        if isinstance(board.get("updated_at"), str):
+            board["updated_at"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+            add_action(applied_actions, "update_board_updated_at", "updated_at set because repair changed the board")
+        write_board(board, original_text)
+        print("Reference board store repair applied OK")
+        write_report(0)
+
+    if apply_requested:
+        print("Reference board store repair no changes needed")
+        write_report(0)
+
+    print("Reference board store repair dry-run OK")
+    write_report(0)
 
 if "board_id" not in board:
     add_finding("warning", "unsafe_board_id_repair_denied", "missing board_id is not repaired")
@@ -262,22 +411,7 @@ if apply_requested and proposed_actions:
     if isinstance(board.get("updated_at"), str):
         board["updated_at"] = now
         add_action(applied_actions, "update_board_updated_at", "updated_at set because repair changed the board")
-    next_text = json.dumps(board, indent=2, sort_keys=True) + "\n"
-    if next_text != original_text:
-        temp_file = board_file.with_name(f".{board_file.name}.repair.tmp")
-        try:
-            temp_file.write_text(next_text, encoding="utf-8")
-            temp_file.replace(board_file)
-            board_file_modified = True
-            repair_applied = True
-        except OSError:
-            try:
-                temp_file.unlink(missing_ok=True)
-            except OSError:
-                pass
-            add_finding("error", "repair_write_failed", "could not atomically write repaired board file")
-            print("Reference board store repair failed")
-            write_report(5)
+    write_board(board, original_text)
 
 if apply_requested:
     if board_file_modified:

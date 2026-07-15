@@ -250,6 +250,10 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board store repair regression review template | [212-reference-board-store-repair-regression-review-template.md](212-reference-board-store-repair-regression-review-template.md) |
 | Reference board duplicate item repair plan | [213-reference-board-duplicate-item-repair-plan.md](213-reference-board-duplicate-item-repair-plan.md) |
 | Reference board duplicate item repair review template | [214-reference-board-duplicate-item-repair-review-template.md](214-reference-board-duplicate-item-repair-review-template.md) |
+| Reference board stale item handling plan | [215-reference-board-stale-item-handling-plan.md](215-reference-board-stale-item-handling-plan.md) |
+| Reference board stale item handling review template | [216-reference-board-stale-item-handling-review-template.md](216-reference-board-stale-item-handling-review-template.md) |
+| Reference board duplicate item repair implementation | [217-reference-board-duplicate-item-repair-implementation.md](217-reference-board-duplicate-item-repair-implementation.md) |
+| Reference board duplicate item repair review template | [218-reference-board-duplicate-item-repair-review-template.md](218-reference-board-duplicate-item-repair-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

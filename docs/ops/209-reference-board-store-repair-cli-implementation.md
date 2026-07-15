@@ -10,6 +10,8 @@ M34.43 adds dedicated repair regression coverage with a temporary fixture board.
 
 Duplicate item removal is intentionally not implemented in M34.42 and is planned separately in M34.44.
 
+M34.46 extends the repair CLI with `remove-duplicate-items` mode.
+
 ## Dry-Run Default
 
 Default behavior:
@@ -55,11 +57,12 @@ Run `make reference-board-store-backup` before applying repair.
 
 ## Supported Mode
 
-Current supported mode:
+Current supported modes:
 
 - `repair-schema`
+- `remove-duplicate-items`
 
-No duplicate item deletion, stale item deletion, source asset repair, metadata repair, restore, or all-board repair is implemented.
+Stale item deletion, source asset repair, metadata repair, restore, or all-board repair is not implemented.
 
 ## Safe Repairs Allowed
 
@@ -90,7 +93,6 @@ The script does not:
 - invent source assets
 - invent metadata
 - remove items
-- delete duplicate items
 - mark stale items
 
 ## Atomic Write Behavior

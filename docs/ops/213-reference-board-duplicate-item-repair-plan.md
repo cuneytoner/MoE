@@ -6,6 +6,8 @@ This document plans safe detection and future repair of duplicate reference boar
 
 M34.44 is documentation only. It does not implement duplicate deletion, repair script changes, Gateway behavior, dashboard behavior, runtime file mutation, source asset mutation, ZIP/PDF behavior, or generation.
 
+M34.46 implements `MODE=remove-duplicate-items`.
+
 ## Current Behavior
 
 - Validate CLI detects duplicate `item_id` and duplicate `card_id` if implemented.

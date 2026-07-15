@@ -16,6 +16,8 @@ M34.43 covers repair-schema with regression fixture.
 
 M34.44 plans future duplicate item repair behavior as a separate mode.
 
+M34.46 implements the duplicate item repair mode planned earlier.
+
 ## Proposed Script
 
 Future script:
