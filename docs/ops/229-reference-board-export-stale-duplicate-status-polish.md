@@ -82,6 +82,8 @@ Markdown exports keep the board, safety, item, and metadata sections while addin
 
 Download endpoints reuse the same export helpers, so downloaded JSON and Markdown include the same review status information.
 
+M34.54 surfaces the export review status in the Dashboard UI.
+
 ## Safety Boundaries
 
 - no runtime board mutation

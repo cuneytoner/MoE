@@ -90,6 +90,8 @@ M34.52 surfaces stale/duplicate status in exports for human review.
 
 M34.53 addresses the remaining backup retention gap as documentation-only policy.
 
+M34.54 adds read-only UI polish for export review status.
+
 ## Non-Goals
 
 - no code changes

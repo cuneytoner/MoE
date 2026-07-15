@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
@@ -438,6 +438,22 @@ type ReferenceBoardExportDialogState = {
   title: string;
 };
 
+type ExportReviewRow = {
+  duplicateHint: boolean | null;
+  itemLabel: string;
+  needsReview: boolean | null;
+  stale: boolean | null;
+  staleReason: string | null;
+};
+
+type ExportReviewSummary = {
+  duplicateHintCount: number;
+  items: ExportReviewRow[];
+  needsReviewCount: number;
+  staleCount: number;
+  totalItems: number;
+};
+
 function ReferenceBoardItemCard({
   item,
   loading,
@@ -709,11 +725,23 @@ function ReferenceBoardExportDialog({
   onCopy: (content: string) => Promise<void>;
 }) {
   const canCopy = typeof navigator !== "undefined" && Boolean(navigator.clipboard);
+  const reviewSummary = useMemo(
+    () => (exportState?.format === "json" ? parseExportReviewSummary(exportState.content) : null),
+    [exportState],
+  );
+  const markdownHasReviewStatus =
+    exportState?.format === "markdown" && exportState.content.toLowerCase().includes("review status");
   return (
     <Dialog fullWidth maxWidth="md" onClose={onClose} open={exportState !== null}>
       <DialogTitle>{exportState?.title ?? "Reference board export"}</DialogTitle>
       <DialogContent>
         <Stack spacing={2} sx={{ pb: 1 }}>
+          {reviewSummary ? <ExportReviewStatusSummary summary={reviewSummary} /> : null}
+          {exportState?.format === "markdown" && markdownHasReviewStatus ? (
+            <Alert severity="info" variant="outlined">
+              Markdown includes review status sections.
+            </Alert>
+          ) : null}
           <Box
             component="pre"
             sx={{
@@ -757,6 +785,142 @@ function ReferenceBoardExportDialog({
       </DialogActions>
     </Dialog>
   );
+}
+
+function ExportReviewStatusSummary({ summary }: { summary: ExportReviewSummary }) {
+  return (
+    <Box
+      sx={{
+        border: "1px solid rgba(145, 158, 171, 0.24)",
+        borderRadius: 1,
+        p: 1.5,
+      }}
+    >
+      <Stack spacing={1.5}>
+        <Stack direction="row" flexWrap="wrap" gap={1}>
+          <Chip label={`${summary.totalItems} items`} size="small" variant="outlined" />
+          <Chip
+            color={summary.needsReviewCount > 0 ? "warning" : "default"}
+            label={`${summary.needsReviewCount} need review`}
+            size="small"
+            variant="outlined"
+          />
+          <Chip
+            color={summary.staleCount > 0 ? "warning" : "default"}
+            label={`${summary.staleCount} stale`}
+            size="small"
+            variant="outlined"
+          />
+          <Chip
+            color={summary.duplicateHintCount > 0 ? "warning" : "default"}
+            label={`${summary.duplicateHintCount} duplicate hints`}
+            size="small"
+            variant="outlined"
+          />
+        </Stack>
+
+        {summary.items.length > 0 ? (
+          <Stack spacing={0.75}>
+            {summary.items.map((item, index) => (
+              <Box
+                key={`${item.itemLabel}-${index}`}
+                sx={{
+                  border: "1px solid rgba(145, 158, 171, 0.18)",
+                  borderRadius: 1,
+                  p: 1,
+                }}
+              >
+                <Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-between" spacing={1}>
+                  <Typography fontWeight={800} sx={{ overflowWrap: "anywhere" }} variant="body2">
+                    {item.itemLabel}
+                  </Typography>
+                  <Stack direction="row" flexWrap="wrap" gap={0.75}>
+                    <StatusChip
+                      label={`needs review: ${reviewValue(item.needsReview)}`}
+                      tone={item.needsReview ? "warning" : "neutral"}
+                    />
+                    <StatusChip label={`stale: ${reviewValue(item.stale)}`} tone={item.stale ? "warning" : "neutral"} />
+                    <StatusChip
+                      label={`duplicate hint: ${reviewValue(item.duplicateHint)}`}
+                      tone={item.duplicateHint ? "warning" : "neutral"}
+                    />
+                  </Stack>
+                </Stack>
+                {item.staleReason ? (
+                  <Typography color="text.secondary" sx={{ mt: 0.5, overflowWrap: "anywhere" }} variant="caption">
+                    stale reason: {item.staleReason}
+                  </Typography>
+                ) : null}
+              </Box>
+            ))}
+          </Stack>
+        ) : null}
+      </Stack>
+    </Box>
+  );
+}
+
+function parseExportReviewSummary(content: string): ExportReviewSummary | null {
+  try {
+    const payload = JSON.parse(content) as unknown;
+    if (!isRecord(payload) || !Array.isArray(payload.items)) {
+      return null;
+    }
+    const items = payload.items.filter(isRecord);
+    const rows = items.map((item): ExportReviewRow => {
+      const reviewStatus = isRecord(item.review_status) ? item.review_status : null;
+      const needsReview = booleanOrNull(reviewStatus?.needs_review);
+      const stale = booleanOrNull(reviewStatus?.stale);
+      const duplicateHint = booleanOrNull(reviewStatus?.duplicate_hint);
+      const staleReason = typeof reviewStatus?.stale_reason === "string" ? reviewStatus.stale_reason : null;
+      return {
+        duplicateHint,
+        itemLabel: exportItemLabel(item),
+        needsReview,
+        stale,
+        staleReason,
+      };
+    });
+    return {
+      duplicateHintCount: rows.filter((row) => row.duplicateHint === true).length,
+      items: rows.slice(0, 20),
+      needsReviewCount: rows.filter((row) => row.needsReview === true).length,
+      staleCount: rows.filter((row) => row.stale === true).length,
+      totalItems: rows.length,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function booleanOrNull(value: unknown): boolean | null {
+  return typeof value === "boolean" ? value : null;
+}
+
+function exportItemLabel(item: Record<string, unknown>): string {
+  const name = typeof item.name === "string" ? item.name.trim() : "";
+  const itemId = typeof item.item_id === "string" ? item.item_id.trim() : "";
+  const cardId = typeof item.card_id === "string" ? item.card_id.trim() : "";
+  if (name !== "" && itemId !== "" && name !== itemId) {
+    return `${name} (${itemId})`;
+  }
+  for (const value of [name, itemId, cardId]) {
+    if (value !== "") {
+      return value;
+    }
+  }
+  return "unknown item";
+}
+
+function reviewValue(value: boolean | null): string {
+  if (value === null) {
+    return "unknown";
+  }
+  return value ? "yes" : "no";
 }
 
 function ReferenceMetadataDetails({ assetType, metadata }: { assetType: string; metadata: Record<string, unknown> }) {

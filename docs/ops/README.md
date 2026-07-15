@@ -268,6 +268,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board export stale duplicate status polish review template | [230-reference-board-export-stale-duplicate-status-polish-review-template.md](230-reference-board-export-stale-duplicate-status-polish-review-template.md) |
 | Reference board backup retention plan | [231-reference-board-backup-retention-plan.md](231-reference-board-backup-retention-plan.md) |
 | Reference board backup retention review template | [232-reference-board-backup-retention-review-template.md](232-reference-board-backup-retention-review-template.md) |
+| Reference board export review UI polish | [233-reference-board-export-review-ui-polish.md](233-reference-board-export-review-ui-polish.md) |
+| Reference board export review UI polish review template | [234-reference-board-export-review-ui-polish-review-template.md](234-reference-board-export-review-ui-polish-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

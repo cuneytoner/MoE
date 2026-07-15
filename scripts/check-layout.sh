@@ -506,6 +506,8 @@ required_paths=(
   "docs/ops/230-reference-board-export-stale-duplicate-status-polish-review-template.md"
   "docs/ops/231-reference-board-backup-retention-plan.md"
   "docs/ops/232-reference-board-backup-retention-review-template.md"
+  "docs/ops/233-reference-board-export-review-ui-polish.md"
+  "docs/ops/234-reference-board-export-review-ui-polish-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

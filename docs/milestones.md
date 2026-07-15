@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.53 Reference Board Backup Retention Plan.
-- Next planned: M34.54 Reference Board Export Review UI Polish.
+- Latest completed: M34.54 Reference Board Export Review UI Polish.
+- Next planned: M34.55 Reference Board Backup Retention CLI Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -89,8 +89,9 @@ Current media milestone status:
 - M34.51 Reference Board Repair CLI Summary Review DONE
 - M34.52 Reference Board Export Stale/Duplicate Status Polish DONE
 - M34.53 Reference Board Backup Retention Plan DONE
-- M34.54 Reference Board Export Review UI Polish PLANNED
+- M34.54 Reference Board Export Review UI Polish DONE
 - M34.55 Reference Board Backup Retention CLI Plan PLANNED
+- M34.56 Reference Board Backup Retention CLI Implementation PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2005,7 +2006,7 @@ Goals:
 
 ## Milestone 34.54: Reference Board Export Review UI Polish
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Polish dashboard review display for exported stale and duplicate status.
@@ -2019,6 +2020,15 @@ Status: PLANNED
 Goals:
 - Plan a guarded CLI interface for backup retention reports and future cleanup.
 - Keep deletion unimplemented until CLI plan and review are complete.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.56: Reference Board Backup Retention CLI Implementation
+
+Status: PLANNED
+
+Goals:
+- Implement guarded backup retention CLI behavior after the retention CLI plan.
+- Keep cleanup explicit, reviewed, and free of default destructive actions.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 35.0: Rigging Pipeline

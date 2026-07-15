@@ -42,6 +42,8 @@ M34.51 confirms the repair CLI safety boundaries and remaining gaps.
 
 M34.53 plans backup retention without deleting backups yet.
 
+M34.54 keeps review status UI read-only with no repair controls.
+
 ## Current Safety Baseline
 
 The current baseline includes:

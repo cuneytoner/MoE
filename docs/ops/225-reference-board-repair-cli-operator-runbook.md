@@ -99,6 +99,8 @@ BOARD_ID=api-test-board MODE=mark-stale-items APPLY=1 make reference-board-store
 
 After repair or stale marking, use JSON and Markdown exports to review item status.
 
+Dashboard export review can be used as a read-only status check after export.
+
 ## Regression Flow
 
 ```bash
