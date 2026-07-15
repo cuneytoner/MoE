@@ -103,7 +103,8 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.54 Reference Board Export Review UI Polish DONE
 - M35.0 Reference Board Phase Closure and M35 Roadmap DONE
 - M35.1 3D / Blender Parametric Pipeline Foundation DONE
-- M35.2 Pergola Parametric Blender Prototype Plan PLANNED
+- M35.2 Generic Parametric Blender Prototype Plan DONE
+- M35.3 Blender Runtime Output Safety Plan PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

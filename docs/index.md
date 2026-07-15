@@ -238,6 +238,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Phase Closure Review Template](ops/236-reference-board-phase-closure-review-template.md)
 - [3D Blender Parametric Pipeline Foundation](ops/237-3d-blender-parametric-pipeline-foundation.md)
 - [3D Blender Parametric Pipeline Foundation Review Template](ops/238-3d-blender-parametric-pipeline-foundation-review-template.md)
+- [Generic Parametric Blender Prototype Plan](ops/239-generic-parametric-blender-prototype-plan.md)
+- [Generic Parametric Blender Prototype Review Template](ops/240-generic-parametric-blender-prototype-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

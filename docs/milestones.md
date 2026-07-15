@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.1 3D / Blender Parametric Pipeline Foundation.
-- Next planned: M35.2 Pergola Parametric Blender Prototype Plan.
+- Latest completed: M35.2 Generic Parametric Blender Prototype Plan.
+- Next planned: M35.3 Blender Runtime Output Safety Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -92,9 +92,10 @@ Current media milestone status:
 - M34.54 Reference Board Export Review UI Polish DONE
 - M35.0 Reference Board Phase Closure and M35 Roadmap DONE
 - M35.1 3D / Blender Parametric Pipeline Foundation DONE
-- M35.2 Pergola Parametric Blender Prototype Plan PLANNED
+- M35.2 Generic Parametric Blender Prototype Plan DONE
 - M35.3 Blender Runtime Output Safety Plan PLANNED
-- M35.4 First Parametric Blender Script Skeleton PLANNED
+- M35.4 Generic Parametric Blender Script Skeleton PLANNED
+- M35.5 Generic 3D Parameter Config Draft PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2047,15 +2048,25 @@ Goals:
 - Avoid Blender execution or 3D asset generation in this milestone.
 - Start future work with simple parametric structures such as pergola.
 
-## Milestone 35.2: Pergola Parametric Blender Prototype Plan
+## Milestone 35.2: Generic Parametric Blender Prototype Plan
+
+Status: DONE
+
+Goals:
+- Plan the first generic deterministic Blender prototype pipeline.
+- Define coordinates, parameter schema, object hierarchy, runtime output plan, metadata plan, and validation plan.
+- Keep the pipeline reusable across architecture, product, furniture, outdoor structure, and simple mechanical object categories.
+- Avoid Blender execution and generated 3D assets in this milestone.
+
+## Milestone 35.3: Blender Runtime Output Safety Plan
 
 Status: PLANNED
 
 Goals:
-- Plan the first pergola parametric Blender prototype.
-- Define dimensions, posts, beams, rafters, roof sheet placeholders, and side panel placeholders.
-- Keep output visual/reference-only.
-- Avoid real Blender generation until a later guarded milestone.
+- Plan safe runtime output handling for Blender-generated assets.
+- Keep `.blend`/`.glb`/`.obj`/`.fbx` out of git.
+- Define runtime folders, metadata sidecars, cleanup guidance, and Git safety checks.
+- Avoid real generation until a later guarded milestone.
 
 ## Milestone 36.0: Animation Pipeline
 

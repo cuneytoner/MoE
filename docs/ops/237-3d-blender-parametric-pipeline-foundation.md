@@ -8,6 +8,7 @@ Define the safe foundation for deterministic Blender-based 3D generation.
 
 - M34 reference board phase is closed.
 - M35 starts 3D / Blender parametric pipeline work.
+- M35.2 defines the generic parametric Blender prototype plan and keeps project-specific examples separate from the core architecture.
 - This milestone does not generate 3D assets.
 - This milestone does not run Blender.
 
@@ -147,8 +148,8 @@ Plan read-only dashboard cards later:
 
 ## Future Milestones
 
-- M35.2 Pergola Parametric Blender Prototype Plan
+- M35.2 Generic Parametric Blender Prototype Plan
 - M35.3 Blender Runtime Output Safety Plan
-- M35.4 First Parametric Blender Script Skeleton
-- M35.5 3D Metadata Sidecar Plan
-- M35.6 3D Output Cards Plan
+- M35.4 Generic Parametric Blender Script Skeleton
+- M35.5 Generic 3D Parameter Config Draft
+- M35.6 First Dry-Run Blender Script Review

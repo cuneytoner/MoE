@@ -512,6 +512,8 @@ required_paths=(
   "docs/ops/236-reference-board-phase-closure-review-template.md"
   "docs/ops/237-3d-blender-parametric-pipeline-foundation.md"
   "docs/ops/238-3d-blender-parametric-pipeline-foundation-review-template.md"
+  "docs/ops/239-generic-parametric-blender-prototype-plan.md"
+  "docs/ops/240-generic-parametric-blender-prototype-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

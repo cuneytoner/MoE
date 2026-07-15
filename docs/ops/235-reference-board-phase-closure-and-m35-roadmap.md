@@ -69,6 +69,8 @@ M35.0 starts the next phase.
 
 M35.1 starts the 3D / Blender parametric pipeline foundation.
 
+M35.2 proceeds as a generic Blender pipeline plan rather than a pergola-specific phase.
+
 M35.1 should begin one of these:
 
 - 3D / Blender Parametric Pipeline Foundation
@@ -88,11 +90,11 @@ Reference boards now provide reviewable visual/source context, so the next value
 
 - M35.0 Reference Board Phase Closure and M35 Roadmap
 - M35.1 3D / Blender Parametric Pipeline Foundation
-- M35.2 Pergola Parametric Blender Prototype Plan
+- M35.2 Generic Parametric Blender Prototype Plan
 - M35.3 Blender Runtime Output Safety Plan
-- M35.4 First Parametric Blender Script Skeleton
-- M35.5 3D Export Format Plan
-- M35.6 3D Dashboard Output Cards Plan
+- M35.4 Generic Parametric Blender Script Skeleton
+- M35.5 Generic 3D Parameter Config Draft
+- M35.6 First Dry-Run Blender Script Review
 
 ## Stop Conditions
 
