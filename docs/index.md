@@ -240,6 +240,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [3D Blender Parametric Pipeline Foundation Review Template](ops/238-3d-blender-parametric-pipeline-foundation-review-template.md)
 - [Generic Parametric Blender Prototype Plan](ops/239-generic-parametric-blender-prototype-plan.md)
 - [Generic Parametric Blender Prototype Review Template](ops/240-generic-parametric-blender-prototype-review-template.md)
+- [Blender Runtime Output Safety Plan](ops/241-blender-runtime-output-safety-plan.md)
+- [Blender Runtime Output Safety Review Template](ops/242-blender-runtime-output-safety-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

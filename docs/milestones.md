@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.2 Generic Parametric Blender Prototype Plan.
-- Next planned: M35.3 Blender Runtime Output Safety Plan.
+- Latest completed: M35.3 Blender Runtime Output Safety Plan.
+- Next planned: M35.4 Generic Parametric Blender Script Skeleton.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -93,9 +93,10 @@ Current media milestone status:
 - M35.0 Reference Board Phase Closure and M35 Roadmap DONE
 - M35.1 3D / Blender Parametric Pipeline Foundation DONE
 - M35.2 Generic Parametric Blender Prototype Plan DONE
-- M35.3 Blender Runtime Output Safety Plan PLANNED
+- M35.3 Blender Runtime Output Safety Plan DONE
 - M35.4 Generic Parametric Blender Script Skeleton PLANNED
 - M35.5 Generic 3D Parameter Config Draft PLANNED
+- M35.6 First Dry-Run Blender Script Review PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2060,13 +2061,23 @@ Goals:
 
 ## Milestone 35.3: Blender Runtime Output Safety Plan
 
+Status: DONE
+
+Goals:
+- Plan safe runtime output handling for future Blender-generated assets.
+- Keep generated 3D binaries and previews out of git.
+- Define runtime output root, metadata sidecar requirements, generation guards, path safety, dashboard boundaries, and validation checks.
+- Avoid Blender execution and generated 3D assets in this milestone.
+
+## Milestone 35.4: Generic Parametric Blender Script Skeleton
+
 Status: PLANNED
 
 Goals:
-- Plan safe runtime output handling for Blender-generated assets.
-- Keep `.blend`/`.glb`/`.obj`/`.fbx` out of git.
-- Define runtime folders, metadata sidecars, cleanup guidance, and Git safety checks.
-- Avoid real generation until a later guarded milestone.
+- Add a source-only Blender script skeleton.
+- Keep it dry-run/plan-only by default.
+- Do not generate assets unless a later guarded milestone enables it.
+- Preserve runtime/source separation.
 
 ## Milestone 36.0: Animation Pipeline
 

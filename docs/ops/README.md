@@ -276,6 +276,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | 3D Blender parametric pipeline foundation review template | [238-3d-blender-parametric-pipeline-foundation-review-template.md](238-3d-blender-parametric-pipeline-foundation-review-template.md) |
 | Generic parametric Blender prototype plan | [239-generic-parametric-blender-prototype-plan.md](239-generic-parametric-blender-prototype-plan.md) |
 | Generic parametric Blender prototype review template | [240-generic-parametric-blender-prototype-review-template.md](240-generic-parametric-blender-prototype-review-template.md) |
+| Blender runtime output safety plan | [241-blender-runtime-output-safety-plan.md](241-blender-runtime-output-safety-plan.md) |
+| Blender runtime output safety review template | [242-blender-runtime-output-safety-review-template.md](242-blender-runtime-output-safety-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

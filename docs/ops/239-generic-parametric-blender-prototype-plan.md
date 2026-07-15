@@ -154,6 +154,8 @@ Future sidecar should include:
 
 ## Runtime Output Plan
 
+M35.3 defines runtime output and generation guard safety for future generic prototypes.
+
 Future outputs should go under:
 
 ```text

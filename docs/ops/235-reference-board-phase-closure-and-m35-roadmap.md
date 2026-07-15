@@ -71,6 +71,8 @@ M35.1 starts the 3D / Blender parametric pipeline foundation.
 
 M35.2 proceeds as a generic Blender pipeline plan rather than a pergola-specific phase.
 
+M35.3 keeps 3D generation guarded and runtime-only before implementation.
+
 M35.1 should begin one of these:
 
 - 3D / Blender Parametric Pipeline Foundation

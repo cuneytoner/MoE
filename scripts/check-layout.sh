@@ -514,6 +514,8 @@ required_paths=(
   "docs/ops/238-3d-blender-parametric-pipeline-foundation-review-template.md"
   "docs/ops/239-generic-parametric-blender-prototype-plan.md"
   "docs/ops/240-generic-parametric-blender-prototype-review-template.md"
+  "docs/ops/241-blender-runtime-output-safety-plan.md"
+  "docs/ops/242-blender-runtime-output-safety-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

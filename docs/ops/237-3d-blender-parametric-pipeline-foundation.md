@@ -9,6 +9,7 @@ Define the safe foundation for deterministic Blender-based 3D generation.
 - M34 reference board phase is closed.
 - M35 starts 3D / Blender parametric pipeline work.
 - M35.2 defines the generic parametric Blender prototype plan and keeps project-specific examples separate from the core architecture.
+- M35.3 defines runtime output safety before any Blender execution.
 - This milestone does not generate 3D assets.
 - This milestone does not run Blender.
 
