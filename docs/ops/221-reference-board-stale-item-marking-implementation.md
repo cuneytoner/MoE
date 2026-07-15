@@ -12,6 +12,8 @@ The mode detects stale reference board items and marks board JSON entries only w
 
 M34.49 adds dedicated regression coverage for `MODE=mark-stale-items`.
 
+M34.50 documents safe operator flow for stale item marking.
+
 ## Supported Mode
 
 Supported stale marking mode:

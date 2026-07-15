@@ -10,6 +10,8 @@ MODE=mark-stale-items
 
 The regression creates one temporary fixture board, verifies dry-run reporting, verifies `APPLY=1` is rejected without backup, creates a backup, applies stale marks, validates the marked board, checks mark-not-remove behavior, and cleans up.
 
+M34.50 includes stale item regression in the standard regression flow.
+
 ## Test Fixture Behavior
 
 The fixture board is created at:

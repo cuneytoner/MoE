@@ -14,6 +14,8 @@ M34.47 adds dedicated regression coverage for `MODE=remove-duplicate-items`.
 
 M34.48 adds stale item marking as a separate repair mode. Duplicate repair remains separate from stale item marking.
 
+M34.50 documents safe operator flow for duplicate repair.
+
 ## Supported Mode
 
 Supported duplicate repair mode:

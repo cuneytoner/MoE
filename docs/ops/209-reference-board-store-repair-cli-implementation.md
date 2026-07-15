@@ -18,6 +18,8 @@ M34.48 extends the repair CLI with `mark-stale-items` mode.
 
 M34.49 regression covers the stale marking mode added after duplicate repair.
 
+M34.50 adds an operator runbook for safe manual use of repair CLI modes.
+
 ## Dry-Run Default
 
 Default behavior:

@@ -36,6 +36,8 @@ M34.48 adds guarded stale item marking with `APPLY=1` and backup requirement.
 
 M34.49 adds regression coverage for guarded stale item marking.
 
+M34.50 adds an operator runbook tying together validation, backup, repair, and regressions.
+
 ## Current Safety Baseline
 
 The current baseline includes:

@@ -498,6 +498,8 @@ required_paths=(
   "docs/ops/222-reference-board-stale-item-marking-review-template.md"
   "docs/ops/223-reference-board-stale-item-regression.md"
   "docs/ops/224-reference-board-stale-item-regression-review-template.md"
+  "docs/ops/225-reference-board-repair-cli-operator-runbook.md"
+  "docs/ops/226-reference-board-repair-cli-operator-runbook-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"
