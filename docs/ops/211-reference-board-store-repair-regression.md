@@ -8,6 +8,8 @@ The regression uses a temporary fixture board and verifies dry-run behavior, bac
 
 M34.44 will guide future duplicate-item regression coverage.
 
+M34.47 adds a separate duplicate item repair regression.
+
 ## Test Fixture Behavior
 
 The script creates one temporary board:

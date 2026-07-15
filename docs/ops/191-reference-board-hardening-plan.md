@@ -30,6 +30,8 @@ M34.44 plans duplicate item handling without touching source assets.
 
 M34.46 adds guarded duplicate item repair with `APPLY=1` and backup requirement.
 
+M34.47 adds regression coverage for guarded duplicate item repair.
+
 ## Current Safety Baseline
 
 The current baseline includes:

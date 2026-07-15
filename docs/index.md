@@ -218,6 +218,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Stale Item Handling Review Template](ops/216-reference-board-stale-item-handling-review-template.md)
 - [Reference Board Duplicate Item Repair Implementation](ops/217-reference-board-duplicate-item-repair-implementation.md)
 - [Reference Board Duplicate Item Repair Review Template](ops/218-reference-board-duplicate-item-repair-review-template.md)
+- [Reference Board Duplicate Item Repair Regression](ops/219-reference-board-duplicate-item-repair-regression.md)
+- [Reference Board Duplicate Item Repair Regression Review Template](ops/220-reference-board-duplicate-item-repair-regression-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

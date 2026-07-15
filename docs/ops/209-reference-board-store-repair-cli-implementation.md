@@ -12,6 +12,8 @@ Duplicate item removal is intentionally not implemented in M34.42 and is planned
 
 M34.46 extends the repair CLI with `remove-duplicate-items` mode.
 
+M34.47 regression covers the duplicate repair mode added after repair-schema.
+
 ## Dry-Run Default
 
 Default behavior:

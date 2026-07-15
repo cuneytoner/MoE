@@ -10,6 +10,8 @@ MODE=remove-duplicate-items
 
 The mode removes only later duplicate board item entries from the board JSON when `APPLY=1` and an existing backup is present.
 
+M34.47 adds dedicated regression coverage for `MODE=remove-duplicate-items`.
+
 ## Supported Mode
 
 Supported duplicate repair mode:
@@ -136,7 +138,6 @@ BOARD_ID=api-test-board MODE=remove-duplicate-items APPLY=1 make reference-board
 
 ## What Is Not Implemented Yet
 
-- duplicate repair regression
 - stale item marking
 - stale item removal
 - source asset repair

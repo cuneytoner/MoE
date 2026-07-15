@@ -8,6 +8,8 @@ M34.44 is documentation only. It does not implement duplicate deletion, repair s
 
 M34.46 implements `MODE=remove-duplicate-items`.
 
+M34.47 verifies duplicate repair behavior with a controlled fixture.
+
 ## Current Behavior
 
 - Validate CLI detects duplicate `item_id` and duplicate `card_id` if implemented.
