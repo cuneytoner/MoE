@@ -10,6 +10,8 @@ M34.44 will guide future duplicate-item regression coverage.
 
 M34.47 adds a separate duplicate item repair regression.
 
+M34.49 adds a separate stale item marking regression.
+
 ## Test Fixture Behavior
 
 The script creates one temporary board:

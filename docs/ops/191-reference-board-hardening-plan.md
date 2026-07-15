@@ -34,6 +34,8 @@ M34.47 adds regression coverage for guarded duplicate item repair.
 
 M34.48 adds guarded stale item marking with `APPLY=1` and backup requirement.
 
+M34.49 adds regression coverage for guarded stale item marking.
+
 ## Current Safety Baseline
 
 The current baseline includes:

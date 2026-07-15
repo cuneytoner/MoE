@@ -147,11 +147,59 @@ def validate_item(
         add_finding(target_board_id, file_path, "error", "invalid_item", f"{item_label} must be an object")
         return
 
+    stale_marker_valid = (
+        item.get("stale") is True
+        and isinstance(item.get("stale_reason"), str)
+        and bool(item.get("stale_reason"))
+        and isinstance(item.get("stale_checked_at"), str)
+        and bool(item.get("stale_checked_at"))
+    )
+
     item_id = check_string(item, "item_id", target_board_id, file_path)
     card_id = check_string(item, "card_id", target_board_id, file_path)
     asset_type = check_string(item, "asset_type", target_board_id, file_path)
     check_string(item, "name", target_board_id, file_path)
-    relative_runtime_path = check_string(item, "relative_runtime_path", target_board_id, file_path)
+    if stale_marker_valid:
+        raw_relative_runtime_path = item.get("relative_runtime_path")
+        if raw_relative_runtime_path is None:
+            add_finding(
+                target_board_id,
+                file_path,
+                "warning",
+                "stale_missing_relative_runtime_path",
+                f"{item_label}.relative_runtime_path is missing on a marked stale item",
+            )
+            relative_runtime_path = None
+        elif not isinstance(raw_relative_runtime_path, str):
+            add_finding(
+                target_board_id,
+                file_path,
+                "warning",
+                "stale_invalid_relative_runtime_path",
+                f"{item_label}.relative_runtime_path is not a string on a marked stale item",
+            )
+            relative_runtime_path = None
+        elif not raw_relative_runtime_path:
+            add_finding(
+                target_board_id,
+                file_path,
+                "warning",
+                "stale_empty_relative_runtime_path",
+                f"{item_label}.relative_runtime_path is empty on a marked stale item",
+            )
+            relative_runtime_path = None
+        else:
+            relative_runtime_path = raw_relative_runtime_path
+            if has_host_path(relative_runtime_path):
+                add_finding(
+                    target_board_id,
+                    file_path,
+                    "warning",
+                    "stale_host_path_relative_runtime_path",
+                    f"{item_label}.relative_runtime_path contains an unsafe host path on a marked stale item",
+                )
+    else:
+        relative_runtime_path = check_string(item, "relative_runtime_path", target_board_id, file_path)
     selected_reason = check_string(item, "selected_reason", target_board_id, file_path)
     check_string(item, "safety_label", target_board_id, file_path)
     check_string(item, "added_at", target_board_id, file_path)
@@ -168,10 +216,11 @@ def validate_item(
         add_finding(target_board_id, file_path, "warning", "unknown_asset_type", f"unknown asset_type: {asset_type}")
     if relative_runtime_path:
         parts = Path(relative_runtime_path).parts
+        severity = "warning" if stale_marker_valid else "error"
         if Path(relative_runtime_path).is_absolute() or relative_runtime_path.startswith(("~", "/")):
-            add_finding(target_board_id, file_path, "error", "absolute_relative_runtime_path", "relative_runtime_path must not be absolute")
+            add_finding(target_board_id, file_path, severity, "absolute_relative_runtime_path", "relative_runtime_path must not be absolute")
         if ".." in parts:
-            add_finding(target_board_id, file_path, "error", "traversal_relative_runtime_path", "relative_runtime_path must not contain traversal")
+            add_finding(target_board_id, file_path, severity, "traversal_relative_runtime_path", "relative_runtime_path must not contain traversal")
     if selected_reason and len(selected_reason) > SELECTED_REASON_MAX_LENGTH:
         add_finding(target_board_id, file_path, "error", "selected_reason_too_long", "selected_reason exceeds limit")
     check_tags(item.get("tags"), target_board_id, file_path, item_label)

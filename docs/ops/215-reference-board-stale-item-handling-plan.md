@@ -36,6 +36,8 @@ Default behavior should preserve board items and report stale references. Any fu
 
 M34.48 implements `MODE=mark-stale-items` with mark-not-remove behavior.
 
+M34.49 verifies stale marking behavior with a controlled fixture.
+
 ## Non-Goals
 
 - no stale item implementation in this milestone

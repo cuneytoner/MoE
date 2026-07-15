@@ -258,6 +258,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board duplicate item repair regression review template | [220-reference-board-duplicate-item-repair-regression-review-template.md](220-reference-board-duplicate-item-repair-regression-review-template.md) |
 | Reference board stale item marking implementation | [221-reference-board-stale-item-marking-implementation.md](221-reference-board-stale-item-marking-implementation.md) |
 | Reference board stale item marking review template | [222-reference-board-stale-item-marking-review-template.md](222-reference-board-stale-item-marking-review-template.md) |
+| Reference board stale item regression | [223-reference-board-stale-item-regression.md](223-reference-board-stale-item-regression.md) |
+| Reference board stale item regression review template | [224-reference-board-stale-item-regression-review-template.md](224-reference-board-stale-item-regression-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

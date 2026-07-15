@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.48 Reference Board Stale Item Marking Implementation.
-- Next planned: M34.49 Reference Board Stale Item Regression.
+- Latest completed: M34.49 Reference Board Stale Item Regression.
+- Next planned: M34.50 Reference Board Repair CLI Operator Runbook.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -84,8 +84,9 @@ Current media milestone status:
 - M34.46 Reference Board Duplicate Item Repair Implementation DONE
 - M34.47 Reference Board Duplicate Item Repair Regression DONE
 - M34.48 Reference Board Stale Item Marking Implementation DONE
-- M34.49 Reference Board Stale Item Regression PLANNED
+- M34.49 Reference Board Stale Item Regression DONE
 - M34.50 Reference Board Repair CLI Operator Runbook PLANNED
+- M34.51 Reference Board Repair CLI Summary Review PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1955,10 +1956,10 @@ Goals:
 
 ## Milestone 34.49: Reference Board Stale Item Regression
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Add regression coverage for future stale item marking behavior.
+- Add regression coverage for stale item marking behavior.
 - Keep stale item regression scoped to controlled runtime test fixtures.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
@@ -1969,6 +1970,15 @@ Status: PLANNED
 Goals:
 - Document the operator sequence for validate, backup, dry-run repair, apply, and post-repair validation.
 - Keep repair operations board-scoped and explicit.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.51: Reference Board Repair CLI Summary Review
+
+Status: PLANNED
+
+Goals:
+- Summarize validate, backup, schema repair, duplicate repair, and stale marking coverage.
+- Identify remaining operator hardening gaps after repair regressions.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 35.0: Rigging Pipeline

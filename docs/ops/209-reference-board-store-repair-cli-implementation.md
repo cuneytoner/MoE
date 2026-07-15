@@ -16,6 +16,8 @@ M34.47 regression covers the duplicate repair mode added after repair-schema.
 
 M34.48 extends the repair CLI with `mark-stale-items` mode.
 
+M34.49 regression covers the stale marking mode added after duplicate repair.
+
 ## Dry-Run Default
 
 Default behavior:

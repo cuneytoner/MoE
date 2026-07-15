@@ -10,6 +10,8 @@ MODE=mark-stale-items
 
 The mode detects stale reference board items and marks board JSON entries only when `APPLY=1` and an existing backup is present.
 
+M34.49 adds dedicated regression coverage for `MODE=mark-stale-items`.
+
 ## Supported Mode
 
 Supported stale marking mode:
