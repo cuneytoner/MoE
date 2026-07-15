@@ -14,6 +14,8 @@ M34.42 implements the first repair-schema CLI slice.
 
 M34.43 covers repair-schema with regression fixture.
 
+M34.44 plans future duplicate item repair behavior as a separate mode.
+
 ## Proposed Script
 
 Future script:

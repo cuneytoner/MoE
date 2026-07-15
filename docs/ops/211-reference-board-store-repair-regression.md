@@ -6,6 +6,8 @@ M34.43 adds `scripts/reference-board-store-repair-regression.sh`, a controlled r
 
 The regression uses a temporary fixture board and verifies dry-run behavior, backup-required behavior, backup creation, guarded `APPLY=1` repair, validation after repair, and cleanup.
 
+M34.44 will guide future duplicate-item regression coverage.
+
 ## Test Fixture Behavior
 
 The script creates one temporary board:

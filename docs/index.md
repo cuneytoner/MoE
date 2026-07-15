@@ -212,6 +212,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Store Repair CLI Review Template](ops/210-reference-board-store-repair-cli-review-template.md)
 - [Reference Board Store Repair Regression](ops/211-reference-board-store-repair-regression.md)
 - [Reference Board Store Repair Regression Review Template](ops/212-reference-board-store-repair-regression-review-template.md)
+- [Reference Board Duplicate Item Repair Plan](ops/213-reference-board-duplicate-item-repair-plan.md)
+- [Reference Board Duplicate Item Repair Review Template](ops/214-reference-board-duplicate-item-repair-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

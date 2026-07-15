@@ -8,6 +8,8 @@ Only `repair-schema` mode is supported. The script is dry-run by default and doe
 
 M34.43 adds dedicated repair regression coverage with a temporary fixture board.
 
+Duplicate item removal is intentionally not implemented in M34.42 and is planned separately in M34.44.
+
 ## Dry-Run Default
 
 Default behavior:

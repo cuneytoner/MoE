@@ -26,6 +26,8 @@ M34.42 introduces guarded `APPLY=1` repair behavior.
 
 M34.43 adds repair regression coverage.
 
+M34.44 plans duplicate item handling without touching source assets.
+
 ## Current Safety Baseline
 
 The current baseline includes:

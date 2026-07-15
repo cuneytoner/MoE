@@ -486,6 +486,8 @@ required_paths=(
   "docs/ops/210-reference-board-store-repair-cli-review-template.md"
   "docs/ops/211-reference-board-store-repair-regression.md"
   "docs/ops/212-reference-board-store-repair-regression-review-template.md"
+  "docs/ops/213-reference-board-duplicate-item-repair-plan.md"
+  "docs/ops/214-reference-board-duplicate-item-repair-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"
