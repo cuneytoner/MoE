@@ -10,6 +10,8 @@ Backup should be run before `APPLY=1` repair-schema.
 
 M34.43 uses the backup CLI before `APPLY=1` repair.
 
+M34.53 plans future backup retention and cleanup policy.
+
 ## Required BOARD_ID
 
 `BOARD_ID` is required.

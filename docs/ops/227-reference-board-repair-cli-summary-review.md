@@ -88,6 +88,8 @@ Exports should clearly surface duplicate/stale status before any dashboard polis
 
 M34.52 surfaces stale/duplicate status in exports for human review.
 
+M34.53 addresses the remaining backup retention gap as documentation-only policy.
+
 ## Non-Goals
 
 - no code changes

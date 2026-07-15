@@ -40,6 +40,8 @@ M34.50 adds an operator runbook tying together validation, backup, repair, and r
 
 M34.51 confirms the repair CLI safety boundaries and remaining gaps.
 
+M34.53 plans backup retention without deleting backups yet.
+
 ## Current Safety Baseline
 
 The current baseline includes:

@@ -141,6 +141,8 @@ Backup filename pattern:
 reference-board-{board_id}-{YYYYMMDD-HHMMSS}.json.bak
 ```
 
+Backup files can accumulate. Retention is planned separately in M34.53, and cleanup must not be manual unless reviewed.
+
 ## Stop Conditions
 
 Do not apply repair if:
