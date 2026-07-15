@@ -30,9 +30,11 @@ Duplicate removal remains separate from stale item handling.
 
 ## Future Strategy
 
-A future milestone may add stale item marking as a separate repair mode.
+M34.48 adds stale item marking as a separate repair mode.
 
 Default behavior should preserve board items and report stale references. Any future marking should write only board JSON after explicit review, backup, and `APPLY=1`.
+
+M34.48 implements `MODE=mark-stale-items` with mark-not-remove behavior.
 
 ## Non-Goals
 

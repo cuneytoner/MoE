@@ -256,6 +256,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board duplicate item repair review template | [218-reference-board-duplicate-item-repair-review-template.md](218-reference-board-duplicate-item-repair-review-template.md) |
 | Reference board duplicate item repair regression | [219-reference-board-duplicate-item-repair-regression.md](219-reference-board-duplicate-item-repair-regression.md) |
 | Reference board duplicate item repair regression review template | [220-reference-board-duplicate-item-repair-regression-review-template.md](220-reference-board-duplicate-item-repair-regression-review-template.md) |
+| Reference board stale item marking implementation | [221-reference-board-stale-item-marking-implementation.md](221-reference-board-stale-item-marking-implementation.md) |
+| Reference board stale item marking review template | [222-reference-board-stale-item-marking-review-template.md](222-reference-board-stale-item-marking-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

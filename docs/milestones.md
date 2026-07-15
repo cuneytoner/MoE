@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.47 Reference Board Duplicate Item Repair Regression.
-- Next planned: M34.48 Reference Board Stale Item Marking Implementation.
+- Latest completed: M34.48 Reference Board Stale Item Marking Implementation.
+- Next planned: M34.49 Reference Board Stale Item Regression.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -83,8 +83,9 @@ Current media milestone status:
 - M34.45 Reference Board Stale Item Handling Plan DONE
 - M34.46 Reference Board Duplicate Item Repair Implementation DONE
 - M34.47 Reference Board Duplicate Item Repair Regression DONE
-- M34.48 Reference Board Stale Item Marking Implementation PLANNED
+- M34.48 Reference Board Stale Item Marking Implementation DONE
 - M34.49 Reference Board Stale Item Regression PLANNED
+- M34.50 Reference Board Repair CLI Operator Runbook PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1945,10 +1946,10 @@ Goals:
 
 ## Milestone 34.48: Reference Board Stale Item Marking Implementation
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Implement stale item marking only after the stale item handling plan is reviewed.
+- Implement guarded `mark-stale-items` repair mode with dry-run default.
 - Keep stale item deletion, source asset recreation, and metadata invention out of scope.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
@@ -1959,6 +1960,15 @@ Status: PLANNED
 Goals:
 - Add regression coverage for future stale item marking behavior.
 - Keep stale item regression scoped to controlled runtime test fixtures.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.50: Reference Board Repair CLI Operator Runbook
+
+Status: PLANNED
+
+Goals:
+- Document the operator sequence for validate, backup, dry-run repair, apply, and post-repair validation.
+- Keep repair operations board-scoped and explicit.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 35.0: Rigging Pipeline

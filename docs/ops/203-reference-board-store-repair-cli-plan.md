@@ -18,6 +18,8 @@ M34.44 plans future duplicate item repair behavior as a separate mode.
 
 M34.46 implements the duplicate item repair mode planned earlier.
 
+M34.48 implements the stale item marking mode planned earlier.
+
 ## Proposed Script
 
 Future script:

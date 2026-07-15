@@ -494,6 +494,8 @@ required_paths=(
   "docs/ops/218-reference-board-duplicate-item-repair-review-template.md"
   "docs/ops/219-reference-board-duplicate-item-repair-regression.md"
   "docs/ops/220-reference-board-duplicate-item-repair-regression-review-template.md"
+  "docs/ops/221-reference-board-stale-item-marking-implementation.md"
+  "docs/ops/222-reference-board-stale-item-marking-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

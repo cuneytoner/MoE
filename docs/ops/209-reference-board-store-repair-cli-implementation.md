@@ -4,7 +4,7 @@
 
 M34.42 adds `scripts/reference-board-store-repair.sh`, the first guarded write-capable reference board store tool.
 
-Only `repair-schema` mode is supported. The script is dry-run by default and does not modify board files unless `APPLY=1` is set and an existing backup is found.
+The script is dry-run by default and does not modify board files unless `APPLY=1` is set and an existing backup is found.
 
 M34.43 adds dedicated repair regression coverage with a temporary fixture board.
 
@@ -13,6 +13,8 @@ Duplicate item removal is intentionally not implemented in M34.42 and is planned
 M34.46 extends the repair CLI with `remove-duplicate-items` mode.
 
 M34.47 regression covers the duplicate repair mode added after repair-schema.
+
+M34.48 extends the repair CLI with `mark-stale-items` mode.
 
 ## Dry-Run Default
 
@@ -63,6 +65,7 @@ Current supported modes:
 
 - `repair-schema`
 - `remove-duplicate-items`
+- `mark-stale-items`
 
 Stale item deletion, source asset repair, metadata repair, restore, or all-board repair is not implemented.
 
@@ -95,7 +98,7 @@ The script does not:
 - invent source assets
 - invent metadata
 - remove items
-- mark stale items
+- delete stale items
 
 ## Atomic Write Behavior
 
@@ -196,4 +199,3 @@ BOARD_ID=api-test-board APPLY=1 make reference-board-store-repair
 - all-board repair
 - dashboard repair button
 - backend repair endpoint
-- repair regression suite

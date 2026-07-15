@@ -27,6 +27,7 @@ BOARD_ID_MAX_LENGTH = 80
 BOARD_ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
 
 runtime_dir = Path(os.environ["REFERENCE_BOARD_RUNTIME_DIR"])
+runtime_root = Path(os.environ.get("RUNTIME_ROOT", "/home/cuneyt/MoE/runtime"))
 board_id = os.environ["BOARD_ID"].strip()
 mode = os.environ["MODE"].strip()
 apply_requested = os.environ["APPLY"] == "1"
@@ -47,6 +48,19 @@ duplicate_groups: list[dict[str, Any]] = []
 proposed_removals: list[dict[str, Any]] = []
 applied_removals: list[dict[str, Any]] = []
 skipped_removals: list[dict[str, Any]] = []
+stale_checked_at = created_at
+stale_check_limited = False
+stale_items: list[dict[str, Any]] = []
+proposed_stale_marks: list[dict[str, Any]] = []
+applied_stale_marks: list[dict[str, Any]] = []
+skipped_stale_marks: list[dict[str, Any]] = []
+
+ALLOWLISTED_RUNTIME_ROOTS = (
+    runtime_root / "media" / "outputs" / "images",
+    runtime_root / "pergola" / "drawings",
+    runtime_root / "drawings",
+)
+SUPPORTED_OUTPUT_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".svg"}
 
 
 def add_finding(severity: str, code: str, detail: str) -> None:
@@ -77,6 +91,13 @@ def write_report(exit_code: int) -> None:
         "proposed_removals": proposed_removals,
         "applied_removals": applied_removals,
         "skipped_removals": skipped_removals,
+        "stale_items": stale_items,
+        "stale_reason": stale_items[0]["stale_reason"] if stale_items else None,
+        "stale_checked_at": stale_checked_at,
+        "stale_check_limited": stale_check_limited,
+        "proposed_stale_marks": proposed_stale_marks,
+        "applied_stale_marks": applied_stale_marks,
+        "skipped_stale_marks": skipped_stale_marks,
         "safety_flags": {
             "source_assets_modified": False,
             "metadata_modified": False,
@@ -225,6 +246,133 @@ def collect_duplicate_removals(items: list[Any]) -> set[int]:
     return removals
 
 
+def is_relative_path_safe(value: str) -> bool:
+    path = Path(value)
+    if path.is_absolute() or value.startswith(("~", "/")):
+        return False
+    return ".." not in path.parts
+
+
+def is_under_path(path: Path, root: Path) -> bool:
+    try:
+        path.resolve(strict=False).relative_to(root.resolve(strict=False))
+        return True
+    except (OSError, ValueError):
+        return False
+
+
+def is_under_allowlisted_runtime_root(path: Path) -> bool:
+    return any(is_under_path(path, root) for root in ALLOWLISTED_RUNTIME_ROOTS)
+
+
+def expected_card_type(path: Path) -> str | None:
+    suffix = path.suffix.lower()
+    if suffix in {".png", ".jpg", ".jpeg", ".webp"}:
+        return "image"
+    if suffix == ".svg":
+        return "drawing_svg"
+    return None
+
+
+def safe_existing_file(path: Path) -> bool:
+    try:
+        return path.is_file()
+    except OSError:
+        return False
+
+
+def detect_stale_item(item: Any, index: int) -> dict[str, Any] | None:
+    global stale_check_limited
+
+    if not isinstance(item, dict):
+        return {
+            "item_index": index,
+            "item_id": None,
+            "card_id": None,
+            "relative_runtime_path": None,
+            "metadata_path": None,
+            "stale_reason": "item_not_object",
+            "stale_reasons": ["item_not_object"],
+            "stale_checked_at": stale_checked_at,
+            "asset_exists": None,
+            "metadata_exists": None,
+            "output_card_exists": None,
+        }
+
+    reasons: list[str] = []
+    asset_exists: bool | None = None
+    metadata_exists: bool | None = None
+    output_card_exists: bool | None = None
+    asset_path: Path | None = None
+
+    relative_runtime_path = item.get("relative_runtime_path")
+    if not isinstance(relative_runtime_path, str):
+        reasons.append("relative_runtime_path_missing_or_invalid")
+    elif not relative_runtime_path:
+        reasons.append("relative_runtime_path_missing_or_invalid")
+    elif not is_relative_path_safe(relative_runtime_path):
+        reasons.append("relative_runtime_path_unsafe")
+    else:
+        asset_path = runtime_root / relative_runtime_path
+        if not is_under_allowlisted_runtime_root(asset_path):
+            reasons.append("relative_runtime_path_outside_allowlist")
+            stale_check_limited = True
+        else:
+            card_type = expected_card_type(asset_path)
+            if card_type is None:
+                reasons.append("unsupported_asset_extension")
+            asset_exists = safe_existing_file(asset_path)
+            if not asset_exists:
+                reasons.append("asset_missing")
+            else:
+                expected_card_id = f"{card_type}:{relative_runtime_path}" if card_type else None
+                card_id = item.get("card_id")
+                output_card_exists = isinstance(card_id, str) and expected_card_id == card_id
+                if output_card_exists is False:
+                    reasons.append("output_card_missing")
+
+    card_id = item.get("card_id")
+    if not isinstance(card_id, str) or not card_id:
+        reasons.append("card_id_missing_or_invalid")
+
+    asset_type = item.get("asset_type")
+    if not isinstance(asset_type, str) or not asset_type:
+        reasons.append("asset_type_missing_or_invalid")
+
+    metadata_path = item.get("metadata_path")
+    if metadata_path is not None:
+        if not isinstance(metadata_path, str) or not metadata_path:
+            reasons.append("metadata_path_invalid")
+        elif not is_relative_path_safe(metadata_path):
+            reasons.append("metadata_path_unsafe")
+        else:
+            resolved_metadata_path = runtime_root / metadata_path
+            if not is_under_allowlisted_runtime_root(resolved_metadata_path):
+                reasons.append("metadata_path_outside_allowlist")
+                stale_check_limited = True
+            else:
+                metadata_exists = safe_existing_file(resolved_metadata_path)
+                if not metadata_exists:
+                    reasons.append("metadata_missing")
+
+    if not reasons:
+        return None
+
+    return {
+        "item_index": index,
+        "item_id": item.get("item_id"),
+        "card_id": card_id if isinstance(card_id, str) else None,
+        "relative_runtime_path": relative_runtime_path if isinstance(relative_runtime_path, str) else None,
+        "metadata_path": metadata_path if isinstance(metadata_path, str) else None,
+        "stale_reason": reasons[0],
+        "stale_reasons": reasons,
+        "stale_checked_at": stale_checked_at,
+        "asset_exists": asset_exists,
+        "metadata_exists": metadata_exists,
+        "output_card_exists": output_card_exists,
+    }
+
+
 def write_board(next_board: dict[str, Any], original_text: str) -> None:
     global board_file_modified, repair_applied
     if board_file is None:
@@ -260,8 +408,12 @@ if not is_safe_board_id(board_id):
     print("Reference board store repair failed")
     write_report(2)
 
-if mode not in {"repair-schema", "remove-duplicate-items"}:
-    add_finding("error", "unsupported_mode", "MODE currently supports only repair-schema or remove-duplicate-items")
+if mode not in {"repair-schema", "remove-duplicate-items", "mark-stale-items"}:
+    add_finding(
+        "error",
+        "unsupported_mode",
+        "MODE currently supports only repair-schema, remove-duplicate-items, or mark-stale-items",
+    )
     print("Reference board store repair failed")
     write_report(2)
 
@@ -342,6 +494,73 @@ if mode == "remove-duplicate-items":
 
     if apply_requested and removal_indices:
         board["items"] = [item for index, item in enumerate(items) if index not in removal_indices]
+        if isinstance(board.get("updated_at"), str):
+            board["updated_at"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+            add_action(applied_actions, "update_board_updated_at", "updated_at set because repair changed the board")
+        write_board(board, original_text)
+        print("Reference board store repair applied OK")
+        write_report(0)
+
+    if apply_requested:
+        print("Reference board store repair no changes needed")
+        write_report(0)
+
+    print("Reference board store repair dry-run OK")
+    write_report(0)
+
+if mode == "mark-stale-items":
+    items = board.get("items")
+    if not isinstance(items, list):
+        add_finding("error", "items_not_list", "items must be a list for mark-stale-items")
+        print("Reference board store repair failed")
+        write_report(1)
+
+    for index, item in enumerate(items):
+        stale_item = detect_stale_item(item, index)
+        if stale_item is None:
+            continue
+        stale_items.append(stale_item)
+        stale_mark = {
+            "item_index": stale_item["item_index"],
+            "item_id": stale_item["item_id"],
+            "card_id": stale_item["card_id"],
+            "stale_reason": stale_item["stale_reason"],
+            "stale_checked_at": stale_checked_at,
+        }
+        proposed_stale_marks.append(stale_mark)
+        add_action(
+            proposed_actions,
+            "mark_stale_item",
+            f"mark stale board item at index {index}: {item_label(item, index)} ({stale_item['stale_reason']})",
+        )
+        if apply_requested:
+            if isinstance(item, dict):
+                before = {field: item.get(field) for field in ("stale", "stale_reason", "stale_checked_at")}
+                item["stale"] = True
+                item["stale_reason"] = stale_item["stale_reason"]
+                item["stale_checked_at"] = stale_checked_at
+                after = {field: item.get(field) for field in ("stale", "stale_reason", "stale_checked_at")}
+                if before != after:
+                    applied_stale_marks.append(stale_mark)
+                    add_action(
+                        applied_actions,
+                        "mark_stale_item",
+                        f"marked stale board item at index {index}: {item_label(item, index)}",
+                    )
+                else:
+                    skipped_stale_marks.append(stale_mark)
+                    add_action(skipped_actions, "mark_stale_item", "stale marker already matched current check")
+            else:
+                skipped_stale_marks.append(stale_mark)
+                add_action(skipped_actions, "mark_stale_item", "item is not an object; stale marker not applied")
+        else:
+            skipped_stale_marks.append(stale_mark)
+            add_action(skipped_actions, "mark_stale_item", "dry-run only; set APPLY=1 after review and backup")
+
+    if any(isinstance(item, dict) and item.get("stale") is True for item in items):
+        add_finding("info", "stale_marker_cleanup_deferred", "existing stale markers are not removed in this milestone")
+
+    if apply_requested and applied_stale_marks:
         if isinstance(board.get("updated_at"), str):
             board["updated_at"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
             add_action(applied_actions, "update_board_updated_at", "updated_at set because repair changed the board")

@@ -12,6 +12,8 @@ The mode removes only later duplicate board item entries from the board JSON whe
 
 M34.47 adds dedicated regression coverage for `MODE=remove-duplicate-items`.
 
+M34.48 adds stale item marking as a separate repair mode. Duplicate repair remains separate from stale item marking.
+
 ## Supported Mode
 
 Supported duplicate repair mode:
@@ -112,7 +114,7 @@ Duplicate mode reports:
 - no source asset copy/move/delete
 - no metadata sidecar modification
 - no output card deletion
-- no stale item behavior
+- no stale item behavior in duplicate repair mode
 - no Gateway/dashboard repair button
 - no arbitrary filesystem browsing
 - no Gateway/dashboard shell execution
@@ -138,7 +140,6 @@ BOARD_ID=api-test-board MODE=remove-duplicate-items APPLY=1 make reference-board
 
 ## What Is Not Implemented Yet
 
-- stale item marking
 - stale item removal
 - source asset repair
 - metadata sidecar repair
