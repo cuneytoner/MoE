@@ -1,9 +1,9 @@
 # MoE / AI-Brain-OS Milestones
 
 Current active phase:
-- M30 Ops resilience is active.
-- Latest completed: M34.54 Reference Board Export Review UI Polish.
-- Next planned: M34.55 Reference Board Backup Retention CLI Plan.
+- M35 roadmap start is active.
+- Latest completed: M35.0 Reference Board Phase Closure and M35 Roadmap.
+- Next planned: M35.1 3D / Blender Parametric Pipeline Foundation.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -53,11 +53,11 @@ Current media milestone status:
 - M34.15 Output Card Metadata Detail Drawer DONE
 - M34.16 Reference Board Safe Runtime Store DONE
 - M34.17 Reference Board Item Selection API DONE
-- M34.18 Reference Board Output Card Integration PLANNED
+- M34.18 Reference Board Output Card Integration BACKLOG
 - M34.19 Reference Board Detail View DONE
 - M34.20 Reference Board Export Plan DONE
 - M34.21 Reference Board Selected Reason Edit DONE
-- M34.22 Reference Board Compare View PLANNED
+- M34.22 Reference Board Compare View BACKLOG
 - M34.23 Reference Board JSON Export Implementation DONE
 - M34.24 Reference Board Markdown Export Implementation DONE
 - M34.25 Reference Board Export UI DONE
@@ -90,8 +90,9 @@ Current media milestone status:
 - M34.52 Reference Board Export Stale/Duplicate Status Polish DONE
 - M34.53 Reference Board Backup Retention Plan DONE
 - M34.54 Reference Board Export Review UI Polish DONE
-- M34.55 Reference Board Backup Retention CLI Plan PLANNED
-- M34.56 Reference Board Backup Retention CLI Implementation PLANNED
+- M35.0 Reference Board Phase Closure and M35 Roadmap DONE
+- M35.1 3D / Blender Parametric Pipeline Foundation PLANNED
+- M35.2 Pergola Parametric Blender Prototype Plan PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1682,7 +1683,7 @@ Goals:
 
 ## Milestone 34.18: Reference Board Output Card Integration
 
-Status: PLANNED
+Status: BACKLOG
 
 Goals:
 - Plan deeper output-card integration for reference board workflows.
@@ -1718,7 +1719,7 @@ Goals:
 
 ## Milestone 34.22: Reference Board Compare View
 
-Status: PLANNED
+Status: BACKLOG
 
 Goals:
 - Plan a future compare view for selected board items.
@@ -2013,31 +2014,36 @@ Goals:
 - Keep UI polish read-only and free of repair controls.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
-## Milestone 34.55: Reference Board Backup Retention CLI Plan
+## Reference Board Backlog After M34 Closure
+
+Status: BACKLOG
+
+Goals:
+- Keep backup retention CLI implementation as backlog until an explicit M35+ milestone.
+- Keep restore workflow, stale marker cleanup, stale item removal, and dashboard repair controls out of active M34 scope.
+- Keep export PDF/ZIP packaging, compare view polish, and backup cleanup UI out of active M34 scope.
+
+## Milestone 35.0: Reference Board Phase Closure and M35 Roadmap
+
+Status: DONE
+
+Goals:
+- Close M34 after the completed reference board/export/repair work.
+- Move remaining polish/cleanup ideas to backlog.
+- Define M35 as the next active phase.
+- Recommend 3D / Blender Parametric Pipeline Foundation as M35.1.
+- Preserve source/runtime/model and safety boundaries.
+
+## Milestone 35.1: 3D / Blender Parametric Pipeline Foundation
 
 Status: PLANNED
 
 Goals:
-- Plan a guarded CLI interface for backup retention reports and future cleanup.
-- Keep deletion unimplemented until CLI plan and review are complete.
-- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
-
-## Milestone 34.56: Reference Board Backup Retention CLI Implementation
-
-Status: PLANNED
-
-Goals:
-- Implement guarded backup retention CLI behavior after the retention CLI plan.
-- Keep cleanup explicit, reviewed, and free of default destructive actions.
-- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
-
-## Milestone 35.0: Rigging Pipeline
-
-Status: PLANNED
-
-Goals:
-- Add basic Blender rig and armature pipeline.
-- Start with mechanical and object rigs before character rigs.
+- Plan deterministic 3D/Blender generation foundations.
+- Keep generated 3D assets under runtime.
+- Keep source-only repo separation.
+- Avoid automatic generation until an explicit guarded milestone.
+- Start with parametric structures such as pergola before complex rigging.
 
 ## Milestone 36.0: Animation Pipeline
 

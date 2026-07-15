@@ -64,11 +64,11 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.15 Output Card Metadata Detail Drawer DONE
 - M34.16 Reference Board Safe Runtime Store DONE
 - M34.17 Reference Board Item Selection API DONE
-- M34.18 Reference Board Output Card Integration PLANNED
+- M34.18 Reference Board Output Card Integration BACKLOG
 - M34.19 Reference Board Detail View DONE
 - M34.20 Reference Board Export Plan DONE
 - M34.21 Reference Board Selected Reason Edit DONE
-- M34.22 Reference Board Compare View PLANNED
+- M34.22 Reference Board Compare View BACKLOG
 - M34.23 Reference Board JSON Export Implementation DONE
 - M34.24 Reference Board Markdown Export Implementation DONE
 - M34.25 Reference Board Export UI DONE
@@ -101,8 +101,8 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M34.52 Reference Board Export Stale/Duplicate Status Polish DONE
 - M34.53 Reference Board Backup Retention Plan DONE
 - M34.54 Reference Board Export Review UI Polish DONE
-- M34.55 Reference Board Backup Retention CLI Plan PLANNED
-- M34.56 Reference Board Backup Retention CLI Implementation PLANNED
+- M35.0 Reference Board Phase Closure and M35 Roadmap DONE
+- M35.1 3D / Blender Parametric Pipeline Foundation PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

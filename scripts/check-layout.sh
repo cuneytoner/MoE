@@ -508,6 +508,8 @@ required_paths=(
   "docs/ops/232-reference-board-backup-retention-review-template.md"
   "docs/ops/233-reference-board-export-review-ui-polish.md"
   "docs/ops/234-reference-board-export-review-ui-polish-review-template.md"
+  "docs/ops/235-reference-board-phase-closure-and-m35-roadmap.md"
+  "docs/ops/236-reference-board-phase-closure-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

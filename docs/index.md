@@ -234,6 +234,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Reference Board Backup Retention Review Template](ops/232-reference-board-backup-retention-review-template.md)
 - [Reference Board Export Review UI Polish](ops/233-reference-board-export-review-ui-polish.md)
 - [Reference Board Export Review UI Polish Review Template](ops/234-reference-board-export-review-ui-polish-review-template.md)
+- [Reference Board Phase Closure and M35 Roadmap](ops/235-reference-board-phase-closure-and-m35-roadmap.md)
+- [Reference Board Phase Closure Review Template](ops/236-reference-board-phase-closure-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

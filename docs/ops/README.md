@@ -270,6 +270,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Reference board backup retention review template | [232-reference-board-backup-retention-review-template.md](232-reference-board-backup-retention-review-template.md) |
 | Reference board export review UI polish | [233-reference-board-export-review-ui-polish.md](233-reference-board-export-review-ui-polish.md) |
 | Reference board export review UI polish review template | [234-reference-board-export-review-ui-polish-review-template.md](234-reference-board-export-review-ui-polish-review-template.md) |
+| Reference board phase closure and M35 roadmap | [235-reference-board-phase-closure-and-m35-roadmap.md](235-reference-board-phase-closure-and-m35-roadmap.md) |
+| Reference board phase closure review template | [236-reference-board-phase-closure-review-template.md](236-reference-board-phase-closure-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
