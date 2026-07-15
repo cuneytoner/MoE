@@ -10,6 +10,8 @@ Validation remains read-only; M34.41 adds separate backup CLI.
 
 Validation should be run before M34.42 repair-schema.
 
+M34.43 uses the validate CLI after repair regression.
+
 ## Read-Only Behavior
 
 The validator:

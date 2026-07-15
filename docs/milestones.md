@@ -2,8 +2,8 @@
 
 Current active phase:
 - M30 Ops resilience is active.
-- Latest completed: M34.42 Reference Board Store Repair CLI Implementation.
-- Next planned: M34.43 Reference Board Store Repair Regression.
+- Latest completed: M34.43 Reference Board Store Repair Regression.
+- Next planned: M34.44 Reference Board Duplicate Item Repair Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -78,8 +78,9 @@ Current media milestone status:
 - M34.40 Reference Board Store Validate CLI Implementation DONE
 - M34.41 Reference Board Store Backup CLI Implementation DONE
 - M34.42 Reference Board Store Repair CLI Implementation DONE
-- M34.43 Reference Board Store Repair Regression PLANNED
+- M34.43 Reference Board Store Repair Regression DONE
 - M34.44 Reference Board Duplicate Item Repair Plan PLANNED
+- M34.45 Reference Board Stale Item Handling Plan PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -1580,7 +1581,7 @@ Goals:
 
 ## Milestone 34.9: Output Card Preview Serving Plan
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Plan safe preview serving for output cards.
@@ -1589,7 +1590,7 @@ Goals:
 
 ## Milestone 34.10: Image Generation Metadata Sidecars
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Plan and implement image generation metadata sidecars after drawing sidecars are stable.
@@ -1598,7 +1599,7 @@ Goals:
 
 ## Milestone 34.11: Reference Board API Implementation
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Implement safe reference-board JSON API under runtime.
@@ -1612,6 +1613,312 @@ Status: DONE
 Goals:
 - Implement dashboard reference-board selection UI.
 - Avoid generation buttons, arbitrary file pickers, shell actions, and asset mutation.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.12.1: Reference Board UI CORS + Unique Card Keys Fix
+
+Status: DONE
+
+Goals:
+- Fix dashboard reference-board CORS behavior and duplicate card key warnings.
+- Keep reference-board UI behavior safe and board-id based.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.13: Output Preview API Implementation
+
+Status: DONE
+
+Goals:
+- Implement safe card-id based output preview serving.
+- Keep SVG preview unavailable and avoid arbitrary path access.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.14: Dashboard Preview UI Implementation
+
+Status: DONE
+
+Goals:
+- Show image previews through the safe output preview API.
+- Keep drawing/SVG cards on placeholder UI.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.15: Output Card Metadata Detail Drawer
+
+Status: DONE
+
+Goals:
+- Add dashboard metadata detail review for output cards.
+- Keep metadata viewing read-only and card-id based.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.16: Reference Board Safe Runtime Store
+
+Status: DONE
+
+Goals:
+- Store reference board review metadata under runtime.
+- Keep source assets in their original runtime locations.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.17: Reference Board Item Selection API
+
+Status: DONE
+
+Goals:
+- Add safe API support for adding output card references to boards.
+- Use stable ids and avoid arbitrary filesystem input.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.18: Reference Board Output Card Integration
+
+Status: PLANNED
+
+Goals:
+- Plan deeper output-card integration for reference board workflows.
+- Keep selection/review behavior separate from asset mutation.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.19: Reference Board Detail View
+
+Status: DONE
+
+Goals:
+- Improve dashboard reference board detail review.
+- Keep board item inspection read-only except explicit review metadata edits.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.20: Reference Board Export Plan
+
+Status: DONE
+
+Goals:
+- Plan JSON and Markdown reference board review exports.
+- Keep exports response-only and avoid runtime export files.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.21: Reference Board Selected Reason Edit
+
+Status: DONE
+
+Goals:
+- Support editing selected reasons and tags for board items.
+- Keep edits limited to reference board review metadata.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.22: Reference Board Compare View
+
+Status: PLANNED
+
+Goals:
+- Plan a future compare view for selected board items.
+- Keep comparison read-only and avoid asset mutation.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.23: Reference Board JSON Export Implementation
+
+Status: DONE
+
+Goals:
+- Implement JSON reference board review export.
+- Keep export response-only and avoid source asset copying.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.24: Reference Board Markdown Export Implementation
+
+Status: DONE
+
+Goals:
+- Implement Markdown reference board review export.
+- Keep export response-only and avoid runtime export files.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.25: Reference Board Export UI
+
+Status: DONE
+
+Goals:
+- Add dashboard UI for read-only JSON and Markdown export panels.
+- Keep export actions separate from download, approve, delete, move, and generate actions.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.26: Reference Board Export Download Plan
+
+Status: DONE
+
+Goals:
+- Plan safe JSON and Markdown download endpoints.
+- Keep downloads response-only and avoid source asset bundles.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.27: Reference Board Markdown Download Implementation
+
+Status: DONE
+
+Goals:
+- Implement Markdown attachment download for reference board review.
+- Keep download content safe and response-only.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.28: Reference Board JSON Download Implementation
+
+Status: DONE
+
+Goals:
+- Implement JSON attachment download for reference board review.
+- Keep download content safe and response-only.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.29: Reference Board Download UI
+
+Status: DONE
+
+Goals:
+- Add dashboard download controls for reference board review artifacts.
+- Avoid approve, delete, move, rename, generate, ZIP, or PDF actions.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.30: Reference Board Export Regression Review
+
+Status: DONE
+
+Goals:
+- Add regression review coverage for reference board export and download behavior.
+- Verify safe response-only exports and no runtime export files.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.31: Reference Board Export Polish
+
+Status: DONE
+
+Goals:
+- Polish dashboard export/download grouping and copy feedback.
+- Keep export UI read-only and avoid destructive actions.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.32: Reference Board Workflow Summary
+
+Status: DONE
+
+Goals:
+- Summarize the reference board workflow and operator review path.
+- Keep source/runtime/model boundaries explicit.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.33: Reference Board Hardening Plan
+
+Status: DONE
+
+Goals:
+- Plan reference board validation, runtime-store, export/download, and dashboard hardening.
+- Keep hardening changes milestone-scoped and safety-first.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.34: Reference Board Error Handling Polish
+
+Status: DONE
+
+Goals:
+- Standardize safe Gateway and dashboard reference board error behavior.
+- Avoid tracebacks, host path leaks, and raw internal exceptions.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.35: Reference Board Validation Limits
+
+Status: DONE
+
+Goals:
+- Add explicit validation limits for board ids, titles, descriptions, reasons, and tags.
+- Keep invalid payload errors controlled and operator-readable.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.36: Reference Board Malformed Store Regression
+
+Status: DONE
+
+Goals:
+- Add regression coverage for malformed runtime board JSON files.
+- Verify controlled errors and cleanup of the temporary malformed test file.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.37: Reference Board Store Repair Plan
+
+Status: DONE
+
+Goals:
+- Plan safe operator repair workflows for reference board runtime store issues.
+- Keep repair planning separate from source asset mutation and generation.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.38: Reference Board Store Backup Plan
+
+Status: DONE
+
+Goals:
+- Plan safe backup behavior for reference board JSON files before repair tooling.
+- Keep backup scope limited to board review metadata.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.39: Reference Board Store Repair CLI Plan
+
+Status: DONE
+
+Goals:
+- Plan the future validate, backup, and repair CLI contract.
+- Keep dry-run defaults, APPLY gates, backup requirements, and reporting explicit.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.40: Reference Board Store Validate CLI Implementation
+
+Status: DONE
+
+Goals:
+- Implement read-only validation for reference board runtime JSON files.
+- Write a local validation report without modifying board files or source assets.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.41: Reference Board Store Backup CLI Implementation
+
+Status: DONE
+
+Goals:
+- Implement safe single-board backup for reference board runtime JSON files.
+- Require a safe board id and avoid source asset or metadata sidecar copying.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.42: Reference Board Store Repair CLI Implementation
+
+Status: DONE
+
+Goals:
+- Implement guarded `repair-schema` mode with dry-run default.
+- Require `APPLY=1` and an existing backup before modifying a board file.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.43: Reference Board Store Repair Regression
+
+Status: DONE
+
+Goals:
+- Add regression coverage for validate, backup, and guarded repair-schema flows.
+- Keep repair regression scoped to safe runtime test fixtures.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.44: Reference Board Duplicate Item Repair Plan
+
+Status: PLANNED
+
+Goals:
+- Plan duplicate item repair behavior before implementing deletion or mutation.
+- Keep item deletion and stale item handling out of scope until explicitly approved.
+- Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
+
+## Milestone 34.45: Reference Board Stale Item Handling Plan
+
+Status: PLANNED
+
+Goals:
+- Plan stale item handling before implementing mutation.
+- Keep stale item deletion and source asset recreation out of scope until explicitly approved.
 - Preserve generated output, model, Git, Gateway, and Docker safety boundaries.
 
 ## Milestone 35.0: Rigging Pipeline

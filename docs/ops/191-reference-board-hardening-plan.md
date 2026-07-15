@@ -24,6 +24,8 @@ M34.41 adds a safe single-board backup CLI for runtime board JSON files.
 
 M34.42 introduces guarded `APPLY=1` repair behavior.
 
+M34.43 adds repair regression coverage.
+
 ## Current Safety Baseline
 
 The current baseline includes:

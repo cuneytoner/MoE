@@ -8,6 +8,8 @@ The backup script copies only the selected board JSON bytes. It does not modify 
 
 Backup should be run before `APPLY=1` repair-schema.
 
+M34.43 uses the backup CLI before `APPLY=1` repair.
+
 ## Required BOARD_ID
 
 `BOARD_ID` is required.

@@ -6,6 +6,8 @@ M34.42 adds `scripts/reference-board-store-repair.sh`, the first guarded write-c
 
 Only `repair-schema` mode is supported. The script is dry-run by default and does not modify board files unless `APPLY=1` is set and an existing backup is found.
 
+M34.43 adds dedicated repair regression coverage with a temporary fixture board.
+
 ## Dry-Run Default
 
 Default behavior:

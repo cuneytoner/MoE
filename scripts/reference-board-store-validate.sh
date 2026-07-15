@@ -110,7 +110,7 @@ def check_string(
     if not isinstance(value, str):
         add_finding(target_board_id, file_path, "error", f"invalid_{field}", f"{field} must be a string")
         return None
-    if field != "description" and not value:
+    if field not in {"description", "selected_reason"} and not value:
         add_finding(target_board_id, file_path, "error", f"empty_{field}", f"{field} must not be empty")
     if has_host_path(value):
         add_finding(target_board_id, file_path, "error", f"host_path_{field}", f"{field} contains an unsafe host path")

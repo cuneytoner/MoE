@@ -12,6 +12,8 @@ M34.41 implements backup mode as a separate safe CLI before repair modes.
 
 M34.42 implements the first repair-schema CLI slice.
 
+M34.43 covers repair-schema with regression fixture.
+
 ## Proposed Script
 
 Future script:
