@@ -248,6 +248,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Generic 3D Parameter Config Review Template](ops/246-generic-3d-parameter-config-review-template.md)
 - [First Dry-Run Blender Script Review](ops/247-first-dry-run-blender-script-review.md)
 - [First Dry-Run Blender Script Review Template](ops/248-first-dry-run-blender-script-review-template.md)
+- [Guarded First Blender Generation Drill Plan](ops/249-guarded-first-blender-generation-drill-plan.md)
+- [Guarded First Blender Generation Drill Review Template](ops/250-guarded-first-blender-generation-drill-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

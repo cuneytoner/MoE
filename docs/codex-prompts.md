@@ -108,7 +108,8 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.4 Generic Parametric Blender Script Skeleton DONE
 - M35.5 Generic 3D Parameter Config Draft DONE
 - M35.6 First Dry-Run Blender Script Review DONE
-- M35.7 Guarded First Blender Generation Drill PLANNED
+- M35.7 Guarded First Blender Generation Drill Plan DONE
+- M35.8 3D Metadata Sidecar Plan PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

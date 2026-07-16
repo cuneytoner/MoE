@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.6 First Dry-Run Blender Script Review.
-- Next planned: M35.7 Guarded First Blender Generation Drill.
+- Latest completed: M35.7 Guarded First Blender Generation Drill Plan.
+- Next planned: M35.8 3D Metadata Sidecar Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -97,9 +97,10 @@ Current media milestone status:
 - M35.4 Generic Parametric Blender Script Skeleton DONE
 - M35.5 Generic 3D Parameter Config Draft DONE
 - M35.6 First Dry-Run Blender Script Review DONE
-- M35.7 Guarded First Blender Generation Drill PLANNED
-- M35.8 3D Output Cards Plan PLANNED
-- M35.9 3D Metadata Sidecar Plan PLANNED
+- M35.7 Guarded First Blender Generation Drill Plan DONE
+- M35.8 3D Metadata Sidecar Plan PLANNED
+- M35.9 3D Output Cards Plan PLANNED
+- M35.10 Guarded Blender Generation Implementation PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2103,16 +2104,24 @@ Goals:
 - Add regression coverage for safety flags and negative generation/config cases.
 - Prepare for later guarded generation.
 
-## Milestone 35.7: Guarded First Blender Generation Drill
+## Milestone 35.7: Guarded First Blender Generation Drill Plan
+
+Status: DONE
+
+Goals:
+- Plan a guarded first Blender generation drill.
+- Keep real generation disabled in this milestone.
+- Define guard conditions, operator sequence, runtime output plan, metadata/report requirements, failure handling, cleanup boundaries, and stop conditions.
+- Prepare for later implementation without creating generated 3D assets.
+
+## Milestone 35.8: 3D Metadata Sidecar Plan
 
 Status: PLANNED
 
 Goals:
-- Plan a guarded first Blender generation drill.
-- Keep real generation disabled by default.
-- Require explicit operator enablement.
-- Write only to runtime if generation is later enabled.
-- Keep generated 3D binaries out of git.
+- Define the metadata sidecar schema for future generated 3D assets.
+- Keep sidecar plan source-only.
+- Prepare validation before real generation.
 
 ## Milestone 36.0: Animation Pipeline
 

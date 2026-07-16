@@ -528,6 +528,8 @@ required_paths=(
   "scripts/test-3d-dry-run-review.sh"
   "docs/ops/247-first-dry-run-blender-script-review.md"
   "docs/ops/248-first-dry-run-blender-script-review-template.md"
+  "docs/ops/249-guarded-first-blender-generation-drill-plan.md"
+  "docs/ops/250-guarded-first-blender-generation-drill-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"
