@@ -530,6 +530,8 @@ required_paths=(
   "docs/ops/248-first-dry-run-blender-script-review-template.md"
   "docs/ops/249-guarded-first-blender-generation-drill-plan.md"
   "docs/ops/250-guarded-first-blender-generation-drill-review-template.md"
+  "docs/ops/251-3d-metadata-sidecar-plan.md"
+  "docs/ops/252-3d-metadata-sidecar-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

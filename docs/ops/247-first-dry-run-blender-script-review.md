@@ -5,6 +5,7 @@
 M35.6 reviews the source-only 3D generator skeleton and generic parameter config together. The review confirms the current flow remains dry-run-only, does not run Blender, and does not generate assets.
 
 M35.7 plans a future guarded generation drill but still does not run Blender.
+M35.8 defines future sidecar expectations while dry-run output remains non-generating.
 
 ## Dry-Run Commands
 

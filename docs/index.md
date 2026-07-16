@@ -250,6 +250,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [First Dry-Run Blender Script Review Template](ops/248-first-dry-run-blender-script-review-template.md)
 - [Guarded First Blender Generation Drill Plan](ops/249-guarded-first-blender-generation-drill-plan.md)
 - [Guarded First Blender Generation Drill Review Template](ops/250-guarded-first-blender-generation-drill-review-template.md)
+- [3D Metadata Sidecar Plan](ops/251-3d-metadata-sidecar-plan.md)
+- [3D Metadata Sidecar Review Template](ops/252-3d-metadata-sidecar-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

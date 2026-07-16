@@ -83,6 +83,8 @@ No output should be written in repo.
 
 ## Metadata Requirement
 
+M35.8 defines the sidecar schema required before future guarded generation writes assets.
+
 Future drill metadata must include:
 
 - `schema_version`

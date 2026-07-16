@@ -6,6 +6,7 @@ M35.5 adds a source-only generic 3D parameter config draft and validation path f
 
 M35.6 reviews config loading through the dry-run review script.
 M35.7 uses the generic config as the planned input for a future guarded generation drill.
+M35.8 links configs to future 3D metadata sidecars through `config_hash` and `config_summary`.
 
 ## Config File Path
 
