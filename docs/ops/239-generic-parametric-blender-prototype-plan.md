@@ -32,6 +32,8 @@ Plan the first generic deterministic Blender prototype pipeline.
 
 ## Generic Parameter Schema
 
+M35.5 adds the first generic parameter config draft.
+
 Plan common fields:
 
 - `project_name`

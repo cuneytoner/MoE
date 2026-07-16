@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.4 Generic Parametric Blender Script Skeleton.
-- Next planned: M35.5 Generic 3D Parameter Config Draft.
+- Latest completed: M35.5 Generic 3D Parameter Config Draft.
+- Next planned: M35.6 First Dry-Run Blender Script Review.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -95,9 +95,10 @@ Current media milestone status:
 - M35.2 Generic Parametric Blender Prototype Plan DONE
 - M35.3 Blender Runtime Output Safety Plan DONE
 - M35.4 Generic Parametric Blender Script Skeleton DONE
-- M35.5 Generic 3D Parameter Config Draft PLANNED
+- M35.5 Generic 3D Parameter Config Draft DONE
 - M35.6 First Dry-Run Blender Script Review PLANNED
 - M35.7 Guarded First Blender Generation Drill PLANNED
+- M35.8 3D Output Cards Plan PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2083,12 +2084,22 @@ Goals:
 
 ## Milestone 35.5: Generic 3D Parameter Config Draft
 
+Status: DONE
+
+Goals:
+- Add a text-only generic 3D parameter config example.
+- Validate config shape without generating assets.
+- Extend the dry-run skeleton to load configs safely.
+- Preserve source/runtime separation and visual_reference_only safety.
+
+## Milestone 35.6: First Dry-Run Blender Script Review
+
 Status: PLANNED
 
 Goals:
-- Add source-only parameter config draft for generic 3D objects.
-- Keep configs text-only.
-- Validate config shape without generating assets.
+- Review the dry-run script and parameter config together.
+- Confirm no Blender execution, no generated assets, and no runtime mutation.
+- Prepare for later guarded generation.
 
 ## Milestone 36.0: Animation Pipeline
 

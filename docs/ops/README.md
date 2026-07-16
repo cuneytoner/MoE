@@ -280,6 +280,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Blender runtime output safety review template | [242-blender-runtime-output-safety-review-template.md](242-blender-runtime-output-safety-review-template.md) |
 | Generic parametric Blender script skeleton | [243-generic-parametric-blender-script-skeleton.md](243-generic-parametric-blender-script-skeleton.md) |
 | Generic parametric Blender script skeleton review template | [244-generic-parametric-blender-script-skeleton-review-template.md](244-generic-parametric-blender-script-skeleton-review-template.md) |
+| Generic 3D parameter config draft | [245-generic-3d-parameter-config-draft.md](245-generic-3d-parameter-config-draft.md) |
+| Generic 3D parameter config review template | [246-generic-3d-parameter-config-review-template.md](246-generic-3d-parameter-config-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

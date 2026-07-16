@@ -16,6 +16,8 @@ Define safety rules for future Blender-generated 3D outputs.
 
 ## Runtime Output Root
 
+M35.5 validates runtime output root in source-only config before any generation exists.
+
 Future Blender outputs must go under:
 
 ```text

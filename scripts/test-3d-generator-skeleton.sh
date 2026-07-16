@@ -13,6 +13,7 @@ trap cleanup EXIT
 "$PYTHON_BIN" "$SCRIPT" --help >/dev/null
 "$PYTHON_BIN" "$SCRIPT" --dry-run >/dev/null
 "$PYTHON_BIN" "$SCRIPT" --plan-json >"$TMP_PLAN"
+"$PYTHON_BIN" "$SCRIPT" --config configs/3d/generic-object.example.json --plan-json >/dev/null
 
 jq -e '.safety_flags.blender_execution_attempted == false' "$TMP_PLAN" >/dev/null
 jq -e '.safety_flags.runtime_assets_written == false' "$TMP_PLAN" >/dev/null

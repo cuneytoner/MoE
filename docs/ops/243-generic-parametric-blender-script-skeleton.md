@@ -9,6 +9,8 @@ M35.4 adds a source-only dry-run skeleton for the future generic parametric Blen
 - `scripts/test-3d-generator-skeleton.sh`
 - `make test-3d-generator-skeleton`
 
+M35.5 adds a source-only generic parameter config draft and config validation.
+
 ## No `bpy` Import At Module Import
 
 The script must run with normal Python, so it does not import `bpy` at module import time. Future Blender-specific imports must remain inside explicitly guarded execution paths.
