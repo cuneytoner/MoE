@@ -254,6 +254,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [3D Metadata Sidecar Review Template](ops/252-3d-metadata-sidecar-review-template.md)
 - [3D Output Cards Plan](ops/253-3d-output-cards-plan.md)
 - [3D Output Cards Review Template](ops/254-3d-output-cards-review-template.md)
+- [Guarded Blender Generation Implementation](ops/255-guarded-blender-generation-implementation.md)
+- [Guarded Blender Generation Implementation Review Template](ops/256-guarded-blender-generation-implementation-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

@@ -93,6 +93,7 @@ M35.6 validates dry-run safety flags before any guarded generation milestone.
 M35.7 defines the future guarded generation drill sequence and stop conditions.
 M35.8 defines metadata sidecar requirements before real generation.
 M35.9 keeps future 3D output card display read-only and runtime-scoped.
+M35.10 requires both `REAL_3D_GENERATION=1` and `--execute-generation` before any future Blender execution.
 
 Future generation commands should default to dry-run or plan mode.
 

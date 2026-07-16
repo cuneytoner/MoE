@@ -61,6 +61,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--config",
         help="Optional source-only JSON parameter config to validate and include in the plan.",
     )
+    parser.add_argument(
+        "--execute-generation",
+        action="store_true",
+        help="Request guarded Blender execution. Also requires REAL_3D_GENERATION=1.",
+    )
     return parser
 
 
@@ -170,19 +175,36 @@ def load_config(raw_config_path: str) -> dict[str, Any]:
     }
 
 
-def build_plan(output_root: Path, config_info: dict[str, Any] | None = None) -> dict[str, Any]:
+def build_generation_guard(execute_generation_requested: bool) -> dict[str, bool]:
     real_generation_enabled = generation_enabled()
+    return {
+        "execute_generation_requested": execute_generation_requested,
+        "real_generation_env_enabled": real_generation_enabled,
+        "all_generation_guards_passed": False,
+        "blender_required": True,
+        "generation_implementation_present": True,
+    }
+
+
+def build_plan(
+    output_root: Path,
+    config_info: dict[str, Any] | None = None,
+    execute_generation_requested: bool = False,
+) -> dict[str, Any]:
+    generation_guard = build_generation_guard(execute_generation_requested)
+    real_generation_enabled = generation_guard["real_generation_env_enabled"]
     return {
         "status": "planned",
         "message": (
             "dry-run only; real generation not implemented yet"
-            if not real_generation_enabled
-            else "REAL_3D_GENERATION=1 requested, but real generation is not implemented yet"
+            if not (execute_generation_requested and real_generation_enabled)
+            else "guarded Blender generation requested"
         ),
         "runtime_output_root": str(output_root),
         "config_loaded": config_info is not None,
         "config_path": config_info["path"] if config_info else None,
         "config_summary": config_info["summary"] if config_info else None,
+        "generation_guard": generation_guard,
         "planned_output_subfolders": [
             "blender",
             "glb",
@@ -194,7 +216,7 @@ def build_plan(output_root: Path, config_info: dict[str, Any] | None = None) -> 
         "planned_primitive_builders": PLANNED_PRIMITIVES,
         "metadata_plan": METADATA_PLAN,
         "safety_flags": {
-            "dry_run": True,
+            "dry_run": not (execute_generation_requested and real_generation_enabled),
             "real_generation_requested": real_generation_enabled,
             "real_generation_enabled": real_generation_enabled,
             "blender_execution_attempted": False,
@@ -203,6 +225,41 @@ def build_plan(output_root: Path, config_info: dict[str, Any] | None = None) -> 
             "generation_triggered": False,
         },
     }
+
+
+def run_guarded_generation(plan: dict[str, Any]) -> dict[str, Any]:
+    """Run the future Blender generation path after all external guards pass."""
+    try:
+        import bpy  # type: ignore[import-not-found]  # noqa: PLC0415
+    except ImportError as exc:
+        raise RuntimeError(
+            "Blender/bpy is unavailable; run inside Blender only after "
+            "REAL_3D_GENERATION=1 and --execute-generation are both set"
+        ) from exc
+
+    # Keep this milestone disk-inert: create only an in-memory marker object.
+    bpy.ops.object.select_all(action="SELECT")
+    bpy.ops.object.delete()
+    bpy.ops.mesh.primitive_cube_add(size=1.0, location=(0, 0, 0))
+    marker = bpy.context.object
+    if marker is not None:
+        marker.name = "moe_guarded_generation_placeholder"
+
+    result = dict(plan)
+    generation_guard = dict(result["generation_guard"])
+    generation_guard["all_generation_guards_passed"] = True
+    result["generation_guard"] = generation_guard
+
+    safety_flags = dict(result["safety_flags"])
+    safety_flags["dry_run"] = False
+    safety_flags["blender_execution_attempted"] = True
+    safety_flags["runtime_assets_written"] = False
+    safety_flags["source_assets_modified"] = False
+    safety_flags["generation_triggered"] = True
+    result["safety_flags"] = safety_flags
+    result["status"] = "generated_in_memory"
+    result["message"] = "guarded Blender generation completed without writing runtime assets"
+    return result
 
 
 def print_dry_run_summary(plan: dict[str, Any]) -> None:
@@ -232,7 +289,19 @@ def run(argv: list[str] | None = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 2
 
-    plan = build_plan(output_root, config_info)
+    if args.execute_generation and not generation_enabled():
+        print("error: real generation requires REAL_3D_GENERATION=1", file=sys.stderr)
+        return 2
+
+    plan = build_plan(output_root, config_info, args.execute_generation)
+
+    if args.execute_generation:
+        try:
+            plan = run_guarded_generation(plan)
+        except RuntimeError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+
     if args.plan_json:
         print(json.dumps(plan, indent=2, sort_keys=True))
         return 0

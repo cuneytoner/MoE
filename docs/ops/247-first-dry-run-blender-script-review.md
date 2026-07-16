@@ -6,6 +6,7 @@ M35.6 reviews the source-only 3D generator skeleton and generic parameter config
 
 M35.7 plans a future guarded generation drill but still does not run Blender.
 M35.8 defines future sidecar expectations while dry-run output remains non-generating.
+M35.10 adds guarded generation flags while preserving dry-run behavior.
 
 ## Dry-Run Commands
 

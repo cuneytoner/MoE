@@ -24,6 +24,8 @@ jq -e '.safety_flags.blender_execution_attempted == false' "$TMP_PLAN" >/dev/nul
 jq -e '.safety_flags.runtime_assets_written == false' "$TMP_PLAN" >/dev/null
 jq -e '.safety_flags.source_assets_modified == false' "$TMP_PLAN" >/dev/null
 jq -e '.safety_flags.generation_triggered == false' "$TMP_PLAN" >/dev/null
+jq -e '.generation_guard.generation_implementation_present == true' "$TMP_PLAN" >/dev/null
+jq -e '.generation_guard.all_generation_guards_passed == false' "$TMP_PLAN" >/dev/null
 jq -e '.metadata_plan.asset_type == "3d_model"' "$TMP_PLAN" >/dev/null
 jq -e '.metadata_plan.safety_label == "visual_reference_only"' "$TMP_PLAN" >/dev/null
 jq -e '.metadata_plan.structural_certification == false' "$TMP_PLAN" >/dev/null
@@ -36,6 +38,10 @@ jq -e '.config_summary.component_count >= 1' "$TMP_CONFIG_PLAN" >/dev/null
 REAL_3D_GENERATION=1 "$PYTHON_BIN" "$SCRIPT" --plan-json >"$TMP_REAL_PLAN"
 jq -e '.safety_flags.real_generation_requested == true' "$TMP_REAL_PLAN" >/dev/null
 jq -e '.safety_flags.real_generation_enabled == true' "$TMP_REAL_PLAN" >/dev/null
+jq -e '.generation_guard.real_generation_env_enabled == true' "$TMP_REAL_PLAN" >/dev/null
+jq -e '.generation_guard.execute_generation_requested == false' "$TMP_REAL_PLAN" >/dev/null
+jq -e '.generation_guard.all_generation_guards_passed == false' "$TMP_REAL_PLAN" >/dev/null
+jq -e '.generation_guard.generation_implementation_present == true' "$TMP_REAL_PLAN" >/dev/null
 jq -e '.safety_flags.runtime_assets_written == false' "$TMP_REAL_PLAN" >/dev/null
 jq -e '.safety_flags.generation_triggered == false' "$TMP_REAL_PLAN" >/dev/null
 

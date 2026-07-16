@@ -290,6 +290,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | 3D metadata sidecar review template | [252-3d-metadata-sidecar-review-template.md](252-3d-metadata-sidecar-review-template.md) |
 | 3D output cards plan | [253-3d-output-cards-plan.md](253-3d-output-cards-plan.md) |
 | 3D output cards review template | [254-3d-output-cards-review-template.md](254-3d-output-cards-review-template.md) |
+| Guarded Blender generation implementation | [255-guarded-blender-generation-implementation.md](255-guarded-blender-generation-implementation.md) |
+| Guarded Blender generation implementation review template | [256-guarded-blender-generation-implementation-review-template.md](256-guarded-blender-generation-implementation-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

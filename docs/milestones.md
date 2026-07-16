@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.9 3D Output Cards Plan.
-- Next planned: M35.10 Guarded Blender Generation Implementation.
+- Latest completed: M35.10 Guarded Blender Generation Implementation.
+- Next planned: M35.11 3D Metadata Sidecar Writer.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -100,9 +100,10 @@ Current media milestone status:
 - M35.7 Guarded First Blender Generation Drill Plan DONE
 - M35.8 3D Metadata Sidecar Plan DONE
 - M35.9 3D Output Cards Plan DONE
-- M35.10 Guarded Blender Generation Implementation PLANNED
+- M35.10 Guarded Blender Generation Implementation DONE
 - M35.11 3D Metadata Sidecar Writer PLANNED
 - M35.12 3D Metadata Sidecar Validator PLANNED
+- M35.13 First Local Blender Generation Drill PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2137,15 +2138,23 @@ Goals:
 
 ## Milestone 35.10: Guarded Blender Generation Implementation
 
+Status: DONE
+
+Goals:
+- Add guarded real-generation code paths without running Blender.
+- Require both REAL_3D_GENERATION=1 and --execute-generation.
+- Import bpy only inside guarded generation.
+- Fail cleanly outside Blender.
+- Keep tests non-generating and runtime-safe.
+
+## Milestone 35.11: 3D Metadata Sidecar Writer
+
 Status: PLANNED
 
 Goals:
-- Implement guarded Blender generation support.
-- Keep REAL_3D_GENERATION=0 by default.
-- Require explicit operator enablement.
-- Write only under runtime output root.
-- Keep generated 3D binaries out of git.
-- Generate sidecars/reports in later or same guarded sequence only if explicitly planned.
+- Add a source-only metadata writer function for future generated 3D assets.
+- Keep writer inactive unless generation is explicitly guarded.
+- Test sidecar generation into temporary files only, not runtime output assets.
 
 ## Milestone 36.0: Animation Pipeline
 
