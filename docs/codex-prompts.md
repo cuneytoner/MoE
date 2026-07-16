@@ -113,7 +113,7 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.9 3D Output Cards Plan DONE
 - M35.10 Guarded Blender Generation Implementation DONE
 - M35.11 3D Metadata Sidecar Writer DONE
-- M35.12 3D Metadata Sidecar Validator PLANNED
+- M35.12 3D Metadata Sidecar Validator DONE
 - M35.13 Generic Primitive Builder Core PLANNED
 - M35.14 Blender Adapter Implementation PLANNED
 - M35.15 First Guarded Local Blender Generation Drill PLANNED

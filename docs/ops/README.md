@@ -294,6 +294,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Guarded Blender generation implementation review template | [256-guarded-blender-generation-implementation-review-template.md](256-guarded-blender-generation-implementation-review-template.md) |
 | 3D metadata sidecar writer | [257-3d-metadata-sidecar-writer.md](257-3d-metadata-sidecar-writer.md) |
 | 3D metadata sidecar writer review template | [258-3d-metadata-sidecar-writer-review-template.md](258-3d-metadata-sidecar-writer-review-template.md) |
+| 3D metadata sidecar validator | [259-3d-metadata-sidecar-validator.md](259-3d-metadata-sidecar-validator.md) |
+| 3D metadata sidecar validator review template | [260-3d-metadata-sidecar-validator-review-template.md](260-3d-metadata-sidecar-validator-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

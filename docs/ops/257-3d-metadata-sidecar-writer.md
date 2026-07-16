@@ -4,6 +4,8 @@
 
 M35.11 adds a source-only metadata sidecar writer for future 3D assets.
 
+M35.12 adds a read-only validator for metadata sidecars using /tmp-only validation tests.
+
 The writer can:
 
 - build metadata sidecar JSON in memory

@@ -80,6 +80,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--write-metadata",
         help="Write metadata sidecar JSON to a /tmp path. Requires --config.",
     )
+    parser.add_argument(
+        "--validate-metadata",
+        help="Validate a metadata sidecar JSON file under /tmp.",
+    )
     return parser
 
 
@@ -365,6 +369,150 @@ def write_metadata_sidecar(metadata: dict[str, Any], output_path: str, allow_tmp
     return str(destination)
 
 
+def resolve_metadata_validation_path(metadata_path: str) -> Path:
+    candidate = Path(metadata_path).expanduser()
+    if not candidate.is_absolute():
+        raise ValueError("metadata validation path must be absolute")
+    if ".." in candidate.parts:
+        raise ValueError("metadata validation path must not contain path traversal")
+    if candidate.suffix.lower() != ".json":
+        raise ValueError("metadata validation path must use .json extension")
+
+    resolved = candidate.resolve(strict=False)
+    repo_root = REPO_ROOT.resolve(strict=True)
+    runtime_root = RUNTIME_OUTPUT_ROOT.resolve(strict=False)
+    tmp_root = TMP_ROOT.resolve(strict=True)
+
+    if resolved == repo_root or repo_root in resolved.parents:
+        raise ValueError("metadata validation path must not be inside the repo")
+    if resolved == runtime_root or runtime_root in resolved.parents:
+        raise ValueError("metadata validation path must not be inside runtime in this milestone")
+    if resolved != tmp_root and tmp_root not in resolved.parents:
+        raise ValueError("metadata validation path must stay under /tmp in this milestone")
+    if resolved.is_symlink():
+        raise ValueError("metadata validation path must not be a symlink")
+    if not resolved.is_file():
+        raise ValueError(f"metadata validation file does not exist: {metadata_path}")
+    return resolved
+
+
+def is_safe_runtime_relative_path(value: str) -> bool:
+    if value.strip() == "":
+        return False
+    path = Path(value)
+    if path.is_absolute():
+        return False
+    if ".." in path.parts:
+        return False
+    lowered = value.lower()
+    blocked_prefixes = (
+        "apps/",
+        "configs/",
+        "docs/",
+        "infra/",
+        "scripts/",
+        "tools/",
+        "packages/",
+        ".git/",
+        "home/",
+        "workspace/",
+    )
+    if lowered.startswith(blocked_prefixes):
+        return False
+    blocked_markers = (
+        "moe_models_backup",
+        "models_backup",
+        "/models/",
+        "\\models\\",
+    )
+    return not any(marker in lowered for marker in blocked_markers)
+
+
+def validate_3d_metadata_sidecar(metadata: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+
+    def require_string(key: str) -> None:
+        if not isinstance(metadata.get(key), str) or metadata.get(key, "").strip() == "":
+            errors.append(f"{key} must exist and be a non-empty string")
+
+    require_string("schema_version")
+    if metadata.get("asset_type") != "3d_model":
+        errors.append("asset_type must be 3d_model")
+    if metadata.get("source") != "blender_parametric":
+        errors.append("source must be blender_parametric")
+    for key in (
+        "generator_script",
+        "generator_version",
+        "project_name",
+        "asset_name",
+        "asset_category",
+        "units",
+        "created_at",
+    ):
+        require_string(key)
+
+    config_hash = metadata.get("config_hash")
+    if not isinstance(config_hash, str) or len(config_hash) != 64:
+        errors.append("config_hash must be a 64-character hex string")
+    elif any(char not in "0123456789abcdefABCDEF" for char in config_hash):
+        errors.append("config_hash must contain only hex characters")
+
+    if not isinstance(metadata.get("coordinate_system"), dict):
+        errors.append("coordinate_system must be an object")
+
+    component_count = metadata.get("component_count")
+    if not isinstance(component_count, int) or isinstance(component_count, bool) or component_count < 0:
+        errors.append("component_count must be an integer >= 0")
+    if not isinstance(metadata.get("component_types"), list):
+        errors.append("component_types must be a list")
+
+    output_files = metadata.get("output_files")
+    if not isinstance(output_files, dict):
+        errors.append("output_files must be an object")
+    else:
+        for key, value in output_files.items():
+            if value is None:
+                continue
+            if not isinstance(value, str):
+                errors.append(f"output_files.{key} must be null or a string")
+                continue
+            if not is_safe_runtime_relative_path(value):
+                errors.append(f"output_files.{key} must be a safe runtime-relative path")
+
+    if metadata.get("safety_label") != "visual_reference_only":
+        errors.append("safety_label must be visual_reference_only")
+    if metadata.get("structural_certification") is not False:
+        errors.append("structural_certification must be false")
+    if metadata.get("operator_review_required") is not True:
+        errors.append("operator_review_required must be true")
+
+    safety_flags = metadata.get("safety_flags")
+    if not isinstance(safety_flags, dict):
+        errors.append("safety_flags must be an object")
+    elif safety_flags.get("source_assets_modified") is not False:
+        errors.append("safety_flags.source_assets_modified must be false")
+
+    return errors
+
+
+def build_metadata_validation_report(metadata_path: str, errors: list[str]) -> dict[str, Any]:
+    return {
+        "schema_version": "1.0",
+        "report_type": "3d_metadata_sidecar_validation",
+        "metadata_path": metadata_path,
+        "valid": len(errors) == 0,
+        "error_count": len(errors),
+        "errors": errors,
+        "safety_flags": {
+            "read_only": True,
+            "runtime_assets_written": False,
+            "source_assets_modified": False,
+            "generation_triggered": False,
+            "blender_execution_attempted": False,
+        },
+    }
+
+
 def run_guarded_generation(plan: dict[str, Any]) -> dict[str, Any]:
     """Run the future Blender generation path after all external guards pass."""
     try:
@@ -420,6 +568,23 @@ def print_dry_run_summary(plan: dict[str, Any]) -> None:
 def run(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    if args.validate_metadata:
+        try:
+            metadata_path = resolve_metadata_validation_path(args.validate_metadata)
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+            if not isinstance(metadata, dict):
+                errors = ["metadata sidecar root must be an object"]
+            else:
+                errors = validate_3d_metadata_sidecar(metadata)
+        except (ValueError, json.JSONDecodeError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+
+        report = build_metadata_validation_report(str(metadata_path), errors)
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return 0 if report["valid"] else 1
+
     try:
         output_root = resolve_output_root(args.output_root)
         config_info = load_config(args.config) if args.config else None

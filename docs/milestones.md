@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.11 3D Metadata Sidecar Writer.
-- Next planned: M35.12 3D Metadata Sidecar Validator.
+- Latest completed: M35.12 3D Metadata Sidecar Validator.
+- Next planned: M35.13 Generic Primitive Builder Core.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -102,7 +102,7 @@ Current media milestone status:
 - M35.9 3D Output Cards Plan DONE
 - M35.10 Guarded Blender Generation Implementation DONE
 - M35.11 3D Metadata Sidecar Writer DONE
-- M35.12 3D Metadata Sidecar Validator PLANNED
+- M35.12 3D Metadata Sidecar Validator DONE
 - M35.13 Generic Primitive Builder Core PLANNED
 - M35.14 Blender Adapter Implementation PLANNED
 - M35.15 First Guarded Local Blender Generation Drill PLANNED
@@ -2165,12 +2165,22 @@ Goals:
 
 ## Milestone 35.12: 3D Metadata Sidecar Validator
 
+Status: DONE
+
+Goals:
+- Add a source-only validator for future 3D metadata sidecars.
+- Validate required fields, safety flags, and safe runtime-relative output file references.
+- Keep validation /tmp-only, read-only, and non-generating in this milestone.
+- Reject repo paths, runtime paths, absolute output paths, path traversal, and model backup-looking paths.
+
+## Milestone 35.13: Generic Primitive Builder Core
+
 Status: PLANNED
 
 Goals:
-- Validate future 3D metadata sidecar shape and required fields.
-- Keep validation source-only and safe for temporary files.
-- Reject unsafe paths, missing safety flags, and unexpected runtime mutation markers.
+- Add source-only primitive builder data structures for future Blender adapter use.
+- Keep builder tests independent from Blender.
+- Avoid runtime asset writes and generation triggers.
 
 ## Milestone 36.0: Animation Pipeline
 
