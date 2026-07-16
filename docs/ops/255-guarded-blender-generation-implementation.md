@@ -15,6 +15,8 @@ No generated 3D assets are created in this milestone.
 
 M35.11 adds metadata writer support without enabling generation or runtime asset writes.
 
+M35.13 prepares generic primitive plans for future guarded Blender adapter use.
+
 ## Why bpy Is Imported Only Inside Guarded Generation
 
 The generator must remain testable with normal Python. Importing `bpy` at module import time would make dry-run tests depend on Blender being installed.

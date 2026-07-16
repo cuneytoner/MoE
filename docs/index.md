@@ -260,6 +260,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [3D Metadata Sidecar Writer Review Template](ops/258-3d-metadata-sidecar-writer-review-template.md)
 - [3D Metadata Sidecar Validator](ops/259-3d-metadata-sidecar-validator.md)
 - [3D Metadata Sidecar Validator Review Template](ops/260-3d-metadata-sidecar-validator-review-template.md)
+- [Generic Primitive Builder Core](ops/261-generic-primitive-builder-core.md)
+- [Generic Primitive Builder Core Review Template](ops/262-generic-primitive-builder-core-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

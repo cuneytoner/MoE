@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.12 3D Metadata Sidecar Validator.
-- Next planned: M35.13 Generic Primitive Builder Core.
+- Latest completed: M35.13 Generic Primitive Builder Core.
+- Next planned: M35.14 Blender Adapter Implementation.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -103,7 +103,7 @@ Current media milestone status:
 - M35.10 Guarded Blender Generation Implementation DONE
 - M35.11 3D Metadata Sidecar Writer DONE
 - M35.12 3D Metadata Sidecar Validator DONE
-- M35.13 Generic Primitive Builder Core PLANNED
+- M35.13 Generic Primitive Builder Core DONE
 - M35.14 Blender Adapter Implementation PLANNED
 - M35.15 First Guarded Local Blender Generation Drill PLANNED
 - M35.16 Generated 3D Artifact Verification PLANNED
@@ -2181,10 +2181,11 @@ Goals:
 
 ## Milestone 35.13: Generic Primitive Builder Core
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Add source-only primitive builder data structures for future Blender adapter use.
+- Add source-only primitive builder data structures.
+- Convert config components to deterministic scene plans.
 - Keep builder tests independent from Blender.
 - Avoid runtime asset writes and generation triggers.
 

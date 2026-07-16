@@ -1,5 +1,7 @@
 # Generic Parametric Blender Prototype Plan
 
+M35.13 implements the Blender-independent primitive builder core.
+
 ## Purpose
 
 Plan the first generic deterministic Blender prototype pipeline.

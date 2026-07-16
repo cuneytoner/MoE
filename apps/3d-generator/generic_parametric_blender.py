@@ -17,6 +17,9 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+sys.dont_write_bytecode = True
+import primitive_builder
+
 
 RUNTIME_OUTPUT_ROOT = Path("/home/cuneyt/MoE/runtime/media/outputs/3d")
 TMP_ROOT = Path("/tmp")
@@ -83,6 +86,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--validate-metadata",
         help="Validate a metadata sidecar JSON file under /tmp.",
+    )
+    parser.add_argument(
+        "--scene-plan-json",
+        action="store_true",
+        help="Print Blender-independent generic 3D scene plan JSON. Requires --config.",
     )
     return parser
 
@@ -219,6 +227,17 @@ def build_plan(
 ) -> dict[str, Any]:
     generation_guard = build_generation_guard(execute_generation_requested)
     real_generation_enabled = generation_guard["real_generation_env_enabled"]
+    scene_plan_summary = None
+    if config_info is not None:
+        scene_plan, scene_errors = primitive_builder.build_scene_plan(config_info["payload"])
+        if scene_errors:
+            scene_plan_summary = {"valid": False, "errors": scene_errors}
+        elif scene_plan is not None:
+            scene_plan_summary = {
+                "valid": True,
+                "primitive_count": scene_plan["primitive_count"],
+                "primitive_types": scene_plan["primitive_types"],
+            }
     return {
         "status": "planned",
         "message": (
@@ -230,6 +249,7 @@ def build_plan(
         "config_loaded": config_info is not None,
         "config_path": config_info["path"] if config_info else None,
         "config_summary": config_info["summary"] if config_info else None,
+        "scene_plan_summary": scene_plan_summary,
         "generation_guard": generation_guard,
         "planned_output_subfolders": [
             "blender",
@@ -591,6 +611,17 @@ def run(argv: list[str] | None = None) -> int:
     except ValueError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+
+    if args.scene_plan_json:
+        if not config_info:
+            print("error: scene plan requires --config", file=sys.stderr)
+            return 2
+        scene_plan, scene_errors = primitive_builder.build_scene_plan(config_info["payload"])
+        if scene_errors:
+            print(f"error: scene plan invalid: {'; '.join(scene_errors)}", file=sys.stderr)
+            return 2
+        print(json.dumps(scene_plan, indent=2, sort_keys=True))
+        return 0
 
     if args.execute_generation and not generation_enabled():
         print("error: real generation requires REAL_3D_GENERATION=1", file=sys.stderr)

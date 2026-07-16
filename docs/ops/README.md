@@ -296,6 +296,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | 3D metadata sidecar writer review template | [258-3d-metadata-sidecar-writer-review-template.md](258-3d-metadata-sidecar-writer-review-template.md) |
 | 3D metadata sidecar validator | [259-3d-metadata-sidecar-validator.md](259-3d-metadata-sidecar-validator.md) |
 | 3D metadata sidecar validator review template | [260-3d-metadata-sidecar-validator-review-template.md](260-3d-metadata-sidecar-validator-review-template.md) |
+| Generic primitive builder core | [261-generic-primitive-builder-core.md](261-generic-primitive-builder-core.md) |
+| Generic primitive builder core review template | [262-generic-primitive-builder-core-review-template.md](262-generic-primitive-builder-core-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -1,5 +1,7 @@
 # Generic Parametric Blender Script Skeleton
 
+M35.13 adds scene-plan output using the primitive builder while remaining non-generating.
+
 ## What Was Added
 
 M35.4 adds a source-only dry-run skeleton for the future generic parametric Blender pipeline:

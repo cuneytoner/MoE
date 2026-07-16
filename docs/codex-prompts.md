@@ -114,7 +114,7 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.10 Guarded Blender Generation Implementation DONE
 - M35.11 3D Metadata Sidecar Writer DONE
 - M35.12 3D Metadata Sidecar Validator DONE
-- M35.13 Generic Primitive Builder Core PLANNED
+- M35.13 Generic Primitive Builder Core DONE
 - M35.14 Blender Adapter Implementation PLANNED
 - M35.15 First Guarded Local Blender Generation Drill PLANNED
 - M35.16 Generated 3D Artifact Verification PLANNED
@@ -123,7 +123,7 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.19 3D Reference Board Selection PLANNED
 - M35.20 M35 Phase Closure PLANNED
 
-M35 roadmap is fixed through M35.20. Next planned remains M35.13 Generic Primitive Builder Core. Do not add new milestones beyond M35.20 by default.
+M35 roadmap is fixed through M35.20. Next planned remains M35.14 Blender Adapter Implementation. Do not add new milestones beyond M35.20 by default.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 
