@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.13 Generic Primitive Builder Core.
-- Next planned: M35.14 Blender Adapter Implementation.
+- Latest completed: M35.14 Blender Adapter Implementation.
+- Next planned: M35.15 First Guarded Local Blender Generation Drill.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -104,7 +104,7 @@ Current media milestone status:
 - M35.11 3D Metadata Sidecar Writer DONE
 - M35.12 3D Metadata Sidecar Validator DONE
 - M35.13 Generic Primitive Builder Core DONE
-- M35.14 Blender Adapter Implementation PLANNED
+- M35.14 Blender Adapter Implementation DONE
 - M35.15 First Guarded Local Blender Generation Drill PLANNED
 - M35.16 Generated 3D Artifact Verification PLANNED
 - M35.17 3D Output Card API PLANNED
@@ -2191,15 +2191,13 @@ Goals:
 
 ## Milestone 35.14: Blender Adapter Implementation
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Add a Blender adapter layer that converts generic primitive builder output into Blender scene operations.
+- Add a Blender adapter layer that converts generic primitive builder output into Blender operation plans.
 - Keep `bpy` imports guarded and inside Blender-only execution paths.
 - Keep default execution dry-run and non-generating.
-- Preserve `REAL_3D_GENERATION=0` as the default.
-- Avoid writing runtime assets unless the guarded generation path is explicitly enabled.
-- Keep tests independent from Blender where possible, using adapter planning/mocking boundaries.
+- Keep tests independent from Blender.
 
 ## Milestone 35.15: First Guarded Local Blender Generation Drill
 

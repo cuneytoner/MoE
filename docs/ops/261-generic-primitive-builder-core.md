@@ -4,6 +4,8 @@
 
 M35.13 adds a Blender-independent primitive builder core for future generic 3D generation.
 
+M35.14 adds a Blender adapter operation-plan layer on top of scene plans without executing Blender.
+
 The builder converts validated config components into deterministic scene plan dictionaries. It does not import Blender, write files, or create runtime assets.
 
 ## Blender-Independent Primitive Builder

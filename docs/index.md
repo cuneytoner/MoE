@@ -262,6 +262,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [3D Metadata Sidecar Validator Review Template](ops/260-3d-metadata-sidecar-validator-review-template.md)
 - [Generic Primitive Builder Core](ops/261-generic-primitive-builder-core.md)
 - [Generic Primitive Builder Core Review Template](ops/262-generic-primitive-builder-core-review-template.md)
+- [Blender Adapter Implementation](ops/263-blender-adapter-implementation.md)
+- [Blender Adapter Implementation Review Template](ops/264-blender-adapter-implementation-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

@@ -298,6 +298,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | 3D metadata sidecar validator review template | [260-3d-metadata-sidecar-validator-review-template.md](260-3d-metadata-sidecar-validator-review-template.md) |
 | Generic primitive builder core | [261-generic-primitive-builder-core.md](261-generic-primitive-builder-core.md) |
 | Generic primitive builder core review template | [262-generic-primitive-builder-core-review-template.md](262-generic-primitive-builder-core-review-template.md) |
+| Blender adapter implementation | [263-blender-adapter-implementation.md](263-blender-adapter-implementation.md) |
+| Blender adapter implementation review template | [264-blender-adapter-implementation-review-template.md](264-blender-adapter-implementation-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

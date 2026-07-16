@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any
 
 sys.dont_write_bytecode = True
+import blender_adapter
 import primitive_builder
 
 
@@ -91,6 +92,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--scene-plan-json",
         action="store_true",
         help="Print Blender-independent generic 3D scene plan JSON. Requires --config.",
+    )
+    parser.add_argument(
+        "--blender-operation-plan-json",
+        action="store_true",
+        help="Print Blender adapter operation plan JSON. Requires --config.",
     )
     return parser
 
@@ -228,6 +234,7 @@ def build_plan(
     generation_guard = build_generation_guard(execute_generation_requested)
     real_generation_enabled = generation_guard["real_generation_env_enabled"]
     scene_plan_summary = None
+    blender_operation_plan_summary = None
     if config_info is not None:
         scene_plan, scene_errors = primitive_builder.build_scene_plan(config_info["payload"])
         if scene_errors:
@@ -238,6 +245,15 @@ def build_plan(
                 "primitive_count": scene_plan["primitive_count"],
                 "primitive_types": scene_plan["primitive_types"],
             }
+            blender_plan, blender_errors = blender_adapter.build_blender_operation_plan(scene_plan)
+            if blender_errors:
+                blender_operation_plan_summary = {"valid": False, "errors": blender_errors}
+            elif blender_plan is not None:
+                blender_operation_plan_summary = {
+                    "valid": True,
+                    "operation_count": blender_plan["operation_count"],
+                    "operation_types": blender_plan["operation_types"],
+                }
     return {
         "status": "planned",
         "message": (
@@ -250,6 +266,7 @@ def build_plan(
         "config_path": config_info["path"] if config_info else None,
         "config_summary": config_info["summary"] if config_info else None,
         "scene_plan_summary": scene_plan_summary,
+        "blender_operation_plan_summary": blender_operation_plan_summary,
         "generation_guard": generation_guard,
         "planned_output_subfolders": [
             "blender",
@@ -621,6 +638,21 @@ def run(argv: list[str] | None = None) -> int:
             print(f"error: scene plan invalid: {'; '.join(scene_errors)}", file=sys.stderr)
             return 2
         print(json.dumps(scene_plan, indent=2, sort_keys=True))
+        return 0
+
+    if args.blender_operation_plan_json:
+        if not config_info:
+            print("error: Blender operation plan requires --config", file=sys.stderr)
+            return 2
+        scene_plan, scene_errors = primitive_builder.build_scene_plan(config_info["payload"])
+        if scene_errors or scene_plan is None:
+            print(f"error: scene plan invalid: {'; '.join(scene_errors)}", file=sys.stderr)
+            return 2
+        blender_plan, blender_errors = blender_adapter.build_blender_operation_plan(scene_plan)
+        if blender_errors:
+            print(f"error: Blender operation plan invalid: {'; '.join(blender_errors)}", file=sys.stderr)
+            return 2
+        print(json.dumps(blender_plan, indent=2, sort_keys=True))
         return 0
 
     if args.execute_generation and not generation_enabled():
