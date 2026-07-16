@@ -242,6 +242,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Generic Parametric Blender Prototype Review Template](ops/240-generic-parametric-blender-prototype-review-template.md)
 - [Blender Runtime Output Safety Plan](ops/241-blender-runtime-output-safety-plan.md)
 - [Blender Runtime Output Safety Review Template](ops/242-blender-runtime-output-safety-review-template.md)
+- [Generic Parametric Blender Script Skeleton](ops/243-generic-parametric-blender-script-skeleton.md)
+- [Generic Parametric Blender Script Skeleton Review Template](ops/244-generic-parametric-blender-script-skeleton-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

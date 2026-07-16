@@ -10,6 +10,7 @@ Define the safe foundation for deterministic Blender-based 3D generation.
 - M35 starts 3D / Blender parametric pipeline work.
 - M35.2 defines the generic parametric Blender prototype plan and keeps project-specific examples separate from the core architecture.
 - M35.3 defines runtime output safety before any Blender execution.
+- M35.4 adds the first dry-run-only source skeleton.
 - This milestone does not generate 3D assets.
 - This milestone does not run Blender.
 

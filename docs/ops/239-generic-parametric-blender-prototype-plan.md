@@ -97,6 +97,8 @@ Plan Blender collection/object hierarchy:
 
 ## Geometry Generation Strategy
 
+M35.4 starts the source-only script skeleton for the generic prototype pipeline.
+
 - deterministic component generation from parameter JSON/YAML
 - reusable primitive builders
 - no physics/structural solver in early milestones

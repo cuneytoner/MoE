@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.3 Blender Runtime Output Safety Plan.
-- Next planned: M35.4 Generic Parametric Blender Script Skeleton.
+- Latest completed: M35.4 Generic Parametric Blender Script Skeleton.
+- Next planned: M35.5 Generic 3D Parameter Config Draft.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -94,9 +94,10 @@ Current media milestone status:
 - M35.1 3D / Blender Parametric Pipeline Foundation DONE
 - M35.2 Generic Parametric Blender Prototype Plan DONE
 - M35.3 Blender Runtime Output Safety Plan DONE
-- M35.4 Generic Parametric Blender Script Skeleton PLANNED
+- M35.4 Generic Parametric Blender Script Skeleton DONE
 - M35.5 Generic 3D Parameter Config Draft PLANNED
 - M35.6 First Dry-Run Blender Script Review PLANNED
+- M35.7 Guarded First Blender Generation Drill PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2071,13 +2072,23 @@ Goals:
 
 ## Milestone 35.4: Generic Parametric Blender Script Skeleton
 
+Status: DONE
+
+Goals:
+- Add a source-only dry-run Blender script skeleton.
+- Avoid importing bpy at module import time.
+- Emit human-readable and JSON generation plans.
+- Keep Blender execution and runtime asset writing disabled.
+- Add regression coverage proving no generated 3D assets are created.
+
+## Milestone 35.5: Generic 3D Parameter Config Draft
+
 Status: PLANNED
 
 Goals:
-- Add a source-only Blender script skeleton.
-- Keep it dry-run/plan-only by default.
-- Do not generate assets unless a later guarded milestone enables it.
-- Preserve runtime/source separation.
+- Add source-only parameter config draft for generic 3D objects.
+- Keep configs text-only.
+- Validate config shape without generating assets.
 
 ## Milestone 36.0: Animation Pipeline
 
