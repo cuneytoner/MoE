@@ -266,6 +266,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Blender Adapter Implementation Review Template](ops/264-blender-adapter-implementation-review-template.md)
 - [First Guarded Local Blender Generation Drill](ops/265-first-guarded-local-blender-generation-drill.md)
 - [First Guarded Local Blender Generation Drill Review Template](ops/266-first-guarded-local-blender-generation-drill-review-template.md)
+- [Generated 3D Artifact Verification](ops/267-generated-3d-artifact-verification.md)
+- [Generated 3D Artifact Verification Review Template](ops/268-generated-3d-artifact-verification-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

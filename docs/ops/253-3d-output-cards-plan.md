@@ -183,6 +183,7 @@ Future tests should verify:
 
 ## Future Milestones
 
+- M35.16 provides artifact verification before the 3D Output Card API.
 - M35.10 Guarded Blender Generation Implementation
 - M35.11 3D Metadata Sidecar Writer
 - M35.12 3D Metadata Sidecar Validator

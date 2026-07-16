@@ -19,6 +19,7 @@ from typing import Any
 
 sys.dont_write_bytecode = True
 import blender_adapter
+import artifact_verifier
 import primitive_builder
 
 
@@ -102,6 +103,15 @@ def build_parser() -> argparse.ArgumentParser:
         "--generation-drill-plan-json",
         action="store_true",
         help="Print first guarded local Blender generation drill plan JSON. Requires --config.",
+    )
+    parser.add_argument(
+        "--verify-artifacts",
+        help="Verify a 3D metadata sidecar from a /tmp path without writing files.",
+    )
+    parser.add_argument(
+        "--require-existing-artifacts",
+        action="store_true",
+        help="Require artifact references to exist under the approved runtime root.",
     )
     return parser
 
@@ -690,6 +700,20 @@ def run(argv: list[str] | None = None) -> int:
             return 2
 
         report = build_metadata_validation_report(str(metadata_path), errors)
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return 0 if report["valid"] else 1
+
+    if args.verify_artifacts:
+        try:
+            metadata = artifact_verifier.load_metadata_file(args.verify_artifacts)
+        except ValueError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+
+        report = artifact_verifier.verify_3d_artifact_set(
+            metadata,
+            require_existing_files=args.require_existing_artifacts,
+        )
         print(json.dumps(report, indent=2, sort_keys=True))
         return 0 if report["valid"] else 1
 

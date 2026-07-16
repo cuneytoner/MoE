@@ -106,6 +106,8 @@ Expected:
 
 Next milestone: M35.16 Generated 3D Artifact Verification.
 
+M35.16 adds read-only artifact verification for future generated Blender outputs.
+
 - M35.16 Generated 3D Artifact Verification
 - M35.17 3D Output Card API
 - M35.18 Dashboard 3D Output Cards UI

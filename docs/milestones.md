@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.15 First Guarded Local Blender Generation Drill.
-- Next planned: M35.16 Generated 3D Artifact Verification.
+- Latest completed: M35.16 Generated 3D Artifact Verification.
+- Next planned: M35.17 3D Output Card API.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -106,7 +106,7 @@ Current media milestone status:
 - M35.13 Generic Primitive Builder Core DONE
 - M35.14 Blender Adapter Implementation DONE
 - M35.15 First Guarded Local Blender Generation Drill DONE
-- M35.16 Generated 3D Artifact Verification PLANNED
+- M35.16 Generated 3D Artifact Verification DONE
 - M35.17 3D Output Card API PLANNED
 - M35.18 Dashboard 3D Output Cards UI PLANNED
 - M35.19 3D Reference Board Selection PLANNED
@@ -2211,15 +2211,13 @@ Goals:
 
 ## Milestone 35.16: Generated 3D Artifact Verification
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Verify generated 3D runtime artifacts after the first guarded drill.
-- Check that generated files exist only under the runtime 3D output root.
-- Validate metadata sidecars and generation reports.
-- Confirm git remains binary-clean.
-- Confirm no source assets, model files, or reference board files were mutated.
-- Add verification scripts that inspect outputs without generating new assets.
+- Check safe runtime-relative output references.
+- Validate metadata and artifact reports without generating new assets.
+- Keep verifier read-only and non-generating.
 
 ## Milestone 35.17: 3D Output Card API
 

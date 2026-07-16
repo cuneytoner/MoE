@@ -238,6 +238,7 @@ Illustrative source-only example:
 
 ## Future Milestones
 
+- M35.16 verifies sidecar output references before 3D cards consume them.
 - M35.9 3D Output Cards Plan
 - M35.10 Guarded Blender Generation Implementation
 - M35.11 3D Metadata Sidecar Writer
