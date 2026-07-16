@@ -69,6 +69,8 @@ This command is planned for a later milestone and must not be run in M35.7.
 M35.9 defines how future generated assets may later become read-only output cards.
 M35.10 implements guarded generation code paths but still does not run Blender or create assets.
 
+M35.15 implements the drill plan command pack without running Blender in tests.
+
 Future drill should write only under:
 
 ```text

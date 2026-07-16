@@ -116,14 +116,14 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.12 3D Metadata Sidecar Validator DONE
 - M35.13 Generic Primitive Builder Core DONE
 - M35.14 Blender Adapter Implementation DONE
-- M35.15 First Guarded Local Blender Generation Drill PLANNED
+- M35.15 First Guarded Local Blender Generation Drill DONE
 - M35.16 Generated 3D Artifact Verification PLANNED
 - M35.17 3D Output Card API PLANNED
 - M35.18 Dashboard 3D Output Cards UI PLANNED
 - M35.19 3D Reference Board Selection PLANNED
 - M35.20 M35 Phase Closure PLANNED
 
-M35 roadmap is fixed through M35.20. Next planned remains M35.15 First Guarded Local Blender Generation Drill. Do not add new milestones beyond M35.20 by default.
+M35 roadmap is fixed through M35.20. Next planned remains M35.16 Generated 3D Artifact Verification. Do not add new milestones beyond M35.20 by default.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

@@ -19,6 +19,8 @@ M35.13 prepares generic primitive plans for future guarded Blender adapter use.
 
 M35.14 prepares guarded Blender operation planning while preserving no-generation test behavior.
 
+M35.15 adds a first-generation drill plan JSON and operator command preview while preserving non-generating tests.
+
 ## Why bpy Is Imported Only Inside Guarded Generation
 
 The generator must remain testable with normal Python. Importing `bpy` at module import time would make dry-run tests depend on Blender being installed.

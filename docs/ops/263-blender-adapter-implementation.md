@@ -4,6 +4,8 @@
 
 M35.14 adds a source-only Blender adapter planning layer.
 
+M35.15 uses Blender operation plans as input to the future guarded generation drill.
+
 The adapter converts generic primitive scene plans into deterministic Blender operation plans without running Blender or importing `bpy` at module import time.
 
 ## Blender Adapter Plan Layer

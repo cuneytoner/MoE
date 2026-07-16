@@ -300,6 +300,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Generic primitive builder core review template | [262-generic-primitive-builder-core-review-template.md](262-generic-primitive-builder-core-review-template.md) |
 | Blender adapter implementation | [263-blender-adapter-implementation.md](263-blender-adapter-implementation.md) |
 | Blender adapter implementation review template | [264-blender-adapter-implementation-review-template.md](264-blender-adapter-implementation-review-template.md) |
+| First guarded local Blender generation drill | [265-first-guarded-local-blender-generation-drill.md](265-first-guarded-local-blender-generation-drill.md) |
+| First guarded local Blender generation drill review template | [266-first-guarded-local-blender-generation-drill-review-template.md](266-first-guarded-local-blender-generation-drill-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -98,6 +98,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Print Blender adapter operation plan JSON. Requires --config.",
     )
+    parser.add_argument(
+        "--generation-drill-plan-json",
+        action="store_true",
+        help="Print first guarded local Blender generation drill plan JSON. Requires --config.",
+    )
     return parser
 
 
@@ -337,6 +342,72 @@ def build_3d_metadata_sidecar(
         "operator_review_required": True,
         "notes": metadata_notes or "Metadata sidecar plan only. No runtime assets generated.",
         "safety_flags": safety_flags,
+    }
+
+
+def build_generation_drill_plan(
+    config_info: dict[str, Any],
+    scene_plan: dict[str, Any],
+    blender_operation_plan: dict[str, Any],
+) -> dict[str, Any]:
+    asset_name = config_info["summary"]["asset_name"]
+    config_path = config_info["path"]
+    planned_outputs = {
+        "blend": f"blender/{asset_name}-{{timestamp}}.blend",
+        "glb": f"glb/{asset_name}-{{timestamp}}.glb",
+        "metadata": f"metadata/{asset_name}-{{timestamp}}.json",
+        "report": f"reports/{asset_name}-{{timestamp}}.json",
+    }
+    metadata_plan = build_3d_metadata_sidecar(
+        build_plan(RUNTIME_OUTPUT_ROOT, config_info),
+        config_info["payload"],
+        config_path,
+        planned_outputs,
+    )
+    return {
+        "schema_version": "1.0",
+        "plan_type": "first_guarded_blender_generation_drill",
+        "asset_name": asset_name,
+        "asset_category": config_info["summary"]["asset_category"],
+        "runtime_output_root": str(RUNTIME_OUTPUT_ROOT),
+        "required_operator_command": (
+            "REAL_3D_GENERATION=1 blender --background --python "
+            "apps/3d-generator/generic_parametric_blender.py -- "
+            f"--config {config_path} --execute-generation"
+        ),
+        "preflight": {
+            "config_valid": True,
+            "scene_plan_valid": scene_plan.get("plan_type") == "generic_3d_scene_plan",
+            "blender_operation_plan_valid": blender_operation_plan.get("plan_type") == "blender_operation_plan",
+            "metadata_plan_available": metadata_plan.get("asset_type") == "3d_model",
+            "blender_available": None,
+            "safe_to_run_manually": False,
+        },
+        "planned_outputs": planned_outputs,
+        "scene_plan_summary": {
+            "primitive_count": scene_plan["primitive_count"],
+            "primitive_types": scene_plan["primitive_types"],
+        },
+        "blender_operation_plan_summary": {
+            "operation_count": blender_operation_plan["operation_count"],
+            "operation_types": blender_operation_plan["operation_types"],
+        },
+        "safety_flags": {
+            "dry_run": True,
+            "blender_execution_attempted": False,
+            "runtime_assets_written": False,
+            "generation_triggered": False,
+            "source_assets_modified": False,
+            "operator_review_required": True,
+        },
+        "stop_conditions": [
+            "Blender is unavailable or version is unknown.",
+            "Config, scene plan, Blender operation plan, or metadata plan fails review.",
+            "Operator has not explicitly approved REAL_3D_GENERATION=1.",
+            "Output root is not /home/cuneyt/MoE/runtime/media/outputs/3d.",
+            "Any planned output would be written inside the repo.",
+            "Git status shows unexpected generated binary files.",
+        ],
     }
 
 
@@ -653,6 +724,22 @@ def run(argv: list[str] | None = None) -> int:
             print(f"error: Blender operation plan invalid: {'; '.join(blender_errors)}", file=sys.stderr)
             return 2
         print(json.dumps(blender_plan, indent=2, sort_keys=True))
+        return 0
+
+    if args.generation_drill_plan_json:
+        if not config_info:
+            print("error: generation drill plan requires --config", file=sys.stderr)
+            return 2
+        scene_plan, scene_errors = primitive_builder.build_scene_plan(config_info["payload"])
+        if scene_errors or scene_plan is None:
+            print(f"error: scene plan invalid: {'; '.join(scene_errors)}", file=sys.stderr)
+            return 2
+        blender_plan, blender_errors = blender_adapter.build_blender_operation_plan(scene_plan)
+        if blender_errors or blender_plan is None:
+            print(f"error: Blender operation plan invalid: {'; '.join(blender_errors)}", file=sys.stderr)
+            return 2
+        drill_plan = build_generation_drill_plan(config_info, scene_plan, blender_plan)
+        print(json.dumps(drill_plan, indent=2, sort_keys=True))
         return 0
 
     if args.execute_generation and not generation_enabled():

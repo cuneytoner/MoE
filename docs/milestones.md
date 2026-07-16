@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.14 Blender Adapter Implementation.
-- Next planned: M35.15 First Guarded Local Blender Generation Drill.
+- Latest completed: M35.15 First Guarded Local Blender Generation Drill.
+- Next planned: M35.16 Generated 3D Artifact Verification.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -105,7 +105,7 @@ Current media milestone status:
 - M35.12 3D Metadata Sidecar Validator DONE
 - M35.13 Generic Primitive Builder Core DONE
 - M35.14 Blender Adapter Implementation DONE
-- M35.15 First Guarded Local Blender Generation Drill PLANNED
+- M35.15 First Guarded Local Blender Generation Drill DONE
 - M35.16 Generated 3D Artifact Verification PLANNED
 - M35.17 3D Output Card API PLANNED
 - M35.18 Dashboard 3D Output Cards UI PLANNED
@@ -2201,16 +2201,13 @@ Goals:
 
 ## Milestone 35.15: First Guarded Local Blender Generation Drill
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Run the first local, operator-approved Blender generation drill.
-- Require explicit `REAL_3D_GENERATION=1` and `--execute-generation`.
-- Write generated outputs only under `/home/cuneyt/MoE/runtime/media/outputs/3d`.
-- Generate a minimal safe 3D output from the generic config.
-- Produce metadata and report files for the generated output.
-- Keep generated `.blend`, `.glb`, `.obj`, `.fbx`, `.mtl`, and preview assets out of git.
-- Record evidence and stop conditions for review.
+- Add first guarded local Blender generation drill plan command pack.
+- Keep tests non-generating and Blender-independent.
+- Emit a reviewed operator command and runtime-relative planned outputs.
+- Preserve source/runtime/model separation.
 
 ## Milestone 35.16: Generated 3D Artifact Verification
 

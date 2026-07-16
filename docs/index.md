@@ -264,6 +264,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Generic Primitive Builder Core Review Template](ops/262-generic-primitive-builder-core-review-template.md)
 - [Blender Adapter Implementation](ops/263-blender-adapter-implementation.md)
 - [Blender Adapter Implementation Review Template](ops/264-blender-adapter-implementation-review-template.md)
+- [First Guarded Local Blender Generation Drill](ops/265-first-guarded-local-blender-generation-drill.md)
+- [First Guarded Local Blender Generation Drill Review Template](ops/266-first-guarded-local-blender-generation-drill-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)
