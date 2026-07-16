@@ -282,6 +282,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Generic parametric Blender script skeleton review template | [244-generic-parametric-blender-script-skeleton-review-template.md](244-generic-parametric-blender-script-skeleton-review-template.md) |
 | Generic 3D parameter config draft | [245-generic-3d-parameter-config-draft.md](245-generic-3d-parameter-config-draft.md) |
 | Generic 3D parameter config review template | [246-generic-3d-parameter-config-review-template.md](246-generic-3d-parameter-config-review-template.md) |
+| First dry-run Blender script review | [247-first-dry-run-blender-script-review.md](247-first-dry-run-blender-script-review.md) |
+| First dry-run Blender script review template | [248-first-dry-run-blender-script-review-template.md](248-first-dry-run-blender-script-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

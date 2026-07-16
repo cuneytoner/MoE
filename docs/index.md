@@ -246,6 +246,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Generic Parametric Blender Script Skeleton Review Template](ops/244-generic-parametric-blender-script-skeleton-review-template.md)
 - [Generic 3D Parameter Config Draft](ops/245-generic-3d-parameter-config-draft.md)
 - [Generic 3D Parameter Config Review Template](ops/246-generic-3d-parameter-config-review-template.md)
+- [First Dry-Run Blender Script Review](ops/247-first-dry-run-blender-script-review.md)
+- [First Dry-Run Blender Script Review Template](ops/248-first-dry-run-blender-script-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

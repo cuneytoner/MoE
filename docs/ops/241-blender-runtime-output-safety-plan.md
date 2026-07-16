@@ -89,6 +89,7 @@ Required fields:
 ## Generation Guard Plan
 
 M35.4 adds a dry-run-only script skeleton and does not generate assets.
+M35.6 validates dry-run safety flags before any guarded generation milestone.
 
 Future generation commands should default to dry-run or plan mode.
 

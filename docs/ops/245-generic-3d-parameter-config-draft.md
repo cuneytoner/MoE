@@ -4,6 +4,8 @@
 
 M35.5 adds a source-only generic 3D parameter config draft and validation path for the dry-run Blender skeleton.
 
+M35.6 reviews config loading through the dry-run review script.
+
 ## Config File Path
 
 ```text

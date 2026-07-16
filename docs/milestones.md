@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.5 Generic 3D Parameter Config Draft.
-- Next planned: M35.6 First Dry-Run Blender Script Review.
+- Latest completed: M35.6 First Dry-Run Blender Script Review.
+- Next planned: M35.7 Guarded First Blender Generation Drill.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -96,9 +96,10 @@ Current media milestone status:
 - M35.3 Blender Runtime Output Safety Plan DONE
 - M35.4 Generic Parametric Blender Script Skeleton DONE
 - M35.5 Generic 3D Parameter Config Draft DONE
-- M35.6 First Dry-Run Blender Script Review PLANNED
+- M35.6 First Dry-Run Blender Script Review DONE
 - M35.7 Guarded First Blender Generation Drill PLANNED
 - M35.8 3D Output Cards Plan PLANNED
+- M35.9 3D Metadata Sidecar Plan PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2094,12 +2095,24 @@ Goals:
 
 ## Milestone 35.6: First Dry-Run Blender Script Review
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Review the dry-run script and parameter config together.
 - Confirm no Blender execution, no generated assets, and no runtime mutation.
+- Add regression coverage for safety flags and negative generation/config cases.
 - Prepare for later guarded generation.
+
+## Milestone 35.7: Guarded First Blender Generation Drill
+
+Status: PLANNED
+
+Goals:
+- Plan a guarded first Blender generation drill.
+- Keep real generation disabled by default.
+- Require explicit operator enablement.
+- Write only to runtime if generation is later enabled.
+- Keep generated 3D binaries out of git.
 
 ## Milestone 36.0: Animation Pipeline
 
