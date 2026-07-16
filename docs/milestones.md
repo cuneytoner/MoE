@@ -112,6 +112,12 @@ Current media milestone status:
 - M35.19 3D Reference Board Selection PLANNED
 - M35.20 M35 Phase Closure PLANNED
 
+M35 fixed roadmap rule:
+- M35 scope is fixed through M35.20.
+- Do not add new M35.x milestones unless a reviewed change request is needed.
+- Implementation should proceed through the listed milestones in order.
+- Backlog ideas should be recorded separately, not inserted into the active M35 sequence.
+
 ## Milestone 0: Clean Codebase
 
 Status: DONE
@@ -2181,6 +2187,91 @@ Goals:
 - Add source-only primitive builder data structures for future Blender adapter use.
 - Keep builder tests independent from Blender.
 - Avoid runtime asset writes and generation triggers.
+
+## Milestone 35.14: Blender Adapter Implementation
+
+Status: PLANNED
+
+Goals:
+- Add a Blender adapter layer that converts generic primitive builder output into Blender scene operations.
+- Keep `bpy` imports guarded and inside Blender-only execution paths.
+- Keep default execution dry-run and non-generating.
+- Preserve `REAL_3D_GENERATION=0` as the default.
+- Avoid writing runtime assets unless the guarded generation path is explicitly enabled.
+- Keep tests independent from Blender where possible, using adapter planning/mocking boundaries.
+
+## Milestone 35.15: First Guarded Local Blender Generation Drill
+
+Status: PLANNED
+
+Goals:
+- Run the first local, operator-approved Blender generation drill.
+- Require explicit `REAL_3D_GENERATION=1` and `--execute-generation`.
+- Write generated outputs only under `/home/cuneyt/MoE/runtime/media/outputs/3d`.
+- Generate a minimal safe 3D output from the generic config.
+- Produce metadata and report files for the generated output.
+- Keep generated `.blend`, `.glb`, `.obj`, `.fbx`, `.mtl`, and preview assets out of git.
+- Record evidence and stop conditions for review.
+
+## Milestone 35.16: Generated 3D Artifact Verification
+
+Status: PLANNED
+
+Goals:
+- Verify generated 3D runtime artifacts after the first guarded drill.
+- Check that generated files exist only under the runtime 3D output root.
+- Validate metadata sidecars and generation reports.
+- Confirm git remains binary-clean.
+- Confirm no source assets, model files, or reference board files were mutated.
+- Add verification scripts that inspect outputs without generating new assets.
+
+## Milestone 35.17: 3D Output Card API
+
+Status: PLANNED
+
+Goals:
+- Add read-only Gateway API support for future 3D output cards.
+- Discover 3D cards from metadata sidecars under the runtime 3D output root.
+- Return safe card metadata such as asset name, category, formats, created time, safety label, and review status.
+- Reject unsafe paths, path traversal, repo paths, model backup paths, and arbitrary filesystem browsing.
+- Do not trigger generation, deletion, cleanup, repair, or shell execution.
+- Keep API behavior read-only and runtime-scoped.
+
+## Milestone 35.18: Dashboard 3D Output Cards UI
+
+Status: PLANNED
+
+Goals:
+- Add read-only Dashboard UI cards for future generated 3D assets.
+- Show asset name, category, available formats, safety label, metadata summary, and preview placeholder.
+- Keep Dashboard free of generation, delete, cleanup, shell, repair, or arbitrary browse controls.
+- Use the read-only 3D Output Card API.
+- Keep missing previews or assets as controlled warnings.
+- Preserve source/runtime/model boundaries.
+
+## Milestone 35.19: 3D Reference Board Selection
+
+Status: PLANNED
+
+Goals:
+- Allow future 3D output cards to be selected into reference boards as review items.
+- Store only reference metadata in board JSON, not copied 3D assets.
+- Keep selected 3D assets visual/reference-only unless policy changes.
+- Avoid mutating generated 3D files, metadata sidecars, or source assets.
+- Preserve existing reference board safety behavior and validation.
+- Do not add generation, delete, cleanup, or shell controls.
+
+## Milestone 35.20: M35 Phase Closure
+
+Status: PLANNED
+
+Goals:
+- Close the M35 generic 3D / Blender pipeline phase.
+- Summarize completed config, dry-run, guard, metadata, generation, verification, API, Dashboard, and reference board selection work.
+- Confirm generated 3D assets remain under runtime and out of git.
+- Confirm source/runtime/model separation remains intact.
+- Move remaining 3D polish or cleanup work to backlog.
+- Define the next phase only after reviewing M35 results.
 
 ## Milestone 36.0: Animation Pipeline
 

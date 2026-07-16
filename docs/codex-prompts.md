@@ -123,6 +123,8 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.19 3D Reference Board Selection PLANNED
 - M35.20 M35 Phase Closure PLANNED
 
+M35 roadmap is fixed through M35.20. Next planned remains M35.13 Generic Primitive Builder Core. Do not add new milestones beyond M35.20 by default.
+
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 
 ## Working Directory
