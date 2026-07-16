@@ -66,6 +66,8 @@ This command is planned for a later milestone and must not be run in M35.7.
 
 ## Runtime Output Plan
 
+M35.9 defines how future generated assets may later become read-only output cards.
+
 Future drill should write only under:
 
 ```text

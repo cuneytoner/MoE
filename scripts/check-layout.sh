@@ -532,6 +532,8 @@ required_paths=(
   "docs/ops/250-guarded-first-blender-generation-drill-review-template.md"
   "docs/ops/251-3d-metadata-sidecar-plan.md"
   "docs/ops/252-3d-metadata-sidecar-review-template.md"
+  "docs/ops/253-3d-output-cards-plan.md"
+  "docs/ops/254-3d-output-cards-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

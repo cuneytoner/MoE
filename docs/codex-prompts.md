@@ -110,7 +110,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.6 First Dry-Run Blender Script Review DONE
 - M35.7 Guarded First Blender Generation Drill Plan DONE
 - M35.8 3D Metadata Sidecar Plan DONE
-- M35.9 3D Output Cards Plan PLANNED
+- M35.9 3D Output Cards Plan DONE
+- M35.10 Guarded Blender Generation Implementation PLANNED
+- M35.11 3D Metadata Sidecar Writer PLANNED
+- M35.12 3D Metadata Sidecar Validator PLANNED
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

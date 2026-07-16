@@ -92,6 +92,7 @@ M35.4 adds a dry-run-only script skeleton and does not generate assets.
 M35.6 validates dry-run safety flags before any guarded generation milestone.
 M35.7 defines the future guarded generation drill sequence and stop conditions.
 M35.8 defines metadata sidecar requirements before real generation.
+M35.9 keeps future 3D output card display read-only and runtime-scoped.
 
 Future generation commands should default to dry-run or plan mode.
 
@@ -204,4 +205,5 @@ Future tests should verify:
 - M35.5 Generic 3D Parameter Config Draft
 - M35.6 First Dry-Run Blender Script Review
 - M35.7 Guarded First Blender Generation Drill
-- M35.8 3D Output Cards Plan
+- M35.8 3D Metadata Sidecar Plan
+- M35.9 3D Output Cards Plan

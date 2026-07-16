@@ -148,6 +148,8 @@ Future sidecar validator should check:
 
 ## Dashboard Use Later
 
+M35.9 plans future 3D output cards that read metadata sidecars without triggering generation.
+
 Future dashboard can read:
 
 - `asset_name`
