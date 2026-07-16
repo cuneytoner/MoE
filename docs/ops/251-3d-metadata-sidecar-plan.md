@@ -150,6 +150,8 @@ Future sidecar validator should check:
 
 M35.9 plans future 3D output cards that read metadata sidecars without triggering generation.
 
+M35.11 implements the source-only metadata sidecar writer using /tmp-only writes for tests.
+
 Future dashboard can read:
 
 - `asset_name`

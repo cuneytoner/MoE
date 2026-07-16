@@ -8,16 +8,21 @@ with normal Python and only emits plans for future guarded Blender execution.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
+import tempfile
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 
 RUNTIME_OUTPUT_ROOT = Path("/home/cuneyt/MoE/runtime/media/outputs/3d")
+TMP_ROOT = Path("/tmp")
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CONFIG_ROOT = REPO_ROOT / "configs" / "3d"
+GENERATOR_VERSION = "0.1.0"
 PLANNED_PRIMITIVES = [
     "rectangular_prism",
     "cylinder",
@@ -66,6 +71,15 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Request guarded Blender execution. Also requires REAL_3D_GENERATION=1.",
     )
+    parser.add_argument(
+        "--metadata-plan-json",
+        action="store_true",
+        help="Print future 3D metadata sidecar JSON without writing files.",
+    )
+    parser.add_argument(
+        "--write-metadata",
+        help="Write metadata sidecar JSON to a /tmp path. Requires --config.",
+    )
     return parser
 
 
@@ -104,6 +118,14 @@ def resolve_output_root(raw_output_root: str) -> Path:
 
 def generation_enabled() -> bool:
     return os.environ.get("REAL_3D_GENERATION", "0") == "1"
+
+
+def compute_config_hash(config_path: str) -> str:
+    digest = hashlib.sha256()
+    with Path(config_path).open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def require_mapping(value: object, label: str) -> dict[str, Any]:
@@ -223,8 +245,124 @@ def build_plan(
             "runtime_assets_written": False,
             "source_assets_modified": False,
             "generation_triggered": False,
+            "metadata_written": False,
         },
     }
+
+
+def build_3d_metadata_sidecar(
+    plan: dict[str, Any],
+    config: dict[str, Any] | None,
+    config_path: str | None,
+    output_files: dict[str, Any],
+) -> dict[str, Any]:
+    components = config.get("components", []) if config else []
+    component_types = sorted(
+        {
+            component.get("component_type")
+            for component in components
+            if isinstance(component, dict) and isinstance(component.get("component_type"), str)
+        }
+    )
+    metadata_notes = config.get("metadata", {}).get("notes") if config else None
+    safety_flags = dict(plan["safety_flags"])
+    safety_flags["metadata_written"] = False
+
+    return {
+        "schema_version": "1.0",
+        "asset_type": "3d_model",
+        "source": "blender_parametric",
+        "generator_script": str(Path(__file__).resolve()),
+        "generator_version": GENERATOR_VERSION,
+        "project_name": config.get("project_name") if config else None,
+        "asset_name": config.get("asset_name") if config else None,
+        "asset_category": config.get("asset_category") if config else None,
+        "config_path": config_path,
+        "config_hash": compute_config_hash(config_path) if config_path else None,
+        "parameters": {
+            "dimensions": config.get("dimensions") if config else None,
+            "materials": config.get("materials") if config else [],
+            "output_plan": config.get("output_plan") if config else None,
+        },
+        "units": config.get("units") if config else None,
+        "coordinate_system": config.get("coordinate_system") if config else None,
+        "component_count": len(components),
+        "component_types": component_types,
+        "output_files": output_files,
+        "created_at": datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+        "safety_label": "visual_reference_only",
+        "structural_certification": False,
+        "generation_mode": "metadata_only",
+        "operator_review_required": True,
+        "notes": metadata_notes or "Metadata sidecar plan only. No runtime assets generated.",
+        "safety_flags": safety_flags,
+    }
+
+
+def resolve_metadata_output_path(output_path: str, allow_tmp_only: bool = True) -> Path:
+    destination = Path(output_path).expanduser()
+    if not destination.is_absolute():
+        raise ValueError("metadata output path must be absolute")
+    if ".." in destination.parts:
+        raise ValueError("metadata output path must not contain path traversal")
+    if destination.suffix.lower() != ".json":
+        raise ValueError("metadata output path must use .json extension")
+
+    repo_root = REPO_ROOT.resolve(strict=True)
+    runtime_root = RUNTIME_OUTPUT_ROOT.resolve(strict=False)
+    tmp_root = TMP_ROOT.resolve(strict=True)
+    resolved = destination.resolve(strict=False)
+
+    if resolved == repo_root or repo_root in resolved.parents:
+        raise ValueError("metadata output path must not be inside the repo")
+    if resolved == runtime_root or runtime_root in resolved.parents:
+        raise ValueError("metadata output path must not be inside runtime in this milestone")
+    if allow_tmp_only and resolved != tmp_root and tmp_root not in resolved.parents:
+        raise ValueError("metadata output path must stay under /tmp in this milestone")
+
+    parent = resolved.parent
+    existing_parent = parent
+    while not existing_parent.exists():
+        if existing_parent == existing_parent.parent:
+            raise ValueError("metadata output parent cannot be resolved")
+        existing_parent = existing_parent.parent
+    if existing_parent.is_symlink():
+        raise ValueError("metadata output parent must not be a symlink")
+    if destination.exists() and destination.is_symlink():
+        raise ValueError("metadata output path must not be a symlink")
+    return resolved
+
+
+def write_metadata_sidecar(metadata: dict[str, Any], output_path: str, allow_tmp_only: bool = True) -> str:
+    destination = resolve_metadata_output_path(output_path, allow_tmp_only)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if destination.parent.is_symlink():
+        raise ValueError("metadata output parent must not be a symlink")
+
+    payload = dict(metadata)
+    safety_flags = dict(payload["safety_flags"])
+    safety_flags["metadata_written"] = True
+    safety_flags["runtime_assets_written"] = False
+    safety_flags["source_assets_modified"] = False
+    safety_flags["generation_triggered"] = False
+    payload["safety_flags"] = safety_flags
+
+    with tempfile.NamedTemporaryFile(
+        "w",
+        encoding="utf-8",
+        dir=destination.parent,
+        prefix=f".{destination.name}.",
+        suffix=".tmp",
+        delete=False,
+    ) as handle:
+        tmp_path = Path(handle.name)
+        json.dump(payload, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+
+    os.replace(tmp_path, destination)
+    return str(destination)
 
 
 def run_guarded_generation(plan: dict[str, Any]) -> dict[str, Any]:
@@ -294,6 +432,34 @@ def run(argv: list[str] | None = None) -> int:
         return 2
 
     plan = build_plan(output_root, config_info, args.execute_generation)
+    planned_output_files = {
+        "blend": None,
+        "glb": None,
+        "obj": None,
+        "preview": None,
+        "report": None,
+    }
+
+    if args.metadata_plan_json or args.write_metadata:
+        if not config_info:
+            print("error: metadata sidecar writing requires --config", file=sys.stderr)
+            return 2
+        metadata = build_3d_metadata_sidecar(
+            plan,
+            config_info["payload"],
+            config_info["path"],
+            planned_output_files,
+        )
+        if args.metadata_plan_json:
+            print(json.dumps(metadata, indent=2, sort_keys=True))
+            return 0
+        try:
+            written_path = write_metadata_sidecar(metadata, args.write_metadata)
+        except ValueError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        print(written_path)
+        return 0
 
     if args.execute_generation:
         try:

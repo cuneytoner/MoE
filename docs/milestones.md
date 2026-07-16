@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.10 Guarded Blender Generation Implementation.
-- Next planned: M35.11 3D Metadata Sidecar Writer.
+- Latest completed: M35.11 3D Metadata Sidecar Writer.
+- Next planned: M35.12 3D Metadata Sidecar Validator.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -101,9 +101,16 @@ Current media milestone status:
 - M35.8 3D Metadata Sidecar Plan DONE
 - M35.9 3D Output Cards Plan DONE
 - M35.10 Guarded Blender Generation Implementation DONE
-- M35.11 3D Metadata Sidecar Writer PLANNED
+- M35.11 3D Metadata Sidecar Writer DONE
 - M35.12 3D Metadata Sidecar Validator PLANNED
-- M35.13 First Local Blender Generation Drill PLANNED
+- M35.13 Generic Primitive Builder Core PLANNED
+- M35.14 Blender Adapter Implementation PLANNED
+- M35.15 First Guarded Local Blender Generation Drill PLANNED
+- M35.16 Generated 3D Artifact Verification PLANNED
+- M35.17 3D Output Card API PLANNED
+- M35.18 Dashboard 3D Output Cards UI PLANNED
+- M35.19 3D Reference Board Selection PLANNED
+- M35.20 M35 Phase Closure PLANNED
 
 ## Milestone 0: Clean Codebase
 
@@ -2149,12 +2156,21 @@ Goals:
 
 ## Milestone 35.11: 3D Metadata Sidecar Writer
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add a source-only metadata writer function for future generated 3D assets.
 - Keep writer inactive unless generation is explicitly guarded.
 - Test sidecar generation into temporary files only, not runtime output assets.
+
+## Milestone 35.12: 3D Metadata Sidecar Validator
+
+Status: PLANNED
+
+Goals:
+- Validate future 3D metadata sidecar shape and required fields.
+- Keep validation source-only and safe for temporary files.
+- Reject unsafe paths, missing safety flags, and unexpected runtime mutation markers.
 
 ## Milestone 36.0: Animation Pipeline
 
