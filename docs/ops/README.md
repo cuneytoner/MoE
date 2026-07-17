@@ -314,6 +314,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | M35 3D pipeline phase closure review template | [276-m35-3d-pipeline-phase-closure-review-template.md](276-m35-3d-pipeline-phase-closure-review-template.md) |
 | Animation pipeline foundation | [277-animation-pipeline-foundation.md](277-animation-pipeline-foundation.md) |
 | Animation pipeline foundation review template | [278-animation-pipeline-foundation-review-template.md](278-animation-pipeline-foundation-review-template.md) |
+| Animation plan schema | [279-animation-plan-schema.md](279-animation-plan-schema.md) |
+| Animation plan schema review template | [280-animation-plan-schema-review-template.md](280-animation-plan-schema-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

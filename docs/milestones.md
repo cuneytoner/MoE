@@ -2,8 +2,8 @@
 
 Current active phase:
 - M36 Animation Pipeline is active.
-- Latest completed: M36.0 Animation Pipeline Foundation and Roadmap.
-- Next planned: M36.1 Animation Plan Schema.
+- Latest completed: M36.1 Animation Plan Schema.
+- Next planned: M36.2 Animation Plan Validator.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -112,7 +112,7 @@ Current media milestone status:
 - M35.19 3D Reference Board Selection DONE
 - M35.20 M35 Phase Closure DONE
 - M36.0 Animation Pipeline Foundation and Roadmap DONE
-- M36.1 Animation Plan Schema PLANNED
+- M36.1 Animation Plan Schema DONE
 - M36.2 Animation Plan Validator PLANNED
 - M36.3 Timeline and Keyframe Planner Core PLANNED
 - M36.4 Camera Animation Planner PLANNED
@@ -2297,10 +2297,12 @@ Goals:
 
 ## Milestone 36.1: Animation Plan Schema
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Define a strict animation plan schema from the source-only example.
+- Define a strict canonical JSON Schema Draft 2020-12 animation plan schema from the source-only example.
+- Cover structural validation for types, required fields, enums, constants, lengths, array bounds, safe ids, and runtime-relative output paths.
+- Defer semantic validation to M36.2, including timeline consistency, unique track ids, ordered keyframes, property/keyframe compatibility, target resolution, runtime asset existence, and symlink/filesystem checks.
 - Keep schema validation source-only and non-generating.
 - Preserve runtime/model/source boundaries.
 

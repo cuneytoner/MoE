@@ -57,7 +57,7 @@ grep -q "REAL_ANIMATION_GENERATION=1" "$DOC"
 grep -q -- "--execute-animation" "$DOC"
 grep -q -- "--render-preview" "$DOC"
 grep -q "M36.0 | Animation Pipeline Foundation and Roadmap | DONE" "$DOC"
-grep -q "M36.1 | Animation Plan Schema | PLANNED" "$DOC"
+grep -q "M36.1 | Animation Plan Schema | DONE" "$DOC"
 
 python3 - "$MILESTONES" <<'PY'
 import re
@@ -67,7 +67,7 @@ from pathlib import Path
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = {
     "36.0": "DONE",
-    "36.1": "PLANNED",
+    "36.1": "DONE",
     "36.2": "PLANNED",
     "36.3": "PLANNED",
     "36.4": "PLANNED",
@@ -100,7 +100,7 @@ if find apps scripts -type f \( -name '*animation*.py' -o -name '*animation*.ts'
   exit 1
 fi
 
-if grep -R "REAL_ANIMATION_GENERATION\|execute-animation\|render-preview" apps scripts --exclude='test-animation-pipeline-foundation.sh' >/dev/null; then
+if grep -R "REAL_ANIMATION_GENERATION\|execute-animation\|render-preview" apps scripts --exclude='test-animation-pipeline-foundation.sh' --exclude='test-animation-plan-schema.sh' >/dev/null; then
   echo "animation execution flags found outside foundation docs/config tests" >&2
   exit 1
 fi

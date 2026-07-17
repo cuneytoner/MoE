@@ -269,7 +269,7 @@ It checks the docs, example config, safety flags, roadmap, source-only audits, a
 | Milestone | Title | Status |
 | --- | --- | --- |
 | M36.0 | Animation Pipeline Foundation and Roadmap | DONE |
-| M36.1 | Animation Plan Schema | PLANNED |
+| M36.1 | Animation Plan Schema | DONE |
 | M36.2 | Animation Plan Validator | PLANNED |
 | M36.3 | Timeline and Keyframe Planner Core | PLANNED |
 | M36.4 | Camera Animation Planner | PLANNED |
@@ -301,4 +301,6 @@ M36.0 is DONE as a foundation and roadmap milestone.
 
 Current active phase: M36 Animation Pipeline.
 
-Next planned milestone: M36.1 Animation Plan Schema.
+Latest completed milestone: M36.1 Animation Plan Schema.
+
+Next planned milestone: M36.2 Animation Plan Validator.

@@ -278,6 +278,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [M35 3D Pipeline Phase Closure Review Template](ops/276-m35-3d-pipeline-phase-closure-review-template.md)
 - [Animation Pipeline Foundation](ops/277-animation-pipeline-foundation.md)
 - [Animation Pipeline Foundation Review Template](ops/278-animation-pipeline-foundation-review-template.md)
+- [Animation Plan Schema](ops/279-animation-plan-schema.md)
+- [Animation Plan Schema Review Template](ops/280-animation-plan-schema-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)
