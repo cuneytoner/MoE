@@ -121,9 +121,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.17 3D Output Card API DONE
 - M35.18 Dashboard 3D Output Cards UI DONE
 - M35.19 3D Reference Board Selection DONE
-- M35.20 M35 Phase Closure PLANNED
+- M35.20 M35 Phase Closure DONE
+- M36.0 Animation Pipeline PLANNED
 
-M35 roadmap is fixed through M35.20. Next planned remains M35.20 M35 Phase Closure. Do not add new milestones beyond M35.20 by default.
+M35 phase is closed. Next planned remains M36.0 Animation Pipeline. Do not implement M36 code until an explicit M36 task is requested.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

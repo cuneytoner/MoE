@@ -132,11 +132,13 @@ make tree
 
 ## Current Milestone
 
-Completed through Milestone 35.19: 3D Reference Board Selection
+M35 is closed.
+
+Completed through Milestone 35.20: M35 Phase Closure
 
 Next planned milestone:
 
-Milestone 35.20: M35 Phase Closure
+Milestone 36.0: Animation Pipeline
 
 ## Model Inventory
 

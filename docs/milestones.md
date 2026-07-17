@@ -1,9 +1,9 @@
 # MoE / AI-Brain-OS Milestones
 
 Current active phase:
-- M35 roadmap start is active.
-- Latest completed: M35.19 3D Reference Board Selection.
-- Next planned: M35.20 M35 Phase Closure.
+- M35 3D pipeline phase is closed.
+- Latest completed: M35.20 M35 Phase Closure.
+- Next planned: M36.0 Animation Pipeline.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -110,7 +110,8 @@ Current media milestone status:
 - M35.17 3D Output Card API DONE
 - M35.18 Dashboard 3D Output Cards UI DONE
 - M35.19 3D Reference Board Selection DONE
-- M35.20 M35 Phase Closure PLANNED
+- M35.20 M35 Phase Closure DONE
+- M36.0 Animation Pipeline PLANNED
 
 M35 fixed roadmap rule:
 - M35 scope is fixed through M35.20.
@@ -2256,7 +2257,7 @@ Goals:
 
 ## Milestone 35.20: M35 Phase Closure
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Close the M35 generic 3D / Blender pipeline phase.
@@ -2264,7 +2265,7 @@ Goals:
 - Confirm generated 3D assets remain under runtime and out of git.
 - Confirm source/runtime/model separation remains intact.
 - Move remaining 3D polish or cleanup work to backlog.
-- Define the next phase only after reviewing M35 results.
+- Define M36.0 Animation Pipeline as the next planned phase without implementing it.
 
 ## Milestone 36.0: Animation Pipeline
 
