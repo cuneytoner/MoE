@@ -2,6 +2,8 @@
 
 M35.16 adds a read-only verifier for future generated 3D runtime artifact sets.
 
+M35.17 uses artifact verification concepts before exposing 3D cards.
+
 The verifier is for the period after a guarded Blender drill has produced files under:
 
 ```text

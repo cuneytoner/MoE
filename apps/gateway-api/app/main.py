@@ -15,6 +15,7 @@ from app.clients.model_runtime import ModelRuntimeClient, ModelRuntimeUnavailabl
 from app.clients.prompt_interpreter import PromptInterpreterClient
 from app.config import get_settings
 from app.media_dashboard import build_media_dashboard
+from app.media_3d_output_cards import build_3d_output_cards
 from app.output_cards import (
     build_output_cards,
     find_output_card_by_id,
@@ -322,6 +323,11 @@ async def media_dashboard() -> dict[str, Any]:
 @app.get("/gateway/media/output-cards")
 async def media_output_cards() -> dict[str, Any]:
     return build_output_cards()
+
+
+@app.get("/gateway/media/3d/cards")
+async def media_3d_output_cards() -> dict[str, Any]:
+    return build_3d_output_cards()
 
 
 @app.get("/gateway/media/output-preview/{card_id:path}", response_model=None)

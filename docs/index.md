@@ -268,6 +268,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [First Guarded Local Blender Generation Drill Review Template](ops/266-first-guarded-local-blender-generation-drill-review-template.md)
 - [Generated 3D Artifact Verification](ops/267-generated-3d-artifact-verification.md)
 - [Generated 3D Artifact Verification Review Template](ops/268-generated-3d-artifact-verification-review-template.md)
+- [3D Output Card API](ops/269-3d-output-card-api.md)
+- [3D Output Card API Review Template](ops/270-3d-output-card-api-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

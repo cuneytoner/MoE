@@ -304,6 +304,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | First guarded local Blender generation drill review template | [266-first-guarded-local-blender-generation-drill-review-template.md](266-first-guarded-local-blender-generation-drill-review-template.md) |
 | Generated 3D artifact verification | [267-generated-3d-artifact-verification.md](267-generated-3d-artifact-verification.md) |
 | Generated 3D artifact verification review template | [268-generated-3d-artifact-verification-review-template.md](268-generated-3d-artifact-verification-review-template.md) |
+| 3D output card API | [269-3d-output-card-api.md](269-3d-output-card-api.md) |
+| 3D output card API review template | [270-3d-output-card-api-review-template.md](270-3d-output-card-api-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

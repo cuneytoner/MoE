@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.16 Generated 3D Artifact Verification.
-- Next planned: M35.17 3D Output Card API.
+- Latest completed: M35.17 3D Output Card API.
+- Next planned: M35.18 Dashboard 3D Output Cards UI.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -107,7 +107,7 @@ Current media milestone status:
 - M35.14 Blender Adapter Implementation DONE
 - M35.15 First Guarded Local Blender Generation Drill DONE
 - M35.16 Generated 3D Artifact Verification DONE
-- M35.17 3D Output Card API PLANNED
+- M35.17 3D Output Card API DONE
 - M35.18 Dashboard 3D Output Cards UI PLANNED
 - M35.19 3D Reference Board Selection PLANNED
 - M35.20 M35 Phase Closure PLANNED
@@ -2221,14 +2221,13 @@ Goals:
 
 ## Milestone 35.17: 3D Output Card API
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add read-only Gateway API support for future 3D output cards.
 - Discover 3D cards from metadata sidecars under the runtime 3D output root.
 - Return safe card metadata such as asset name, category, formats, created time, safety label, and review status.
-- Reject unsafe paths, path traversal, repo paths, model backup paths, and arbitrary filesystem browsing.
-- Do not trigger generation, deletion, cleanup, repair, or shell execution.
+- Reject unsafe paths, path traversal, repo paths, model backup paths, symlinks, and arbitrary filesystem browsing.
 - Keep API behavior read-only and runtime-scoped.
 
 ## Milestone 35.18: Dashboard 3D Output Cards UI
