@@ -4,6 +4,7 @@ import type {
   OutputCardMetadataResponse,
   OutputCardsResponse,
   ReferenceBoardAddItemRequest,
+  ReferenceBoardAddThreeDItemRequest,
   ReferenceBoardCreateRequest,
   ReferenceBoardResponse,
   ReferenceBoardUpdateItemRequest,
@@ -146,6 +147,21 @@ export async function addReferenceBoardItem(
   });
   if (!response.ok) {
     throw new Error(await gatewayErrorMessage(response, "Gateway reference board item add"));
+  }
+  return response.json();
+}
+
+export async function addThreeDReferenceBoardItem(
+  boardId: string,
+  request: ReferenceBoardAddThreeDItemRequest,
+): Promise<ReferenceBoardResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/items/3d`, {
+    body: JSON.stringify(request),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  });
+  if (!response.ok) {
+    throw new Error(await gatewayErrorMessage(response, "Gateway 3D reference board item add"));
   }
   return response.json();
 }

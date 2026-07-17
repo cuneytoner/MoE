@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.18 Dashboard 3D Output Cards UI.
-- Next planned: M35.19 3D Reference Board Selection.
+- Latest completed: M35.19 3D Reference Board Selection.
+- Next planned: M35.20 M35 Phase Closure.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -109,7 +109,7 @@ Current media milestone status:
 - M35.16 Generated 3D Artifact Verification DONE
 - M35.17 3D Output Card API DONE
 - M35.18 Dashboard 3D Output Cards UI DONE
-- M35.19 3D Reference Board Selection PLANNED
+- M35.19 3D Reference Board Selection DONE
 - M35.20 M35 Phase Closure PLANNED
 
 M35 fixed roadmap rule:
@@ -2244,7 +2244,7 @@ Goals:
 
 ## Milestone 35.19: 3D Reference Board Selection
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Allow future 3D output cards to be selected into reference boards as review items.

@@ -30,6 +30,20 @@ def build_3d_output_cards() -> dict[str, Any]:
     return _build_3d_output_cards_from_root(DEFAULT_RUNTIME_3D_ROOT)
 
 
+def find_3d_output_card_by_id(card_id: str) -> dict[str, Any] | None:
+    return _find_3d_output_card_by_id_in_root(card_id, DEFAULT_RUNTIME_3D_ROOT)
+
+
+def _find_3d_output_card_by_id_in_root(card_id: str, runtime_root: str | Path) -> dict[str, Any] | None:
+    if _unsafe_card_id(card_id):
+        return None
+    response = _build_3d_output_cards_from_root(runtime_root)
+    for card in response.get("cards", []):
+        if isinstance(card, dict) and card.get("id") == card_id:
+            return card
+    return None
+
+
 def _build_3d_output_cards_from_root(runtime_root: str | Path) -> dict[str, Any]:
     root = Path(runtime_root).expanduser()
     response = _base_response()
@@ -372,3 +386,18 @@ def _path_has_unsafe_parts(path: Path) -> bool:
 
 def _has_hidden_part(path: Path) -> bool:
     return any(part.startswith(".") for part in path.parts)
+
+
+def _unsafe_card_id(card_id: str) -> bool:
+    if not isinstance(card_id, str) or not card_id:
+        return True
+    if "\x00" in card_id or any(char in string.whitespace and char != " " for char in card_id):
+        return True
+    lowered = card_id.lower()
+    if "\\" in card_id or ".." in card_id or card_id.startswith(("/", "./", "//")):
+        return True
+    if "://" in lowered or lowered.startswith("file:"):
+        return True
+    if len(card_id) >= 2 and card_id[1] == ":":
+        return True
+    return False

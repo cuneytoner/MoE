@@ -598,6 +598,24 @@ class ReferenceBoardAddItemRequest(BaseModel):
         return value
 
 
+class ReferenceBoardAddThreeDItemRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    card_id: str = Field(min_length=1, max_length=240)
+    selected_reason: str | None = Field(default=None, max_length=1000)
+    tags: list[str] | None = Field(default=None, max_length=12)
+
+    @field_validator("tags")
+    @classmethod
+    def validate_tags(cls, value: list[str] | None) -> list[str] | None:
+        if value is None:
+            return None
+        for tag in value:
+            if not tag or len(tag.strip()) > 40:
+                raise ValueError("tags must be non-empty strings up to 40 characters")
+        return value
+
+
 class ReferenceBoardUpdateItemRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

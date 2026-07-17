@@ -175,6 +175,24 @@ Do not commit `node_modules`, `dist`, build output, logs, generated media, or ru
 
 Milestone 35.18 keeps the source repository clean by running the 3D output cards UI build test in an isolated temporary Docker workspace when the local `node:22-alpine` image is already available. The test refuses to pull images automatically and must not create `node_modules`, `dist`, `build`, or `.cache` under the source checkout.
 
+## 3D Output Cards
+
+Milestone 35.18 adds a read-only 3D Output Cards panel backed by:
+
+```text
+GET /gateway/media/3d/cards
+```
+
+Milestone 35.19 adds 3D reference-board selection backed by:
+
+```text
+POST /gateway/media/reference-boards/{board_id}/items/3d
+```
+
+The Dashboard sends only `card_id`, `selected_reason`, and `tags`. Gateway resolves asset name, safety label, metadata path, and runtime-relative reference path server-side from the verified 3D output card.
+
+3D reference-board selection writes only reference metadata. It does not copy, move, delete, regenerate, repair, or modify 3D assets.
+
 ## Configuration
 
 Example-only environment values live in `.env.example`:

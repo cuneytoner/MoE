@@ -15,7 +15,7 @@ from app.clients.model_runtime import ModelRuntimeClient, ModelRuntimeUnavailabl
 from app.clients.prompt_interpreter import PromptInterpreterClient
 from app.config import get_settings
 from app.media_dashboard import build_media_dashboard
-from app.media_3d_output_cards import build_3d_output_cards
+from app.media_3d_output_cards import build_3d_output_cards, find_3d_output_card_by_id
 from app.output_cards import (
     build_output_cards,
     find_output_card_by_id,
@@ -30,6 +30,7 @@ from app.reference_boards import (
     add_item_to_reference_board,
     board_path_for_id,
     build_empty_reference_board,
+    build_3d_reference_board_item,
     build_reference_board_download_filename,
     build_reference_board_json_export,
     build_reference_board_markdown_export,
@@ -95,6 +96,7 @@ from app.models.gateway import (
     OpenAIChatCompletionUsage,
     OpenAIChatMessage,
     ReferenceBoardAddItemRequest,
+    ReferenceBoardAddThreeDItemRequest,
     ReferenceBoardCreateRequest,
     ReferenceBoardUpdateItemRequest,
 )
@@ -802,6 +804,104 @@ async def media_reference_board_add_item(
             400,
             "invalid_reference_board_payload",
             "Reference board item payload is invalid.",
+        )
+
+    return {
+        "status": "ok",
+        "service": "gateway-reference-boards",
+        "board": board,
+        "item": item,
+    }
+
+
+@app.post("/gateway/media/reference-boards/{board_id}/items/3d", response_model=None)
+async def media_reference_board_add_3d_item(
+    board_id: str,
+    request_data: dict[str, Any],
+) -> dict[str, Any] | JSONResponse:
+    try:
+        request = ReferenceBoardAddThreeDItemRequest.model_validate(request_data)
+    except ValidationError:
+        return _reference_board_error(
+            400,
+            "invalid_reference_board_payload",
+            "Reference board 3D item payload is invalid.",
+        )
+
+    try:
+        safe_board_id = sanitize_board_id(board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    try:
+        load_reference_board(safe_board_id)
+    except FileNotFoundError:
+        return _reference_board_error(
+            404,
+            "reference_board_not_found",
+            "Reference board not found.",
+        )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_reference_board_payload",
+            "Reference board data is invalid.",
+        )
+
+    card = find_3d_output_card_by_id(request.card_id)
+    if card is None:
+        return _reference_board_error(
+            404,
+            "3d_output_card_not_found",
+            "3D output card not found.",
+        )
+
+    item = build_3d_reference_board_item(
+        card=card,
+        selected_reason=request.selected_reason,
+        request_tags=request.tags,
+    )
+    try:
+        board = add_item_to_reference_board(safe_board_id, item)
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
+    except ValueError as exc:
+        if str(exc) == "reference_board_item_exists":
+            return _reference_board_error(
+                409,
+                "reference_board_item_exists",
+                "3D output card is already selected in this board.",
+            )
+        return _reference_board_error(
+            400,
+            "invalid_reference_board_payload",
+            "Reference board 3D item payload is invalid.",
         )
 
     return {

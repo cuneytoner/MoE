@@ -440,6 +440,12 @@ export type ReferenceBoardAddItemRequest = {
   tags?: string[] | null;
 };
 
+export type ReferenceBoardAddThreeDItemRequest = {
+  card_id: string;
+  selected_reason?: string | null;
+  tags?: string[] | null;
+};
+
 export type ReferenceBoardUpdateItemRequest = {
   selected_reason?: string | null;
   tags?: string[] | null;

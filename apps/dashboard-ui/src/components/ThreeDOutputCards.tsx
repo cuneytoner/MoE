@@ -1,17 +1,20 @@
 import ViewInArOutlinedIcon from "@mui/icons-material/ViewInArOutlined";
-import { Alert, Box, Card, CardContent, CardHeader, Chip, Stack, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, CardHeader, Chip, Stack, Typography } from "@mui/material";
 import type { ThreeDOutputCard, ThreeDOutputCardsResponse } from "../types";
 import { StatusChip } from "./StatusChip";
 
 type Props = {
+  activeBoardId: string;
+  addingCardId: string;
   cardsResponse: ThreeDOutputCardsResponse | null;
   error: string;
   loading: boolean;
+  onAddToBoard: (card: ThreeDOutputCard) => void;
 };
 
 const MAX_VISIBLE_CARDS = 12;
 
-export function ThreeDOutputCards({ cardsResponse, error, loading }: Props) {
+export function ThreeDOutputCards({ activeBoardId, addingCardId, cardsResponse, error, loading, onAddToBoard }: Props) {
   const cards = cardsResponse?.cards ?? [];
   const visibleCards = cards.slice(0, MAX_VISIBLE_CARDS);
   const metadataMissing = cardsResponse?.metadata_dir_available === false;
@@ -36,6 +39,10 @@ export function ThreeDOutputCards({ cardsResponse, error, loading }: Props) {
             </Typography>
             <StatusChip label="read-only" tone="ok" />
           </Stack>
+
+          <Alert severity="info" variant="outlined">
+            Adds a metadata reference only. No 3D asset is copied or modified.
+          </Alert>
 
           {error ? (
             <Alert severity="warning" variant="outlined">
@@ -88,7 +95,13 @@ export function ThreeDOutputCards({ cardsResponse, error, loading }: Props) {
               }}
             >
               {visibleCards.map((card) => (
-                <ThreeDOutputCardTile card={card} key={card.id} />
+                <ThreeDOutputCardTile
+                  activeBoardId={activeBoardId}
+                  adding={addingCardId === card.id}
+                  card={card}
+                  key={card.id}
+                  onAddToBoard={onAddToBoard}
+                />
               ))}
             </Box>
           ) : null}
@@ -98,8 +111,19 @@ export function ThreeDOutputCards({ cardsResponse, error, loading }: Props) {
   );
 }
 
-function ThreeDOutputCardTile({ card }: { card: ThreeDOutputCard }) {
+function ThreeDOutputCardTile({
+  activeBoardId,
+  adding,
+  card,
+  onAddToBoard,
+}: {
+  activeBoardId: string;
+  adding: boolean;
+  card: ThreeDOutputCard;
+  onAddToBoard: (card: ThreeDOutputCard) => void;
+}) {
   const verificationTone = card.verification.valid ? "ok" : "warning";
+  const addDisabled = !activeBoardId || adding;
 
   return (
     <Card variant="outlined">
@@ -192,6 +216,21 @@ function ThreeDOutputCardTile({ card }: { card: ThreeDOutputCard }) {
             <Typography sx={{ overflowWrap: "anywhere" }} variant="body2">
               {card.metadata_path}
             </Typography>
+          </Stack>
+
+          <Stack spacing={0.75}>
+            <Button disabled={addDisabled} onClick={() => onAddToBoard(card)} size="small" variant="outlined">
+              {adding ? "Adding" : "Add to board"}
+            </Button>
+            {!activeBoardId ? (
+              <Typography color="text.secondary" variant="caption">
+                Select a reference board first.
+              </Typography>
+            ) : (
+              <Typography color="text.secondary" variant="caption">
+                Adds a metadata reference only. No 3D asset is copied or modified.
+              </Typography>
+            )}
           </Stack>
         </Stack>
       </CardContent>

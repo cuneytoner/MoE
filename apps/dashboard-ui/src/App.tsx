@@ -4,6 +4,7 @@ import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import { Alert, Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import {
   addReferenceBoardItem,
+  addThreeDReferenceBoardItem,
   createReferenceBoard,
   fetchDashboard,
   fetchMemoryApprovalDashboard,
@@ -40,6 +41,7 @@ import type {
   ReferenceBoardUpdateItemRequest,
   ReferenceBoardsResponse,
   RuntimeDashboardModel,
+  ThreeDOutputCard,
   ThreeDOutputCardsResponse,
 } from "./types";
 
@@ -60,6 +62,7 @@ export function App() {
   const [referenceBoardError, setReferenceBoardError] = useState("");
   const [referenceBoardActionMessage, setReferenceBoardActionMessage] = useState("");
   const [addingBoardCardId, setAddingBoardCardId] = useState("");
+  const [addingThreeDBoardCardId, setAddingThreeDBoardCardId] = useState("");
   const [loading, setLoading] = useState(false);
   const [referenceBoardLoading, setReferenceBoardLoading] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<string>("never");
@@ -212,6 +215,38 @@ export function App() {
     }
   }
 
+  async function handleAddThreeDCardToBoard(card: ThreeDOutputCard) {
+    if (!activeReferenceBoardId) {
+      return;
+    }
+    setAddingThreeDBoardCardId(card.id);
+    setReferenceBoardActionMessage("");
+    setReferenceBoardError("");
+    try {
+      const safeTags = ["3d", card.asset_category, ...card.formats]
+        .map((tag) => tag.trim())
+        .filter((tag, index, tags) => tag !== "" && tag.length <= 40 && /^[A-Za-z0-9 _-]+$/.test(tag) && tags.indexOf(tag) === index)
+        .slice(0, 12);
+      const updated = await addThreeDReferenceBoardItem(activeReferenceBoardId, {
+        card_id: card.id,
+        selected_reason: "Selected from dashboard 3D output cards.",
+        tags: safeTags,
+      });
+      setActiveReferenceBoard(updated.board);
+      await refreshReferenceBoards(activeReferenceBoardId);
+      setReferenceBoardActionMessage("Added 3D reference to board.");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "unknown error";
+      if (message.includes("already selected") || message.includes("already")) {
+        setReferenceBoardActionMessage("Already in board.");
+      } else {
+        setReferenceBoardError(referenceBoardUiError("Add 3D item failed.", err));
+      }
+    } finally {
+      setAddingThreeDBoardCardId("");
+    }
+  }
+
   async function handleRemoveBoardItem(itemId: string) {
     if (!activeReferenceBoardId) {
       return;
@@ -284,7 +319,14 @@ export function App() {
         </Stack>
       ) : null}
       <MemoryApprovalPanel error={memoryApprovalError} memoryApproval={memoryApprovalDashboard} />
-      <ThreeDOutputCards cardsResponse={threeDOutputCards} error={threeDOutputCardsError} loading={loading} />
+      <ThreeDOutputCards
+        activeBoardId={activeReferenceBoardId}
+        addingCardId={addingThreeDBoardCardId}
+        cardsResponse={threeDOutputCards}
+        error={threeDOutputCardsError}
+        loading={loading}
+        onAddToBoard={(card) => void handleAddThreeDCardToBoard(card)}
+      />
 
       {dashboard ? (
         <>

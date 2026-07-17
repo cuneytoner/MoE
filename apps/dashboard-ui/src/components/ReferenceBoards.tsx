@@ -91,6 +91,13 @@ export function ReferenceBoards({
   }
 
   async function openMetadata(item: ReferenceBoardItem) {
+    if (item.asset_type === "3d_model") {
+      setMetadataItem(item);
+      setMetadataResponse(null);
+      setMetadataError("3D metadata is reviewed from the 3D Output Cards panel.");
+      setMetadataLoading(false);
+      return;
+    }
     setMetadataItem(item);
     setMetadataResponse(null);
     setMetadataError("");
@@ -642,7 +649,11 @@ function ReferenceBoardItemCard({
               Edit board note
             </Button>
           ) : null}
-          {item.metadata_path ? (
+          {item.asset_type === "3d_model" ? (
+            <Typography color="text.secondary" variant="caption">
+              3D metadata reference. Review metadata from the 3D Output Cards panel.
+            </Typography>
+          ) : item.metadata_path ? (
             <Button onClick={() => onViewMetadata(item)} size="small" variant="outlined">
               View metadata
             </Button>

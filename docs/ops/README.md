@@ -308,6 +308,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | 3D output card API review template | [270-3d-output-card-api-review-template.md](270-3d-output-card-api-review-template.md) |
 | Dashboard 3D output cards UI | [271-dashboard-3d-output-cards-ui.md](271-dashboard-3d-output-cards-ui.md) |
 | Dashboard 3D output cards UI review template | [272-dashboard-3d-output-cards-ui-review-template.md](272-dashboard-3d-output-cards-ui-review-template.md) |
+| 3D reference board selection | [273-3d-reference-board-selection.md](273-3d-reference-board-selection.md) |
+| 3D reference board selection review template | [274-3d-reference-board-selection-review-template.md](274-3d-reference-board-selection-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
@@ -499,3 +501,5 @@ For dashboard output cards UI review, read 127 and 128.
 For deterministic drawing metadata sidecars, read 129 and 130.
 
 For reference-board selection planning, read 131 through 136.
+
+For 3D reference-board selection, read 273 and 274.

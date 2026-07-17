@@ -120,10 +120,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.16 Generated 3D Artifact Verification DONE
 - M35.17 3D Output Card API DONE
 - M35.18 Dashboard 3D Output Cards UI DONE
-- M35.19 3D Reference Board Selection PLANNED
+- M35.19 3D Reference Board Selection DONE
 - M35.20 M35 Phase Closure PLANNED
 
-M35 roadmap is fixed through M35.20. Next planned remains M35.19 3D Reference Board Selection. Do not add new milestones beyond M35.20 by default.
+M35 roadmap is fixed through M35.20. Next planned remains M35.20 M35 Phase Closure. Do not add new milestones beyond M35.20 by default.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

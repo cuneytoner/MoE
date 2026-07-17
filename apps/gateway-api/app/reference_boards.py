@@ -154,6 +154,47 @@ def add_item_to_reference_board(board_id: str, item: dict[str, Any]) -> dict[str
     return load_reference_board(board_id)
 
 
+def build_3d_reference_board_item(
+    card: dict[str, Any],
+    selected_reason: str | None,
+    request_tags: list[str] | None,
+) -> dict[str, Any]:
+    formats = card.get("formats") if isinstance(card.get("formats"), list) else []
+    relative_runtime_paths = card.get("relative_runtime_paths")
+    if not isinstance(relative_runtime_paths, dict):
+        relative_runtime_paths = {}
+    primary_path = primary_3d_reference_path(formats, relative_runtime_paths, str(card.get("metadata_path") or ""))
+    tags = normalize_tags(dedupe_strings(["3d", card.get("asset_category"), *formats, *(request_tags or [])]))
+    return {
+        "item_id": item_id_for_card_id(str(card["id"])),
+        "card_id": card["id"],
+        "asset_type": "3d_model",
+        "name": card.get("asset_name") or str(card["id"]),
+        "relative_runtime_path": primary_path,
+        "metadata_path": card.get("metadata_path"),
+        "selected_reason": normalize_selected_reason(selected_reason),
+        "tags": tags,
+        "safety_label": card.get("safety_label") or "visual_reference_only",
+        "added_at": utc_now_iso(),
+    }
+
+
+def primary_3d_reference_path(
+    formats: list[Any],
+    relative_runtime_paths: dict[str, Any],
+    metadata_path: str,
+) -> str:
+    format_set = {value for value in formats if isinstance(value, str)}
+    for key in ("glb", "blend", "obj"):
+        value = relative_runtime_paths.get(key)
+        if key in format_set and isinstance(value, str) and value:
+            return value
+    metadata_value = relative_runtime_paths.get("metadata")
+    if isinstance(metadata_value, str) and metadata_value:
+        return metadata_value
+    return metadata_path
+
+
 def remove_item_from_reference_board(board_id: str, item_id: str) -> dict[str, Any]:
     if not ITEM_ID_PATTERN.fullmatch(item_id):
         raise ValueError("invalid_item_id")
@@ -294,6 +335,9 @@ def build_reference_board_download_filename(board_id: str, extension: str) -> st
 
 
 def summarize_item_metadata(item: dict[str, Any]) -> dict[str, Any] | None:
+    if item.get("asset_type") == "3d_model":
+        return {"available": False, "reason": "3d_metadata_review_in_output_cards"}
+
     card_id = item.get("card_id")
     if not isinstance(card_id, str) or not card_id:
         return {"available": False, "reason": "metadata_unavailable"}
@@ -728,3 +772,17 @@ def normalize_tags(value: Any) -> list[str]:
         seen.add(normalized)
         tags.append(normalized)
     return tags
+
+
+def dedupe_strings(values: list[Any]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for value in values:
+        if not isinstance(value, str):
+            continue
+        normalized = value.strip()
+        if not normalized or normalized in seen:
+            continue
+        seen.add(normalized)
+        result.append(normalized)
+    return result

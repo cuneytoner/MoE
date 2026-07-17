@@ -272,6 +272,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [3D Output Card API Review Template](ops/270-3d-output-card-api-review-template.md)
 - [Dashboard 3D Output Cards UI](ops/271-dashboard-3d-output-cards-ui.md)
 - [Dashboard 3D Output Cards UI Review Template](ops/272-dashboard-3d-output-cards-ui-review-template.md)
+- [3D Reference Board Selection](ops/273-3d-reference-board-selection.md)
+- [3D Reference Board Selection Review Template](ops/274-3d-reference-board-selection-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

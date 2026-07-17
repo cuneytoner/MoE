@@ -84,6 +84,8 @@ docs:
 - M35.18 adds a read-only Dashboard panel for 3D output cards.
 - The panel consumes `GET /gateway/media/3d/cards`.
 - It shows guarded Blender metadata verification without generation, shell, Docker, delete, move, rename, repair, cleanup, or absolute path actions.
+- M35.19 adds 3D reference-board selection through `POST /gateway/media/reference-boards/{board_id}/items/3d`.
+- 3D reference-board selection writes only reference metadata. It does not copy, move, delete, regenerate, repair, or modify 3D assets.
 - memory-injection.md
 - feedback.md
 - feedback-worker.md
@@ -130,11 +132,11 @@ make tree
 
 ## Current Milestone
 
-Completed through Milestone 29.9: Memory Approval Manual Store Runbook
+Completed through Milestone 35.19: 3D Reference Board Selection
 
 Next planned milestone:
 
-Milestone 29.10: Memory Store Real Apply Guardrail Review
+Milestone 35.20: M35 Phase Closure
 
 ## Model Inventory
 
