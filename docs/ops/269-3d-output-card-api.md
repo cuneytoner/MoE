@@ -11,6 +11,8 @@ M35.17 adds read-only Gateway API support for future 3D output cards.
 
 The API discovers 3D cards from metadata sidecars only. It does not scan arbitrary paths, run Blender, generate assets, write runtime files, or expose delete/move/rename/repair/generation actions.
 
+M35.17 security hardening keeps the production endpoint pinned to the fixed 3D runtime root and exposes only a safe runtime scope label in responses.
+
 ## Endpoint Path
 
 ```text
@@ -25,7 +27,7 @@ gateway-3d-output-cards
 
 ## Card Discovery Source
 
-Default runtime root:
+Production runtime root:
 
 ```text
 /home/cuneyt/MoE/runtime/media/outputs/3d
@@ -37,7 +39,9 @@ Metadata directory:
 /home/cuneyt/MoE/runtime/media/outputs/3d/metadata
 ```
 
-Only `.json` sidecars under the metadata directory are scanned. Missing metadata directories return an empty card list with a warning.
+Only direct `metadata/*.json` sidecars under the metadata directory are scanned. Recursive scanning is not used.
+
+Missing metadata directories return an empty card list with a warning. Relative roots, repo paths, model backup paths, runtime root symlinks, metadata directory symlinks, and sidecar symlinks are rejected or skipped safely.
 
 ## Card Response Shape
 
@@ -50,7 +54,7 @@ Example card:
   "asset_name": "simple_frame_example",
   "asset_category": "architecture",
   "created_at": "2026-07-17T00:00:00Z",
-  "formats": ["blend", "glb"],
+  "formats": [],
   "preview_available": false,
   "metadata_path": "metadata/simple_frame_example-test.json",
   "relative_runtime_paths": {
@@ -66,11 +70,23 @@ Example card:
   "operator_review_required": true,
   "generation_mode": "guarded_blender",
   "verification": {
-    "valid": true,
-    "error_count": 0
+    "metadata_valid": true,
+    "artifacts_valid": false,
+    "valid": false,
+    "declared_count": 4,
+    "existing_count": 1,
+    "missing_count": 3,
+    "error_count": 3,
+    "errors": [
+      "declared blend artifact is missing",
+      "declared glb artifact is missing",
+      "declared report artifact is missing"
+    ]
   }
 }
 ```
+
+`formats` includes only existing regular files that pass directory, extension, runtime-scope, and symlink checks. Missing declared `.blend` or `.glb` files do not appear in `formats`.
 
 List response:
 
@@ -78,7 +94,7 @@ List response:
 {
   "status": "ok",
   "service": "gateway-3d-output-cards",
-  "runtime_root": "/home/cuneyt/MoE/runtime/media/outputs/3d",
+  "runtime_scope": "runtime/media/outputs/3d",
   "metadata_dir_available": true,
   "card_count": 1,
   "invalid_count": 0,
@@ -104,12 +120,30 @@ glb/simple_frame_example-test.glb
 reports/simple_frame_example-test.json
 ```
 
+The exact path allowlist is:
+
+| Key | Allowed path |
+| --- | --- |
+| `blend` | `blender/*.blend` |
+| `glb` | `glb/*.glb` |
+| `obj` | `obj/*.obj` |
+| `preview` | `previews/*.png`, `previews/*.jpg`, `previews/*.jpeg`, `previews/*.webp` |
+| `metadata` | `metadata/*.json` |
+| `report` | `reports/*.json` |
+
 The API rejects or skips:
 
 - absolute output paths
 - path traversal
-- repo-looking paths such as `docs/`, `apps/`, `scripts/`, and `configs/`
-- model backup-looking paths
+- leading `./`
+- backslashes
+- empty, dot, dot-dot, hidden, null-byte, control-character, URL, drive-prefix, and network path forms
+- wrong directory for key
+- wrong extension for key
+- repo paths
+- model backup paths
+- artifact symlinks
+- runtime root symlinks
 - symlink metadata directories
 - symlink sidecar files
 - non-JSON sidecar files
@@ -129,6 +163,15 @@ Malformed or unsafe sidecars:
 - counted in `invalid_count`
 - warning included
 - no traceback exposed
+- absolute host paths are not included in warnings
+
+Metadata-valid sidecars with missing declared artifacts:
+
+- remain visible as cards
+- report `verification.valid=false`
+- report missing artifact counts and sanitized errors
+- do not list missing formats in `formats`
+- do not set `preview_available=true`
 
 ## Safety Flags
 

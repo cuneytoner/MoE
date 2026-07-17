@@ -7,10 +7,14 @@
 - Discovery source reviewed?
 - Card shape reviewed?
 - Runtime-relative path policy reviewed?
+- Exact key/directory/extension allowlist reviewed?
 - Missing metadata behavior reviewed?
 - Malformed metadata behavior reviewed?
+- Missing artifact verification reviewed?
+- Existing artifact format filtering reviewed?
 - Unsafe path rejection reviewed?
 - Symlink rejection reviewed?
+- Response contains no absolute host paths?
 - No generation confirmed?
 - No shell execution confirmed?
 - Test script result:

@@ -326,7 +326,7 @@ async def media_output_cards() -> dict[str, Any]:
 
 
 @app.get("/gateway/media/3d/cards")
-async def media_3d_output_cards() -> dict[str, Any]:
+def media_3d_output_cards() -> dict[str, Any]:
     return build_3d_output_cards()
 
 
