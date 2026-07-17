@@ -325,6 +325,61 @@ export type OutputCardMetadataResponse = {
   metadata: Record<string, unknown>;
 };
 
+export type ThreeDArtifactVerification = {
+  metadata_valid: boolean;
+  artifacts_valid: boolean;
+  valid: boolean;
+  declared_count: number;
+  existing_count: number;
+  missing_count: number;
+  error_count: number;
+  errors: string[];
+};
+
+export type ThreeDRelativeRuntimePaths = {
+  blend: string | null;
+  glb: string | null;
+  obj: string | null;
+  preview: string | null;
+  metadata: string | null;
+  report: string | null;
+};
+
+export type ThreeDOutputCard = {
+  id: string;
+  type: "3d_model";
+  asset_name: string;
+  asset_category: string;
+  created_at: string;
+  formats: string[];
+  preview_available: boolean;
+  metadata_path: string;
+  relative_runtime_paths: ThreeDRelativeRuntimePaths;
+  safety_label: string;
+  structural_certification: false;
+  operator_review_required: true;
+  generation_mode: string | null;
+  verification: ThreeDArtifactVerification;
+};
+
+export type ThreeDOutputCardsResponse = {
+  status: string;
+  service: string;
+  runtime_scope: string;
+  metadata_dir_available: boolean;
+  card_count: number;
+  invalid_count: number;
+  cards: ThreeDOutputCard[];
+  warnings: string[];
+  safety_flags: {
+    read_only: boolean;
+    generation_triggered: boolean;
+    runtime_assets_written: boolean;
+    source_assets_modified: boolean;
+    shell_execution: boolean;
+  };
+};
+
 export type ReferenceBoardSummary = {
   board_id: string;
   title: string;

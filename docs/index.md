@@ -270,6 +270,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Generated 3D Artifact Verification Review Template](ops/268-generated-3d-artifact-verification-review-template.md)
 - [3D Output Card API](ops/269-3d-output-card-api.md)
 - [3D Output Card API Review Template](ops/270-3d-output-card-api-review-template.md)
+- [Dashboard 3D Output Cards UI](ops/271-dashboard-3d-output-cards-ui.md)
+- [Dashboard 3D Output Cards UI Review Template](ops/272-dashboard-3d-output-cards-ui-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

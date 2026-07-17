@@ -11,6 +11,7 @@ import {
   fetchReferenceBoard,
   fetchReferenceBoards,
   fetchRuntimeDashboard,
+  fetchThreeDOutputCards,
   gatewayBaseUrl,
   removeReferenceBoardItem,
   updateReferenceBoardItem,
@@ -26,6 +27,7 @@ import { SafeCommandsPanel } from "./components/SafeCommandsPanel";
 import { ServicesPanel } from "./components/ServicesPanel";
 import { SummaryCards } from "./components/SummaryCards";
 import { SystemResourceCards } from "./components/SystemResourceCards";
+import { ThreeDOutputCards } from "./components/ThreeDOutputCards";
 import { WarningsPanel } from "./components/WarningsPanel";
 import { DashboardLayout } from "./layout/DashboardLayout";
 import type {
@@ -38,6 +40,7 @@ import type {
   ReferenceBoardUpdateItemRequest,
   ReferenceBoardsResponse,
   RuntimeDashboardModel,
+  ThreeDOutputCardsResponse,
 } from "./types";
 
 export function App() {
@@ -45,6 +48,7 @@ export function App() {
   const [runtimeDashboard, setRuntimeDashboard] = useState<RuntimeDashboardModel | null>(null);
   const [memoryApprovalDashboard, setMemoryApprovalDashboard] = useState<MemoryApprovalDashboardModel | null>(null);
   const [outputCards, setOutputCards] = useState<OutputCardsResponse | null>(null);
+  const [threeDOutputCards, setThreeDOutputCards] = useState<ThreeDOutputCardsResponse | null>(null);
   const [referenceBoards, setReferenceBoards] = useState<ReferenceBoardsResponse | null>(null);
   const [activeReferenceBoard, setActiveReferenceBoard] = useState<ReferenceBoard | null>(null);
   const [activeReferenceBoardId, setActiveReferenceBoardId] = useState("");
@@ -52,6 +56,7 @@ export function App() {
   const [runtimeError, setRuntimeError] = useState("");
   const [memoryApprovalError, setMemoryApprovalError] = useState("");
   const [outputCardsError, setOutputCardsError] = useState("");
+  const [threeDOutputCardsError, setThreeDOutputCardsError] = useState("");
   const [referenceBoardError, setReferenceBoardError] = useState("");
   const [referenceBoardActionMessage, setReferenceBoardActionMessage] = useState("");
   const [addingBoardCardId, setAddingBoardCardId] = useState("");
@@ -65,6 +70,7 @@ export function App() {
     setRuntimeError("");
     setMemoryApprovalError("");
     setOutputCardsError("");
+    setThreeDOutputCardsError("");
     setReferenceBoardError("");
     try {
       const next = await fetchDashboard();
@@ -90,6 +96,12 @@ export function App() {
       setOutputCards(nextOutputCards);
     } catch (err) {
       setOutputCardsError(err instanceof Error ? err.message : "unknown output cards error");
+    }
+    try {
+      const nextThreeDOutputCards = await fetchThreeDOutputCards();
+      setThreeDOutputCards(nextThreeDOutputCards);
+    } catch (err) {
+      setThreeDOutputCardsError(err instanceof Error ? err.message : "unknown 3D output cards error");
     }
     try {
       const nextReferenceBoards = await fetchReferenceBoards();
@@ -272,6 +284,7 @@ export function App() {
         </Stack>
       ) : null}
       <MemoryApprovalPanel error={memoryApprovalError} memoryApproval={memoryApprovalDashboard} />
+      <ThreeDOutputCards cardsResponse={threeDOutputCards} error={threeDOutputCardsError} loading={loading} />
 
       {dashboard ? (
         <>

@@ -2,8 +2,8 @@
 
 Current active phase:
 - M35 roadmap start is active.
-- Latest completed: M35.17 3D Output Card API.
-- Next planned: M35.18 Dashboard 3D Output Cards UI.
+- Latest completed: M35.18 Dashboard 3D Output Cards UI.
+- Next planned: M35.19 3D Reference Board Selection.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -108,7 +108,7 @@ Current media milestone status:
 - M35.15 First Guarded Local Blender Generation Drill DONE
 - M35.16 Generated 3D Artifact Verification DONE
 - M35.17 3D Output Card API DONE
-- M35.18 Dashboard 3D Output Cards UI PLANNED
+- M35.18 Dashboard 3D Output Cards UI DONE
 - M35.19 3D Reference Board Selection PLANNED
 - M35.20 M35 Phase Closure PLANNED
 
@@ -2232,7 +2232,7 @@ Goals:
 
 ## Milestone 35.18: Dashboard 3D Output Cards UI
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add read-only Dashboard UI cards for future generated 3D assets.

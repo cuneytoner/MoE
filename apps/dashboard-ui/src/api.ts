@@ -9,6 +9,7 @@ import type {
   ReferenceBoardUpdateItemRequest,
   ReferenceBoardsResponse,
   RuntimeDashboardModel,
+  ThreeDOutputCardsResponse,
 } from "./types";
 
 const gatewayUrl = import.meta.env.VITE_GATEWAY_API_URL ?? "http://127.0.0.1:8100";
@@ -62,6 +63,14 @@ export async function fetchOutputCards(): Promise<OutputCardsResponse> {
   const response = await fetch(`${gatewayUrl}/gateway/media/output-cards`);
   if (!response.ok) {
     throw new Error(`Gateway output cards returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchThreeDOutputCards(): Promise<ThreeDOutputCardsResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/3d/cards`);
+  if (!response.ok) {
+    throw new Error(`Gateway 3D output cards returned HTTP ${response.status}`);
   }
   return response.json();
 }

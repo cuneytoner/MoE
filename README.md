@@ -78,6 +78,12 @@ docs:
 - milestones.md
 - continue-gateway-config.md
 - gateway-chat.md
+
+## Current Media UI
+
+- M35.18 adds a read-only Dashboard panel for 3D output cards.
+- The panel consumes `GET /gateway/media/3d/cards`.
+- It shows guarded Blender metadata verification without generation, shell, Docker, delete, move, rename, repair, cleanup, or absolute path actions.
 - memory-injection.md
 - feedback.md
 - feedback-worker.md

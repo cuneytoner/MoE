@@ -1,0 +1,28 @@
+# Dashboard 3D Output Cards UI Review Template
+
+- Date/time:
+- Reviewer:
+- Current commit:
+- Dashboard URL:
+- 3D Output Cards panel visible?
+- Read-only subtitle visible?
+- Loading state reviewed?
+- Endpoint unavailable state reviewed?
+- Missing metadata directory state reviewed?
+- Empty cards state reviewed?
+- Invalid sidecar warning reviewed?
+- Card asset name/category/created time visible?
+- Formats visible?
+- Safety label visible?
+- Not structurally certified visible?
+- Operator review required visible?
+- Verification summary visible?
+- Runtime-relative metadata path visible?
+- Preview placeholder visible?
+- No 3D preview fetch?
+- No absolute filesystem path visible?
+- No generation/delete/move/rename/repair/cleanup controls?
+- Test script result:
+- Git safety result:
+- Issues found:
+- Next milestone: M35.19 3D Reference Board Selection

@@ -306,6 +306,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Generated 3D artifact verification review template | [268-generated-3d-artifact-verification-review-template.md](268-generated-3d-artifact-verification-review-template.md) |
 | 3D output card API | [269-3d-output-card-api.md](269-3d-output-card-api.md) |
 | 3D output card API review template | [270-3d-output-card-api-review-template.md](270-3d-output-card-api-review-template.md) |
+| Dashboard 3D output cards UI | [271-dashboard-3d-output-cards-ui.md](271-dashboard-3d-output-cards-ui.md) |
+| Dashboard 3D output cards UI review template | [272-dashboard-3d-output-cards-ui-review-template.md](272-dashboard-3d-output-cards-ui-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 
