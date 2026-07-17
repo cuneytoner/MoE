@@ -74,6 +74,8 @@ The codebase is deployed to runtime folders.
 codebase -> PC1 ~/MoE
 codebase -> PC2 ~/MoE
 
+Running services should use deployed source/config checkouts such as `/home/cuneyt/MoE/codebase`, not the authoring checkout under `/home/cuneyt/DiskD/Projects/MoE/codebase`, unless an explicit local development fallback is requested.
+
 Deploy scripts must copy only source and configuration needed to run services.
 
 Deploy scripts must exclude:
@@ -90,6 +92,8 @@ Deploy scripts must exclude:
 - checkpoints
 - caches
 - temporary files
+
+UI build tests must use `/tmp` or runtime test workspaces for dependency installation and build output. They must not create `node_modules`, `dist`, `build`, or `.cache` inside the source checkout.
 
 ## Network
 

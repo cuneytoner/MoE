@@ -71,6 +71,10 @@ Target:
 
 /home/cuneyt/MoE
 
+Deployed source/config checkout:
+
+/home/cuneyt/MoE/codebase
+
 PC1 deployment should prepare services that run locally on the main workstation.
 
 Possible PC1 services:
@@ -80,6 +84,8 @@ Possible PC1 services:
 - local model endpoint bridge
 - local inference helpers
 - embed-worker if needed
+
+Dashboard UI start/stop helpers should run from `/home/cuneyt/MoE/codebase` by default. The authoring source checkout can be used only with an explicit development fallback flag.
 
 ## PC2 Deployment
 

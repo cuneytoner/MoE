@@ -107,6 +107,20 @@ Start the UI:
 make dashboard-ui-up
 ```
 
+The start/stop helpers prefer the deployed PC-1 source/config checkout:
+
+```text
+/home/cuneyt/MoE/codebase
+```
+
+They do not use the authoring checkout by default. For explicit local source-only development fallback, set:
+
+```bash
+ALLOW_SOURCE_DASHBOARD_UI=1 make dashboard-ui-up
+```
+
+Deploy or sync source to `/home/cuneyt/MoE/codebase` before treating the Dashboard UI as a running PC-1 service.
+
 ## Memory Approval
 
 Milestone 29.8 adds a read-only Memory Approval section backed by:
@@ -158,6 +172,8 @@ npm run dev
 ```
 
 Do not commit `node_modules`, `dist`, build output, logs, generated media, or runtime data.
+
+Milestone 35.18 keeps the source repository clean by running the 3D output cards UI build test in an isolated temporary Docker workspace when the local `node:22-alpine` image is already available. The test refuses to pull images automatically and must not create `node_modules`, `dist`, `build`, or `.cache` under the source checkout.
 
 ## Configuration
 
