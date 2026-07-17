@@ -287,7 +287,7 @@ Milestone 24.3 uses feedback events to generate deterministic recommendations fo
 
 Media lab roadmap:
 
-Future media services should keep generated assets under `/home/cuneyt/MoE/runtime/media`, keep media models under `/home/cuneyt/MoE_Models_Backup`, and keep source-only service code in this repository. PC-1 is the future GPU media generation host by default; PC-2 remains a worker/report node and is not the default media GPU node. The planned sequence is foundation, image generation, video generation, 3D generation, rigging, animation, then workflow orchestration.
+Future media services should keep generated assets under `/home/cuneyt/MoE/runtime/media`, keep media models under `/home/cuneyt/MoE_Models_Backup`, and keep source-only service code in this repository. PC-1 is the future GPU media generation host by default; PC-2 remains a worker/report node and is not the default media GPU node. M35 closed the generic 3D / Blender parametric pipeline foundation. M36 starts the Animation Pipeline with source-only planning for deterministic timeline/keyframe contracts, runtime output boundaries under `/home/cuneyt/MoE/runtime/media/animation`, and future guarded animation/preview generation. M36.0 does not add Blender execution, rendering, Gateway endpoints, or Dashboard features.
 
 apps/dashboard:
 

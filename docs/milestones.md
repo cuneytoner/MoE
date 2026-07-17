@@ -1,9 +1,9 @@
 # MoE / AI-Brain-OS Milestones
 
 Current active phase:
-- M35 3D pipeline phase is closed.
-- Latest completed: M35.20 M35 Phase Closure.
-- Next planned: M36.0 Animation Pipeline.
+- M36 Animation Pipeline is active.
+- Latest completed: M36.0 Animation Pipeline Foundation and Roadmap.
+- Next planned: M36.1 Animation Plan Schema.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -111,7 +111,24 @@ Current media milestone status:
 - M35.18 Dashboard 3D Output Cards UI DONE
 - M35.19 3D Reference Board Selection DONE
 - M35.20 M35 Phase Closure DONE
-- M36.0 Animation Pipeline PLANNED
+- M36.0 Animation Pipeline Foundation and Roadmap DONE
+- M36.1 Animation Plan Schema PLANNED
+- M36.2 Animation Plan Validator PLANNED
+- M36.3 Timeline and Keyframe Planner Core PLANNED
+- M36.4 Camera Animation Planner PLANNED
+- M36.5 Object Transform Animation Planner PLANNED
+- M36.6 Blender Animation Adapter Plan PLANNED
+- M36.7 Guarded Blender Animation Implementation PLANNED
+- M36.8 Animation Metadata Sidecar Writer PLANNED
+- M36.9 Animation Metadata Validator PLANNED
+- M36.10 Preview Render Safety Plan PLANNED
+- M36.11 Guarded Preview Render Implementation PLANNED
+- M36.12 Animation Artifact Verifier PLANNED
+- M36.13 Animation Output Card API Plan PLANNED
+- M36.14 Animation Output Card API PLANNED
+- M36.15 Dashboard Animation Cards UI PLANNED
+- M36.16 Animation Reference Board Selection PLANNED
+- M36.17 M36 Phase Closure PLANNED
 
 M35 fixed roadmap rule:
 - M35 scope is fixed through M35.20.
@@ -2267,14 +2284,169 @@ Goals:
 - Move remaining 3D polish or cleanup work to backlog.
 - Define M36.0 Animation Pipeline as the next planned phase without implementing it.
 
-## Milestone 36.0: Animation Pipeline
+## Milestone 36.0: Animation Pipeline Foundation and Roadmap
+
+Status: DONE
+
+Goals:
+- Activate M36 as the Animation Pipeline phase.
+- Define the text request to deterministic timeline/keyframe plan architecture.
+- Add a source-only animation plan example.
+- Define camera and object animation allowlists, timeline bounds, runtime output layout, metadata sidecar plan, and generation/preview guard model.
+- Keep Blender execution, keyframe writing, frame rendering, video encoding, Gateway endpoints, Dashboard features, and runtime writes out of scope.
+
+## Milestone 36.1: Animation Plan Schema
 
 Status: PLANNED
 
 Goals:
-- Convert text requests into keyframe plans.
-- Support Blender camera and object animation.
-- Render preview outputs.
+- Define a strict animation plan schema from the source-only example.
+- Keep schema validation source-only and non-generating.
+- Preserve runtime/model/source boundaries.
+
+## Milestone 36.2: Animation Plan Validator
+
+Status: PLANNED
+
+Goals:
+- Validate animation plan ids, timeline bounds, tracks, targets, properties, interpolation, keyframes, and output references.
+- Reject absolute paths, traversal, repo paths, model paths, and unsupported animation features.
+- Keep validation read-only and source-safe.
+
+## Milestone 36.3: Timeline and Keyframe Planner Core
+
+Status: PLANNED
+
+Goals:
+- Convert validated animation intent into deterministic timeline and keyframe plans.
+- Keep planning independent from Blender.
+- Avoid runtime writes and rendering.
+
+## Milestone 36.4: Camera Animation Planner
+
+Status: PLANNED
+
+Goals:
+- Add deterministic camera animation planning for orbit, pan, dolly, and static framing patterns.
+- Keep outputs as plans only.
+- Avoid Blender execution.
+
+## Milestone 36.5: Object Transform Animation Planner
+
+Status: PLANNED
+
+Goals:
+- Add deterministic object transform animation planning.
+- Support location, rotation, scale, visibility, and transform plan outputs.
+- Keep tests non-generating.
+
+## Milestone 36.6: Blender Animation Adapter Plan
+
+Status: PLANNED
+
+Goals:
+- Plan conversion from keyframe plans to Blender operation plans.
+- Preserve no module-level `bpy` import.
+- Keep execution deferred.
+
+## Milestone 36.7: Guarded Blender Animation Implementation
+
+Status: PLANNED
+
+Goals:
+- Add guarded animation execution support only after schema and adapter review.
+- Require `REAL_ANIMATION_GENERATION=1` and `--execute-animation`.
+- Keep tests non-rendering and source-safe.
+
+## Milestone 36.8: Animation Metadata Sidecar Writer
+
+Status: PLANNED
+
+Goals:
+- Add guarded animation metadata sidecar writing.
+- Exclude secrets, shell history, environment dumps, model paths, and absolute host paths.
+- Keep default behavior non-writing.
+
+## Milestone 36.9: Animation Metadata Validator
+
+Status: PLANNED
+
+Goals:
+- Validate animation sidecars and runtime-relative output references.
+- Reject unsafe paths and malformed metadata.
+- Keep validation read-only.
+
+## Milestone 36.10: Preview Render Safety Plan
+
+Status: PLANNED
+
+Goals:
+- Plan preview render safety, frame limits, output locations, and operator gates.
+- Keep rendering disabled.
+- Avoid ffmpeg execution.
+
+## Milestone 36.11: Guarded Preview Render Implementation
+
+Status: PLANNED
+
+Goals:
+- Add guarded preview rendering only after safety planning.
+- Require explicit preview render guard.
+- Keep output runtime-only.
+
+## Milestone 36.12: Animation Artifact Verifier
+
+Status: PLANNED
+
+Goals:
+- Verify animation metadata, frames, previews, and reports in a read-only way.
+- Keep verification independent from rendering.
+- Preserve source/runtime boundaries.
+
+## Milestone 36.13: Animation Output Card API Plan
+
+Status: PLANNED
+
+Goals:
+- Plan read-only output cards for animation artifacts.
+- Keep API implementation deferred.
+- Avoid arbitrary filesystem browsing.
+
+## Milestone 36.14: Animation Output Card API
+
+Status: PLANNED
+
+Goals:
+- Add read-only animation output card discovery after metadata validation is stable.
+- Keep discovery runtime-scoped and card-id based.
+- Avoid generation controls.
+
+## Milestone 36.15: Dashboard Animation Cards UI
+
+Status: PLANNED
+
+Goals:
+- Add read-only Dashboard cards for verified animation outputs.
+- Keep preview and download behavior guarded by reviewed API boundaries.
+- Avoid control-plane actions.
+
+## Milestone 36.16: Animation Reference Board Selection
+
+Status: PLANNED
+
+Goals:
+- Allow verified animation cards to be selected as reference-board metadata.
+- Avoid copying, moving, deleting, or modifying animation outputs.
+- Preserve reference-board safety behavior.
+
+## Milestone 36.17: M36 Phase Closure
+
+Status: PLANNED
+
+Goals:
+- Close the M36 animation phase after planned safety, schema, execution, metadata, verification, API, Dashboard, and reference workflows are reviewed.
+- Move remaining animation work to backlog.
+- Define the next phase without implementing it.
 
 ## Milestone 37.0: Media Workflow Orchestrator
 

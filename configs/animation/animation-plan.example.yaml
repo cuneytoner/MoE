@@ -1,0 +1,50 @@
+schema_version: "1.0"
+plan_id: "camera-orbit-demo"
+title: "Camera orbit around a static object"
+description: "Source-only animation plan example"
+
+mode: "dry_run"
+visual_reference_only: true
+structural_certification: false
+operator_review_required: true
+
+timeline:
+  fps: 24
+  start_frame: 1
+  end_frame: 120
+  duration_seconds: 5
+
+scene:
+  source_scene:
+    type: "existing_runtime_3d_asset"
+    reference_id: "example-only"
+  units: "meters"
+
+tracks:
+  - track_id: "camera-main"
+    target_type: "camera"
+    target_id: "camera"
+    property: "transform"
+    interpolation: "bezier"
+    keyframes:
+      - frame: 1
+        location: [4.0, -4.0, 3.0]
+        rotation_euler: [1.1, 0.0, 0.75]
+      - frame: 120
+        location: [-4.0, 4.0, 3.0]
+        rotation_euler: [1.1, 0.0, -2.35]
+
+outputs:
+  preview:
+    enabled: false
+    format: "mp4"
+    relative_runtime_path: "media/animation/previews/camera-orbit-demo.mp4"
+  metadata:
+    relative_runtime_path: "media/animation/metadata/camera-orbit-demo.json"
+
+safety:
+  real_animation_enabled: false
+  blender_execution_enabled: false
+  preview_render_enabled: false
+  source_assets_modified: false
+  runtime_write_planned: false

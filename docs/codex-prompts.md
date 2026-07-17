@@ -122,9 +122,26 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.18 Dashboard 3D Output Cards UI DONE
 - M35.19 3D Reference Board Selection DONE
 - M35.20 M35 Phase Closure DONE
-- M36.0 Animation Pipeline PLANNED
+- M36.0 Animation Pipeline Foundation and Roadmap DONE
+- M36.1 Animation Plan Schema PLANNED
+- M36.2 Animation Plan Validator PLANNED
+- M36.3 Timeline and Keyframe Planner Core PLANNED
+- M36.4 Camera Animation Planner PLANNED
+- M36.5 Object Transform Animation Planner PLANNED
+- M36.6 Blender Animation Adapter Plan PLANNED
+- M36.7 Guarded Blender Animation Implementation PLANNED
+- M36.8 Animation Metadata Sidecar Writer PLANNED
+- M36.9 Animation Metadata Validator PLANNED
+- M36.10 Preview Render Safety Plan PLANNED
+- M36.11 Guarded Preview Render Implementation PLANNED
+- M36.12 Animation Artifact Verifier PLANNED
+- M36.13 Animation Output Card API Plan PLANNED
+- M36.14 Animation Output Card API PLANNED
+- M36.15 Dashboard Animation Cards UI PLANNED
+- M36.16 Animation Reference Board Selection PLANNED
+- M36.17 M36 Phase Closure PLANNED
 
-M35 phase is closed. Next planned remains M36.0 Animation Pipeline. Do not implement M36 code until an explicit M36 task is requested.
+M36 Animation Pipeline is active. Latest completed is M36.0 Animation Pipeline Foundation and Roadmap. Next planned remains M36.1 Animation Plan Schema. Do not implement M36.1 code until explicitly requested.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

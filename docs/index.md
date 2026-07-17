@@ -276,6 +276,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [3D Reference Board Selection Review Template](ops/274-3d-reference-board-selection-review-template.md)
 - [M35 3D Pipeline Phase Closure](ops/275-m35-3d-pipeline-phase-closure.md)
 - [M35 3D Pipeline Phase Closure Review Template](ops/276-m35-3d-pipeline-phase-closure-review-template.md)
+- [Animation Pipeline Foundation](ops/277-animation-pipeline-foundation.md)
+- [Animation Pipeline Foundation Review Template](ops/278-animation-pipeline-foundation-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

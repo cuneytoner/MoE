@@ -132,13 +132,15 @@ make tree
 
 ## Current Milestone
 
+Current active phase: M36 Animation Pipeline.
+
 M35 is closed.
 
-Completed through Milestone 35.20: M35 Phase Closure
+Completed through Milestone 36.0: Animation Pipeline Foundation and Roadmap
 
 Next planned milestone:
 
-Milestone 36.0: Animation Pipeline
+Milestone 36.1: Animation Plan Schema
 
 ## Model Inventory
 

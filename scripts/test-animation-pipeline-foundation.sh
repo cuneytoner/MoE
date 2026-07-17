@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOC="docs/ops/277-animation-pipeline-foundation.md"
+REVIEW="docs/ops/278-animation-pipeline-foundation-review-template.md"
+CONFIG="configs/animation/animation-plan.example.yaml"
+MILESTONES="docs/milestones.md"
+
+for path in "$DOC" "$REVIEW" "$CONFIG" "$MILESTONES"; do
+  if [ ! -f "$path" ]; then
+    echo "missing animation foundation file: $path" >&2
+    exit 1
+  fi
+done
+
+grep -q 'schema_version: "1.0"' "$CONFIG"
+grep -q 'plan_id: "camera-orbit-demo"' "$CONFIG"
+grep -q 'mode: "dry_run"' "$CONFIG"
+grep -q 'visual_reference_only: true' "$CONFIG"
+grep -q 'structural_certification: false' "$CONFIG"
+grep -q 'operator_review_required: true' "$CONFIG"
+grep -q 'fps: 24' "$CONFIG"
+grep -q 'start_frame: 1' "$CONFIG"
+grep -q 'end_frame: 120' "$CONFIG"
+grep -q 'duration_seconds: 5' "$CONFIG"
+grep -q 'target_type: "camera"' "$CONFIG"
+grep -q 'property: "transform"' "$CONFIG"
+grep -q 'interpolation: "bezier"' "$CONFIG"
+grep -q 'keyframes:' "$CONFIG"
+grep -q 'real_animation_enabled: false' "$CONFIG"
+grep -q 'blender_execution_enabled: false' "$CONFIG"
+grep -q 'preview_render_enabled: false' "$CONFIG"
+grep -q 'runtime_write_planned: false' "$CONFIG"
+
+if grep -E 'relative_runtime_path: "/|relative_runtime_path: "\.\.|/home/cuneyt|MoE_Models_Backup|DiskD/Projects/MoE/codebase' "$CONFIG" >/dev/null; then
+  echo "unsafe path found in animation example config" >&2
+  exit 1
+fi
+
+grep -q "fps.*1..120" "$DOC"
+grep -q "max tracks: 64" "$DOC"
+grep -q "max keyframes per track: 1000" "$DOC"
+grep -q "max plan id length: 80" "$DOC"
+grep -q "max title length: 120" "$DOC"
+grep -q "max description length: 1000" "$DOC"
+grep -q '`camera`' "$DOC"
+grep -q '`object`' "$DOC"
+grep -q '`transform`' "$DOC"
+grep -q '`location`' "$DOC"
+grep -q '`rotation_euler`' "$DOC"
+grep -q '`scale`' "$DOC"
+grep -q '`visibility`' "$DOC"
+grep -q '`constant`' "$DOC"
+grep -q '`linear`' "$DOC"
+grep -q '`bezier`' "$DOC"
+grep -q "REAL_ANIMATION_GENERATION=1" "$DOC"
+grep -q -- "--execute-animation" "$DOC"
+grep -q -- "--render-preview" "$DOC"
+grep -q "M36.0 | Animation Pipeline Foundation and Roadmap | DONE" "$DOC"
+grep -q "M36.1 | Animation Plan Schema | PLANNED" "$DOC"
+
+python3 - "$MILESTONES" <<'PY'
+import re
+import sys
+from pathlib import Path
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+expected = {
+    "36.0": "DONE",
+    "36.1": "PLANNED",
+    "36.2": "PLANNED",
+    "36.3": "PLANNED",
+    "36.4": "PLANNED",
+    "36.5": "PLANNED",
+    "36.6": "PLANNED",
+    "36.7": "PLANNED",
+    "36.8": "PLANNED",
+    "36.9": "PLANNED",
+    "36.10": "PLANNED",
+    "36.11": "PLANNED",
+    "36.12": "PLANNED",
+    "36.13": "PLANNED",
+    "36.14": "PLANNED",
+    "36.15": "PLANNED",
+    "36.16": "PLANNED",
+    "36.17": "PLANNED",
+}
+for milestone, status in expected.items():
+    pattern = rf"## Milestone {re.escape(milestone)}:.*?\n\nStatus: ([^\n]+)"
+    match = re.search(pattern, text, flags=re.S)
+    if not match:
+        raise SystemExit(f"missing Milestone {milestone}")
+    actual = match.group(1).strip()
+    if actual != status:
+        raise SystemExit(f"Milestone {milestone} expected {status}, got {actual}")
+PY
+
+if find apps scripts -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) -print -quit | grep -q .; then
+  echo "animation implementation source file found unexpectedly" >&2
+  exit 1
+fi
+
+if grep -R "REAL_ANIMATION_GENERATION\|execute-animation\|render-preview" apps scripts --exclude='test-animation-pipeline-foundation.sh' >/dev/null; then
+  echo "animation execution flags found outside foundation docs/config tests" >&2
+  exit 1
+fi
+
+if find . -type d \( -name node_modules -o -name dist -o -name build -o -name .cache -o -name __pycache__ \) -print -quit | grep -q .; then
+  echo "generated dependency/build/cache directory found in source checkout" >&2
+  exit 1
+fi
+
+if git ls-files | grep -Ei '\.(mp4|webm|mov|gif|blend|glb|obj|fbx|mtl|safetensors|gguf|ckpt|pt|pth|zip|tar)$' >/dev/null; then
+  echo "tracked animation/video/model/3D binary found" >&2
+  exit 1
+fi
+
+if find . -type f \( -name "*.mp4" -o -name "*.webm" -o -name "*.mov" -o -name "*.gif" -o -name "*.blend" -o -name "*.glb" -o -name "*.obj" -o -name "*.fbx" -o -name "*.mtl" \) -print -quit | grep -q .; then
+  echo "generated animation/video/3D artifact found in source checkout" >&2
+  exit 1
+fi
+
+echo "Animation pipeline foundation OK"
