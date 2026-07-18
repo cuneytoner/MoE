@@ -10,7 +10,15 @@ DEFAULT_RUNTIME_3D_ROOT = Path("/home/cuneyt/MoE/runtime/media/outputs/3d")
 RUNTIME_SCOPE = "runtime/media/outputs/3d"
 METADATA_SUBDIR = "metadata"
 MODEL_BACKUP_ROOT = Path("/home/cuneyt/MoE_Models_Backup")
-REPO_ROOT = Path(__file__).resolve().parents[3]
+_MODULE_PATH = Path(__file__).resolve()
+if Path("/workspace").is_dir():
+    REPO_ROOT = Path("/workspace")
+elif len(_MODULE_PATH.parents) > 3:
+    REPO_ROOT = _MODULE_PATH.parents[3]
+elif len(_MODULE_PATH.parents) > 1:
+    REPO_ROOT = _MODULE_PATH.parents[1]
+else:
+    REPO_ROOT = _MODULE_PATH.parent
 ALLOWED_OUTPUT_KEYS = ("blend", "glb", "obj", "preview", "metadata", "report")
 FORMAT_OUTPUT_KEYS = ("blend", "glb", "obj")
 PREVIEW_EXTENSIONS = (".png", ".jpg", ".jpeg", ".webp")
