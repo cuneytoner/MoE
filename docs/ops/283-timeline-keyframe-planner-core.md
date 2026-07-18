@@ -201,7 +201,7 @@ Planner safety flags remain false for runtime writes, source mutation, generatio
 
 ## M36.4 And M36.5 Boundaries
 
-M36.4 remains the future camera animation planner milestone. It may plan camera orbit, look-at targets, camera paths, camera-specific constraints, lenses, and camera transform synthesis.
+M36.4 now uses this planner as a downstream step. The camera animation planner synthesizes a canonical M36.2 animation plan for orbit/look-at camera transforms, then passes it through the M36.3 timeline/keyframe planner for deterministic timing and summary metadata.
 
 M36.5 remains the future object transform animation planner milestone. It may plan object movement, rotation, scale, visibility behavior, and object-specific constraints.
 
@@ -242,8 +242,8 @@ Run:
 make test-animation-timeline-planner
 ```
 
-The regression covers valid YAML/JSON planning, invalid and malformed input exit codes, validator reuse, mutation safety, canonical hash determinism, timeline math, frame time convention, progress calculation, float normalization, track/keyframe order, segment counts, value normalization, safety flags, no timestamp/UUID/path leakage, no Blender import, no external process surface, no runtime writes, no generated media, fixture cleanup, and M36.4 non-start.
+The regression covers valid YAML/JSON planning, invalid and malformed input exit codes, validator reuse, mutation safety, canonical hash determinism, timeline math, frame time convention, progress calculation, float normalization, track/keyframe order, segment counts, value normalization, safety flags, no timestamp/UUID/path leakage, no Blender import, no external process surface, no runtime writes, no generated media, fixture cleanup, and M36.5 non-start.
 
 ## Final Decision
 
-M36.3 is DONE when the planner, CLI, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.4 remains planned and unimplemented.
+M36.3 is DONE when the planner, CLI, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.4 builds on it with camera-specific planning; M36.5 remains planned and unimplemented.

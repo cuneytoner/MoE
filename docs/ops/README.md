@@ -320,6 +320,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Animation plan validator review template | [282-animation-plan-validator-review-template.md](282-animation-plan-validator-review-template.md) |
 | Timeline keyframe planner core | [283-timeline-keyframe-planner-core.md](283-timeline-keyframe-planner-core.md) |
 | Timeline keyframe planner core review template | [284-timeline-keyframe-planner-core-review-template.md](284-timeline-keyframe-planner-core-review-template.md) |
+| Camera animation planner | [285-camera-animation-planner.md](285-camera-animation-planner.md) |
+| Camera animation planner review template | [286-camera-animation-planner-review-template.md](286-camera-animation-planner-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

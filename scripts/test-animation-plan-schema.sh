@@ -73,12 +73,14 @@ grep -q -- "- M36.0 Animation Pipeline Foundation and Roadmap DONE" "$MILESTONES
 grep -q -- "- M36.1 Animation Plan Schema DONE" "$MILESTONES"
 grep -q -- "- M36.2 Animation Plan Validator DONE" "$MILESTONES"
 grep -q -- "- M36.3 Timeline and Keyframe Planner Core DONE" "$MILESTONES"
-grep -q -- "- M36.4 Camera Animation Planner PLANNED" "$MILESTONES"
+grep -q -- "- M36.4 Camera Animation Planner DONE" "$MILESTONES"
+grep -q -- "- M36.5 Object Transform Animation Planner PLANNED" "$MILESTONES"
 
 unexpected_animation_files="$(
   find apps -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) \
     ! -path 'apps/media-worker/app/animation_plan_validator.py' \
-    ! -path 'apps/media-worker/app/animation_timeline_planner.py' -print
+    ! -path 'apps/media-worker/app/animation_timeline_planner.py' \
+    ! -path 'apps/media-worker/app/camera_animation_planner.py' -print
 )"
 if [ -n "$unexpected_animation_files" ]; then
   echo "unexpected animation implementation source file found:" >&2

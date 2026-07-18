@@ -1,0 +1,51 @@
+schema_version: "1.0"
+request_id: "camera-orbit-demo"
+output_plan_id: "camera-orbit-demo-plan"
+title: "Camera orbit around a static target"
+description: "Deterministic source-only camera orbit example"
+
+mode: "dry_run"
+visual_reference_only: true
+structural_certification: false
+operator_review_required: true
+
+timeline:
+  fps: 24
+  start_frame: 1
+  end_frame: 120
+
+scene:
+  source_scene:
+    type: "existing_runtime_3d_asset"
+    reference_id: "example-only"
+  units: "meters"
+
+camera:
+  camera_id: "camera"
+  lens_mm: 50.0
+
+motion:
+  type: "orbit"
+  center: [0.0, 0.0, 1.0]
+  radius: 5.0
+  height_offset: 2.0
+  start_angle_degrees: -90.0
+  end_angle_degrees: 270.0
+  keyframe_count: 5
+  interpolation: "bezier"
+  orientation: "look_at_center"
+
+outputs:
+  preview:
+    enabled: false
+    format: "mp4"
+    relative_runtime_path: "media/animation/previews/camera-orbit-demo.mp4"
+  metadata:
+    relative_runtime_path: "media/animation/metadata/camera-orbit-demo.json"
+
+safety:
+  real_animation_enabled: false
+  blender_execution_enabled: false
+  preview_render_enabled: false
+  source_assets_modified: false
+  runtime_write_planned: false

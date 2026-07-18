@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:moe:camera-motion-schema:1.0",
+  "title": "MoE Camera Motion Request Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id",
+    "output_plan_id",
+    "title",
+    "description",
+    "mode",
+    "visual_reference_only",
+    "structural_certification",
+    "operator_review_required",
+    "timeline",
+    "scene",
+    "camera",
+    "motion",
+    "outputs",
+    "safety"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "request_id": { "$ref": "#/$defs/safeIdentifier80" },
+    "output_plan_id": { "$ref": "#/$defs/safeIdentifier80" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "description": { "type": "string", "maxLength": 1000 },
+    "mode": { "type": "string", "enum": ["dry_run"] },
+    "visual_reference_only": { "type": "boolean", "const": true },
+    "structural_certification": { "type": "boolean", "const": false },
+    "operator_review_required": { "type": "boolean", "const": true },
+    "timeline": { "$ref": "#/$defs/timeline" },
+    "scene": { "$ref": "#/$defs/scene" },
+    "camera": { "$ref": "#/$defs/camera" },
+    "motion": { "$ref": "#/$defs/orbitMotion" },
+    "outputs": { "$ref": "#/$defs/outputs" },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "$defs": {
+    "safeIdentifier80": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "safeReferenceId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+    },
+    "vector3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "type": "number" }
+    },
+    "timeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fps", "start_frame", "end_frame"],
+      "properties": {
+        "fps": { "type": "integer", "minimum": 1, "maximum": 120 },
+        "start_frame": { "type": "integer", "minimum": 0 },
+        "end_frame": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_scene", "units"],
+      "properties": {
+        "source_scene": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "reference_id"],
+          "properties": {
+            "type": { "type": "string", "enum": ["existing_runtime_3d_asset"] },
+            "reference_id": { "$ref": "#/$defs/safeReferenceId" }
+          }
+        },
+        "units": { "type": "string", "enum": ["meters", "centimeters", "millimeters"] }
+      }
+    },
+    "camera": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["camera_id", "lens_mm"],
+      "properties": {
+        "camera_id": { "$ref": "#/$defs/safeReferenceId" },
+        "lens_mm": { "type": "number", "minimum": 1.0, "maximum": 300.0 }
+      }
+    },
+    "orbitMotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "center",
+        "radius",
+        "height_offset",
+        "start_angle_degrees",
+        "end_angle_degrees",
+        "keyframe_count",
+        "interpolation",
+        "orientation"
+      ],
+      "properties": {
+        "type": { "type": "string", "enum": ["orbit"] },
+        "center": { "$ref": "#/$defs/vector3" },
+        "radius": { "type": "number", "exclusiveMinimum": 0, "maximum": 1000000 },
+        "height_offset": { "type": "number", "minimum": -1000000, "maximum": 1000000 },
+        "start_angle_degrees": { "type": "number", "minimum": -36000, "maximum": 36000 },
+        "end_angle_degrees": { "type": "number", "minimum": -36000, "maximum": 36000 },
+        "keyframe_count": { "type": "integer", "minimum": 2, "maximum": 64 },
+        "interpolation": { "type": "string", "enum": ["constant", "linear", "bezier"] },
+        "orientation": { "type": "string", "enum": ["look_at_center"] }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preview", "metadata"],
+      "properties": {
+        "preview": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "format", "relative_runtime_path"],
+          "properties": {
+            "enabled": { "type": "boolean", "const": false },
+            "format": { "type": "string", "enum": ["mp4", "webm", "gif"] },
+            "relative_runtime_path": { "type": "string" }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["relative_runtime_path"],
+          "properties": {
+            "relative_runtime_path": { "type": "string" }
+          }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "real_animation_enabled",
+        "blender_execution_enabled",
+        "preview_render_enabled",
+        "source_assets_modified",
+        "runtime_write_planned"
+      ],
+      "properties": {
+        "real_animation_enabled": { "type": "boolean", "const": false },
+        "blender_execution_enabled": { "type": "boolean", "const": false },
+        "preview_render_enabled": { "type": "boolean", "const": false },
+        "source_assets_modified": { "type": "boolean", "const": false },
+        "runtime_write_planned": { "type": "boolean", "const": false }
+      }
+    }
+  }
+}

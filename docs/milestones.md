@@ -2,8 +2,8 @@
 
 Current active phase:
 - M36 Animation Pipeline is active.
-- Latest completed: M36.3 Timeline and Keyframe Planner Core.
-- Next planned: M36.4 Camera Animation Planner.
+- Latest completed: M36.4 Camera Animation Planner.
+- Next planned: M36.5 Object Transform Animation Planner.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -115,7 +115,7 @@ Current media milestone status:
 - M36.1 Animation Plan Schema DONE
 - M36.2 Animation Plan Validator DONE
 - M36.3 Timeline and Keyframe Planner Core DONE
-- M36.4 Camera Animation Planner PLANNED
+- M36.4 Camera Animation Planner DONE
 - M36.5 Object Transform Animation Planner PLANNED
 - M36.6 Blender Animation Adapter Plan PLANNED
 - M36.7 Guarded Blender Animation Implementation PLANNED
@@ -2330,12 +2330,14 @@ Goals:
 
 ## Milestone 36.4: Camera Animation Planner
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Add deterministic camera animation planning for orbit, pan, dolly, and static framing patterns.
+- Add deterministic camera orbit animation planning from a source-only request.
+- Compute frame distribution, orbit positions, look-at Euler rotations, static lens settings, and a canonical M36.2 animation plan.
+- Reuse the M36.3 timeline/keyframe planner for derived camera tracks.
 - Keep outputs as plans only.
-- Avoid Blender execution.
+- Avoid Blender execution, runtime writes, preview rendering, and object transform planning.
 
 ## Milestone 36.5: Object Transform Animation Planner
 
