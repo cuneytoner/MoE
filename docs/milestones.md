@@ -2,8 +2,8 @@
 
 Current active phase:
 - M36 Animation Pipeline is active.
-- Latest completed: M36.8 Animation Metadata Sidecar Writer.
-- Next planned: M36.9 Animation Metadata Validator.
+- Latest completed: M36.9 Animation Metadata Validator.
+- Next planned: M36.10 Preview Render Safety Plan.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -120,7 +120,7 @@ Current media milestone status:
 - M36.6 Blender Animation Adapter Plan DONE
 - M36.7 Guarded Blender Animation Implementation DONE
 - M36.8 Animation Metadata Sidecar Writer DONE
-- M36.9 Animation Metadata Validator PLANNED
+- M36.9 Animation Metadata Validator DONE
 - M36.10 Preview Render Safety Plan PLANNED
 - M36.11 Guarded Preview Render Implementation PLANNED
 - M36.12 Animation Artifact Verifier PLANNED
@@ -2382,11 +2382,11 @@ Goals:
 
 ## Milestone 36.9: Animation Metadata Validator
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Validate animation sidecars and runtime-relative output references.
-- Reject unsafe paths and malformed metadata.
+- Reject unsafe paths, malformed metadata, inconsistent summaries, unsafe safety flags, and provenance mismatches.
 - Keep validation read-only.
 
 ## Milestone 36.10: Preview Render Safety Plan

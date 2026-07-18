@@ -192,7 +192,7 @@ Only explicit `/tmp` writes are supported for review/testing.
 
 ## M36.9 Boundary
 
-M36.9 remains planned for the animation metadata validator. M36.8 does not implement metadata validation as a separate CLI or schema validator.
+M36.9 adds the read-only animation metadata validator as a separate CLI and schema. M36.8 still only plans or writes metadata.
 
 ## Non-goals
 
@@ -212,4 +212,4 @@ The regression covers plan-only metadata, fixed and current timestamps, hash con
 
 ## Final Decision
 
-M36.8 is complete when the writer, docs, review template, layout entry, Make target, roadmap updates, and non-Blender regression pass. M36.9 remains planned.
+M36.8 is complete when the writer, docs, review template, layout entry, Make target, roadmap updates, and non-Blender regression pass. M36.9 validates the metadata contract separately.

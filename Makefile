@@ -5,6 +5,7 @@
 .PHONY: test-blender-animation-adapter-plan
 .PHONY: test-blender-animation-adapter
 .PHONY: test-animation-metadata-sidecar-writer
+.PHONY: test-animation-metadata-validator
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -668,6 +669,9 @@ test-blender-animation-adapter:
 
 test-animation-metadata-sidecar-writer:
 > @./scripts/test-animation-metadata-sidecar-writer.sh
+
+test-animation-metadata-validator:
+> @./scripts/test-animation-metadata-validator.sh
 
 test-memory-approval-dashboard:
 > @./scripts/test-memory-approval-dashboard.sh

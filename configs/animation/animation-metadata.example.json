@@ -1,0 +1,90 @@
+{
+  "adapter_request_sha256": "8c71439c23a04fe445c80c2558d870aae224fd405edd1fc57bbecc6dd84aaeb0",
+  "adapter_summary": {
+    "execution_status": "not_executed",
+    "operation_count": 14,
+    "operation_types": [
+      "configure_scene_timeline",
+      "insert_transform_keyframe",
+      "resolve_target",
+      "set_fcurve_interpolation",
+      "set_rotation_mode",
+      "set_transform_values"
+    ],
+    "resolved_target_ids": [
+      "demo-object"
+    ]
+  },
+  "animation_id": "object-transform-demo-plan",
+  "animation_summary": {
+    "interpolations": [
+      "bezier"
+    ],
+    "keyframe_count": 2,
+    "properties": [
+      "transform"
+    ],
+    "segment_count": 1,
+    "target_ids": [
+      "demo-object"
+    ],
+    "target_types": [
+      "object"
+    ],
+    "track_count": 1
+  },
+  "asset_type": "animation",
+  "canonical_plan_sha256": "53736036a756394ab84aa53c5da2b854292404c998d7e176bdaa7d9016858a3b",
+  "created_at": "2026-01-01T00:00:00Z",
+  "generation_mode": "metadata_only",
+  "generator_script": "apps/media-worker/app/animation_metadata_sidecar.py",
+  "generator_version": "0.1.0",
+  "metadata_type": "animation_sidecar",
+  "operation_plan_sha256": "4b57e4c899366c2fcd1844f8241fa1fc87efc11416c20fc0ef45aedc212e44fa",
+  "operator_review_required": true,
+  "output_files": {
+    "metadata": "media/animation/metadata/object-transform-demo.json",
+    "preview": "media/animation/previews/object-transform-demo.mp4",
+    "report": null
+  },
+  "preview_available": false,
+  "safety_flags": {
+    "blend_file_saved": false,
+    "blender_execution_attempted": false,
+    "external_process_started": false,
+    "generation_triggered": false,
+    "keyframes_written": false,
+    "metadata_written": false,
+    "preview_render_attempted": false,
+    "read_only_inputs": true,
+    "runtime_assets_written": false,
+    "scene_modified": false,
+    "source_assets_modified": false
+  },
+  "schema_version": "1.0",
+  "source": "blender_animation_adapter",
+  "source_kind": "object_transform_animation_plan",
+  "source_request_sha256": "90186a11d8c7a9e9eb9c3de085e74f8a34d8752c7a97e3ae8cb3313393d0a323",
+  "source_scene": {
+    "reference_id": "example-only",
+    "type": "existing_runtime_3d_asset",
+    "units": "meters"
+  },
+  "structural_certification": false,
+  "timeline": {
+    "duration_seconds": 5.0,
+    "end_frame": 120,
+    "fps": 24,
+    "start_frame": 1,
+    "total_frames": 120
+  },
+  "title": "Move and rotate a static object",
+  "validation": {
+    "adapter_request_valid": true,
+    "canonical_plan_valid": true,
+    "operation_plan_valid": true,
+    "timeline_plan_valid": true
+  },
+  "visual_reference_only": true,
+  "warnings": []
+}

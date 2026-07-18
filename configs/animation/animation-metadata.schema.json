@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:moe:animation-metadata-schema:1.0",
+  "title": "Animation Metadata Sidecar",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "metadata_type",
+    "asset_type",
+    "source",
+    "generator_script",
+    "generator_version",
+    "animation_id",
+    "title",
+    "created_at",
+    "source_kind",
+    "source_request_sha256",
+    "adapter_request_sha256",
+    "canonical_plan_sha256",
+    "operation_plan_sha256",
+    "source_scene",
+    "timeline",
+    "animation_summary",
+    "adapter_summary",
+    "output_files",
+    "preview_available",
+    "visual_reference_only",
+    "structural_certification",
+    "operator_review_required",
+    "generation_mode",
+    "validation",
+    "warnings",
+    "safety_flags"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "metadata_type": {"const": "animation_sidecar"},
+    "asset_type": {"const": "animation"},
+    "source": {"const": "blender_animation_adapter"},
+    "generator_script": {"const": "apps/media-worker/app/animation_metadata_sidecar.py"},
+    "generator_version": {"const": "0.1.0"},
+    "animation_id": {"$ref": "#/$defs/safeIdentifier"},
+    "title": {"type": "string", "minLength": 1, "maxLength": 200},
+    "created_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"},
+    "source_kind": {"enum": ["camera_animation_plan", "object_transform_animation_plan"]},
+    "source_request_sha256": {"$ref": "#/$defs/sha256"},
+    "adapter_request_sha256": {"$ref": "#/$defs/sha256"},
+    "canonical_plan_sha256": {"$ref": "#/$defs/sha256"},
+    "operation_plan_sha256": {"$ref": "#/$defs/sha256"},
+    "source_scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "reference_id", "units"],
+      "properties": {
+        "type": {"const": "existing_runtime_3d_asset"},
+        "reference_id": {"$ref": "#/$defs/safeIdentifier"},
+        "units": {"enum": ["meters", "centimeters", "millimeters"]}
+      }
+    },
+    "timeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fps", "start_frame", "end_frame", "total_frames", "duration_seconds"],
+      "properties": {
+        "fps": {"type": "integer", "minimum": 1, "maximum": 120},
+        "start_frame": {"type": "integer", "minimum": 0},
+        "end_frame": {"type": "integer", "minimum": 1},
+        "total_frames": {"type": "integer", "minimum": 2},
+        "duration_seconds": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "animation_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["track_count", "keyframe_count", "segment_count", "target_types", "target_ids", "properties", "interpolations"],
+      "properties": {
+        "track_count": {"type": "integer", "minimum": 1},
+        "keyframe_count": {"type": "integer", "minimum": 1},
+        "segment_count": {"type": "integer", "minimum": 0},
+        "target_types": {"type": "array", "minItems": 1, "items": {"enum": ["camera", "object"]}},
+        "target_ids": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/safeIdentifier"}},
+        "properties": {"type": "array", "minItems": 1, "items": {"enum": ["transform", "location", "rotation_euler", "scale", "visibility"]}},
+        "interpolations": {"type": "array", "minItems": 1, "items": {"enum": ["constant", "linear", "bezier"]}}
+      }
+    },
+    "adapter_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation_count", "operation_types", "resolved_target_ids", "execution_status"],
+      "properties": {
+        "operation_count": {"type": "integer", "minimum": 1},
+        "operation_types": {"type": "array", "minItems": 1, "items": {"enum": ["configure_scene_timeline", "resolve_target", "set_rotation_mode", "set_camera_lens", "set_transform_values", "set_visibility_value", "insert_transform_keyframe", "insert_visibility_keyframe", "set_fcurve_interpolation"]}},
+        "resolved_target_ids": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/safeIdentifier"}},
+        "execution_status": {"const": "not_executed"}
+      }
+    },
+    "output_files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preview", "metadata", "report"],
+      "properties": {
+        "preview": {"type": "string"},
+        "metadata": {"type": "string"},
+        "report": {"type": "null"}
+      }
+    },
+    "preview_available": {"const": false},
+    "visual_reference_only": {"const": true},
+    "structural_certification": {"const": false},
+    "operator_review_required": {"const": true},
+    "generation_mode": {"const": "metadata_only"},
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapter_request_valid", "canonical_plan_valid", "timeline_plan_valid", "operation_plan_valid"],
+      "properties": {
+        "adapter_request_valid": {"const": true},
+        "canonical_plan_valid": {"const": true},
+        "timeline_plan_valid": {"const": true},
+        "operation_plan_valid": {"const": true}
+      }
+    },
+    "warnings": {"type": "array", "maxItems": 100, "items": {"type": "string", "maxLength": 500}},
+    "safety_flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["metadata_written", "read_only_inputs", "runtime_assets_written", "source_assets_modified", "generation_triggered", "blender_execution_attempted", "keyframes_written", "scene_modified", "preview_render_attempted", "external_process_started", "blend_file_saved"],
+      "properties": {
+        "metadata_written": {"type": "boolean"},
+        "read_only_inputs": {"const": true},
+        "runtime_assets_written": {"const": false},
+        "source_assets_modified": {"const": false},
+        "generation_triggered": {"const": false},
+        "blender_execution_attempted": {"const": false},
+        "keyframes_written": {"const": false},
+        "scene_modified": {"const": false},
+        "preview_render_attempted": {"const": false},
+        "external_process_started": {"const": false},
+        "blend_file_saved": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "safeIdentifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+      "maxLength": 160
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}
