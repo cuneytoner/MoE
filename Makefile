@@ -9,6 +9,7 @@
 .PHONY: test-preview-render-safety-plan
 .PHONY: test-animation-preview-renderer
 .PHONY: test-animation-artifact-verifier
+.PHONY: test-animation-output-card-api-plan
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -684,6 +685,9 @@ test-animation-preview-renderer:
 
 test-animation-artifact-verifier:
 > @./scripts/test-animation-artifact-verifier.sh
+
+test-animation-output-card-api-plan:
+> @./scripts/test-animation-output-card-api-plan.sh
 
 test-memory-approval-dashboard:
 > @./scripts/test-memory-approval-dashboard.sh

@@ -1,0 +1,152 @@
+{
+  "card_count": 2,
+  "cards": [
+    {
+      "animation_id": "object-transform-demo-plan",
+      "created_at": "2026-01-01T00:00:00Z",
+      "generation_mode": "metadata_only",
+      "id": "animation:media/animation/metadata/object-transform-demo.json",
+      "operator_review_required": true,
+      "preview": {
+        "available": false,
+        "first_frame_relative_path": null,
+        "format": null,
+        "frame_count": 0,
+        "height": null,
+        "preview_id": null,
+        "relative_directory": null,
+        "total_output_bytes": 0,
+        "width": null
+      },
+      "relative_runtime_paths": {
+        "declared_video_preview": "media/animation/previews/object-transform-demo.mp4",
+        "metadata": "media/animation/metadata/object-transform-demo.json",
+        "preview_frames": null,
+        "report": null
+      },
+      "source_kind": "object_transform_animation_plan",
+      "structural_certification": false,
+      "summary": {
+        "interpolations": [
+          "bezier"
+        ],
+        "keyframe_count": 2,
+        "operation_count": 14,
+        "properties": [
+          "transform"
+        ],
+        "segment_count": 1,
+        "target_ids": [
+          "demo-object"
+        ],
+        "target_types": [
+          "object"
+        ],
+        "track_count": 1
+      },
+      "timeline": {
+        "duration_seconds": 5.0,
+        "end_frame": 120,
+        "fps": 24,
+        "start_frame": 1,
+        "total_frames": 120
+      },
+      "title": "Move and rotate a static object",
+      "type": "animation",
+      "verification": {
+        "error_count": 0,
+        "metadata_valid": true,
+        "preview_report_valid": false,
+        "provenance_checked": false,
+        "runtime_preview_verified": false,
+        "valid": true,
+        "warning_count": 0
+      },
+      "visual_reference_only": true
+    },
+    {
+      "animation_id": "object-transform-demo-plan-previewed",
+      "created_at": "2026-01-01T00:00:00Z",
+      "generation_mode": "guarded_preview_render",
+      "id": "animation:media/animation/metadata/object-transform-demo-previewed.json",
+      "operator_review_required": true,
+      "preview": {
+        "available": true,
+        "first_frame_relative_path": "media/animation/previews/object-transform-demo-preview/frames/frame-000001.png",
+        "format": "PNG",
+        "frame_count": 8,
+        "height": 720,
+        "preview_id": "object-transform-demo-preview",
+        "relative_directory": "media/animation/previews/object-transform-demo-preview/frames",
+        "total_output_bytes": 123456,
+        "width": 1280
+      },
+      "relative_runtime_paths": {
+        "declared_video_preview": "media/animation/previews/object-transform-demo-previewed.mp4",
+        "metadata": "media/animation/metadata/object-transform-demo-previewed.json",
+        "preview_frames": "media/animation/previews/object-transform-demo-preview/frames",
+        "report": "media/animation/reports/object-transform-demo-preview-report.json"
+      },
+      "source_kind": "object_transform_animation_plan",
+      "structural_certification": false,
+      "summary": {
+        "interpolations": [
+          "bezier"
+        ],
+        "keyframe_count": 2,
+        "operation_count": 14,
+        "properties": [
+          "transform"
+        ],
+        "segment_count": 1,
+        "target_ids": [
+          "demo-object"
+        ],
+        "target_types": [
+          "object"
+        ],
+        "track_count": 1
+      },
+      "timeline": {
+        "duration_seconds": 5.0,
+        "end_frame": 120,
+        "fps": 24,
+        "start_frame": 1,
+        "total_frames": 120
+      },
+      "title": "Move and rotate a static object with sampled preview frames",
+      "type": "animation",
+      "verification": {
+        "error_count": 0,
+        "metadata_valid": true,
+        "preview_report_valid": true,
+        "provenance_checked": false,
+        "runtime_preview_verified": true,
+        "valid": true,
+        "warning_count": 0
+      },
+      "visual_reference_only": true
+    }
+  ],
+  "invalid_count": 0,
+  "metadata_dir_available": true,
+  "preview_report_count": 1,
+  "reports_dir_available": true,
+  "runtime_scope": "runtime/media/animation",
+  "safety_flags": {
+    "animation_execution_attempted": false,
+    "external_process_started": false,
+    "generation_triggered": false,
+    "preview_render_attempted": false,
+    "read_only": true,
+    "runtime_assets_deleted": false,
+    "runtime_assets_modified": false,
+    "runtime_assets_written": false,
+    "shell_execution": false,
+    "source_assets_modified": false
+  },
+  "service": "gateway-animation-output-cards",
+  "status": "ok",
+  "verified_preview_count": 1,
+  "warnings": []
+}

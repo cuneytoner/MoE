@@ -302,6 +302,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Guarded Preview Render Implementation Review Template](ops/300-guarded-preview-render-implementation-review-template.md)
 - [Animation Artifact Verifier](ops/301-animation-artifact-verifier.md)
 - [Animation Artifact Verifier Review Template](ops/302-animation-artifact-verifier-review-template.md)
+- [Animation Output Card API Plan](ops/303-animation-output-card-api-plan.md)
+- [Animation Output Card API Plan Review Template](ops/304-animation-output-card-api-plan-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

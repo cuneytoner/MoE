@@ -196,7 +196,7 @@ The verifier does not write metadata, write reports, render frames, repair files
 
 ## M36.13 boundary
 
-M36.13 Animation Output Card API Plan remains planned. M36.12 does not add Gateway endpoints, Dashboard cards, reference-board integration, or output-card APIs.
+M36.13 Animation Output Card API Plan defines the future read-only Gateway animation card contract. M36.12 does not add Gateway endpoints, Dashboard cards, reference-board integration, or output-card APIs.
 
 ## Non-goals
 

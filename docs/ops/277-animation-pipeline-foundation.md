@@ -281,7 +281,7 @@ It checks the docs, example config, safety flags, roadmap, source-only audits, a
 | M36.10 | Preview Render Safety Plan | DONE |
 | M36.11 | Guarded Preview Render Implementation | DONE |
 | M36.12 | Animation Artifact Verifier | DONE |
-| M36.13 | Animation Output Card API Plan | PLANNED |
+| M36.13 | Animation Output Card API Plan | DONE |
 | M36.14 | Animation Output Card API | PLANNED |
 | M36.15 | Dashboard Animation Cards UI | PLANNED |
 | M36.16 | Animation Reference Board Selection | PLANNED |
@@ -301,6 +301,6 @@ M36.0 is DONE as a foundation and roadmap milestone.
 
 Current active phase: M36 Animation Pipeline.
 
-Latest completed milestone: M36.12 Animation Artifact Verifier.
+Latest completed milestone: M36.13 Animation Output Card API Plan.
 
-Next planned milestone: M36.13 Animation Output Card API Plan.
+Next planned milestone: M36.14 Animation Output Card API.

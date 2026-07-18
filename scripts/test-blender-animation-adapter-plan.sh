@@ -150,7 +150,8 @@ grep -q -- "- M36.9 Animation Metadata Validator DONE" "$MILESTONES"
 grep -q -- "- M36.10 Preview Render Safety Plan DONE" "$MILESTONES"
 grep -q -- "- M36.11 Guarded Preview Render Implementation DONE" "$MILESTONES"
 grep -q -- "- M36.12 Animation Artifact Verifier DONE" "$MILESTONES"
-grep -q -- "- M36.13 Animation Output Card API Plan PLANNED" "$MILESTONES"
+grep -q -- "- M36.13 Animation Output Card API Plan DONE" "$MILESTONES"
+grep -q -- "- M36.14 Animation Output Card API PLANNED" "$MILESTONES"
 
 if [ -e "apps/media-worker/app/animation_blender_adapter.py" ]; then
   echo "unexpected alternate Blender animation adapter implementation found" >&2

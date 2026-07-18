@@ -69,6 +69,7 @@ grep -q "M36.9 | Animation Metadata Validator | DONE" "$DOC"
 grep -q "M36.10 | Preview Render Safety Plan | DONE" "$DOC"
 grep -q "M36.11 | Guarded Preview Render Implementation | DONE" "$DOC"
 grep -q "M36.12 | Animation Artifact Verifier | DONE" "$DOC"
+grep -q "M36.13 | Animation Output Card API Plan | DONE" "$DOC"
 
 python3 - "$MILESTONES" <<'PY'
 import re
@@ -90,7 +91,7 @@ expected = {
     "36.10": "DONE",
     "36.11": "DONE",
     "36.12": "DONE",
-    "36.13": "PLANNED",
+    "36.13": "DONE",
     "36.14": "PLANNED",
     "36.15": "PLANNED",
     "36.16": "PLANNED",

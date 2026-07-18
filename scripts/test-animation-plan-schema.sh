@@ -82,7 +82,8 @@ grep -q -- "- M36.9 Animation Metadata Validator DONE" "$MILESTONES"
 grep -q -- "- M36.10 Preview Render Safety Plan DONE" "$MILESTONES"
 grep -q -- "- M36.11 Guarded Preview Render Implementation DONE" "$MILESTONES"
 grep -q -- "- M36.12 Animation Artifact Verifier DONE" "$MILESTONES"
-grep -q -- "- M36.13 Animation Output Card API Plan PLANNED" "$MILESTONES"
+grep -q -- "- M36.13 Animation Output Card API Plan DONE" "$MILESTONES"
+grep -q -- "- M36.14 Animation Output Card API PLANNED" "$MILESTONES"
 
 unexpected_animation_files="$(
   find apps -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) \
