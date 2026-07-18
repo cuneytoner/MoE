@@ -290,6 +290,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Object Transform Animation Planner Review Template](ops/288-object-transform-animation-planner-review-template.md)
 - [Blender Animation Adapter Plan](ops/289-blender-animation-adapter-plan.md)
 - [Blender Animation Adapter Plan Review Template](ops/290-blender-animation-adapter-plan-review-template.md)
+- [Guarded Blender Animation Implementation](ops/291-guarded-blender-animation-implementation.md)
+- [Guarded Blender Animation Implementation Review Template](ops/292-guarded-blender-animation-implementation-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

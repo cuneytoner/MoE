@@ -2,7 +2,7 @@
 
 ## Purpose
 
-M36.6 defines the future Blender animation adapter contract without implementing a Python adapter. It connects validated canonical animation plans and timeline/keyframe plans to a deterministic Blender animation operation plan that M36.7 can implement under explicit guards.
+M36.6 defined the future Blender animation adapter contract without implementing a Python adapter. M36.7 implements that reviewed contract in `apps/media-worker/app/blender_animation_adapter.py` while keeping normal operation plan-only.
 
 ## Scope
 
@@ -10,7 +10,7 @@ This milestone is plan-only. It defines input envelopes, target resolution, oper
 
 ## Non-Goals
 
-M36.6 does not add `apps/media-worker/app/blender_animation_adapter.py`, `apps/media-worker/app/animation_blender_adapter.py`, `bpy` imports, `mathutils` imports, Blender execution, keyframe insertion, preview rendering, ffmpeg, runtime writes, Gateway endpoints, Dashboard UI, Docker services, or generated media.
+M36.6 did not add `apps/media-worker/app/blender_animation_adapter.py`, `apps/media-worker/app/animation_blender_adapter.py`, `bpy` imports, `mathutils` imports, Blender execution, keyframe insertion, preview rendering, ffmpeg, runtime writes, Gateway endpoints, Dashboard UI, Docker services, or generated media. M36.7 adds the adapter with local-only `bpy` import inside the guarded execution function and still does not add rendering, runtime asset writes, Gateway endpoints, Dashboard UI, Docker services, or generated media.
 
 ## Existing M35 Adapter Lessons
 
@@ -83,7 +83,7 @@ Allowed target types:
 - `camera`
 - `object`
 
-M36.6 performs no target resolution. M36.7 should resolve camera targets with `bpy.data.objects.get(target_id)` and verify `object.type == CAMERA`. Object targets should also use `bpy.data.objects.get(target_id)` and require existence.
+M36.6 performed no target resolution. M36.7 resolves camera targets with `bpy.data.objects.get(target_id)` and verifies `object.type == CAMERA`. Object targets also use `bpy.data.objects.get(target_id)` and require existence.
 
 If a target cannot be resolved, future implementation must not create a new object, guess a target name, use the first camera, or use the active object fallback. It should return a controlled failure.
 
@@ -185,7 +185,7 @@ Planned operation:
 }
 ```
 
-M36.7 should limit implementation to `scene.render.fps`, `scene.frame_start`, and `scene.frame_end`. Resolution, render engine, output path, and codec settings stay out of scope.
+M36.7 limits implementation to `scene.render.fps`, `scene.frame_start`, and `scene.frame_end`. Resolution, render engine, output path, and codec settings stay out of scope.
 
 ## Camera Settings
 
@@ -370,7 +370,7 @@ Ids must be unique, deterministic, and derived from operation type, target id, s
 
 ## M36.7 Implementation Contract
 
-M36.7 may implement the adapter only after this plan is reviewed. It should build operation plans without Blender, preflight everything before mutation, require the two execution guards, and import `bpy` only inside guarded execution.
+M36.7 implements the adapter after this plan was reviewed. It builds operation plans without Blender, preflights everything before mutation, requires the two execution guards, and imports `bpy` only inside guarded execution.
 
 ## Test Strategy
 
@@ -380,8 +380,8 @@ Run:
 make test-blender-animation-adapter-plan
 ```
 
-The regression checks the plan docs, example JSON, operation allowlist, forbidden operations, ordering, target resolution rules, safety flags, guards, import boundary, runtime boundary, roadmap status, no new Python Blender animation adapter file, no new `bpy` or `mathutils` import in M36 apps, no generated media, and M36.7 non-start.
+The M36.6 regression checks the plan docs, example JSON, operation allowlist, forbidden operations, ordering, target resolution rules, safety flags, guards, import boundary, runtime boundary, roadmap status, no generated media, and M36.8 non-start.
 
 ## Final Decision
 
-M36.6 is DONE when the plan, review template, example operation plan, layout requirements, roadmap updates, and source-only regression pass. M36.7 remains planned and unimplemented.
+M36.6 is DONE when the plan, review template, example operation plan, layout requirements, roadmap updates, and source-only regression pass. M36.7 is implemented separately by 291 and 292. M36.8 remains planned.

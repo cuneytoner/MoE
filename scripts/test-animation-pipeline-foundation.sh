@@ -63,7 +63,8 @@ grep -q "M36.3 | Timeline and Keyframe Planner Core | DONE" "$DOC"
 grep -q "M36.4 | Camera Animation Planner | DONE" "$DOC"
 grep -q "M36.5 | Object Transform Animation Planner | DONE" "$DOC"
 grep -q "M36.6 | Blender Animation Adapter Plan | DONE" "$DOC"
-grep -q "M36.7 | Guarded Blender Animation Implementation | PLANNED" "$DOC"
+grep -q "M36.7 | Guarded Blender Animation Implementation | DONE" "$DOC"
+grep -q "M36.8 | Animation Metadata Sidecar Writer | PLANNED" "$DOC"
 
 python3 - "$MILESTONES" <<'PY'
 import re
@@ -79,7 +80,7 @@ expected = {
     "36.4": "DONE",
     "36.5": "DONE",
     "36.6": "DONE",
-    "36.7": "PLANNED",
+    "36.7": "DONE",
     "36.8": "PLANNED",
     "36.9": "PLANNED",
     "36.10": "PLANNED",
@@ -106,7 +107,8 @@ unexpected_animation_files="$(
     ! -path 'apps/media-worker/app/animation_plan_validator.py' \
     ! -path 'apps/media-worker/app/animation_timeline_planner.py' \
     ! -path 'apps/media-worker/app/camera_animation_planner.py' \
-    ! -path 'apps/media-worker/app/object_transform_animation_planner.py' -print
+    ! -path 'apps/media-worker/app/object_transform_animation_planner.py' \
+    ! -path 'apps/media-worker/app/blender_animation_adapter.py' -print
 )"
 if [ -n "$unexpected_animation_files" ]; then
   echo "unexpected animation implementation source file found:" >&2
@@ -114,8 +116,8 @@ if [ -n "$unexpected_animation_files" ]; then
   exit 1
 fi
 
-if grep -R "REAL_ANIMATION_GENERATION\|execute-animation\|render-preview" apps scripts --exclude='test-animation-pipeline-foundation.sh' --exclude='test-animation-plan-schema.sh' --exclude='test-animation-plan-validator.sh' --exclude='test-animation-timeline-planner.sh' --exclude='test-camera-animation-planner.sh' --exclude='test-object-transform-animation-planner.sh' --exclude='test-blender-animation-adapter-plan.sh' >/dev/null; then
-  echo "animation execution flags found outside foundation docs/config tests" >&2
+if grep -R "render-preview\|animation_metadata_sidecar\|write_animation_metadata" apps scripts --exclude='test-animation-pipeline-foundation.sh' --exclude='test-animation-plan-schema.sh' --exclude='test-animation-plan-validator.sh' --exclude='test-animation-timeline-planner.sh' --exclude='test-camera-animation-planner.sh' --exclude='test-object-transform-animation-planner.sh' --exclude='test-blender-animation-adapter-plan.sh' --exclude='test-blender-animation-adapter.sh' >/dev/null; then
+  echo "M36.8+ animation metadata/preview behavior found outside allowed docs/config tests" >&2
   exit 1
 fi
 

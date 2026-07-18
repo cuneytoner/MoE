@@ -110,7 +110,7 @@ grep -q "REAL_ANIMATION_GENERATION=1" "$PLAN_DOC"
 grep -q -- "--execute-animation" "$PLAN_DOC"
 grep -q "bpy.*module level" "$PLAN_DOC"
 grep -q "guarded execution function" "$PLAN_DOC"
-grep -q "M36.7 remains planned and unimplemented" "$PLAN_DOC"
+grep -q "M36.7 is implemented separately by 291 and 292" "$PLAN_DOC"
 
 for heading in \
   "Repository State" \
@@ -144,20 +144,21 @@ done
 
 grep -q -- "- M36.5 Object Transform Animation Planner DONE" "$MILESTONES"
 grep -q -- "- M36.6 Blender Animation Adapter Plan DONE" "$MILESTONES"
-grep -q -- "- M36.7 Guarded Blender Animation Implementation PLANNED" "$MILESTONES"
+grep -q -- "- M36.7 Guarded Blender Animation Implementation DONE" "$MILESTONES"
+grep -q -- "- M36.8 Animation Metadata Sidecar Writer PLANNED" "$MILESTONES"
 
-if [ -e "apps/media-worker/app/blender_animation_adapter.py" ] || [ -e "apps/media-worker/app/animation_blender_adapter.py" ]; then
-  echo "M36.6 must not create a Python Blender animation adapter implementation" >&2
+if [ -e "apps/media-worker/app/animation_blender_adapter.py" ]; then
+  echo "unexpected alternate Blender animation adapter implementation found" >&2
   exit 1
 fi
 
-if grep -R '^import bpy\|from bpy\|mathutils' apps/media-worker/app configs/animation >/dev/null; then
+if grep -R '^import bpy\|from bpy\|mathutils' apps/media-worker/app configs/animation --exclude='blender_animation_adapter.py' >/dev/null; then
   echo "new animation layer contains forbidden Blender import surface" >&2
   exit 1
 fi
 
-if grep -R "REAL_ANIMATION_GENERATION\|execute-animation\|render-preview" apps/media-worker/app configs/animation >/dev/null; then
-  echo "M36.7 guarded execution behavior appears to have started in app/config source" >&2
+if grep -R "render-preview\|animation_metadata_sidecar\|write_animation_metadata" apps/media-worker/app configs/animation >/dev/null; then
+  echo "M36.8+ animation metadata/preview behavior appears to have started in app/config source" >&2
   exit 1
 fi
 

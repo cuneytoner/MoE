@@ -1,0 +1,234 @@
+{
+  "canonical_animation_plan": {
+    "description": "Deterministic source-only object transform example",
+    "mode": "dry_run",
+    "operator_review_required": true,
+    "outputs": {
+      "metadata": {
+        "relative_runtime_path": "media/animation/metadata/object-transform-demo.json"
+      },
+      "preview": {
+        "enabled": false,
+        "format": "mp4",
+        "relative_runtime_path": "media/animation/previews/object-transform-demo.mp4"
+      }
+    },
+    "plan_id": "object-transform-demo-plan",
+    "safety": {
+      "blender_execution_enabled": false,
+      "preview_render_enabled": false,
+      "real_animation_enabled": false,
+      "runtime_write_planned": false,
+      "source_assets_modified": false
+    },
+    "scene": {
+      "source_scene": {
+        "reference_id": "example-only",
+        "type": "existing_runtime_3d_asset"
+      },
+      "units": "meters"
+    },
+    "schema_version": "1.0",
+    "structural_certification": false,
+    "timeline": {
+      "duration_seconds": 5.0,
+      "end_frame": 120,
+      "fps": 24,
+      "start_frame": 1
+    },
+    "title": "Move and rotate a static object",
+    "tracks": [
+      {
+        "interpolation": "bezier",
+        "keyframes": [
+          {
+            "frame": 1,
+            "location": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_euler": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "frame": 120,
+            "location": [
+              2.0,
+              0.0,
+              1.0
+            ],
+            "rotation_euler": [
+              0.0,
+              0.0,
+              1.570796327
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ],
+        "property": "transform",
+        "target_id": "demo-object",
+        "target_type": "object",
+        "track_id": "object-demo-object-transform"
+      }
+    ],
+    "visual_reference_only": true
+  },
+  "planner_context": {},
+  "request_type": "blender_animation_adapter_request",
+  "safety": {
+    "blender_execution_enabled": false,
+    "real_animation_enabled": false,
+    "runtime_write_planned": false
+  },
+  "schema_version": "1.0",
+  "source_kind": "object_transform_animation_plan",
+  "source_request_sha256": "90186a11d8c7a9e9eb9c3de085e74f8a34d8752c7a97e3ae8cb3313393d0a323",
+  "timeline_plan": {
+    "mode": "dry_run",
+    "operator_review_required": true,
+    "plan_type": "animation_timeline_keyframe_plan",
+    "planned_outputs": {
+      "metadata_relative_runtime_path": "media/animation/metadata/object-transform-demo.json",
+      "preview_enabled": false,
+      "preview_format": "mp4",
+      "preview_relative_runtime_path": "media/animation/previews/object-transform-demo.mp4"
+    },
+    "safety_flags": {
+      "blender_execution_attempted": false,
+      "external_process_started": false,
+      "generation_triggered": false,
+      "interpolation_evaluated": false,
+      "keyframes_written": false,
+      "preview_render_attempted": false,
+      "read_only": true,
+      "runtime_assets_written": false,
+      "source_assets_modified": false
+    },
+    "schema_version": "1.0",
+    "source_plan_id": "object-transform-demo-plan",
+    "source_plan_sha256": "53736036a756394ab84aa53c5da2b854292404c998d7e176bdaa7d9016858a3b",
+    "source_scene": {
+      "reference_id": "example-only",
+      "type": "existing_runtime_3d_asset",
+      "units": "meters"
+    },
+    "status": "planned",
+    "structural_certification": false,
+    "summary": {
+      "interpolations": [
+        "bezier"
+      ],
+      "keyframe_count": 2,
+      "properties": [
+        "transform"
+      ],
+      "segment_count": 1,
+      "target_types": [
+        "object"
+      ],
+      "track_count": 1
+    },
+    "timeline": {
+      "declared_duration_seconds": 5.0,
+      "duration_seconds": 5.0,
+      "end_frame": 120,
+      "fps": 24,
+      "frame_duration_seconds": 0.041666667,
+      "frame_span": 119,
+      "frame_span_seconds": 4.958333333,
+      "start_frame": 1,
+      "total_frames": 120
+    },
+    "title": "Move and rotate a static object",
+    "tracks": [
+      {
+        "first_frame": 1,
+        "interpolation": "bezier",
+        "keyframe_count": 2,
+        "keyframes": [
+          {
+            "frame": 1,
+            "normalized_progress": 0.0,
+            "sequence": 0,
+            "time_seconds": 0.0,
+            "values": {
+              "location": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_euler": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "frame": 120,
+            "normalized_progress": 1.0,
+            "sequence": 1,
+            "time_seconds": 4.958333333,
+            "values": {
+              "location": [
+                2.0,
+                0.0,
+                1.0
+              ],
+              "rotation_euler": [
+                0.0,
+                0.0,
+                1.570796327
+              ],
+              "scale": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            }
+          }
+        ],
+        "last_frame": 120,
+        "property": "transform",
+        "segment_count": 1,
+        "segments": [
+          {
+            "duration_seconds": 4.958333333,
+            "end_frame": 120,
+            "end_time_seconds": 4.958333333,
+            "frame_delta": 119,
+            "interpolation": "bezier",
+            "normalized_end": 1.0,
+            "normalized_start": 0.0,
+            "sequence": 0,
+            "start_frame": 1,
+            "start_time_seconds": 0.0
+          }
+        ],
+        "sequence": 0,
+        "target_id": "demo-object",
+        "target_type": "object",
+        "track_id": "object-demo-object-transform"
+      }
+    ],
+    "visual_reference_only": true
+  }
+}

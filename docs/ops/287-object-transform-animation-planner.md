@@ -219,4 +219,4 @@ The regression covers valid YAML/JSON requests, malformed and invalid inputs, fi
 
 ## Final Decision
 
-M36.5 is DONE when the object planner, schema, example request, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.6 builds on it with an adapter plan; M36.7 remains planned and unimplemented.
+M36.5 is DONE when the object planner, schema, example request, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.6 builds on it with an adapter plan; M36.7 implements the guarded adapter. M36.8 remains planned.

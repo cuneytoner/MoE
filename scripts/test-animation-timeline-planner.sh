@@ -187,8 +187,8 @@ if grep -R '^import bpy\|from bpy\|subprocess\|ffmpeg\|render-preview\|execute-a
   exit 1
 fi
 
-if rg -n "REAL_ANIMATION_GENERATION|execute-animation|render-preview" apps/media-worker/app configs/animation >/dev/null; then
-  echo "M36.7 guarded Blender animation implementation appears to have started" >&2
+if rg -n "render-preview|animation_metadata_sidecar|write_animation_metadata" apps/media-worker/app configs/animation >/dev/null; then
+  echo "M36.8+ animation metadata/preview behavior appears to have started" >&2
   exit 1
 fi
 

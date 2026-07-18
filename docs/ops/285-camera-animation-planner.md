@@ -218,4 +218,4 @@ The regression covers valid YAML/JSON requests, malformed and invalid inputs, de
 
 ## Final Decision
 
-M36.4 is DONE when the camera planner, schema, example request, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.5 builds on it with object transform planning; M36.6 adds the adapter plan. M36.7 remains planned and unimplemented.
+M36.4 is DONE when the camera planner, schema, example request, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.5 builds on it with object transform planning; M36.6 adds the adapter plan; M36.7 implements the guarded adapter. M36.8 remains planned.

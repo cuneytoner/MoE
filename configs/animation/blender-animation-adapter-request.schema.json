@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.moe/schemas/animation/blender-animation-adapter-request.schema.json",
+  "title": "Blender Animation Adapter Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_type",
+    "source_kind",
+    "source_request_sha256",
+    "canonical_animation_plan",
+    "timeline_plan",
+    "planner_context",
+    "safety"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "request_type": {
+      "const": "blender_animation_adapter_request"
+    },
+    "source_kind": {
+      "enum": [
+        "camera_animation_plan",
+        "object_transform_animation_plan"
+      ]
+    },
+    "source_request_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "canonical_animation_plan": {
+      "type": "object"
+    },
+    "timeline_plan": {
+      "type": "object"
+    },
+    "planner_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "camera_settings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "camera_id",
+            "lens_mm"
+          ],
+          "properties": {
+            "camera_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+              "maxLength": 160
+            },
+            "lens_mm": {
+              "type": "number",
+              "minimum": 1.0,
+              "maximum": 300.0
+            }
+          }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "real_animation_enabled",
+        "blender_execution_enabled",
+        "runtime_write_planned"
+      ],
+      "properties": {
+        "real_animation_enabled": {
+          "const": false
+        },
+        "blender_execution_enabled": {
+          "const": false
+        },
+        "runtime_write_planned": {
+          "const": false
+        }
+      }
+    }
+  }
+}
