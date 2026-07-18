@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:moe:animation-preview-render-request:1.0",
+  "title": "Animation Preview Render Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_type",
+    "preview_id",
+    "source_kind",
+    "source_request_sha256",
+    "canonical_plan_sha256",
+    "camera_id",
+    "render_mode",
+    "frame_selection",
+    "render",
+    "output",
+    "limits",
+    "safety"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "request_type": {
+      "const": "animation_preview_render_request"
+    },
+    "preview_id": {
+      "$ref": "#/$defs/safeIdentifier"
+    },
+    "source_kind": {
+      "enum": [
+        "camera_animation_plan",
+        "object_transform_animation_plan"
+      ]
+    },
+    "source_request_sha256": {
+      "$ref": "#/$defs/hash64"
+    },
+    "canonical_plan_sha256": {
+      "$ref": "#/$defs/hash64"
+    },
+    "camera_id": {
+      "$ref": "#/$defs/safeIdentifier"
+    },
+    "render_mode": {
+      "const": "sampled_frames"
+    },
+    "frame_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sample_count",
+        "include_start_frame",
+        "include_end_frame"
+      ],
+      "properties": {
+        "sample_count": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 24
+        },
+        "include_start_frame": {
+          "const": true
+        },
+        "include_end_frame": {
+          "const": true
+        }
+      }
+    },
+    "render": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "engine",
+        "format",
+        "width",
+        "height",
+        "resolution_percentage",
+        "transparent_background"
+      ],
+      "properties": {
+        "engine": {
+          "const": "BLENDER_EEVEE_NEXT"
+        },
+        "format": {
+          "const": "PNG"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 64,
+          "maximum": 1920
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 64,
+          "maximum": 1080
+        },
+        "resolution_percentage": {
+          "const": 100
+        },
+        "transparent_background": {
+          "type": "boolean"
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relative_runtime_directory",
+        "filename_pattern",
+        "overwrite_existing"
+      ],
+      "properties": {
+        "relative_runtime_directory": {
+          "type": "string",
+          "pattern": "^media/animation/previews/[a-z0-9][a-z0-9-]{0,79}/frames$",
+          "minLength": 41,
+          "maxLength": 128
+        },
+        "filename_pattern": {
+          "const": "frame-{frame:06d}.png"
+        },
+        "overwrite_existing": {
+          "const": false
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_frames",
+        "max_total_output_bytes",
+        "timeout_seconds"
+      ],
+      "properties": {
+        "max_frames": {
+          "const": 24
+        },
+        "max_total_output_bytes": {
+          "const": 536870912
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "real_animation_enabled",
+        "preview_render_enabled",
+        "runtime_write_planned",
+        "blend_file_save_planned",
+        "video_encode_planned",
+        "external_process_planned"
+      ],
+      "properties": {
+        "real_animation_enabled": {
+          "const": false
+        },
+        "preview_render_enabled": {
+          "const": false
+        },
+        "runtime_write_planned": {
+          "const": false
+        },
+        "blend_file_save_planned": {
+          "const": false
+        },
+        "video_encode_planned": {
+          "const": false
+        },
+        "external_process_planned": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "hash64": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "safeIdentifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "minLength": 1,
+      "maxLength": 80,
+      "not": {
+        "anyOf": [
+          {
+            "pattern": "[/\\\\]"
+          },
+          {
+            "pattern": "\\.\\."
+          },
+          {
+            "pattern": "^\\."
+          },
+          {
+            "pattern": "\\s"
+          },
+          {
+            "pattern": "://"
+          },
+          {
+            "pattern": "^[A-Za-z]:"
+          },
+          {
+            "pattern": "^//"
+          },
+          {
+            "pattern": "/home/|/mnt/|/media/|/workspace/|/app/|MoE_Models_Backup"
+          }
+        ]
+      }
+    }
+  }
+}

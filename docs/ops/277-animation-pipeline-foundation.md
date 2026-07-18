@@ -278,7 +278,7 @@ It checks the docs, example config, safety flags, roadmap, source-only audits, a
 | M36.7 | Guarded Blender Animation Implementation | DONE |
 | M36.8 | Animation Metadata Sidecar Writer | DONE |
 | M36.9 | Animation Metadata Validator | DONE |
-| M36.10 | Preview Render Safety Plan | PLANNED |
+| M36.10 | Preview Render Safety Plan | DONE |
 | M36.11 | Guarded Preview Render Implementation | PLANNED |
 | M36.12 | Animation Artifact Verifier | PLANNED |
 | M36.13 | Animation Output Card API Plan | PLANNED |

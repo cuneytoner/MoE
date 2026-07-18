@@ -332,6 +332,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Animation metadata sidecar writer review template | [294-animation-metadata-sidecar-writer-review-template.md](294-animation-metadata-sidecar-writer-review-template.md) |
 | Animation metadata validator | [295-animation-metadata-validator.md](295-animation-metadata-validator.md) |
 | Animation metadata validator review template | [296-animation-metadata-validator-review-template.md](296-animation-metadata-validator-review-template.md) |
+| Preview render safety plan | [297-preview-render-safety-plan.md](297-preview-render-safety-plan.md) |
+| Preview render safety plan review template | [298-preview-render-safety-plan-review-template.md](298-preview-render-safety-plan-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -79,7 +79,8 @@ grep -q -- "- M36.6 Blender Animation Adapter Plan DONE" "$MILESTONES"
 grep -q -- "- M36.7 Guarded Blender Animation Implementation DONE" "$MILESTONES"
 grep -q -- "- M36.8 Animation Metadata Sidecar Writer DONE" "$MILESTONES"
 grep -q -- "- M36.9 Animation Metadata Validator DONE" "$MILESTONES"
-grep -q -- "- M36.10 Preview Render Safety Plan PLANNED" "$MILESTONES"
+grep -q -- "- M36.10 Preview Render Safety Plan DONE" "$MILESTONES"
+grep -q -- "- M36.11 Guarded Preview Render Implementation PLANNED" "$MILESTONES"
 
 unexpected_animation_files="$(
   find apps -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) \

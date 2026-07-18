@@ -140,7 +140,7 @@ M36.9 writes no files, reads no runtime metadata root, does not inspect runtime 
 
 ## M36.10 Boundary
 
-M36.10 remains planned for preview render safety planning. M36.9 does not add preview rendering or render controls.
+M36.10 adds preview render safety planning as a source-only contract. M36.9 does not add preview rendering or render controls.
 
 ## Non-goals
 
@@ -160,4 +160,4 @@ The regression covers source examples, writer output, standalone validation, pro
 
 ## Final Decision
 
-M36.9 is complete when the validator, schema, example, docs, review template, layout entry, Make target, roadmap updates, and read-only regressions pass. M36.10 remains planned.
+M36.9 is complete when the validator, schema, example, docs, review template, layout entry, Make target, roadmap updates, and read-only regressions pass. M36.10 now carries the separate preview render safety plan.

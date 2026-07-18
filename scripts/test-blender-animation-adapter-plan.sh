@@ -147,7 +147,8 @@ grep -q -- "- M36.6 Blender Animation Adapter Plan DONE" "$MILESTONES"
 grep -q -- "- M36.7 Guarded Blender Animation Implementation DONE" "$MILESTONES"
 grep -q -- "- M36.8 Animation Metadata Sidecar Writer DONE" "$MILESTONES"
 grep -q -- "- M36.9 Animation Metadata Validator DONE" "$MILESTONES"
-grep -q -- "- M36.10 Preview Render Safety Plan PLANNED" "$MILESTONES"
+grep -q -- "- M36.10 Preview Render Safety Plan DONE" "$MILESTONES"
+grep -q -- "- M36.11 Guarded Preview Render Implementation PLANNED" "$MILESTONES"
 
 if [ -e "apps/media-worker/app/animation_blender_adapter.py" ]; then
   echo "unexpected alternate Blender animation adapter implementation found" >&2
@@ -159,8 +160,8 @@ if grep -R '^import bpy\|from bpy\|mathutils' apps/media-worker/app configs/anim
   exit 1
 fi
 
-if grep -R "preview_render_safety\|render_preview_plan\|--render-preview" apps/media-worker/app configs/animation >/dev/null; then
-  echo "M36.10+ animation preview behavior appears to have started in app/config source" >&2
+if grep -R "preview_render_implementation\|execute_preview_render\|render_preview_plan\|--render-preview" apps/media-worker/app configs/animation >/dev/null; then
+  echo "M36.11+ animation preview implementation behavior appears to have started in app/config source" >&2
   exit 1
 fi
 

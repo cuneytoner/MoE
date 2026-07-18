@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "request_type": "animation_preview_render_request",
+  "preview_id": "object-transform-demo-preview",
+  "source_kind": "object_transform_animation_plan",
+  "source_request_sha256": "90186a11d8c7a9e9eb9c3de085e74f8a34d8752c7a97e3ae8cb3313393d0a323",
+  "canonical_plan_sha256": "53736036a756394ab84aa53c5da2b854292404c998d7e176bdaa7d9016858a3b",
+  "camera_id": "camera",
+  "render_mode": "sampled_frames",
+  "frame_selection": {
+    "sample_count": 8,
+    "include_start_frame": true,
+    "include_end_frame": true
+  },
+  "render": {
+    "engine": "BLENDER_EEVEE_NEXT",
+    "format": "PNG",
+    "width": 1280,
+    "height": 720,
+    "resolution_percentage": 100,
+    "transparent_background": false
+  },
+  "output": {
+    "relative_runtime_directory": "media/animation/previews/object-transform-demo-preview/frames",
+    "filename_pattern": "frame-{frame:06d}.png",
+    "overwrite_existing": false
+  },
+  "limits": {
+    "max_frames": 24,
+    "max_total_output_bytes": 536870912,
+    "timeout_seconds": 300
+  },
+  "safety": {
+    "real_animation_enabled": false,
+    "preview_render_enabled": false,
+    "runtime_write_planned": false,
+    "blend_file_save_planned": false,
+    "video_encode_planned": false,
+    "external_process_planned": false
+  }
+}

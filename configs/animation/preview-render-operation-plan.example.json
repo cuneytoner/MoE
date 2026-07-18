@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "plan_type": "animation_preview_render_operation_plan",
+  "status": "planned",
+  "preview_id": "object-transform-demo-preview",
+  "render_mode": "sampled_frames",
+  "source_kind": "object_transform_animation_plan",
+  "source_request_sha256": "90186a11d8c7a9e9eb9c3de085e74f8a34d8752c7a97e3ae8cb3313393d0a323",
+  "canonical_plan_sha256": "53736036a756394ab84aa53c5da2b854292404c998d7e176bdaa7d9016858a3b",
+  "frames": [
+    1,
+    18,
+    35,
+    52,
+    69,
+    86,
+    103,
+    120
+  ],
+  "relative_output_directory": "media/animation/previews/object-transform-demo-preview/frames",
+  "operation_types": [
+    "validate_preview_request",
+    "validate_adapter_request",
+    "resolve_camera",
+    "select_preview_frames",
+    "validate_output_directory",
+    "snapshot_render_settings",
+    "apply_animation_operations",
+    "configure_preview_render",
+    "render_preview_frame",
+    "verify_preview_frame",
+    "restore_render_settings",
+    "publish_preview_directory"
+  ],
+  "operation_count": 12,
+  "operations": [
+    {
+      "operation_id": "validate-preview-request",
+      "operation_type": "validate_preview_request"
+    },
+    {
+      "operation_id": "validate-adapter-request",
+      "operation_type": "validate_adapter_request"
+    },
+    {
+      "operation_id": "resolve-camera-camera",
+      "operation_type": "resolve_camera",
+      "camera_id": "camera",
+      "fallback_allowed": false,
+      "create_if_missing": false
+    },
+    {
+      "operation_id": "select-preview-frames",
+      "operation_type": "select_preview_frames",
+      "formula": "start_frame + (i * (end_frame - start_frame)) // (sample_count - 1)"
+    },
+    {
+      "operation_id": "validate-output-directory",
+      "operation_type": "validate_output_directory",
+      "overwrite_existing": false
+    },
+    {
+      "operation_id": "snapshot-render-settings",
+      "operation_type": "snapshot_render_settings"
+    },
+    {
+      "operation_id": "apply-animation-operations",
+      "operation_type": "apply_animation_operations",
+      "requires_m36_7_guards": true
+    },
+    {
+      "operation_id": "configure-preview-render",
+      "operation_type": "configure_preview_render",
+      "engine": "BLENDER_EEVEE_NEXT",
+      "format": "PNG"
+    },
+    {
+      "operation_id": "render-preview-frame",
+      "operation_type": "render_preview_frame",
+      "filename_pattern": "frame-{frame:06d}.png"
+    },
+    {
+      "operation_id": "verify-preview-frame",
+      "operation_type": "verify_preview_frame"
+    },
+    {
+      "operation_id": "restore-render-settings",
+      "operation_type": "restore_render_settings"
+    },
+    {
+      "operation_id": "publish-preview-directory",
+      "operation_type": "publish_preview_directory",
+      "atomic_publish_required": true
+    }
+  ],
+  "safety_flags": {
+    "runtime_assets_written": false,
+    "source_assets_modified": false,
+    "preview_render_attempted": false,
+    "external_process_started": false,
+    "ffmpeg_started": false,
+    "video_written": false,
+    "blend_file_saved": false,
+    "render_settings_restored": false
+  }
+}
