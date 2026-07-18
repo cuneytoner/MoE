@@ -5,10 +5,14 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY apps/gateway-api/requirements.txt /tmp/gateway-requirements.txt
+RUN pip install --no-cache-dir -r /tmp/gateway-requirements.txt
 
-COPY app ./app
+COPY apps/gateway-api/app ./app
+COPY packages/animation-validation ./packages/animation-validation
+COPY configs/animation ./configs/animation
+
+ENV PYTHONPATH=/app/packages/animation-validation
 
 EXPOSE 8100
 

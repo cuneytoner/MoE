@@ -1,8 +1,8 @@
 services:
   gateway-api:
     build:
-      context: ../../apps/gateway-api
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: apps/gateway-api/Dockerfile
     container_name: ${PROJECT_NAME:-moe}-gateway-api
     restart: unless-stopped
     environment:
@@ -52,6 +52,7 @@ services:
       - ../../configs/model-routing.yaml:/app/configs/model-routing.yaml:ro
       - ../../:/workspace:ro
       - ${MEDIA_OUTPUTS_DIR:-/home/cuneyt/MoE/runtime/media/outputs}:/home/cuneyt/MoE/runtime/media/outputs:ro
+      - ${RUNTIME_DIR:-/home/cuneyt/MoE/runtime}/media/animation:/home/cuneyt/MoE/runtime/media/animation:ro
       - ${RUNTIME_DIR:-/home/cuneyt/MoE/runtime}/pergola/drawings:/home/cuneyt/MoE/runtime/pergola/drawings:ro
       - ${RUNTIME_DIR:-/home/cuneyt/MoE/runtime}/drawings:/home/cuneyt/MoE/runtime/drawings:ro
       - ${MEDIA_JOBS_DIR:-/home/cuneyt/MoE/runtime/media/jobs}:/home/cuneyt/MoE/runtime/media/jobs:ro

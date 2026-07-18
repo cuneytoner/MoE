@@ -282,7 +282,7 @@ It checks the docs, example config, safety flags, roadmap, source-only audits, a
 | M36.11 | Guarded Preview Render Implementation | DONE |
 | M36.12 | Animation Artifact Verifier | DONE |
 | M36.13 | Animation Output Card API Plan | DONE |
-| M36.14 | Animation Output Card API | PLANNED |
+| M36.14 | Animation Output Card API | DONE |
 | M36.15 | Dashboard Animation Cards UI | PLANNED |
 | M36.16 | Animation Reference Board Selection | PLANNED |
 | M36.17 | M36 Phase Closure | PLANNED |

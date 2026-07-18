@@ -172,29 +172,21 @@ grep -q "M36.14 may implement" "$DOC"
 
 grep -q -- "- M36.12 Animation Artifact Verifier DONE" "$MILESTONES"
 grep -q -- "- M36.13 Animation Output Card API Plan DONE" "$MILESTONES"
-grep -q -- "- M36.14 Animation Output Card API PLANNED" "$MILESTONES"
+grep -q -- "- M36.14 Animation Output Card API DONE" "$MILESTONES"
+grep -q -- "- M36.15 Dashboard Animation Cards UI PLANNED" "$MILESTONES"
 grep -q -- "- M36.13 Animation Output Card API Plan DONE" "$CODEX_PROMPTS"
-grep -q -- "- M36.14 Animation Output Card API PLANNED" "$CODEX_PROMPTS"
-grep -q "Completed through Milestone 36.13: Animation Output Card API Plan" "$README"
-grep -q "Milestone 36.14: Animation Output Card API" "$README"
-grep -q "M36.13 adds source-only planning" "$ARCH"
-
-if [ -f "apps/gateway-api/app/media_animation_output_cards.py" ]; then
-  echo "M36.14 Gateway animation output card module was created during M36.13" >&2
-  exit 1
-fi
-
-if grep -R 'gateway/media/animation/cards\|media_animation_output_cards\|build_animation_output_cards' apps/gateway-api >/dev/null; then
-  echo "M36.14 Gateway endpoint implementation appears to have started" >&2
-  exit 1
-fi
+grep -q -- "- M36.14 Animation Output Card API DONE" "$CODEX_PROMPTS"
+grep -q -- "- M36.15 Dashboard Animation Cards UI PLANNED" "$CODEX_PROMPTS"
+grep -q "Completed through Milestone 36.14: Animation Output Card API" "$README"
+grep -q "Milestone 36.15: Dashboard Animation Cards UI" "$README"
+grep -q "M36.14 implements that read-only Gateway endpoint" "$ARCH"
 
 if find apps/dashboard-ui -type f \( -name '*Animation*Cards*.tsx' -o -name '*animation*cards*.tsx' -o -name '*Animation*Cards*.ts' \) -print -quit | grep -q .; then
-  echo "Dashboard animation card component appears to have started" >&2
+  echo "M36.15 Dashboard animation card component appears to have started" >&2
   exit 1
 fi
 
-if grep -R '/gateway/media/animation/preview\|/gateway/media/animation/cards\|render-preview\|execute-animation\|animation.*FileResponse\|base64.*animation' apps/gateway-api >/dev/null; then
+if grep -R '/gateway/media/animation/preview\|render-preview\|execute-animation\|animation.*FileResponse\|base64.*animation' apps/gateway-api >/dev/null; then
   echo "binary serving or execution surface found in M36.13 scope" >&2
   exit 1
 fi
@@ -204,7 +196,7 @@ if [ -d "runtime/media/animation" ] || [ -d "media/animation" ]; then
   exit 1
 fi
 
-if rg -n "M36\\.14.*DONE|M37\\.0.*DONE|M38" README.md docs scripts --glob '!scripts/test-animation-output-card-api-plan.sh' --glob '!scripts/test-animation-preview-renderer.sh' >/dev/null; then
+if rg -n "M36\\.15.*DONE|M37\\.0.*DONE|M38" README.md docs scripts --glob '!scripts/test-animation-output-card-api-plan.sh' --glob '!scripts/test-animation-output-card-api.sh' --glob '!scripts/test-animation-preview-renderer.sh' >/dev/null; then
   echo "future milestone state changed unexpectedly" >&2
   exit 1
 fi

@@ -136,11 +136,11 @@ Current active phase: M36 Animation Pipeline.
 
 M35 is closed.
 
-Completed through Milestone 36.13: Animation Output Card API Plan
+Completed through Milestone 36.14: Animation Output Card API
 
 Next planned milestone:
 
-Milestone 36.14: Animation Output Card API
+Milestone 36.15: Dashboard Animation Cards UI
 
 ## Model Inventory
 

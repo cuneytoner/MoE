@@ -2,8 +2,8 @@
 
 Current active phase:
 - M36 Animation Pipeline is active.
-- Latest completed: M36.13 Animation Output Card API Plan.
-- Next planned: M36.14 Animation Output Card API.
+- Latest completed: M36.14 Animation Output Card API.
+- Next planned: M36.15 Dashboard Animation Cards UI.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -125,7 +125,7 @@ Current media milestone status:
 - M36.11 Guarded Preview Render Implementation DONE
 - M36.12 Animation Artifact Verifier DONE
 - M36.13 Animation Output Card API Plan DONE
-- M36.14 Animation Output Card API PLANNED
+- M36.14 Animation Output Card API DONE
 - M36.15 Dashboard Animation Cards UI PLANNED
 - M36.16 Animation Reference Board Selection PLANNED
 - M36.17 M36 Phase Closure PLANNED
@@ -2431,7 +2431,7 @@ Goals:
 
 ## Milestone 36.14: Animation Output Card API
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add read-only animation output card discovery after metadata validation is stable.

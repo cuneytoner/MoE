@@ -340,6 +340,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Animation artifact verifier review template | [302-animation-artifact-verifier-review-template.md](302-animation-artifact-verifier-review-template.md) |
 | Animation output card API plan | [303-animation-output-card-api-plan.md](303-animation-output-card-api-plan.md) |
 | Animation output card API plan review template | [304-animation-output-card-api-plan-review-template.md](304-animation-output-card-api-plan-review-template.md) |
+| Animation output card API | [305-animation-output-card-api.md](305-animation-output-card-api.md) |
+| Animation output card API review template | [306-animation-output-card-api-review-template.md](306-animation-output-card-api-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

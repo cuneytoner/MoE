@@ -9,16 +9,10 @@ from typing import Any
 DEFAULT_RUNTIME_3D_ROOT = Path("/home/cuneyt/MoE/runtime/media/outputs/3d")
 RUNTIME_SCOPE = "runtime/media/outputs/3d"
 METADATA_SUBDIR = "metadata"
+SOURCE_REPO_ROOT = Path("/home/cuneyt/DiskD/Projects/MoE/codebase")
+DEPLOYED_REPO_ROOT = Path("/home/cuneyt/MoE/codebase")
+CONTAINER_WORKSPACE_ROOT = Path("/workspace")
 MODEL_BACKUP_ROOT = Path("/home/cuneyt/MoE_Models_Backup")
-_MODULE_PATH = Path(__file__).resolve()
-if Path("/workspace").is_dir():
-    REPO_ROOT = Path("/workspace")
-elif len(_MODULE_PATH.parents) > 3:
-    REPO_ROOT = _MODULE_PATH.parents[3]
-elif len(_MODULE_PATH.parents) > 1:
-    REPO_ROOT = _MODULE_PATH.parents[1]
-else:
-    REPO_ROOT = _MODULE_PATH.parent
 ALLOWED_OUTPUT_KEYS = ("blend", "glb", "obj", "preview", "metadata", "report")
 FORMAT_OUTPUT_KEYS = ("blend", "glb", "obj")
 PREVIEW_EXTENSIONS = (".png", ".jpg", ".jpeg", ".webp")
@@ -374,18 +368,8 @@ def _is_under_root(path: Path, root: Path) -> bool:
 
 
 def _is_repo_or_model_backup_path(path: Path) -> bool:
-    try:
-        resolved = path.resolve(strict=False)
-        repo = REPO_ROOT.resolve(strict=False)
-        model_backup = MODEL_BACKUP_ROOT.resolve(strict=False)
-        return (
-            resolved == repo
-            or repo in resolved.parents
-            or resolved == model_backup
-            or model_backup in resolved.parents
-        )
-    except OSError:
-        return True
+    denied_roots = (SOURCE_REPO_ROOT, DEPLOYED_REPO_ROOT, CONTAINER_WORKSPACE_ROOT, MODEL_BACKUP_ROOT)
+    return any(_is_under_root(path, denied_root) for denied_root in denied_roots)
 
 
 def _path_has_unsafe_parts(path: Path) -> bool:

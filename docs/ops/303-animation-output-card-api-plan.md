@@ -274,4 +274,4 @@ M36.13 regression checks the plan document, review template, JSON response examp
 
 ## Final decision
 
-M36.13 is a planning milestone only. The Animation Output Card API implementation remains deferred to M36.14.
+M36.13 is a planning milestone only. M36.14 implements this plan in `apps/gateway-api/app/media_animation_output_cards.py` and documents the result in `docs/ops/305-animation-output-card-api.md`.
