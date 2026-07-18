@@ -328,6 +328,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Blender animation adapter plan review template | [290-blender-animation-adapter-plan-review-template.md](290-blender-animation-adapter-plan-review-template.md) |
 | Guarded Blender animation implementation | [291-guarded-blender-animation-implementation.md](291-guarded-blender-animation-implementation.md) |
 | Guarded Blender animation implementation review template | [292-guarded-blender-animation-implementation-review-template.md](292-guarded-blender-animation-implementation-review-template.md) |
+| Animation metadata sidecar writer | [293-animation-metadata-sidecar-writer.md](293-animation-metadata-sidecar-writer.md) |
+| Animation metadata sidecar writer review template | [294-animation-metadata-sidecar-writer-review-template.md](294-animation-metadata-sidecar-writer-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

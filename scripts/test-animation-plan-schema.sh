@@ -77,7 +77,8 @@ grep -q -- "- M36.4 Camera Animation Planner DONE" "$MILESTONES"
 grep -q -- "- M36.5 Object Transform Animation Planner DONE" "$MILESTONES"
 grep -q -- "- M36.6 Blender Animation Adapter Plan DONE" "$MILESTONES"
 grep -q -- "- M36.7 Guarded Blender Animation Implementation DONE" "$MILESTONES"
-grep -q -- "- M36.8 Animation Metadata Sidecar Writer PLANNED" "$MILESTONES"
+grep -q -- "- M36.8 Animation Metadata Sidecar Writer DONE" "$MILESTONES"
+grep -q -- "- M36.9 Animation Metadata Validator PLANNED" "$MILESTONES"
 
 unexpected_animation_files="$(
   find apps -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) \
@@ -85,7 +86,8 @@ unexpected_animation_files="$(
     ! -path 'apps/media-worker/app/animation_timeline_planner.py' \
     ! -path 'apps/media-worker/app/camera_animation_planner.py' \
     ! -path 'apps/media-worker/app/object_transform_animation_planner.py' \
-    ! -path 'apps/media-worker/app/blender_animation_adapter.py' -print
+    ! -path 'apps/media-worker/app/blender_animation_adapter.py' \
+    ! -path 'apps/media-worker/app/animation_metadata_sidecar.py' -print
 )"
 if [ -n "$unexpected_animation_files" ]; then
   echo "unexpected animation implementation source file found:" >&2
@@ -93,8 +95,8 @@ if [ -n "$unexpected_animation_files" ]; then
   exit 1
 fi
 
-if grep -R "render-preview\|animation_metadata_sidecar\|write_animation_metadata" apps >/dev/null; then
-  echo "M36.8+ animation metadata/preview behavior found in apps" >&2
+if grep -R "animation_metadata_validator\|validate_animation_metadata_sidecar\|render-preview" apps >/dev/null; then
+  echo "M36.9+ animation validator/preview behavior found in apps" >&2
   exit 1
 fi
 

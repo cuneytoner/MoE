@@ -121,7 +121,7 @@ M36.7 does not implement:
 - Dashboard UI
 - Docker changes
 
-M36.8 remains planned for animation metadata sidecar writing.
+M36.8 adds animation metadata sidecar writing as a separate source-only writer. The M36.7 adapter still does not write metadata sidecars itself.
 
 ## How To Test
 

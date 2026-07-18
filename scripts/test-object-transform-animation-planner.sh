@@ -253,8 +253,8 @@ if grep -R '^import bpy\|from bpy\|mathutils\|subprocess\|ffmpeg\|constraints\.n
   exit 1
 fi
 
-if rg -n "render-preview|animation_metadata_sidecar|write_animation_metadata" apps/media-worker/app configs/animation >/dev/null; then
-  echo "M36.8+ animation metadata/preview behavior appears to have started" >&2
+if rg -n "animation_metadata_validator|validate_animation_metadata_sidecar|render-preview" apps/media-worker/app configs/animation >/dev/null; then
+  echo "M36.9+ animation validator/preview behavior appears to have started" >&2
   exit 1
 fi
 

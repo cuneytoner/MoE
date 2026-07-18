@@ -136,11 +136,11 @@ Current active phase: M36 Animation Pipeline.
 
 M35 is closed.
 
-Completed through Milestone 36.7: Guarded Blender Animation Implementation
+Completed through Milestone 36.8: Animation Metadata Sidecar Writer
 
 Next planned milestone:
 
-Milestone 36.8: Animation Metadata Sidecar Writer
+Milestone 36.9: Animation Metadata Validator
 
 ## Model Inventory
 

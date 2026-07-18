@@ -292,6 +292,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Blender Animation Adapter Plan Review Template](ops/290-blender-animation-adapter-plan-review-template.md)
 - [Guarded Blender Animation Implementation](ops/291-guarded-blender-animation-implementation.md)
 - [Guarded Blender Animation Implementation Review Template](ops/292-guarded-blender-animation-implementation-review-template.md)
+- [Animation Metadata Sidecar Writer](ops/293-animation-metadata-sidecar-writer.md)
+- [Animation Metadata Sidecar Writer Review Template](ops/294-animation-metadata-sidecar-writer-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)
