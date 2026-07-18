@@ -287,7 +287,7 @@ M36.11 does not produce MP4, WebM, GIF, audio, muxed video, Blender FFMPEG outpu
 
 ## M36.12 boundary
 
-M36.12 Animation Artifact Verifier remains planned. M36.11 verifies frames during the guarded render flow but does not add a separate artifact verifier milestone implementation.
+M36.12 Animation Artifact Verifier adds a separate read-only verification layer for metadata, preview renderer reports, and sampled PNG frame artifacts. M36.11 remains responsible only for guarded sampled-frame rendering.
 
 ## Final decision
 

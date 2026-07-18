@@ -253,8 +253,8 @@ if grep -R '^import bpy\|from bpy\|mathutils\|subprocess\|ffmpeg\|constraints\.n
   exit 1
 fi
 
-if rg -n "animation_artifact_verifier|verify_animation_artifact" apps/media-worker/app configs/animation >/dev/null; then
-  echo "M36.12+ animation artifact verifier behavior appears to have started" >&2
+if rg -n "animation_output_card|animation_reference_board|animation_dashboard" apps/media-worker/app configs/animation >/dev/null; then
+  echo "M36.13+ animation output card behavior appears to have started" >&2
   exit 1
 fi
 

@@ -386,8 +386,8 @@ It must not add Gateway or Dashboard behavior. It must not accept arbitrary outp
 
 Regression checks must avoid internet, Docker, Blender, node/npm, runtime services, model runtime, runtime writes, and generated preview assets.
 
-They verify schema constants, JSON examples, docs, roadmap status, guard documentation, output path policy, no `bpy`/`mathutils` imports, no implementation source, no runtime directory creation, and no generated frame/video artifacts.
+They verify schema constants, JSON examples, docs, roadmap status, guard documentation, output path policy, no `bpy`/`mathutils` imports, no runtime directory creation, and no generated frame/video artifacts.
 
 ## Final Decision
 
-M36.10 is approved as a source-only preview render safety plan. M36.11 implements the guarded sampled PNG renderer without adding video, Gateway, Dashboard, Docker, or artifact-verifier behavior.
+M36.10 is approved as a source-only preview render safety plan. M36.11 implements the guarded sampled PNG renderer without adding video, Gateway, Dashboard, or Docker behavior. M36.12 adds a separate read-only artifact verifier for metadata, preview reports, and sampled PNG frame sets.

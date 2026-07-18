@@ -463,8 +463,9 @@ for heading in \
 done
 
 grep -q -- "- M36.11 Guarded Preview Render Implementation DONE" docs/milestones.md
-grep -q -- "- M36.12 Animation Artifact Verifier PLANNED" docs/milestones.md
-if rg -n "M36\\.12.*DONE|M37\\.0.*DONE|M38" README.md docs scripts --glob '!scripts/test-animation-preview-renderer.sh' >/dev/null; then
+grep -q -- "- M36.12 Animation Artifact Verifier DONE" docs/milestones.md
+grep -q -- "- M36.13 Animation Output Card API Plan PLANNED" docs/milestones.md
+if rg -n "M36\\.13.*DONE|M37\\.0.*DONE|M38" README.md docs scripts --glob '!scripts/test-animation-preview-renderer.sh' >/dev/null; then
   echo "future milestone state changed unexpectedly" >&2
   exit 1
 fi
