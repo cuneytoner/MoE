@@ -234,8 +234,8 @@ if grep -R '^import bpy\|from bpy\|subprocess\|ffmpeg\|render-preview\|execute-a
   exit 1
 fi
 
-if rg -n "preview_render_safety|render_preview_plan|--render-preview" apps/media-worker/app configs/animation >/dev/null; then
-  echo "M36.10+ animation preview behavior appears to have started" >&2
+if rg -n "animation_artifact_verifier|verify_animation_artifact" apps/media-worker/app configs/animation >/dev/null; then
+  echo "M36.12+ animation artifact verifier behavior appears to have started" >&2
   exit 1
 fi
 

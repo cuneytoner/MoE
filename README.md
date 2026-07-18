@@ -136,11 +136,11 @@ Current active phase: M36 Animation Pipeline.
 
 M35 is closed.
 
-Completed through Milestone 36.10: Preview Render Safety Plan
+Completed through Milestone 36.11: Guarded Preview Render Implementation
 
 Next planned milestone:
 
-Milestone 36.11: Guarded Preview Render Implementation
+Milestone 36.12: Animation Artifact Verifier
 
 ## Model Inventory
 

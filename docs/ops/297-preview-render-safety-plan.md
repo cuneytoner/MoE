@@ -378,7 +378,7 @@ The canonical animation plan may still keep MP4/WebM/GIF preview paths as future
 
 ## M36.11 Implementation Contract
 
-M36.11 may implement guarded sampled PNG preview frames only after this plan is reviewed.
+M36.11 implements guarded sampled PNG preview frames after this plan. The default behavior remains plan-only.
 
 It must not add Gateway or Dashboard behavior. It must not accept arbitrary output roots. It must not treat request safety fields as execution guards.
 
@@ -390,4 +390,4 @@ They verify schema constants, JSON examples, docs, roadmap status, guard documen
 
 ## Final Decision
 
-M36.10 is approved as a source-only preview render safety plan. The next milestone remains M36.11 Guarded Preview Render Implementation.
+M36.10 is approved as a source-only preview render safety plan. M36.11 implements the guarded sampled PNG renderer without adding video, Gateway, Dashboard, Docker, or artifact-verifier behavior.

@@ -7,6 +7,7 @@
 .PHONY: test-animation-metadata-sidecar-writer
 .PHONY: test-animation-metadata-validator
 .PHONY: test-preview-render-safety-plan
+.PHONY: test-animation-preview-renderer
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -676,6 +677,9 @@ test-animation-metadata-validator:
 
 test-preview-render-safety-plan:
 > @./scripts/test-preview-render-safety-plan.sh
+
+test-animation-preview-renderer:
+> @./scripts/test-animation-preview-renderer.sh
 
 test-memory-approval-dashboard:
 > @./scripts/test-memory-approval-dashboard.sh

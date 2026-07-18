@@ -67,7 +67,8 @@ grep -q "M36.7 | Guarded Blender Animation Implementation | DONE" "$DOC"
 grep -q "M36.8 | Animation Metadata Sidecar Writer | DONE" "$DOC"
 grep -q "M36.9 | Animation Metadata Validator | DONE" "$DOC"
 grep -q "M36.10 | Preview Render Safety Plan | DONE" "$DOC"
-grep -q "M36.11 | Guarded Preview Render Implementation | PLANNED" "$DOC"
+grep -q "M36.11 | Guarded Preview Render Implementation | DONE" "$DOC"
+grep -q "M36.12 | Animation Artifact Verifier | PLANNED" "$DOC"
 
 python3 - "$MILESTONES" <<'PY'
 import re
@@ -87,7 +88,7 @@ expected = {
     "36.8": "DONE",
     "36.9": "DONE",
     "36.10": "DONE",
-    "36.11": "PLANNED",
+    "36.11": "DONE",
     "36.12": "PLANNED",
     "36.13": "PLANNED",
     "36.14": "PLANNED",
@@ -113,7 +114,8 @@ unexpected_animation_files="$(
     ! -path 'apps/media-worker/app/object_transform_animation_planner.py' \
     ! -path 'apps/media-worker/app/blender_animation_adapter.py' \
     ! -path 'apps/media-worker/app/animation_metadata_sidecar.py' \
-    ! -path 'apps/media-worker/app/animation_metadata_validator.py' -print
+    ! -path 'apps/media-worker/app/animation_metadata_validator.py' \
+    ! -path 'apps/media-worker/app/animation_preview_renderer.py' -print
 )"
 if [ -n "$unexpected_animation_files" ]; then
   echo "unexpected animation implementation source file found:" >&2
@@ -121,8 +123,8 @@ if [ -n "$unexpected_animation_files" ]; then
   exit 1
 fi
 
-if grep -R "preview_render_implementation\|execute_preview_render\|render_preview_plan\|--render-preview" apps scripts --exclude='test-animation-pipeline-foundation.sh' --exclude='test-animation-plan-schema.sh' --exclude='test-animation-plan-validator.sh' --exclude='test-animation-timeline-planner.sh' --exclude='test-camera-animation-planner.sh' --exclude='test-object-transform-animation-planner.sh' --exclude='test-blender-animation-adapter-plan.sh' --exclude='test-blender-animation-adapter.sh' --exclude='test-animation-metadata-sidecar-writer.sh' --exclude='test-animation-metadata-validator.sh' --exclude='test-preview-render-safety-plan.sh' >/dev/null; then
-  echo "M36.11+ animation preview implementation behavior found outside allowed docs/config tests" >&2
+if grep -R "animation_artifact_verifier\|verify_animation_artifact" apps >/dev/null; then
+  echo "M36.12+ animation artifact verifier behavior found outside allowed docs/config tests" >&2
   exit 1
 fi
 

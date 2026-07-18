@@ -334,6 +334,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Animation metadata validator review template | [296-animation-metadata-validator-review-template.md](296-animation-metadata-validator-review-template.md) |
 | Preview render safety plan | [297-preview-render-safety-plan.md](297-preview-render-safety-plan.md) |
 | Preview render safety plan review template | [298-preview-render-safety-plan-review-template.md](298-preview-render-safety-plan-review-template.md) |
+| Guarded preview render implementation | [299-guarded-preview-render-implementation.md](299-guarded-preview-render-implementation.md) |
+| Guarded preview render implementation review template | [300-guarded-preview-render-implementation-review-template.md](300-guarded-preview-render-implementation-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

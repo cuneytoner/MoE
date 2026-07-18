@@ -2,8 +2,8 @@
 
 Current active phase:
 - M36 Animation Pipeline is active.
-- Latest completed: M36.10 Preview Render Safety Plan.
-- Next planned: M36.11 Guarded Preview Render Implementation.
+- Latest completed: M36.11 Guarded Preview Render Implementation.
+- Next planned: M36.12 Animation Artifact Verifier.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -122,7 +122,7 @@ Current media milestone status:
 - M36.8 Animation Metadata Sidecar Writer DONE
 - M36.9 Animation Metadata Validator DONE
 - M36.10 Preview Render Safety Plan DONE
-- M36.11 Guarded Preview Render Implementation PLANNED
+- M36.11 Guarded Preview Render Implementation DONE
 - M36.12 Animation Artifact Verifier PLANNED
 - M36.13 Animation Output Card API Plan PLANNED
 - M36.14 Animation Output Card API PLANNED
@@ -2402,12 +2402,14 @@ Goals:
 
 ## Milestone 36.11: Guarded Preview Render Implementation
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Add guarded preview rendering only after safety planning.
 - Require explicit preview render guard.
 - Keep output runtime-only.
+- Keep default behavior plan-only and importable without Blender.
+- Render only sampled PNG frames under guarded execution.
 
 ## Milestone 36.12: Animation Artifact Verifier
 

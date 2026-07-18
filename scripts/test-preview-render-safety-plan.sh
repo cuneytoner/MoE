@@ -200,21 +200,18 @@ grep -q "must not produce" "$DOC"
 
 grep -q -- "- M36.9 Animation Metadata Validator DONE" "$MILESTONES"
 grep -q -- "- M36.10 Preview Render Safety Plan DONE" "$MILESTONES"
-grep -q -- "- M36.11 Guarded Preview Render Implementation PLANNED" "$MILESTONES"
+grep -q -- "- M36.11 Guarded Preview Render Implementation DONE" "$MILESTONES"
+grep -q -- "- M36.12 Animation Artifact Verifier PLANNED" "$MILESTONES"
 grep -q -- "- M36.10 Preview Render Safety Plan DONE" "$CODEX_PROMPTS"
-grep -q -- "- M36.11 Guarded Preview Render Implementation PLANNED" "$CODEX_PROMPTS"
-grep -q "Completed through Milestone 36.10: Preview Render Safety Plan" "$README"
-grep -q "Milestone 36.11: Guarded Preview Render Implementation" "$README"
+grep -q -- "- M36.11 Guarded Preview Render Implementation DONE" "$CODEX_PROMPTS"
+grep -q -- "- M36.12 Animation Artifact Verifier PLANNED" "$CODEX_PROMPTS"
+grep -q "Completed through Milestone 36.11: Guarded Preview Render Implementation" "$README"
+grep -q "Milestone 36.12: Animation Artifact Verifier" "$README"
 grep -q "Milestone 37.0: Media Workflow Orchestrator" "$MILESTONES"
 grep -q "Status: PLANNED" <(sed -n '/## Milestone 37.0:/,/## Future Homelab Ops/p' "$MILESTONES")
 
-if rg -n '^import bpy|from bpy|mathutils|subprocess|render-preview' apps/media-worker/app configs/animation --glob '*.py' --glob '!blender_animation_adapter.py' >/dev/null; then
+if rg -n '^import bpy|from bpy|mathutils|subprocess|render-preview' apps/media-worker/app configs/animation --glob '*.py' --glob '!blender_animation_adapter.py' --glob '!animation_preview_renderer.py' >/dev/null; then
   echo "preview safety milestone introduced forbidden Python import/execution surface" >&2
-  exit 1
-fi
-
-if find apps/media-worker/app -type f \( -name '*preview*.py' -o -name '*render*.py' \) -print -quit | grep -q .; then
-  echo "preview implementation source was added too early" >&2
   exit 1
 fi
 

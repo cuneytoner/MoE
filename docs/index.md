@@ -298,6 +298,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Animation Metadata Validator Review Template](ops/296-animation-metadata-validator-review-template.md)
 - [Preview Render Safety Plan](ops/297-preview-render-safety-plan.md)
 - [Preview Render Safety Plan Review Template](ops/298-preview-render-safety-plan-review-template.md)
+- [Guarded Preview Render Implementation](ops/299-guarded-preview-render-implementation.md)
+- [Guarded Preview Render Implementation Review Template](ops/300-guarded-preview-render-implementation-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)
