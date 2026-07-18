@@ -215,8 +215,8 @@ if grep -R '^import bpy\|from bpy\|mathutils\|subprocess\|ffmpeg\|constraints\.n
   exit 1
 fi
 
-if rg -n "object_transform|object planner|object-specific|pivot" apps/media-worker/app >/dev/null; then
-  echo "M36.5 object transform planner behavior appears to have started" >&2
+if rg -n "Blender operation plan|bpy operation|adapter implementation|execute-animation" apps/media-worker/app configs/animation --glob '!configs/animation/animation-plan.example.yaml' >/dev/null; then
+  echo "M36.6 Blender animation adapter behavior appears to have started" >&2
   exit 1
 fi
 

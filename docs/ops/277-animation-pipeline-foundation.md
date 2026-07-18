@@ -273,7 +273,7 @@ It checks the docs, example config, safety flags, roadmap, source-only audits, a
 | M36.2 | Animation Plan Validator | DONE |
 | M36.3 | Timeline and Keyframe Planner Core | DONE |
 | M36.4 | Camera Animation Planner | DONE |
-| M36.5 | Object Transform Animation Planner | PLANNED |
+| M36.5 | Object Transform Animation Planner | DONE |
 | M36.6 | Blender Animation Adapter Plan | PLANNED |
 | M36.7 | Guarded Blender Animation Implementation | PLANNED |
 | M36.8 | Animation Metadata Sidecar Writer | PLANNED |
@@ -301,6 +301,6 @@ M36.0 is DONE as a foundation and roadmap milestone.
 
 Current active phase: M36 Animation Pipeline.
 
-Latest completed milestone: M36.4 Camera Animation Planner.
+Latest completed milestone: M36.5 Object Transform Animation Planner.
 
-Next planned milestone: M36.5 Object Transform Animation Planner.
+Next planned milestone: M36.6 Blender Animation Adapter Plan.

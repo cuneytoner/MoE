@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:moe:object-motion-schema:1.0",
+  "title": "MoE Object Motion Request Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id",
+    "output_plan_id",
+    "title",
+    "description",
+    "mode",
+    "visual_reference_only",
+    "structural_certification",
+    "operator_review_required",
+    "timeline",
+    "scene",
+    "object",
+    "motion",
+    "visibility",
+    "outputs",
+    "safety"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "request_id": { "$ref": "#/$defs/safeIdentifier80" },
+    "output_plan_id": { "$ref": "#/$defs/safeIdentifier80" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "description": { "type": "string", "maxLength": 1000 },
+    "mode": { "type": "string", "enum": ["dry_run"] },
+    "visual_reference_only": { "type": "boolean", "const": true },
+    "structural_certification": { "type": "boolean", "const": false },
+    "operator_review_required": { "type": "boolean", "const": true },
+    "timeline": { "$ref": "#/$defs/timeline" },
+    "scene": { "$ref": "#/$defs/scene" },
+    "object": { "$ref": "#/$defs/object" },
+    "motion": { "$ref": "#/$defs/transformBetweenMotion" },
+    "visibility": { "$ref": "#/$defs/visibility" },
+    "outputs": { "$ref": "#/$defs/outputs" },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "$defs": {
+    "safeIdentifier80": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "safeReferenceId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+    },
+    "vector3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "type": "number" }
+    },
+    "timeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fps", "start_frame", "end_frame"],
+      "properties": {
+        "fps": { "type": "integer", "minimum": 1, "maximum": 120 },
+        "start_frame": { "type": "integer", "minimum": 0 },
+        "end_frame": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_scene", "units"],
+      "properties": {
+        "source_scene": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "reference_id"],
+          "properties": {
+            "type": { "type": "string", "enum": ["existing_runtime_3d_asset"] },
+            "reference_id": { "$ref": "#/$defs/safeReferenceId" }
+          }
+        },
+        "units": { "type": "string", "enum": ["meters", "centimeters", "millimeters"] }
+      }
+    },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["object_id"],
+      "properties": {
+        "object_id": { "$ref": "#/$defs/safeReferenceId" }
+      }
+    },
+    "transformState": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "location": { "$ref": "#/$defs/vector3" },
+        "rotation_euler_degrees": { "$ref": "#/$defs/vector3" },
+        "scale": { "$ref": "#/$defs/vector3" }
+      },
+      "anyOf": [
+        { "required": ["location"] },
+        { "required": ["rotation_euler_degrees"] },
+        { "required": ["scale"] }
+      ]
+    },
+    "transformBetweenMotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "interpolation", "start", "end"],
+      "properties": {
+        "type": { "type": "string", "enum": ["transform_between"] },
+        "interpolation": { "type": "string", "enum": ["constant", "linear", "bezier"] },
+        "start": { "$ref": "#/$defs/transformState" },
+        "end": { "$ref": "#/$defs/transformState" }
+      }
+    },
+    "visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "start_visible", "end_visible", "interpolation"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "start_visible": { "type": "boolean" },
+        "end_visible": { "type": "boolean" },
+        "interpolation": { "type": "string", "enum": ["constant"] }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preview", "metadata"],
+      "properties": {
+        "preview": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "format", "relative_runtime_path"],
+          "properties": {
+            "enabled": { "type": "boolean", "const": false },
+            "format": { "type": "string", "enum": ["mp4", "webm", "gif"] },
+            "relative_runtime_path": { "type": "string" }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["relative_runtime_path"],
+          "properties": {
+            "relative_runtime_path": { "type": "string" }
+          }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "real_animation_enabled",
+        "blender_execution_enabled",
+        "preview_render_enabled",
+        "source_assets_modified",
+        "runtime_write_planned"
+      ],
+      "properties": {
+        "real_animation_enabled": { "type": "boolean", "const": false },
+        "blender_execution_enabled": { "type": "boolean", "const": false },
+        "preview_render_enabled": { "type": "boolean", "const": false },
+        "source_assets_modified": { "type": "boolean", "const": false },
+        "runtime_write_planned": { "type": "boolean", "const": false }
+      }
+    }
+  }
+}
