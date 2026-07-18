@@ -316,6 +316,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Animation pipeline foundation review template | [278-animation-pipeline-foundation-review-template.md](278-animation-pipeline-foundation-review-template.md) |
 | Animation plan schema | [279-animation-plan-schema.md](279-animation-plan-schema.md) |
 | Animation plan schema review template | [280-animation-plan-schema-review-template.md](280-animation-plan-schema-review-template.md) |
+| Animation plan validator | [281-animation-plan-validator.md](281-animation-plan-validator.md) |
+| Animation plan validator review template | [282-animation-plan-validator-review-template.md](282-animation-plan-validator-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

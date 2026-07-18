@@ -5,8 +5,9 @@ SCHEMA="configs/animation/animation-plan.schema.json"
 EXAMPLE="configs/animation/animation-plan.example.yaml"
 DOC="docs/ops/279-animation-plan-schema.md"
 REVIEW="docs/ops/280-animation-plan-schema-review-template.md"
+MILESTONES="docs/milestones.md"
 
-for path in "$SCHEMA" "$EXAMPLE" "$DOC" "$REVIEW"; do
+for path in "$SCHEMA" "$EXAMPLE" "$DOC" "$REVIEW" "$MILESTONES"; do
   if [ ! -f "$path" ]; then
     echo "missing animation plan schema file: $path" >&2
     exit 1
@@ -65,12 +66,21 @@ if grep -E '/home/cuneyt|MoE_Models_Backup|DiskD/Projects/MoE/codebase' "$SCHEMA
 fi
 
 grep -q "M36.1 defines" "$DOC"
-grep -q "M36.2 will implement loading and semantic validation" "$DOC"
-grep -q "Semantic Validation Deferred To M36.2" "$DOC"
+grep -q "M36.2 adds the source-only validator" "$DOC"
+grep -q "M36.2 implements loading plus structural and timeline/keyframe semantic validation" "$DOC"
 grep -q "Status: PASS / FAIL / BLOCKED / NOT APPLICABLE" "$REVIEW"
+grep -q -- "- M36.0 Animation Pipeline Foundation and Roadmap DONE" "$MILESTONES"
+grep -q -- "- M36.1 Animation Plan Schema DONE" "$MILESTONES"
+grep -q -- "- M36.2 Animation Plan Validator DONE" "$MILESTONES"
+grep -q -- "- M36.3 Timeline and Keyframe Planner Core PLANNED" "$MILESTONES"
 
-if find apps -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) -print -quit | grep -q .; then
-  echo "animation implementation source file found unexpectedly" >&2
+unexpected_animation_files="$(
+  find apps -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) \
+    ! -path 'apps/media-worker/app/animation_plan_validator.py' -print
+)"
+if [ -n "$unexpected_animation_files" ]; then
+  echo "unexpected animation implementation source file found:" >&2
+  echo "$unexpected_animation_files" >&2
   exit 1
 fi
 

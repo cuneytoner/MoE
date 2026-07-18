@@ -2,7 +2,9 @@
 
 ## Purpose
 
-M36.1 defines the canonical source-only contract for animation plans. It turns the M36.0 example shape into a strict JSON Schema without adding a loader, semantic validator, Blender execution, preview rendering, Gateway endpoint, Dashboard UI, or runtime write path.
+M36.1 defines the canonical source-only contract for animation plans. It turns the M36.0 example shape into a strict JSON Schema without adding Blender execution, preview rendering, Gateway endpoint, Dashboard UI, or runtime write path.
+
+M36.2 adds the source-only validator that loads this schema, loads YAML/JSON plans from allowlisted paths, checks structural rules, and checks timeline/keyframe semantics. Runtime asset resolution and Blender target checks remain deferred to future guarded preflight work.
 
 ## Canonical Schema Location
 
@@ -165,16 +167,10 @@ Structural validation covers:
 - array bounds
 - basic safe-id and runtime-relative path patterns
 
-## Semantic Validation Deferred To M36.2
+## Semantic Validation Status
 
-M36.2 will implement loading and semantic validation. Deferred checks include:
+M36.2 implements loading plus structural and timeline/keyframe semantic validation. Future preflight checks still include:
 
-- `end_frame > start_frame`
-- duration and fps consistency
-- unique track ids
-- ordered keyframes
-- duplicate keyframe frames
-- property/keyframe compatibility
 - target resolution
 - runtime asset existence
 - symlink and filesystem resolution
@@ -210,4 +206,4 @@ The test checks the schema identity, strictness, safety constants, allowlists, p
 
 ## Final Decision
 
-M36.1 is DONE when the canonical schema, example alignment, documentation, layout requirement, and source-only regression test pass. M36.2 remains the next planned milestone for loading and semantic validation.
+M36.1 is DONE as the canonical schema contract. M36.2 adds the source-only validator for loading, structural validation, and timeline/keyframe semantic validation; runtime reference resolution remains deferred to future guarded preflight work.

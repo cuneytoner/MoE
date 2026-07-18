@@ -280,6 +280,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Animation Pipeline Foundation Review Template](ops/278-animation-pipeline-foundation-review-template.md)
 - [Animation Plan Schema](ops/279-animation-plan-schema.md)
 - [Animation Plan Schema Review Template](ops/280-animation-plan-schema-review-template.md)
+- [Animation Plan Validator](ops/281-animation-plan-validator.md)
+- [Animation Plan Validator Review Template](ops/282-animation-plan-validator-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

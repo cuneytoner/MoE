@@ -124,7 +124,7 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M35.20 M35 Phase Closure DONE
 - M36.0 Animation Pipeline Foundation and Roadmap DONE
 - M36.1 Animation Plan Schema DONE
-- M36.2 Animation Plan Validator PLANNED
+- M36.2 Animation Plan Validator DONE
 - M36.3 Timeline and Keyframe Planner Core PLANNED
 - M36.4 Camera Animation Planner PLANNED
 - M36.5 Object Transform Animation Planner PLANNED
@@ -141,7 +141,7 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M36.16 Animation Reference Board Selection PLANNED
 - M36.17 M36 Phase Closure PLANNED
 
-M36 Animation Pipeline is active. Latest completed is M36.1 Animation Plan Schema. Next planned remains M36.2 Animation Plan Validator. Do not implement M36.2 code until explicitly requested.
+M36 Animation Pipeline is active. Latest completed is M36.2 Animation Plan Validator. Next planned remains M36.3 Timeline and Keyframe Planner Core. Do not implement M36.3 code until explicitly requested.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

@@ -58,6 +58,8 @@ grep -q -- "--execute-animation" "$DOC"
 grep -q -- "--render-preview" "$DOC"
 grep -q "M36.0 | Animation Pipeline Foundation and Roadmap | DONE" "$DOC"
 grep -q "M36.1 | Animation Plan Schema | DONE" "$DOC"
+grep -q "M36.2 | Animation Plan Validator | DONE" "$DOC"
+grep -q "M36.3 | Timeline and Keyframe Planner Core | PLANNED" "$DOC"
 
 python3 - "$MILESTONES" <<'PY'
 import re
@@ -68,7 +70,7 @@ text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = {
     "36.0": "DONE",
     "36.1": "DONE",
-    "36.2": "PLANNED",
+    "36.2": "DONE",
     "36.3": "PLANNED",
     "36.4": "PLANNED",
     "36.5": "PLANNED",
@@ -95,12 +97,17 @@ for milestone, status in expected.items():
         raise SystemExit(f"Milestone {milestone} expected {status}, got {actual}")
 PY
 
-if find apps scripts -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) -print -quit | grep -q .; then
-  echo "animation implementation source file found unexpectedly" >&2
+unexpected_animation_files="$(
+  find apps scripts -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) \
+    ! -path 'apps/media-worker/app/animation_plan_validator.py' -print
+)"
+if [ -n "$unexpected_animation_files" ]; then
+  echo "unexpected animation implementation source file found:" >&2
+  echo "$unexpected_animation_files" >&2
   exit 1
 fi
 
-if grep -R "REAL_ANIMATION_GENERATION\|execute-animation\|render-preview" apps scripts --exclude='test-animation-pipeline-foundation.sh' --exclude='test-animation-plan-schema.sh' >/dev/null; then
+if grep -R "REAL_ANIMATION_GENERATION\|execute-animation\|render-preview" apps scripts --exclude='test-animation-pipeline-foundation.sh' --exclude='test-animation-plan-schema.sh' --exclude='test-animation-plan-validator.sh' >/dev/null; then
   echo "animation execution flags found outside foundation docs/config tests" >&2
   exit 1
 fi

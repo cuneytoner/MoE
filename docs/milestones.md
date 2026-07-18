@@ -2,8 +2,8 @@
 
 Current active phase:
 - M36 Animation Pipeline is active.
-- Latest completed: M36.1 Animation Plan Schema.
-- Next planned: M36.2 Animation Plan Validator.
+- Latest completed: M36.2 Animation Plan Validator.
+- Next planned: M36.3 Timeline and Keyframe Planner Core.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -113,7 +113,7 @@ Current media milestone status:
 - M35.20 M35 Phase Closure DONE
 - M36.0 Animation Pipeline Foundation and Roadmap DONE
 - M36.1 Animation Plan Schema DONE
-- M36.2 Animation Plan Validator PLANNED
+- M36.2 Animation Plan Validator DONE
 - M36.3 Timeline and Keyframe Planner Core PLANNED
 - M36.4 Camera Animation Planner PLANNED
 - M36.5 Object Transform Animation Planner PLANNED
@@ -2308,11 +2308,13 @@ Goals:
 
 ## Milestone 36.2: Animation Plan Validator
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Validate animation plan ids, timeline bounds, tracks, targets, properties, interpolation, keyframes, and output references.
 - Reject absolute paths, traversal, repo paths, model paths, and unsupported animation features.
+- Emit deterministic machine-readable validation reports from source or `/tmp` inputs.
+- Keep runtime asset existence, target resolution, symlink resolution, Blender target checks, and planner output deferred.
 - Keep validation read-only and source-safe.
 
 ## Milestone 36.3: Timeline and Keyframe Planner Core
