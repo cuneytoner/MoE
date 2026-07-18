@@ -324,6 +324,8 @@ If you are unsure where to run a command, stop and check [13-service-location-re
 | Camera animation planner review template | [286-camera-animation-planner-review-template.md](286-camera-animation-planner-review-template.md) |
 | Object transform animation planner | [287-object-transform-animation-planner.md](287-object-transform-animation-planner.md) |
 | Object transform animation planner review template | [288-object-transform-animation-planner-review-template.md](288-object-transform-animation-planner-review-template.md) |
+| Blender animation adapter plan | [289-blender-animation-adapter-plan.md](289-blender-animation-adapter-plan.md) |
+| Blender animation adapter plan review template | [290-blender-animation-adapter-plan-review-template.md](290-blender-animation-adapter-plan-review-template.md) |
 
 If you are lost, open [11-first-day-walkthrough.md](11-first-day-walkthrough.md), then [12-zero-to-running-checklist.md](12-zero-to-running-checklist.md), then [13-service-location-reference.md](13-service-location-reference.md).
 

@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "plan_type": "blender_animation_operation_plan",
+  "status": "planned",
+  "source_plan_id": "camera-orbit-demo-plan",
+  "source_plan_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "operation_count": 15,
+  "operation_types": [
+    "configure_scene_timeline",
+    "insert_transform_keyframe",
+    "insert_visibility_keyframe",
+    "resolve_target",
+    "set_camera_lens",
+    "set_fcurve_interpolation",
+    "set_rotation_mode",
+    "set_transform_values",
+    "set_visibility_value"
+  ],
+  "operations": [
+    {
+      "operation_id": "configure-scene-timeline",
+      "operation_type": "configure_scene_timeline",
+      "fps": 24,
+      "start_frame": 1,
+      "end_frame": 120
+    },
+    {
+      "operation_id": "resolve-target-camera",
+      "operation_type": "resolve_target",
+      "target_type": "camera",
+      "target_id": "camera",
+      "required": true,
+      "create_if_missing": false
+    },
+    {
+      "operation_id": "set-rotation-mode-camera",
+      "operation_type": "set_rotation_mode",
+      "target_type": "camera",
+      "target_id": "camera",
+      "rotation_mode": "XYZ"
+    },
+    {
+      "operation_id": "set-camera-lens-camera",
+      "operation_type": "set_camera_lens",
+      "target_type": "camera",
+      "target_id": "camera",
+      "lens_mm": 50.0,
+      "animated": false
+    },
+    {
+      "operation_id": "set-transform-camera-frame-1",
+      "operation_type": "set_transform_values",
+      "target_type": "camera",
+      "target_id": "camera",
+      "frame": 1,
+      "values": {
+        "location": [0.0, -5.0, 3.0],
+        "rotation_euler": [1.19028995, 0.0, 0.0]
+      }
+    },
+    {
+      "operation_id": "insert-location-camera-frame-1",
+      "operation_type": "insert_transform_keyframe",
+      "target_type": "camera",
+      "target_id": "camera",
+      "frame": 1,
+      "data_path": "location"
+    },
+    {
+      "operation_id": "insert-rotation-euler-camera-frame-1",
+      "operation_type": "insert_transform_keyframe",
+      "target_type": "camera",
+      "target_id": "camera",
+      "frame": 1,
+      "data_path": "rotation_euler"
+    },
+    {
+      "operation_id": "set-transform-camera-frame-120",
+      "operation_type": "set_transform_values",
+      "target_type": "camera",
+      "target_id": "camera",
+      "frame": 120,
+      "values": {
+        "location": [0.0, 5.0, 3.0],
+        "rotation_euler": [1.19028995, 0.0, -3.141592654]
+      }
+    },
+    {
+      "operation_id": "insert-location-camera-frame-120",
+      "operation_type": "insert_transform_keyframe",
+      "target_type": "camera",
+      "target_id": "camera",
+      "frame": 120,
+      "data_path": "location"
+    },
+    {
+      "operation_id": "insert-rotation-euler-camera-frame-120",
+      "operation_type": "insert_transform_keyframe",
+      "target_type": "camera",
+      "target_id": "camera",
+      "frame": 120,
+      "data_path": "rotation_euler"
+    },
+    {
+      "operation_id": "set-interpolation-camera-transform",
+      "operation_type": "set_fcurve_interpolation",
+      "target_type": "camera",
+      "target_id": "camera",
+      "source_track_id": "camera-camera-transform",
+      "interpolation": "BEZIER"
+    },
+    {
+      "operation_id": "resolve-target-demo-object",
+      "operation_type": "resolve_target",
+      "target_type": "object",
+      "target_id": "demo-object",
+      "required": true,
+      "create_if_missing": false
+    },
+    {
+      "operation_id": "set-visibility-demo-object-frame-1",
+      "operation_type": "set_visibility_value",
+      "target_type": "object",
+      "target_id": "demo-object",
+      "frame": 1,
+      "visible": true,
+      "blender_properties": ["hide_viewport", "hide_render"]
+    },
+    {
+      "operation_id": "insert-visibility-demo-object-frame-1",
+      "operation_type": "insert_visibility_keyframe",
+      "target_type": "object",
+      "target_id": "demo-object",
+      "frame": 1,
+      "data_paths": ["hide_viewport", "hide_render"]
+    },
+    {
+      "operation_id": "set-interpolation-demo-object-visibility",
+      "operation_type": "set_fcurve_interpolation",
+      "target_type": "object",
+      "target_id": "demo-object",
+      "source_track_id": "object-demo-object-visibility",
+      "interpolation": "CONSTANT"
+    }
+  ],
+  "safety_flags": {
+    "bpy_imported": false,
+    "blender_execution_attempted": false,
+    "runtime_assets_written": false,
+    "source_assets_modified": false,
+    "keyframes_written": false,
+    "scene_modified": false,
+    "external_process_started": false
+  }
+}

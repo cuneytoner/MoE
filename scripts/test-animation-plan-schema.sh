@@ -75,7 +75,8 @@ grep -q -- "- M36.2 Animation Plan Validator DONE" "$MILESTONES"
 grep -q -- "- M36.3 Timeline and Keyframe Planner Core DONE" "$MILESTONES"
 grep -q -- "- M36.4 Camera Animation Planner DONE" "$MILESTONES"
 grep -q -- "- M36.5 Object Transform Animation Planner DONE" "$MILESTONES"
-grep -q -- "- M36.6 Blender Animation Adapter Plan PLANNED" "$MILESTONES"
+grep -q -- "- M36.6 Blender Animation Adapter Plan DONE" "$MILESTONES"
+grep -q -- "- M36.7 Guarded Blender Animation Implementation PLANNED" "$MILESTONES"
 
 unexpected_animation_files="$(
   find apps -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) \

@@ -214,8 +214,8 @@ Run:
 make test-camera-animation-planner
 ```
 
-The regression covers valid YAML/JSON requests, malformed and invalid inputs, deterministic frame/angle/pose/rotation behavior, canonical plan validation, M36.3 timeline integration, request hashing, mutation safety, safety flags, no Blender/process/runtime behavior, fixture cleanup, and M36.6 non-start.
+The regression covers valid YAML/JSON requests, malformed and invalid inputs, deterministic frame/angle/pose/rotation behavior, canonical plan validation, M36.3 timeline integration, request hashing, mutation safety, safety flags, no Blender/process/runtime behavior, fixture cleanup, and M36.7 non-start.
 
 ## Final Decision
 
-M36.4 is DONE when the camera planner, schema, example request, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.5 builds on it with object transform planning; M36.6 remains planned and unimplemented.
+M36.4 is DONE when the camera planner, schema, example request, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.5 builds on it with object transform planning; M36.6 adds the adapter plan. M36.7 remains planned and unimplemented.

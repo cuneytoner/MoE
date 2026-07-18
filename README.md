@@ -136,11 +136,11 @@ Current active phase: M36 Animation Pipeline.
 
 M35 is closed.
 
-Completed through Milestone 36.5: Object Transform Animation Planner
+Completed through Milestone 36.6: Blender Animation Adapter Plan
 
 Next planned milestone:
 
-Milestone 36.6: Blender Animation Adapter Plan
+Milestone 36.7: Guarded Blender Animation Implementation
 
 ## Model Inventory
 

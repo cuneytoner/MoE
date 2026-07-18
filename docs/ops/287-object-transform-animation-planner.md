@@ -195,9 +195,9 @@ If start and end transform values are identical, the planner still creates the t
 object_transform_unchanged
 ```
 
-## M36.6 Boundary
+## M36.6 Follow-Up
 
-M36.6 remains the future Blender Animation Adapter Plan. M36.5 does not produce Blender operation plans and does not translate canonical animation plans into `bpy` calls.
+M36.6 defines the future Blender Animation Adapter Plan. M36.5 remains object-planner-only and does not translate canonical animation plans into `bpy` calls.
 
 ## Deferred Features
 
@@ -205,7 +205,7 @@ Deferred features include object path generation, multi-object requests, parent-
 
 ## Non-Goals
 
-M36.5 does not implement Blender execution, real keyframe writing, preview rendering, runtime output, Gateway endpoints, Dashboard UI, Docker services, reference-board integration, or M36.6 adapter behavior.
+M36.5 does not implement Blender execution, real keyframe writing, preview rendering, runtime output, Gateway endpoints, Dashboard UI, Docker services, reference-board integration, or M36.7 guarded execution behavior.
 
 ## Test Coverage
 
@@ -215,8 +215,8 @@ Run:
 make test-object-transform-animation-planner
 ```
 
-The regression covers valid YAML/JSON requests, malformed and invalid inputs, field matching, location/rotation/scale validation, degree-to-radian conversion, visibility track behavior, canonical plan validation, M36.3 timeline integration, request hashing, mutation safety, warnings, safety flags, no Blender/process/runtime behavior, fixture cleanup, and M36.6 non-start.
+The regression covers valid YAML/JSON requests, malformed and invalid inputs, field matching, location/rotation/scale validation, degree-to-radian conversion, visibility track behavior, canonical plan validation, M36.3 timeline integration, request hashing, mutation safety, warnings, safety flags, no Blender/process/runtime behavior, fixture cleanup, and M36.7 non-start.
 
 ## Final Decision
 
-M36.5 is DONE when the object planner, schema, example request, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.6 remains planned and unimplemented.
+M36.5 is DONE when the object planner, schema, example request, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.6 builds on it with an adapter plan; M36.7 remains planned and unimplemented.

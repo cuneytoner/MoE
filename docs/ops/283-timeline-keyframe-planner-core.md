@@ -242,8 +242,8 @@ Run:
 make test-animation-timeline-planner
 ```
 
-The regression covers valid YAML/JSON planning, invalid and malformed input exit codes, validator reuse, mutation safety, canonical hash determinism, timeline math, frame time convention, progress calculation, float normalization, track/keyframe order, segment counts, value normalization, safety flags, no timestamp/UUID/path leakage, no Blender import, no external process surface, no runtime writes, no generated media, fixture cleanup, and M36.6 non-start.
+The regression covers valid YAML/JSON planning, invalid and malformed input exit codes, validator reuse, mutation safety, canonical hash determinism, timeline math, frame time convention, progress calculation, float normalization, track/keyframe order, segment counts, value normalization, safety flags, no timestamp/UUID/path leakage, no Blender import, no external process surface, no runtime writes, no generated media, fixture cleanup, and M36.7 non-start.
 
 ## Final Decision
 
-M36.3 is DONE when the planner, CLI, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.4 builds on it with camera-specific planning; M36.5 builds on it with object transform planning. M36.6 remains planned and unimplemented.
+M36.3 is DONE when the planner, CLI, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.4 builds on it with camera-specific planning; M36.5 builds on it with object transform planning; M36.6 builds on it with an adapter plan. M36.7 remains planned and unimplemented.

@@ -2,8 +2,8 @@
 
 Current active phase:
 - M36 Animation Pipeline is active.
-- Latest completed: M36.5 Object Transform Animation Planner.
-- Next planned: M36.6 Blender Animation Adapter Plan.
+- Latest completed: M36.6 Blender Animation Adapter Plan.
+- Next planned: M36.7 Guarded Blender Animation Implementation.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -117,7 +117,7 @@ Current media milestone status:
 - M36.3 Timeline and Keyframe Planner Core DONE
 - M36.4 Camera Animation Planner DONE
 - M36.5 Object Transform Animation Planner DONE
-- M36.6 Blender Animation Adapter Plan PLANNED
+- M36.6 Blender Animation Adapter Plan DONE
 - M36.7 Guarded Blender Animation Implementation PLANNED
 - M36.8 Animation Metadata Sidecar Writer PLANNED
 - M36.9 Animation Metadata Validator PLANNED
@@ -2352,12 +2352,13 @@ Goals:
 
 ## Milestone 36.6: Blender Animation Adapter Plan
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Plan conversion from keyframe plans to Blender operation plans.
+- Plan conversion from canonical animation and timeline/keyframe plans to deterministic Blender animation operation plans.
+- Define adapter input envelope, target resolution, operation allowlist, ordering, failure handling, and guard requirements.
 - Preserve no module-level `bpy` import.
-- Keep execution deferred.
+- Keep Python adapter implementation and execution deferred to M36.7.
 
 ## Milestone 36.7: Guarded Blender Animation Implementation
 

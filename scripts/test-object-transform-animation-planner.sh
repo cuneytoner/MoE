@@ -253,8 +253,8 @@ if grep -R '^import bpy\|from bpy\|mathutils\|subprocess\|ffmpeg\|constraints\.n
   exit 1
 fi
 
-if rg -n "Blender operation plan|bpy operation|adapter implementation|execute-animation" apps/media-worker/app configs/animation --glob '!configs/animation/animation-plan.example.yaml' >/dev/null; then
-  echo "M36.6 Blender animation adapter behavior appears to have started" >&2
+if rg -n "REAL_ANIMATION_GENERATION|execute-animation|render-preview" apps/media-worker/app configs/animation >/dev/null; then
+  echo "M36.7 guarded Blender animation implementation appears to have started" >&2
   exit 1
 fi
 
