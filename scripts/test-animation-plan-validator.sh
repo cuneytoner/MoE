@@ -234,8 +234,8 @@ if grep -R '^import bpy\|from bpy\|subprocess\|ffmpeg\|render-preview\|execute-a
   exit 1
 fi
 
-if rg -n "Timeline and Keyframe Planner Core|timeline_planner|keyframe_planner" apps configs >/dev/null; then
-  echo "M36.3 planner implementation appears to have started" >&2
+if rg -n "camera_orbit|look_at|look-at|camera_path|focal|lens|camera constraint" apps/media-worker/app configs --glob '!configs/animation/animation-plan.example.yaml' >/dev/null; then
+  echo "M36.4 camera planner behavior appears to have started" >&2
   exit 1
 fi
 

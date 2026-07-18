@@ -2,8 +2,8 @@
 
 Current active phase:
 - M36 Animation Pipeline is active.
-- Latest completed: M36.2 Animation Plan Validator.
-- Next planned: M36.3 Timeline and Keyframe Planner Core.
+- Latest completed: M36.3 Timeline and Keyframe Planner Core.
+- Next planned: M36.4 Camera Animation Planner.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -114,7 +114,7 @@ Current media milestone status:
 - M36.0 Animation Pipeline Foundation and Roadmap DONE
 - M36.1 Animation Plan Schema DONE
 - M36.2 Animation Plan Validator DONE
-- M36.3 Timeline and Keyframe Planner Core PLANNED
+- M36.3 Timeline and Keyframe Planner Core DONE
 - M36.4 Camera Animation Planner PLANNED
 - M36.5 Object Transform Animation Planner PLANNED
 - M36.6 Blender Animation Adapter Plan PLANNED
@@ -2319,10 +2319,12 @@ Goals:
 
 ## Milestone 36.3: Timeline and Keyframe Planner Core
 
-Status: PLANNED
+Status: DONE
 
 Goals:
 - Convert validated animation intent into deterministic timeline and keyframe plans.
+- Normalize timeline, keyframe, segment, summary, output-reference, and safety metadata without Blender.
+- Preserve source track and keyframe ordering while keeping summary lists deterministic.
 - Keep planning independent from Blender.
 - Avoid runtime writes and rendering.
 

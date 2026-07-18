@@ -282,6 +282,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Animation Plan Schema Review Template](ops/280-animation-plan-schema-review-template.md)
 - [Animation Plan Validator](ops/281-animation-plan-validator.md)
 - [Animation Plan Validator Review Template](ops/282-animation-plan-validator-review-template.md)
+- [Timeline Keyframe Planner Core](ops/283-timeline-keyframe-planner-core.md)
+- [Timeline Keyframe Planner Core Review Template](ops/284-timeline-keyframe-planner-core-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

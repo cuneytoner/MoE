@@ -4,7 +4,7 @@
 
 M36.2 adds a source-only, read-only validator for animation plans. It loads the canonical schema, safely loads YAML or JSON animation plans, checks structural rules, checks timeline/keyframe semantics, and emits deterministic machine-readable validation reports.
 
-It does not generate timelines, write keyframes, resolve runtime assets, import Blender, render previews, start external processes, expose Gateway endpoints, or change Dashboard UI.
+It does not write keyframes, resolve runtime assets, import Blender, render previews, start external processes, expose Gateway endpoints, or change Dashboard UI. M36.3 reuses this validator before building Blender-independent timeline/keyframe plans.
 
 ## Validator Location
 
@@ -264,7 +264,6 @@ The validator reads only the canonical source schema and an allowlisted source o
 
 M36.2 does not implement:
 
-- M36.3 timeline planner
 - M36.4 camera planner
 - M36.5 object transform planner
 - request normalization
@@ -288,8 +287,8 @@ Run:
 make test-animation-plan-validator
 ```
 
-The regression covers valid YAML and JSON, malformed inputs, path restrictions, structural errors, semantic errors, property compatibility, identifier safety, output path safety, deterministic reports, safety flags, runtime write audit, Blender import audit, external execution audit, and M36.3 non-start.
+The regression covers valid YAML and JSON, malformed inputs, path restrictions, structural errors, semantic errors, property compatibility, identifier safety, output path safety, deterministic reports, safety flags, runtime write audit, Blender import audit, external execution audit, and planner-boundary safety.
 
 ## Final Decision
 
-M36.2 is DONE when the validator, CLI, docs, review template, layout requirements, roadmap updates, and source-only regressions pass. M36.3 remains planned and unimplemented.
+M36.2 is DONE as the source-only validator milestone. M36.3 adds the Blender-independent timeline/keyframe planner core, while camera/object planner behavior and runtime preflight checks remain deferred.

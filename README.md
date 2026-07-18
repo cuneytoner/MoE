@@ -136,11 +136,11 @@ Current active phase: M36 Animation Pipeline.
 
 M35 is closed.
 
-Completed through Milestone 36.2: Animation Plan Validator
+Completed through Milestone 36.3: Timeline and Keyframe Planner Core
 
 Next planned milestone:
 
-Milestone 36.3: Timeline and Keyframe Planner Core
+Milestone 36.4: Camera Animation Planner
 
 ## Model Inventory
 
