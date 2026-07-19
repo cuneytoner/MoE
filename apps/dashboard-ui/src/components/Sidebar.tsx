@@ -1,4 +1,5 @@
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
+import AnimationOutlinedIcon from "@mui/icons-material/AnimationOutlined";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
@@ -15,6 +16,7 @@ const items: Array<{ label: string; href: string; icon: ReactNode }> = [
   { label: "Runtime", href: "#runtime", icon: <MemoryOutlinedIcon /> },
   { label: "System", href: "#system-resources", icon: <SpeedOutlinedIcon /> },
   { label: "Memory Approval", href: "#memory-approval", icon: <FactCheckOutlinedIcon /> },
+  { label: "Animation", href: "#animation-output-cards", icon: <AnimationOutlinedIcon /> },
   { label: "Services", href: "#services", icon: <StorageRoundedIcon /> },
   { label: "Media", href: "#media", icon: <PermMediaOutlinedIcon /> },
   { label: "Gates", href: "#gates", icon: <LockOutlinedIcon /> },

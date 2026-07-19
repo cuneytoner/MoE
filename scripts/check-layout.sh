@@ -647,6 +647,8 @@ required_paths=(
   "docs/ops/304-animation-output-card-api-plan-review-template.md"
   "docs/ops/305-animation-output-card-api.md"
   "docs/ops/306-animation-output-card-api-review-template.md"
+  "docs/ops/307-dashboard-animation-cards-ui.md"
+  "docs/ops/308-dashboard-animation-cards-ui-review-template.md"
   "tools/prompt-packs/README.md"
   "tools/prompt-packs/generic-image/README.md"
   "tools/prompt-packs/generic-image/base-prompts.md"

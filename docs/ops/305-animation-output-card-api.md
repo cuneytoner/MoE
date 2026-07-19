@@ -147,10 +147,10 @@ gateway-animation-output-cards
 
 The API does not generate animation, render previews, execute Blender, call subprocess, encode video, write metadata, repair artifacts, delete files, serve binaries, expose arbitrary paths, or add Dashboard UI.
 
-## M36.15 boundary
+## M36.15 Dashboard consumption
 
-Dashboard animation cards remain deferred to M36.15.
+M36.15 consumes this endpoint in the Dashboard through read-only animation cards. The UI displays metadata, timeline, summary, verified sampled-preview status, runtime-relative paths, and verification fields without serving binaries, loading sampled PNG frames, adding downloads, or adding reference-board actions.
 
 ## Final decision
 
-M36.14 implements the read-only animation output card API and leaves UI, binary preview serving, downloads, generation, rendering, and reference-board selection to later reviewed milestones.
+M36.14 implements the read-only animation output card API. M36.15 adds read-only Dashboard consumption and still leaves binary preview serving, downloads, generation, rendering, and reference-board selection to later reviewed milestones.

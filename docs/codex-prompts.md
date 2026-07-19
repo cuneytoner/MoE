@@ -137,11 +137,11 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M36.12 Animation Artifact Verifier DONE
 - M36.13 Animation Output Card API Plan DONE
 - M36.14 Animation Output Card API DONE
-- M36.15 Dashboard Animation Cards UI PLANNED
+- M36.15 Dashboard Animation Cards UI DONE
 - M36.16 Animation Reference Board Selection PLANNED
 - M36.17 M36 Phase Closure PLANNED
 
-M36 Animation Pipeline is active. Latest completed is M36.14 Animation Output Card API. Next planned remains M36.15 Dashboard Animation Cards UI. Do not implement M36.15 code until explicitly requested.
+M36 Animation Pipeline is active. Latest completed is M36.15 Dashboard Animation Cards UI. Next planned remains M36.16 Animation Reference Board Selection. Do not implement M36.16 code until explicitly requested.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

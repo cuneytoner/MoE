@@ -70,6 +70,7 @@ grep -q "M36.10 | Preview Render Safety Plan | DONE" "$DOC"
 grep -q "M36.11 | Guarded Preview Render Implementation | DONE" "$DOC"
 grep -q "M36.12 | Animation Artifact Verifier | DONE" "$DOC"
 grep -q "M36.13 | Animation Output Card API Plan | DONE" "$DOC"
+grep -q "M36.15 | Dashboard Animation Cards UI | DONE" "$DOC"
 
 python3 - "$MILESTONES" <<'PY'
 import re
@@ -93,7 +94,7 @@ expected = {
     "36.12": "DONE",
     "36.13": "DONE",
     "36.14": "DONE",
-    "36.15": "PLANNED",
+    "36.15": "DONE",
     "36.16": "PLANNED",
     "36.17": "PLANNED",
 }
@@ -119,6 +120,8 @@ unexpected_animation_files="$(
     ! -path 'apps/media-worker/app/animation_preview_renderer.py' \
     ! -path 'apps/media-worker/app/animation_artifact_verifier.py' \
     ! -path 'apps/gateway-api/app/media_animation_output_cards.py' \
+    ! -path 'apps/dashboard-ui/src/components/AnimationOutputCards.tsx' \
+    ! -path 'scripts/test-dashboard-animation-cards.sh' \
     ! -path 'scripts/test-animation-output-card-api.sh' -print
 )"
 if [ -n "$unexpected_animation_files" ]; then

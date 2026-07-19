@@ -1,5 +1,6 @@
 import type {
   DashboardModel,
+  AnimationOutputCardsResponse,
   MemoryApprovalDashboardModel,
   OutputCardMetadataResponse,
   OutputCardsResponse,
@@ -72,6 +73,14 @@ export async function fetchThreeDOutputCards(): Promise<ThreeDOutputCardsRespons
   const response = await fetch(`${gatewayUrl}/gateway/media/3d/cards`);
   if (!response.ok) {
     throw new Error(`Gateway 3D output cards returned HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchAnimationOutputCards(): Promise<AnimationOutputCardsResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/animation/cards`);
+  if (!response.ok) {
+    throw new Error(`Gateway animation output cards returned HTTP ${response.status}`);
   }
   return response.json();
 }

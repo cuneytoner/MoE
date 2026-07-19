@@ -33,6 +33,7 @@ required_paths=(
   "apps/dashboard-ui/src/components/ImageLifecycleCard.tsx"
   "apps/dashboard-ui/src/components/SystemResourceCards.tsx"
   "apps/dashboard-ui/src/components/MemoryApprovalPanel.tsx"
+  "apps/dashboard-ui/src/components/AnimationOutputCards.tsx"
   "apps/dashboard-ui/src/components/SummaryCards.tsx"
   "apps/dashboard-ui/src/components/StatusChip.tsx"
   "apps/dashboard-ui/src/components/StatusCard.tsx"

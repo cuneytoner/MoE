@@ -6,6 +6,7 @@ import {
   addReferenceBoardItem,
   addThreeDReferenceBoardItem,
   createReferenceBoard,
+  fetchAnimationOutputCards,
   fetchDashboard,
   fetchMemoryApprovalDashboard,
   fetchOutputCards,
@@ -21,6 +22,7 @@ import { GatesPanel } from "./components/GatesPanel";
 import { LatestImagesPanel } from "./components/LatestImagesPanel";
 import { ModeHintsPanel } from "./components/ModeHintsPanel";
 import { MemoryApprovalPanel } from "./components/MemoryApprovalPanel";
+import { AnimationOutputCards } from "./components/AnimationOutputCards";
 import { OutputCards } from "./components/OutputCards";
 import { ReferenceBoards } from "./components/ReferenceBoards";
 import { RuntimeCards } from "./components/RuntimeCards";
@@ -33,6 +35,7 @@ import { WarningsPanel } from "./components/WarningsPanel";
 import { DashboardLayout } from "./layout/DashboardLayout";
 import type {
   DashboardModel,
+  AnimationOutputCardsResponse,
   MemoryApprovalDashboardModel,
   OutputCard,
   OutputCardsResponse,
@@ -51,6 +54,7 @@ export function App() {
   const [memoryApprovalDashboard, setMemoryApprovalDashboard] = useState<MemoryApprovalDashboardModel | null>(null);
   const [outputCards, setOutputCards] = useState<OutputCardsResponse | null>(null);
   const [threeDOutputCards, setThreeDOutputCards] = useState<ThreeDOutputCardsResponse | null>(null);
+  const [animationOutputCards, setAnimationOutputCards] = useState<AnimationOutputCardsResponse | null>(null);
   const [referenceBoards, setReferenceBoards] = useState<ReferenceBoardsResponse | null>(null);
   const [activeReferenceBoard, setActiveReferenceBoard] = useState<ReferenceBoard | null>(null);
   const [activeReferenceBoardId, setActiveReferenceBoardId] = useState("");
@@ -59,6 +63,7 @@ export function App() {
   const [memoryApprovalError, setMemoryApprovalError] = useState("");
   const [outputCardsError, setOutputCardsError] = useState("");
   const [threeDOutputCardsError, setThreeDOutputCardsError] = useState("");
+  const [animationOutputCardsError, setAnimationOutputCardsError] = useState("");
   const [referenceBoardError, setReferenceBoardError] = useState("");
   const [referenceBoardActionMessage, setReferenceBoardActionMessage] = useState("");
   const [addingBoardCardId, setAddingBoardCardId] = useState("");
@@ -74,6 +79,7 @@ export function App() {
     setMemoryApprovalError("");
     setOutputCardsError("");
     setThreeDOutputCardsError("");
+    setAnimationOutputCardsError("");
     setReferenceBoardError("");
     try {
       const next = await fetchDashboard();
@@ -105,6 +111,13 @@ export function App() {
       setThreeDOutputCards(nextThreeDOutputCards);
     } catch (err) {
       setThreeDOutputCardsError(err instanceof Error ? err.message : "unknown 3D output cards error");
+    }
+    try {
+      const nextAnimationOutputCards = await fetchAnimationOutputCards();
+      setAnimationOutputCards(nextAnimationOutputCards);
+    } catch (err) {
+      setAnimationOutputCards(null);
+      setAnimationOutputCardsError(err instanceof Error ? err.message : "Animation output cards unavailable");
     }
     try {
       const nextReferenceBoards = await fetchReferenceBoards();
@@ -327,6 +340,7 @@ export function App() {
         loading={loading}
         onAddToBoard={(card) => void handleAddThreeDCardToBoard(card)}
       />
+      <AnimationOutputCards cardsResponse={animationOutputCards} error={animationOutputCardsError} loading={loading} />
 
       {dashboard ? (
         <>
@@ -385,7 +399,7 @@ export function App() {
       ) : null}
 
       <Typography align="center" color="text.secondary" variant="body2">
-        M29.8 Memory Approval Dashboard. Read-only. No service control.
+        M36 Animation Pipeline Dashboard. Read-only. No generation or service control.
       </Typography>
     </DashboardLayout>
   );

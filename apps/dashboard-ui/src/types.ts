@@ -380,6 +380,98 @@ export type ThreeDOutputCardsResponse = {
   };
 };
 
+export type AnimationTimelineSummary = {
+  fps: number;
+  start_frame: number;
+  end_frame: number;
+  frame_count: number;
+  duration_seconds: number;
+};
+
+export type AnimationOutputSummary = {
+  track_count: number;
+  keyframe_count: number;
+  segment_count: number;
+  operation_count: number;
+  target_types: string[];
+  target_ids: string[];
+  properties: string[];
+  interpolations: string[];
+};
+
+export type AnimationPreviewSummary = {
+  available: boolean;
+  preview_id: string | null;
+  format: string | null;
+  frame_count: number | null;
+  width: number | null;
+  height: number | null;
+  relative_directory: string | null;
+  first_frame_relative_path: string | null;
+  total_output_bytes: number | null;
+};
+
+export type AnimationRelativeRuntimePaths = {
+  metadata: string | null;
+  declared_video_preview: string | null;
+  preview_frames: string | null;
+  report: string | null;
+};
+
+export type AnimationVerificationSummary = {
+  metadata_valid: boolean;
+  provenance_checked: boolean;
+  preview_report_valid: boolean;
+  runtime_preview_verified: boolean;
+  valid: boolean;
+  error_count: number;
+  warning_count: number;
+};
+
+export type AnimationOutputCard = {
+  id: string;
+  type: "animation";
+  animation_id: string;
+  title: string;
+  created_at: string;
+  source_kind: string;
+  generation_mode: string | null;
+  timeline: AnimationTimelineSummary;
+  summary: AnimationOutputSummary;
+  preview: AnimationPreviewSummary;
+  relative_runtime_paths: AnimationRelativeRuntimePaths;
+  verification: AnimationVerificationSummary;
+  visual_reference_only: boolean;
+  structural_certification: false;
+  operator_review_required: true;
+};
+
+export type AnimationOutputCardsResponse = {
+  status: string;
+  service: string;
+  runtime_scope: string;
+  metadata_dir_available: boolean;
+  reports_dir_available: boolean;
+  card_count: number;
+  invalid_count: number;
+  preview_report_count: number;
+  verified_preview_count: number;
+  cards: AnimationOutputCard[];
+  warnings: string[];
+  safety_flags: {
+    read_only: boolean;
+    generation_triggered: boolean;
+    animation_execution_attempted: boolean;
+    preview_render_attempted: boolean;
+    runtime_assets_written: boolean;
+    runtime_assets_modified: boolean;
+    runtime_assets_deleted: boolean;
+    source_assets_modified: boolean;
+    external_process_started: boolean;
+    shell_execution: boolean;
+  };
+};
+
 export type ReferenceBoardSummary = {
   board_id: string;
   title: string;

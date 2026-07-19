@@ -539,3 +539,5 @@ For 3D reference-board selection, read 273 and 274.
 For M35 phase closure, read 275 and 276.
 
 For M36 animation pipeline foundation, read 277 and 278.
+
+For Dashboard animation output cards, read 307 and 308.

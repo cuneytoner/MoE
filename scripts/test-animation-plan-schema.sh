@@ -84,7 +84,8 @@ grep -q -- "- M36.11 Guarded Preview Render Implementation DONE" "$MILESTONES"
 grep -q -- "- M36.12 Animation Artifact Verifier DONE" "$MILESTONES"
 grep -q -- "- M36.13 Animation Output Card API Plan DONE" "$MILESTONES"
 grep -q -- "- M36.14 Animation Output Card API DONE" "$MILESTONES"
-grep -q -- "- M36.15 Dashboard Animation Cards UI PLANNED" "$MILESTONES"
+grep -q -- "- M36.15 Dashboard Animation Cards UI DONE" "$MILESTONES"
+grep -q -- "- M36.16 Animation Reference Board Selection PLANNED" "$MILESTONES"
 
 unexpected_animation_files="$(
   find apps -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) \
@@ -97,7 +98,8 @@ unexpected_animation_files="$(
     ! -path 'apps/media-worker/app/animation_metadata_validator.py' \
     ! -path 'apps/media-worker/app/animation_preview_renderer.py' \
     ! -path 'apps/media-worker/app/animation_artifact_verifier.py' \
-    ! -path 'apps/gateway-api/app/media_animation_output_cards.py' -print
+    ! -path 'apps/gateway-api/app/media_animation_output_cards.py' \
+    ! -path 'apps/dashboard-ui/src/components/AnimationOutputCards.tsx' -print
 )"
 if [ -n "$unexpected_animation_files" ]; then
   echo "unexpected animation implementation source file found:" >&2
