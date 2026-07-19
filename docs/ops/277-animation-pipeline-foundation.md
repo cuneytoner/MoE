@@ -285,7 +285,8 @@ It checks the docs, example config, safety flags, roadmap, source-only audits, a
 | M36.14 | Animation Output Card API | DONE |
 | M36.15 | Dashboard Animation Cards UI | DONE |
 | M36.16 | Animation Reference Board Selection | DONE |
-| M36.17 | M36 Phase Closure | PLANNED |
+| M36.17 | M36 Phase Closure | DONE |
+| M37.0 | Media Workflow Orchestrator | PLANNED |
 
 ## Backlog
 
@@ -297,10 +298,10 @@ It checks the docs, example config, safety flags, roadmap, source-only audits, a
 
 ## Final Decision
 
-M36.0 is DONE as a foundation and roadmap milestone.
+M36 is CLOSED after real Blender 4.5.11 acceptance.
 
-Current active phase: M36 Animation Pipeline.
+Current active phase: M36 Animation Pipeline CLOSED.
 
-Latest completed milestone: M36.13 Animation Output Card API Plan.
+Latest completed milestone: M36.17 M36 Phase Closure.
 
-Next planned milestone: M36.14 Animation Output Card API.
+Next planned milestone: M37.0 Media Workflow Orchestrator.

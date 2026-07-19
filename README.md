@@ -132,15 +132,15 @@ make tree
 
 ## Current Milestone
 
-Current active phase: M36 Animation Pipeline.
+Current active phase: M36 Animation Pipeline CLOSED.
 
 M35 is closed.
 
-Completed through Milestone 36.16: Animation Reference Board Selection
+Completed through Milestone 36.17: M36 Phase Closure
 
 Next planned milestone:
 
-Milestone 36.17: M36 Phase Closure
+Milestone 37.0: Media Workflow Orchestrator
 
 ## Model Inventory
 

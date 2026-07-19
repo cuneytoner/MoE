@@ -1,9 +1,9 @@
 # MoE / AI-Brain-OS Milestones
 
 Current active phase:
-- M36 Animation Pipeline is active.
-- Latest completed: M36.16 Animation Reference Board Selection.
-- Next planned: M36.17 M36 Phase Closure.
+- M36 Animation Pipeline CLOSED.
+- Latest completed: M36.17 M36 Phase Closure.
+- Next planned: M37.0 Media Workflow Orchestrator.
 - Future phases: M31 Homelab Ops, M32+ Media expansion.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
@@ -128,7 +128,8 @@ Current media milestone status:
 - M36.14 Animation Output Card API DONE
 - M36.15 Dashboard Animation Cards UI DONE
 - M36.16 Animation Reference Board Selection DONE
-- M36.17 M36 Phase Closure PLANNED
+- M36.17 M36 Phase Closure DONE
+- M37.0 Media Workflow Orchestrator PLANNED
 
 M35 fixed roadmap rule:
 - M35 scope is fixed through M35.20.
@@ -2458,12 +2459,12 @@ Goals:
 
 ## Milestone 36.17: M36 Phase Closure
 
-Status: PLANNED
+Status: DONE
 
 Goals:
-- Close the M36 animation phase after planned safety, schema, execution, metadata, verification, API, Dashboard, and reference workflows are reviewed.
-- Move remaining animation work to backlog.
-- Define the next phase without implementing it.
+- Close the M36 animation phase after real Blender 4.5.11 acceptance succeeds.
+- Verify guarded animation execution, sampled PNG preview rendering, and artifact verification.
+- Keep M37.0 planned without implementing the workflow orchestrator.
 
 ## Milestone 37.0: Media Workflow Orchestrator
 

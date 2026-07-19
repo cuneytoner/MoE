@@ -139,9 +139,10 @@ Never put logs, database data, model files, cache, virtual environments, node_mo
 - M36.14 Animation Output Card API DONE
 - M36.15 Dashboard Animation Cards UI DONE
 - M36.16 Animation Reference Board Selection DONE
-- M36.17 M36 Phase Closure PLANNED
+- M36.17 M36 Phase Closure DONE
+- M37.0 Media Workflow Orchestrator PLANNED
 
-M36 Animation Pipeline is active. Latest completed is M36.16 Animation Reference Board Selection. Next planned remains M36.17 M36 Phase Closure. Do not implement M36.17 code until explicitly requested.
+M36 Animation Pipeline is CLOSED after real Blender acceptance. Latest completed is M36.17 M36 Phase Closure. Next planned is M37.0 Media Workflow Orchestrator. Do not implement M37 code until explicitly requested.
 
 Pergola is now a case study/prototype. Generic media and drawing roadmap begins at M34.
 

@@ -253,8 +253,8 @@ if grep -R '^import bpy\|from bpy\|mathutils\|subprocess\|ffmpeg\|constraints\.n
   exit 1
 fi
 
-if rg -n "animation_phase_closure" apps/media-worker/app configs/animation >/dev/null; then
-  echo "M36.17 phase closure behavior appears to have started" >&2
+if rg -n "workflow_orchestrator" apps/media-worker/app configs/animation >/dev/null; then
+  echo "M37 workflow orchestrator behavior appears to have started" >&2
   exit 1
 fi
 

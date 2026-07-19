@@ -148,9 +148,9 @@ jq '.paths["/gateway/media/reference-boards/{board_id}/items/animation"].post'
 
 Do not POST to a production board during smoke verification.
 
-## M36.17 boundary
+## M36.17 closure
 
-M36.17 M36 Phase Closure remains planned. This milestone does not close the phase or start M37/M38.
+M36.17 closes the M36 phase only after real Blender acceptance succeeds. It does not start M37/M38 implementation.
 
 ## Final decision
 

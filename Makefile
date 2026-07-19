@@ -13,6 +13,7 @@
 .PHONY: test-animation-output-card-api
 .PHONY: test-dashboard-animation-cards
 .PHONY: test-animation-reference-board-selection
+.PHONY: test-m36-phase-closure
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -700,6 +701,9 @@ test-dashboard-animation-cards:
 
 test-animation-reference-board-selection:
 > @./scripts/test-animation-reference-board-selection.sh
+
+test-m36-phase-closure:
+> @./scripts/test-m36-phase-closure.sh
 
 test-memory-approval-dashboard:
 > @./scripts/test-memory-approval-dashboard.sh

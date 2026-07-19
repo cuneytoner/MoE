@@ -138,13 +138,15 @@ fi
 
 grep -q 'M36.15 Dashboard Animation Cards UI DONE' "$MILESTONES"
 grep -q 'M36.16 Animation Reference Board Selection DONE' "$MILESTONES"
-grep -q 'M36.17 M36 Phase Closure PLANNED' "$MILESTONES"
-grep -q 'Latest completed: M36.16 Animation Reference Board Selection.' "$MILESTONES"
-grep -q 'Next planned: M36.17 M36 Phase Closure.' "$MILESTONES"
+grep -q 'M36.17 M36 Phase Closure DONE' "$MILESTONES"
+grep -q 'M37.0 Media Workflow Orchestrator PLANNED' "$MILESTONES"
+grep -q 'Latest completed: M36.17 M36 Phase Closure.' "$MILESTONES"
+grep -q 'Next planned: M37.0 Media Workflow Orchestrator.' "$MILESTONES"
 grep -q 'M36.15 Dashboard Animation Cards UI DONE' "$CODEX_PROMPTS"
 grep -q 'M36.16 Animation Reference Board Selection DONE' "$CODEX_PROMPTS"
-grep -q 'M36.17 M36 Phase Closure PLANNED' "$CODEX_PROMPTS"
-grep -q 'Completed through Milestone 36.16: Animation Reference Board Selection' "$README"
+grep -q 'M36.17 M36 Phase Closure DONE' "$CODEX_PROMPTS"
+grep -q 'M37.0 Media Workflow Orchestrator PLANNED' "$CODEX_PROMPTS"
+grep -q 'Completed through Milestone 36.17: M36 Phase Closure' "$README"
 grep -q 'M36.15 adds read-only Dashboard animation cards' "$ARCHITECTURE"
 
 if grep -q 'M37.0 .* DONE\|M38.0 .* DONE' "$MILESTONES" "$CODEX_PROMPTS"; then
