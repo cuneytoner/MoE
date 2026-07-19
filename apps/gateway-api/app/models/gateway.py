@@ -616,6 +616,31 @@ class ReferenceBoardAddThreeDItemRequest(BaseModel):
         return value
 
 
+class ReferenceBoardAddAnimationItemRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    card_id: str = Field(min_length=1, max_length=512)
+    selected_reason: str | None = Field(default=None, max_length=1000)
+    tags: list[str] | None = Field(default=None, max_length=12)
+
+    @field_validator("card_id")
+    @classmethod
+    def validate_card_id(cls, value: str) -> str:
+        if any(ord(character) < 32 or ord(character) == 127 for character in value):
+            raise ValueError("card_id contains unsupported characters")
+        return value
+
+    @field_validator("tags")
+    @classmethod
+    def validate_tags(cls, value: list[str] | None) -> list[str] | None:
+        if value is None:
+            return None
+        for tag in value:
+            if not tag or len(tag.strip()) > 40:
+                raise ValueError("tags must be non-empty strings up to 40 characters")
+        return value
+
+
 class ReferenceBoardUpdateItemRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

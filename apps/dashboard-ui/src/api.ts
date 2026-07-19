@@ -5,6 +5,7 @@ import type {
   OutputCardMetadataResponse,
   OutputCardsResponse,
   ReferenceBoardAddItemRequest,
+  ReferenceBoardAddAnimationItemRequest,
   ReferenceBoardAddThreeDItemRequest,
   ReferenceBoardCreateRequest,
   ReferenceBoardResponse,
@@ -171,6 +172,21 @@ export async function addThreeDReferenceBoardItem(
   });
   if (!response.ok) {
     throw new Error(await gatewayErrorMessage(response, "Gateway 3D reference board item add"));
+  }
+  return response.json();
+}
+
+export async function addAnimationReferenceBoardItem(
+  boardId: string,
+  request: ReferenceBoardAddAnimationItemRequest,
+): Promise<ReferenceBoardResponse> {
+  const response = await fetch(`${gatewayUrl}/gateway/media/reference-boards/${encodeURIComponent(boardId)}/items/animation`, {
+    body: JSON.stringify(request),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  });
+  if (!response.ok) {
+    throw new Error(await gatewayErrorMessage(response, "Gateway animation reference board item add"));
   }
   return response.json();
 }

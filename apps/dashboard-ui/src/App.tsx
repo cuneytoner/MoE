@@ -3,6 +3,7 @@ import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlin
 import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import { Alert, Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import {
+  addAnimationReferenceBoardItem,
   addReferenceBoardItem,
   addThreeDReferenceBoardItem,
   createReferenceBoard,
@@ -36,6 +37,7 @@ import { DashboardLayout } from "./layout/DashboardLayout";
 import type {
   DashboardModel,
   AnimationOutputCardsResponse,
+  AnimationOutputCard,
   MemoryApprovalDashboardModel,
   OutputCard,
   OutputCardsResponse,
@@ -68,6 +70,7 @@ export function App() {
   const [referenceBoardActionMessage, setReferenceBoardActionMessage] = useState("");
   const [addingBoardCardId, setAddingBoardCardId] = useState("");
   const [addingThreeDBoardCardId, setAddingThreeDBoardCardId] = useState("");
+  const [addingAnimationBoardCardId, setAddingAnimationBoardCardId] = useState("");
   const [loading, setLoading] = useState(false);
   const [referenceBoardLoading, setReferenceBoardLoading] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<string>("never");
@@ -260,6 +263,44 @@ export function App() {
     }
   }
 
+  async function handleAddAnimationCardToBoard(card: AnimationOutputCard) {
+    if (!activeReferenceBoardId) {
+      return;
+    }
+    setAddingAnimationBoardCardId(card.id);
+    setReferenceBoardActionMessage("");
+    setReferenceBoardError("");
+    try {
+      const safeTags = [
+        "animation",
+        card.source_kind,
+        card.generation_mode,
+        ...card.summary.target_types,
+        ...card.summary.properties,
+      ]
+        .map((tag) => (tag ?? "").trim())
+        .filter((tag, index, tags) => tag !== "" && tag.length <= 40 && /^[A-Za-z0-9 _-]+$/.test(tag) && tags.indexOf(tag) === index)
+        .slice(0, 12);
+      const updated = await addAnimationReferenceBoardItem(activeReferenceBoardId, {
+        card_id: card.id,
+        selected_reason: "Selected from dashboard animation output cards.",
+        tags: safeTags,
+      });
+      setActiveReferenceBoard(updated.board);
+      await refreshReferenceBoards(activeReferenceBoardId);
+      setReferenceBoardActionMessage("Added animation reference to board.");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "unknown error";
+      if (message.includes("already selected") || message.includes("already")) {
+        setReferenceBoardActionMessage("Already in board.");
+      } else {
+        setReferenceBoardError(referenceBoardUiError("Add animation item failed.", err));
+      }
+    } finally {
+      setAddingAnimationBoardCardId("");
+    }
+  }
+
   async function handleRemoveBoardItem(itemId: string) {
     if (!activeReferenceBoardId) {
       return;
@@ -340,7 +381,14 @@ export function App() {
         loading={loading}
         onAddToBoard={(card) => void handleAddThreeDCardToBoard(card)}
       />
-      <AnimationOutputCards cardsResponse={animationOutputCards} error={animationOutputCardsError} loading={loading} />
+      <AnimationOutputCards
+        activeBoardId={activeReferenceBoardId}
+        addingCardId={addingAnimationBoardCardId}
+        cardsResponse={animationOutputCards}
+        error={animationOutputCardsError}
+        loading={loading}
+        onAddToBoard={(card) => void handleAddAnimationCardToBoard(card)}
+      />
 
       {dashboard ? (
         <>

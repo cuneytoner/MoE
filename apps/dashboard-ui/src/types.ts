@@ -384,7 +384,8 @@ export type AnimationTimelineSummary = {
   fps: number;
   start_frame: number;
   end_frame: number;
-  frame_count: number;
+  frame_count?: number | null;
+  total_frames?: number | null;
   duration_seconds: number;
 };
 
@@ -533,6 +534,12 @@ export type ReferenceBoardAddItemRequest = {
 };
 
 export type ReferenceBoardAddThreeDItemRequest = {
+  card_id: string;
+  selected_reason?: string | null;
+  tags?: string[] | null;
+};
+
+export type ReferenceBoardAddAnimationItemRequest = {
   card_id: string;
   selected_reason?: string | null;
   tags?: string[] | null;

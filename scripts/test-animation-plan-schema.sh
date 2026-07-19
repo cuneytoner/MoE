@@ -85,7 +85,8 @@ grep -q -- "- M36.12 Animation Artifact Verifier DONE" "$MILESTONES"
 grep -q -- "- M36.13 Animation Output Card API Plan DONE" "$MILESTONES"
 grep -q -- "- M36.14 Animation Output Card API DONE" "$MILESTONES"
 grep -q -- "- M36.15 Dashboard Animation Cards UI DONE" "$MILESTONES"
-grep -q -- "- M36.16 Animation Reference Board Selection PLANNED" "$MILESTONES"
+grep -q -- "- M36.16 Animation Reference Board Selection DONE" "$MILESTONES"
+grep -q -- "- M36.17 M36 Phase Closure PLANNED" "$MILESTONES"
 
 unexpected_animation_files="$(
   find apps -type f \( -name '*animation*.py' -o -name '*animation*.ts' -o -name '*animation*.tsx' \) \
@@ -107,8 +108,8 @@ if [ -n "$unexpected_animation_files" ]; then
   exit 1
 fi
 
-if grep -R "animation_reference_board\|animation_dashboard" apps configs >/dev/null; then
-  echo "future animation dashboard/reference-board behavior found in apps/configs" >&2
+if grep -R "animation_phase_closure" apps configs >/dev/null; then
+  echo "future animation phase-closure behavior found in apps/configs" >&2
   exit 1
 fi
 

@@ -136,11 +136,11 @@ Current active phase: M36 Animation Pipeline.
 
 M35 is closed.
 
-Completed through Milestone 36.15: Dashboard Animation Cards UI
+Completed through Milestone 36.16: Animation Reference Board Selection
 
 Next planned milestone:
 
-Milestone 36.16: Animation Reference Board Selection
+Milestone 36.17: M36 Phase Closure
 
 ## Model Inventory
 

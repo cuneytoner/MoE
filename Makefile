@@ -12,6 +12,7 @@
 .PHONY: test-animation-output-card-api-plan
 .PHONY: test-animation-output-card-api
 .PHONY: test-dashboard-animation-cards
+.PHONY: test-animation-reference-board-selection
 
 COMPOSE_FILE := infra/docker/docker-compose.yml
 ENV_FILE := .env.example
@@ -696,6 +697,9 @@ test-animation-output-card-api:
 
 test-dashboard-animation-cards:
 > @./scripts/test-dashboard-animation-cards.sh
+
+test-animation-reference-board-selection:
+> @./scripts/test-animation-reference-board-selection.sh
 
 test-memory-approval-dashboard:
 > @./scripts/test-memory-approval-dashboard.sh

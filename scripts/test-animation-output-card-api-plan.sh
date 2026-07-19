@@ -174,17 +174,19 @@ grep -q -- "- M36.12 Animation Artifact Verifier DONE" "$MILESTONES"
 grep -q -- "- M36.13 Animation Output Card API Plan DONE" "$MILESTONES"
 grep -q -- "- M36.14 Animation Output Card API DONE" "$MILESTONES"
 grep -q -- "- M36.15 Dashboard Animation Cards UI DONE" "$MILESTONES"
-grep -q -- "- M36.16 Animation Reference Board Selection PLANNED" "$MILESTONES"
+grep -q -- "- M36.16 Animation Reference Board Selection DONE" "$MILESTONES"
+grep -q -- "- M36.17 M36 Phase Closure PLANNED" "$MILESTONES"
 grep -q -- "- M36.13 Animation Output Card API Plan DONE" "$CODEX_PROMPTS"
 grep -q -- "- M36.14 Animation Output Card API DONE" "$CODEX_PROMPTS"
 grep -q -- "- M36.15 Dashboard Animation Cards UI DONE" "$CODEX_PROMPTS"
-grep -q -- "- M36.16 Animation Reference Board Selection PLANNED" "$CODEX_PROMPTS"
-grep -q "Completed through Milestone 36.15: Dashboard Animation Cards UI" "$README"
+grep -q -- "- M36.16 Animation Reference Board Selection DONE" "$CODEX_PROMPTS"
+grep -q -- "- M36.17 M36 Phase Closure PLANNED" "$CODEX_PROMPTS"
+grep -q "Completed through Milestone 36.16: Animation Reference Board Selection" "$README"
 grep -q "Milestone 36.16: Animation Reference Board Selection" "$README"
 grep -q "M36.14 implements that read-only Gateway endpoint" "$ARCH"
 
-if grep -q 'M36.16 Animation Reference Board Selection DONE' "$MILESTONES" "$CODEX_PROMPTS"; then
-  echo "M36.16 reference-board milestone must remain planned" >&2
+if grep -q 'M36.17 M36 Phase Closure DONE' "$MILESTONES" "$CODEX_PROMPTS"; then
+  echo "M36.17 phase closure milestone must remain planned" >&2
   exit 1
 fi
 
@@ -198,7 +200,7 @@ if [ -d "runtime/media/animation" ] || [ -d "media/animation" ]; then
   exit 1
 fi
 
-if rg -n "M36\\.16.*DONE|M37\\.0.*DONE|M38\\.0.*DONE" README.md docs scripts --glob '!scripts/test-animation-output-card-api-plan.sh' --glob '!scripts/test-animation-output-card-api.sh' --glob '!scripts/test-animation-preview-renderer.sh' --glob '!scripts/test-dashboard-animation-cards.sh' >/dev/null; then
+if rg -n "M36\\.17.*DONE|M37\\.0.*DONE|M38\\.0.*DONE" README.md docs scripts --glob '!scripts/test-animation-output-card-api-plan.sh' --glob '!scripts/test-animation-output-card-api.sh' --glob '!scripts/test-animation-preview-renderer.sh' --glob '!scripts/test-dashboard-animation-cards.sh' --glob '!scripts/test-animation-reference-board-selection.sh' >/dev/null; then
   echo "future milestone state changed unexpectedly" >&2
   exit 1
 fi

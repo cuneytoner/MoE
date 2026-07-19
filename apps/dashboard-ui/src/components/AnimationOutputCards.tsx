@@ -1,20 +1,23 @@
 import AnimationOutlinedIcon from "@mui/icons-material/AnimationOutlined";
 import ImageNotSupportedOutlinedIcon from "@mui/icons-material/ImageNotSupportedOutlined";
-import { Alert, Box, Card, CardContent, CardHeader, Chip, Stack, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, CardHeader, Chip, Stack, Typography } from "@mui/material";
 import type { ReactNode } from "react";
 import type { AnimationOutputCard, AnimationOutputCardsResponse } from "../types";
 import { StatusChip } from "./StatusChip";
 
 type Props = {
+  activeBoardId: string;
+  addingCardId: string;
   cardsResponse: AnimationOutputCardsResponse | null;
   error: string;
   loading: boolean;
+  onAddToBoard: (card: AnimationOutputCard) => void;
 };
 
 const MAX_VISIBLE_CARDS = 12;
 const VISIBLE_CHIP_LIMIT = 6;
 
-export function AnimationOutputCards({ cardsResponse, error, loading }: Props) {
+export function AnimationOutputCards({ activeBoardId, addingCardId, cardsResponse, error, loading, onAddToBoard }: Props) {
   const cards = cardsResponse?.cards ?? [];
   const visibleCards = cards.slice(0, MAX_VISIBLE_CARDS);
   const metadataMissing = cardsResponse?.metadata_dir_available === false;
@@ -122,7 +125,13 @@ export function AnimationOutputCards({ cardsResponse, error, loading }: Props) {
               }}
             >
               {visibleCards.map((card) => (
-                <AnimationOutputCardTile card={card} key={card.id} />
+                <AnimationOutputCardTile
+                  activeBoardId={activeBoardId}
+                  adding={addingCardId === card.id}
+                  card={card}
+                  key={card.id}
+                  onAddToBoard={onAddToBoard}
+                />
               ))}
             </Box>
           ) : null}
@@ -132,9 +141,20 @@ export function AnimationOutputCards({ cardsResponse, error, loading }: Props) {
   );
 }
 
-function AnimationOutputCardTile({ card }: { card: AnimationOutputCard }) {
+function AnimationOutputCardTile({
+  activeBoardId,
+  adding,
+  card,
+  onAddToBoard,
+}: {
+  activeBoardId: string;
+  adding: boolean;
+  card: AnimationOutputCard;
+  onAddToBoard: (card: AnimationOutputCard) => void;
+}) {
   const metadataTone = card.verification.metadata_valid ? "ok" : "warning";
   const previewTone = card.preview.available && card.verification.runtime_preview_verified ? "ok" : "warning";
+  const addDisabled = !activeBoardId || adding;
 
   return (
     <Card variant="outlined">
@@ -195,7 +215,7 @@ function AnimationOutputCardTile({ card }: { card: AnimationOutputCard }) {
             <Typography variant="body2">
               Frames {card.timeline.start_frame}-{card.timeline.end_frame}
             </Typography>
-            <Typography variant="body2">{card.timeline.frame_count} total frames</Typography>
+            <Typography variant="body2">{card.timeline.frame_count ?? card.timeline.total_frames ?? "unknown"} total frames</Typography>
             <Typography variant="body2">{formatDuration(card.timeline.duration_seconds)}</Typography>
           </InfoPanel>
 
@@ -226,6 +246,21 @@ function AnimationOutputCardTile({ card }: { card: AnimationOutputCard }) {
             <Typography variant="body2">Errors: {card.verification.error_count}</Typography>
             <Typography variant="body2">Warnings: {card.verification.warning_count}</Typography>
           </InfoPanel>
+
+          <Stack spacing={0.75}>
+            <Button disabled={addDisabled} onClick={() => onAddToBoard(card)} size="small" variant="outlined">
+              {adding ? "Adding" : "Add to board"}
+            </Button>
+            {!activeBoardId ? (
+              <Typography color="text.secondary" variant="caption">
+                Select a reference board first.
+              </Typography>
+            ) : (
+              <Typography color="text.secondary" variant="caption">
+                Adds an animation metadata reference only. No frame, video, metadata, or source asset is copied or modified.
+              </Typography>
+            )}
+          </Stack>
         </Stack>
       </CardContent>
     </Card>

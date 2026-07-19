@@ -308,6 +308,8 @@ Start with the operator runbooks if you are bringing the system up, moving to a 
 - [Animation Output Card API Review Template](ops/306-animation-output-card-api-review-template.md)
 - [Dashboard Animation Cards UI](ops/307-dashboard-animation-cards-ui.md)
 - [Dashboard Animation Cards UI Review Template](ops/308-dashboard-animation-cards-ui-review-template.md)
+- [Animation Reference Board Selection](ops/309-animation-reference-board-selection.md)
+- [Animation Reference Board Selection Review Template](ops/310-animation-reference-board-selection-review-template.md)
 - [Prompt Packs](../tools/prompt-packs/README.md)
 - [Generic Image Prompt Pack](../tools/prompt-packs/generic-image/README.md)
 - [Architecture Prompt Pack](../tools/prompt-packs/architecture/README.md)

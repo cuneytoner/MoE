@@ -467,8 +467,9 @@ grep -q -- "- M36.12 Animation Artifact Verifier DONE" docs/milestones.md
 grep -q -- "- M36.13 Animation Output Card API Plan DONE" docs/milestones.md
 grep -q -- "- M36.14 Animation Output Card API DONE" docs/milestones.md
 grep -q -- "- M36.15 Dashboard Animation Cards UI DONE" docs/milestones.md
-grep -q -- "- M36.16 Animation Reference Board Selection PLANNED" docs/milestones.md
-if rg -n "M36\\.16.*DONE|M37\\.0.*DONE|M38\\.0.*DONE" README.md docs scripts --glob '!scripts/test-animation-preview-renderer.sh' --glob '!scripts/test-animation-output-card-api-plan.sh' --glob '!scripts/test-animation-output-card-api.sh' --glob '!scripts/test-dashboard-animation-cards.sh' >/dev/null; then
+grep -q -- "- M36.16 Animation Reference Board Selection DONE" docs/milestones.md
+grep -q -- "- M36.17 M36 Phase Closure PLANNED" docs/milestones.md
+if rg -n "M36\\.17.*DONE|M37\\.0.*DONE|M38\\.0.*DONE" README.md docs scripts --glob '!scripts/test-animation-preview-renderer.sh' --glob '!scripts/test-animation-output-card-api-plan.sh' --glob '!scripts/test-animation-output-card-api.sh' --glob '!scripts/test-dashboard-animation-cards.sh' --glob '!scripts/test-animation-reference-board-selection.sh' >/dev/null; then
   echo "future milestone state changed unexpectedly" >&2
   exit 1
 fi

@@ -153,7 +153,8 @@ grep -q -- "- M36.12 Animation Artifact Verifier DONE" "$MILESTONES"
 grep -q -- "- M36.13 Animation Output Card API Plan DONE" "$MILESTONES"
 grep -q -- "- M36.14 Animation Output Card API DONE" "$MILESTONES"
 grep -q -- "- M36.15 Dashboard Animation Cards UI DONE" "$MILESTONES"
-grep -q -- "- M36.16 Animation Reference Board Selection PLANNED" "$MILESTONES"
+grep -q -- "- M36.16 Animation Reference Board Selection DONE" "$MILESTONES"
+grep -q -- "- M36.17 M36 Phase Closure PLANNED" "$MILESTONES"
 
 if [ -e "apps/media-worker/app/animation_blender_adapter.py" ]; then
   echo "unexpected alternate Blender animation adapter implementation found" >&2
@@ -165,8 +166,8 @@ if grep -R '^import bpy\|from bpy\|mathutils' apps/media-worker/app configs/anim
   exit 1
 fi
 
-if grep -R "animation_output_card\|animation_reference_board\|animation_dashboard" apps/media-worker/app configs/animation >/dev/null; then
-  echo "M36.13+ animation output card behavior appears to have started in app/config source" >&2
+if grep -R "animation_phase_closure" apps/media-worker/app configs/animation >/dev/null; then
+  echo "M36.17 phase closure behavior appears to have started in app/config source" >&2
   exit 1
 fi
 

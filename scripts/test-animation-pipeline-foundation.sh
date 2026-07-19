@@ -70,7 +70,10 @@ grep -q "M36.10 | Preview Render Safety Plan | DONE" "$DOC"
 grep -q "M36.11 | Guarded Preview Render Implementation | DONE" "$DOC"
 grep -q "M36.12 | Animation Artifact Verifier | DONE" "$DOC"
 grep -q "M36.13 | Animation Output Card API Plan | DONE" "$DOC"
+grep -q "M36.14 | Animation Output Card API | DONE" "$DOC"
 grep -q "M36.15 | Dashboard Animation Cards UI | DONE" "$DOC"
+grep -q "M36.16 | Animation Reference Board Selection | DONE" "$DOC"
+grep -q "M36.17 | M36 Phase Closure | PLANNED" "$DOC"
 
 python3 - "$MILESTONES" <<'PY'
 import re
@@ -95,7 +98,7 @@ expected = {
     "36.13": "DONE",
     "36.14": "DONE",
     "36.15": "DONE",
-    "36.16": "PLANNED",
+    "36.16": "DONE",
     "36.17": "PLANNED",
 }
 for milestone, status in expected.items():
@@ -130,8 +133,8 @@ if [ -n "$unexpected_animation_files" ]; then
   exit 1
 fi
 
-if grep -R "animation_reference_board\|animation_dashboard" apps configs >/dev/null; then
-  echo "future animation dashboard/reference-board behavior found outside allowed docs/config tests" >&2
+if grep -R "animation_phase_closure" apps configs >/dev/null; then
+  echo "future animation phase-closure behavior found outside allowed docs/config tests" >&2
   exit 1
 fi
 

@@ -277,7 +277,7 @@ if find /tmp -maxdepth 1 -type d -name 'moe-animation-output-cards.fixture' -pri
   exit 1
 fi
 
-if rg -n "M36\\.16.*DONE|M37\\.0.*DONE|M38\\.0.*DONE" README.md docs scripts --glob '!scripts/test-animation-output-card-api.sh' --glob '!scripts/test-animation-output-card-api-plan.sh' --glob '!scripts/test-animation-preview-renderer.sh' --glob '!scripts/test-dashboard-animation-cards.sh' >/dev/null; then
+if rg -n "M36\\.17.*DONE|M37\\.0.*DONE|M38\\.0.*DONE" README.md docs scripts --glob '!scripts/test-animation-output-card-api.sh' --glob '!scripts/test-animation-output-card-api-plan.sh' --glob '!scripts/test-animation-preview-renderer.sh' --glob '!scripts/test-dashboard-animation-cards.sh' --glob '!scripts/test-animation-reference-board-selection.sh' >/dev/null; then
   echo "future milestone state changed unexpectedly" >&2
   exit 1
 fi

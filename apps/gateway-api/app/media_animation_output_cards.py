@@ -54,6 +54,28 @@ def build_animation_output_cards() -> dict[str, Any]:
     return _build_animation_output_cards_from_root(DEFAULT_RUNTIME_ROOT)
 
 
+def find_animation_output_card_by_id(card_id: str) -> dict[str, Any] | None:
+    return _find_animation_output_card_by_id_from_root(card_id, DEFAULT_RUNTIME_ROOT)
+
+
+def _find_animation_output_card_by_id_from_root(card_id: str, runtime_root: str | Path) -> dict[str, Any] | None:
+    if _unsafe_card_id(card_id):
+        return None
+    response = _build_animation_output_cards_from_root(runtime_root)
+    matches = [card for card in response.get("cards", []) if isinstance(card, dict) and card.get("id") == card_id]
+    if len(matches) != 1:
+        return None
+    card = matches[0]
+    verification = card.get("verification")
+    if not isinstance(verification, dict):
+        return None
+    if card.get("type") != "animation":
+        return None
+    if verification.get("metadata_valid") is not True or verification.get("valid") is not True:
+        return None
+    return card
+
+
 def _build_animation_output_cards_from_root(runtime_root: str | Path) -> dict[str, Any]:
     root = Path(runtime_root)
     response = _base_response()
@@ -411,6 +433,16 @@ def _safe_declared_video(metadata: dict[str, Any]) -> str | None:
 def _safe_relative_text(value: str) -> bool:
     path = Path(value)
     return not path.is_absolute() and path.as_posix() == value and not any(part in {"", ".", ".."} for part in path.parts)
+
+
+def _unsafe_card_id(card_id: str) -> bool:
+    if not isinstance(card_id, str):
+        return True
+    if not card_id or len(card_id) > 512:
+        return True
+    if any(ord(character) < 32 or ord(character) == 127 for character in card_id):
+        return True
+    return False
 
 
 def _runtime_relative(root: Path, path: Path) -> str | None:

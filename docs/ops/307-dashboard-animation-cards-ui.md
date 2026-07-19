@@ -144,7 +144,7 @@ M36.15 does not add image, video, GIF, WebM, MP4, FileResponse, base64, download
 
 ## No reference-board action
 
-M36.15 does not add animation reference-board selection. There is no add-to-board button for animation cards. M36.16 remains the planned milestone for reviewed animation reference-board selection.
+M36.15 originally shipped read-only animation cards without reference-board selection. M36.16 adds reviewed metadata-only selection while preserving the no-binary-serving dashboard boundary.
 
 ## Responsive layout
 
@@ -183,9 +183,9 @@ Expected:
 - Preview status is metadata-only.
 - No generation, rendering, download, delete, move, repair, or reference-board button exists.
 
-## M36.16 boundary
+## M36.16 reference-board selection
 
-Animation reference-board selection remains planned for M36.16. Do not add animation reference-board API calls or UI actions in M36.15.
+M36.16 adds an `Add to board` action for animation cards. It posts only the card id, selected reason, and safe tags to the reviewed animation reference-board endpoint. The action stores a metadata reference only and does not copy frames, videos, metadata sidecars, preview reports, or source assets.
 
 ## Final decision
 

@@ -16,7 +16,7 @@ from app.clients.prompt_interpreter import PromptInterpreterClient
 from app.config import get_settings
 from app.media_dashboard import build_media_dashboard
 from app.media_3d_output_cards import build_3d_output_cards, find_3d_output_card_by_id
-from app.media_animation_output_cards import build_animation_output_cards
+from app.media_animation_output_cards import build_animation_output_cards, find_animation_output_card_by_id
 from app.output_cards import (
     build_output_cards,
     find_output_card_by_id,
@@ -29,9 +29,11 @@ from app.reference_boards import (
     ReferenceBoardMalformedError,
     ReferenceBoardStoreUnavailableError,
     add_item_to_reference_board,
+    animation_metadata_reference_path,
     board_path_for_id,
-    build_empty_reference_board,
     build_3d_reference_board_item,
+    build_animation_reference_board_item,
+    build_empty_reference_board,
     build_reference_board_download_filename,
     build_reference_board_json_export,
     build_reference_board_markdown_export,
@@ -97,6 +99,7 @@ from app.models.gateway import (
     OpenAIChatCompletionUsage,
     OpenAIChatMessage,
     ReferenceBoardAddItemRequest,
+    ReferenceBoardAddAnimationItemRequest,
     ReferenceBoardAddThreeDItemRequest,
     ReferenceBoardCreateRequest,
     ReferenceBoardUpdateItemRequest,
@@ -908,6 +911,110 @@ async def media_reference_board_add_3d_item(
             400,
             "invalid_reference_board_payload",
             "Reference board 3D item payload is invalid.",
+        )
+
+    return {
+        "status": "ok",
+        "service": "gateway-reference-boards",
+        "board": board,
+        "item": item,
+    }
+
+
+@app.post("/gateway/media/reference-boards/{board_id}/items/animation", response_model=None)
+async def media_reference_board_add_animation_item(
+    board_id: str,
+    request_data: dict[str, Any],
+) -> dict[str, Any] | JSONResponse:
+    try:
+        request = ReferenceBoardAddAnimationItemRequest.model_validate(request_data)
+    except ValidationError:
+        return _reference_board_error(
+            400,
+            "invalid_reference_board_payload",
+            "Reference board animation item payload is invalid.",
+        )
+
+    try:
+        safe_board_id = sanitize_board_id(board_id)
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_board_id",
+            "Invalid reference board id.",
+        )
+
+    try:
+        load_reference_board(safe_board_id)
+    except FileNotFoundError:
+        return _reference_board_error(
+            404,
+            "reference_board_not_found",
+            "Reference board not found.",
+        )
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
+    except ValueError:
+        return _reference_board_error(
+            400,
+            "invalid_reference_board_payload",
+            "Reference board data is invalid.",
+        )
+
+    card = find_animation_output_card_by_id(request.card_id)
+    if card is None:
+        return _reference_board_error(
+            404,
+            "animation_output_card_not_found",
+            "Animation output card not found.",
+        )
+    if not _animation_reference_card_is_safe(card):
+        return _reference_board_error(
+            422,
+            "animation_output_card_not_selectable",
+            "Animation output card is not selectable.",
+        )
+
+    try:
+        item = build_animation_reference_board_item(
+            card=card,
+            selected_reason=request.selected_reason,
+            request_tags=request.tags,
+        )
+        board = add_item_to_reference_board(safe_board_id, item)
+    except ReferenceBoardMalformedError:
+        return _reference_board_error(
+            422,
+            "reference_board_malformed",
+            "Reference board data is malformed.",
+        )
+    except ReferenceBoardStoreUnavailableError:
+        return _reference_board_error(
+            503,
+            "reference_board_store_unavailable",
+            "Reference board store is unavailable.",
+        )
+    except ValueError as exc:
+        if str(exc) == "reference_board_item_exists":
+            return _reference_board_error(
+                409,
+                "reference_board_item_exists",
+                "Animation output card is already selected in this board.",
+            )
+        return _reference_board_error(
+            400,
+            "invalid_reference_board_payload",
+            "Reference board animation item payload is invalid.",
         )
 
     return {
@@ -1849,6 +1956,27 @@ def _reference_board_item_from_card(
         "safety_label": card.get("safety_label") or "visual_reference_only",
         "added_at": utc_now_iso(),
     }
+
+
+def _animation_reference_card_is_safe(card: dict[str, Any]) -> bool:
+    verification = card.get("verification")
+    if not isinstance(verification, dict):
+        return False
+    if card.get("type") != "animation":
+        return False
+    if verification.get("metadata_valid") is not True or verification.get("valid") is not True:
+        return False
+    if card.get("visual_reference_only") is not True:
+        return False
+    if card.get("structural_certification") is not False:
+        return False
+    if card.get("operator_review_required") is not True:
+        return False
+    try:
+        animation_metadata_reference_path(card)
+    except ValueError:
+        return False
+    return True
 
 
 def _dedupe_strings(values: list[Any]) -> list[str]:

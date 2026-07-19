@@ -59,7 +59,13 @@ grep -q 'fetchAnimationOutputCards' "$APP"
 grep -q 'AnimationOutputCardsResponse | null' "$APP"
 grep -q 'animationOutputCardsError' "$APP"
 grep -q 'setAnimationOutputCards(null)' "$APP"
-grep -q '<AnimationOutputCards cardsResponse={animationOutputCards} error={animationOutputCardsError} loading={loading} />' "$APP"
+grep -q '<AnimationOutputCards' "$APP"
+grep -q 'cardsResponse={animationOutputCards}' "$APP"
+grep -q 'error={animationOutputCardsError}' "$APP"
+grep -q 'activeBoardId={activeReferenceBoardId}' "$APP"
+grep -q 'addingCardId={addingAnimationBoardCardId}' "$APP"
+grep -q 'onAddToBoard=' "$APP"
+grep -q 'handleAddAnimationCardToBoard(card)' "$APP"
 grep -q 'href: "#animation-output-cards"' "$SIDEBAR"
 grep -q 'label: "Animation"' "$SIDEBAR"
 
@@ -123,12 +129,6 @@ fi
 if grep -R 'FileResponse\|base64\|file://' apps/dashboard-ui/src/components/AnimationOutputCards.tsx apps/dashboard-ui/src/api.ts >/dev/null; then
   fail "animation cards introduced binary serving or file URL behavior"
 fi
-if grep -R 'onAddToBoard\|Add to board' "$COMPONENT" >/dev/null; then
-  fail "M36.15 animation component must not add board actions"
-fi
-if grep -R 'reference-boards/.*/animation\|items/animation\|addAnimationReferenceBoardItem\|AnimationReferenceBoard' "$APP" "$API" "$TYPES" >/dev/null; then
-  fail "M36.15 must not add animation reference-board actions"
-fi
 if grep -R 'relative_runtime_paths.*fetch\|declared_video_preview.*fetch\|first_frame_relative_path.*fetch' "$COMPONENT" "$API" >/dev/null; then
   fail "animation cards must not build URLs from runtime paths"
 fi
@@ -137,17 +137,16 @@ if grep -R 'execute-animation\|render-preview\|REAL_ANIMATION_GENERATION\|subpro
 fi
 
 grep -q 'M36.15 Dashboard Animation Cards UI DONE' "$MILESTONES"
-grep -q 'M36.16 Animation Reference Board Selection PLANNED' "$MILESTONES"
-grep -q 'Latest completed: M36.15 Dashboard Animation Cards UI.' "$MILESTONES"
-grep -q 'Next planned: M36.16 Animation Reference Board Selection.' "$MILESTONES"
+grep -q 'M36.16 Animation Reference Board Selection DONE' "$MILESTONES"
+grep -q 'M36.17 M36 Phase Closure PLANNED' "$MILESTONES"
+grep -q 'Latest completed: M36.16 Animation Reference Board Selection.' "$MILESTONES"
+grep -q 'Next planned: M36.17 M36 Phase Closure.' "$MILESTONES"
 grep -q 'M36.15 Dashboard Animation Cards UI DONE' "$CODEX_PROMPTS"
-grep -q 'M36.16 Animation Reference Board Selection PLANNED' "$CODEX_PROMPTS"
-grep -q 'Completed through Milestone 36.15: Dashboard Animation Cards UI' "$README"
+grep -q 'M36.16 Animation Reference Board Selection DONE' "$CODEX_PROMPTS"
+grep -q 'M36.17 M36 Phase Closure PLANNED' "$CODEX_PROMPTS"
+grep -q 'Completed through Milestone 36.16: Animation Reference Board Selection' "$README"
 grep -q 'M36.15 adds read-only Dashboard animation cards' "$ARCHITECTURE"
 
-if grep -q 'M36.16 Animation Reference Board Selection DONE' "$MILESTONES" "$CODEX_PROMPTS"; then
-  fail "M36.16 must remain planned"
-fi
 if grep -q 'M37.0 .* DONE\|M38.0 .* DONE' "$MILESTONES" "$CODEX_PROMPTS"; then
   fail "future M37/M38 milestones must not be marked done"
 fi

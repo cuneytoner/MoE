@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,6 +21,7 @@ TAG_MAX_LENGTH = 40
 BOARD_ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
 ITEM_ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
 TAG_PATTERN = re.compile(r"^[A-Za-z0-9 _-]+$")
+ALLOWED_ASSET_TYPES = {"image", "drawing_svg", "3d_model", "animation"}
 METADATA_SUMMARY_FIELDS = (
     "source",
     "script",
@@ -177,6 +179,55 @@ def build_3d_reference_board_item(
         "safety_label": card.get("safety_label") or "visual_reference_only",
         "added_at": utc_now_iso(),
     }
+
+
+def build_animation_reference_board_item(
+    card: dict[str, Any],
+    selected_reason: str | None,
+    request_tags: list[str] | None,
+) -> dict[str, Any]:
+    metadata_path = animation_metadata_reference_path(card)
+    tags = normalize_tags(
+        dedupe_strings(
+            [
+                "animation",
+                card.get("source_kind"),
+                card.get("generation_mode"),
+                *(request_tags or []),
+            ]
+        )
+    )
+    return {
+        "item_id": item_id_for_card_id(str(card["id"])),
+        "card_id": card["id"],
+        "asset_type": "animation",
+        "name": card.get("title") or str(card["id"]),
+        "relative_runtime_path": metadata_path,
+        "metadata_path": metadata_path,
+        "selected_reason": normalize_selected_reason(selected_reason),
+        "tags": tags,
+        "safety_label": "visual-reference-only",
+        "added_at": utc_now_iso(),
+    }
+
+
+def animation_metadata_reference_path(card: dict[str, Any]) -> str:
+    paths = card.get("relative_runtime_paths")
+    metadata_path = paths.get("metadata") if isinstance(paths, dict) else None
+    if not isinstance(metadata_path, str) or not is_safe_animation_metadata_reference(metadata_path):
+        raise ValueError("invalid animation metadata reference")
+    return metadata_path
+
+
+def is_safe_animation_metadata_reference(value: str) -> bool:
+    if not value.startswith("media/animation/metadata/") or not value.endswith(".json"):
+        return False
+    if "\\" in value or "://" in value or value.startswith(("/", "~")):
+        return False
+    if re.match(r"^[A-Za-z]:", value):
+        return False
+    path = Path(value)
+    return not path.is_absolute() and path.as_posix() == value and not any(part in {"", ".", ".."} for part in path.parts)
 
 
 def primary_3d_reference_path(
@@ -398,6 +449,14 @@ def write_reference_board(board: dict[str, Any]) -> Path:
     path = board_path_for_id(str(board["board_id"]))
     if not is_safe_board_path(path):
         raise ValueError("unsafe reference board path")
+    try:
+        root = ensure_reference_boards_root()
+        if root.is_symlink():
+            raise ReferenceBoardStoreUnavailableError("reference board store is unavailable")
+        if path.exists() and path.is_symlink():
+            raise ReferenceBoardStoreUnavailableError("reference board store is unavailable")
+    except OSError as exc:
+        raise ReferenceBoardStoreUnavailableError("reference board store is unavailable") from exc
 
     now = utc_now_iso()
     board = dict(board)
@@ -409,10 +468,24 @@ def write_reference_board(board: dict[str, Any]) -> Path:
     if len(encoded) > MAX_REFERENCE_BOARD_BYTES:
         raise ValueError("reference board JSON exceeds size limit")
 
-    ensure_reference_boards_root()
+    temp_path = path.with_name(f".{path.name}.tmp")
     try:
-        path.write_bytes(encoded)
+        with temp_path.open("wb") as handle:
+            handle.write(encoded)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temp_path, path)
+        directory_fd = os.open(root, os.O_RDONLY)
+        try:
+            os.fsync(directory_fd)
+        finally:
+            os.close(directory_fd)
     except OSError as exc:
+        try:
+            if temp_path.exists() and not temp_path.is_symlink():
+                temp_path.unlink()
+        except OSError:
+            pass
         raise ReferenceBoardStoreUnavailableError("reference board store is unavailable") from exc
     return path
 
@@ -682,6 +755,10 @@ def validate_reference_board_item_shape(item: dict[str, Any]) -> list[str]:
         if not item.get(field):
             errors.append(f"{field} is required")
 
+    asset_type = item.get("asset_type")
+    if isinstance(asset_type, str) and asset_type not in ALLOWED_ASSET_TYPES:
+        errors.append("asset_type is not supported")
+
     item_id = item.get("item_id")
     if isinstance(item_id, str) and not ITEM_ID_PATTERN.fullmatch(item_id):
         errors.append("item_id contains unsupported characters")
@@ -707,6 +784,23 @@ def validate_reference_board_item_shape(item: dict[str, Any]) -> list[str]:
                 errors.append("relative_runtime_path must not be absolute")
             if ".." in Path(relative_runtime_path).parts:
                 errors.append("relative_runtime_path must not contain traversal")
+            if "\\" in relative_runtime_path:
+                errors.append("relative_runtime_path must be POSIX-style")
+            if "://" in relative_runtime_path:
+                errors.append("relative_runtime_path must not be a URL")
+    metadata_path = item.get("metadata_path")
+    if metadata_path is not None:
+        if not isinstance(metadata_path, str):
+            errors.append("metadata_path must be a string")
+        else:
+            if metadata_path.startswith("/"):
+                errors.append("metadata_path must not be absolute")
+            if ".." in Path(metadata_path).parts:
+                errors.append("metadata_path must not contain traversal")
+            if "\\" in metadata_path:
+                errors.append("metadata_path must be POSIX-style")
+            if "://" in metadata_path:
+                errors.append("metadata_path must not be a URL")
     return errors
 
 

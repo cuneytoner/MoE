@@ -98,6 +98,13 @@ export function ReferenceBoards({
       setMetadataLoading(false);
       return;
     }
+    if (item.asset_type === "animation") {
+      setMetadataItem(item);
+      setMetadataResponse(null);
+      setMetadataError("Animation metadata is reviewed from the Animation Output Cards panel.");
+      setMetadataLoading(false);
+      return;
+    }
     setMetadataItem(item);
     setMetadataResponse(null);
     setMetadataError("");
